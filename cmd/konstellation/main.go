@@ -8,9 +8,9 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/cli"
-	dbm "github.com/tendermint/tendermint/libs/db"
 	"github.com/tendermint/tendermint/libs/log"
 	tmtypes "github.com/tendermint/tendermint/types"
+	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/x/genaccounts"
@@ -19,6 +19,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 
 	"github.com/konstellation/konstellation/app"
+	kinit "github.com/konstellation/konstellation/init"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func main() {
 
 	cdc := app.MakeCodec()
 
-	// kinit.Init()
+	kinit.Init()
 
 	ctx := server.NewDefaultContext()
 

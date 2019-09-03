@@ -6,9 +6,9 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	cmn "github.com/tendermint/tendermint/libs/common"
-	dbm "github.com/tendermint/tendermint/libs/db"
 	"github.com/tendermint/tendermint/libs/log"
 	tmtypes "github.com/tendermint/tendermint/types"
+	dbm "github.com/tendermint/tm-db"
 
 	bam "github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -28,13 +28,13 @@ import (
 const appName = "konstellation"
 
 var (
-	// default home directories for the application CLI
+	// Default home directories for the application CLI
 	DefaultCLIHome = os.ExpandEnv("$HOME/.konstellationcli")
 
-	// DefaultNodeHome sets the folder where the applcation data and configuration will be stored
+	// DefaultNodeHome sets the folder where the application data and configuration will be stored
 	DefaultNodeHome = os.ExpandEnv("$HOME/.konstellation")
 
-	// ModuleBasicManager is in charge of setting up basic module elemnets
+	// ModuleBasicManager is in charge of setting up basic module elements
 	ModuleBasics = module.NewBasicManager(
 		genaccounts.AppModuleBasic{},
 		genutil.AppModuleBasic{},
@@ -47,7 +47,7 @@ var (
 		supply.AppModuleBasic{},
 	)
 
-	// account permissions
+	// Account permissions
 	maccPerms = map[string][]string{
 		auth.FeeCollectorName:   nil,
 		distribution.ModuleName: nil,
@@ -77,16 +77,16 @@ type KonstellationApp struct {
 	cdc *codec.Codec
 
 	// Keys to access the substores
-	keyMain          *sdk.KVStoreKey
-	keyAccount       *sdk.KVStoreKey
-	keySupply        *sdk.KVStoreKey
-	keyStaking       *sdk.KVStoreKey
-	tkeyStaking      *sdk.TransientStoreKey
-	keyDistribution  *sdk.KVStoreKey
-	tkeyDistribution *sdk.TransientStoreKey
-	keyParams        *sdk.KVStoreKey
-	tkeyParams       *sdk.TransientStoreKey
-	keySlashing      *sdk.KVStoreKey
+	keyMain         *sdk.KVStoreKey
+	keyAccount      *sdk.KVStoreKey
+	keySupply       *sdk.KVStoreKey
+	keyStaking      *sdk.KVStoreKey
+	tkeyStaking     *sdk.TransientStoreKey
+	keyDistribution *sdk.KVStoreKey
+	// tkeyDistribution *sdk.TransientStoreKey
+	keyParams   *sdk.KVStoreKey
+	tkeyParams  *sdk.TransientStoreKey
+	keySlashing *sdk.KVStoreKey
 
 	// Keepers
 	accountKeeper      auth.AccountKeeper
@@ -115,16 +115,16 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		BaseApp: bApp,
 		cdc:     cdc,
 
-		keyMain:          sdk.NewKVStoreKey(bam.MainStoreKey),
-		keyAccount:       sdk.NewKVStoreKey(auth.StoreKey),
-		keySupply:        sdk.NewKVStoreKey(supply.StoreKey),
-		keyStaking:       sdk.NewKVStoreKey(staking.StoreKey),
-		tkeyStaking:      sdk.NewTransientStoreKey(staking.TStoreKey),
-		keyDistribution:  sdk.NewKVStoreKey(distribution.StoreKey),
-		tkeyDistribution: sdk.NewTransientStoreKey(distribution.TStoreKey),
-		keyParams:        sdk.NewKVStoreKey(params.StoreKey),
-		tkeyParams:       sdk.NewTransientStoreKey(params.TStoreKey),
-		keySlashing:      sdk.NewKVStoreKey(slashing.StoreKey),
+		keyMain:         sdk.NewKVStoreKey(bam.MainStoreKey),
+		keyAccount:      sdk.NewKVStoreKey(auth.StoreKey),
+		keySupply:       sdk.NewKVStoreKey(supply.StoreKey),
+		keyStaking:      sdk.NewKVStoreKey(staking.StoreKey),
+		tkeyStaking:     sdk.NewTransientStoreKey(staking.TStoreKey),
+		keyDistribution: sdk.NewKVStoreKey(distribution.StoreKey),
+		// tkeyDistribution: sdk.NewTransientStoreKey(distribution.TStoreKey),
+		keyParams:   sdk.NewKVStoreKey(params.StoreKey),
+		tkeyParams:  sdk.NewTransientStoreKey(params.TStoreKey),
+		keySlashing: sdk.NewKVStoreKey(slashing.StoreKey),
 	}
 
 	// The ParamsKeeper handles parameter storage for the application
@@ -148,7 +148,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		app.accountKeeper,
 		app.paramsKeeper.Subspace(bank.DefaultParamspace),
 		bank.DefaultCodespace,
-		// map[string]bool{},
+		map[string]bool{},
 	)
 
 	// The SupplyKeeper collects transaction fees and renders them to the fee distribution module
@@ -157,7 +157,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		app.keySupply,
 		app.accountKeeper,
 		app.bankKeeper,
-		supply.DefaultCodespace,
+		// supply.DefaultCodespace,
 		maccPerms,
 	)
 
@@ -179,7 +179,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		app.supplyKeeper,
 		distribution.DefaultCodespace,
 		auth.FeeCollectorName,
-		// map[string]bool{},
+		map[string]bool{},
 	)
 
 	app.slashingKeeper = slashing.NewKeeper(
@@ -245,7 +245,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		app.keyStaking,
 		app.tkeyStaking,
 		app.keyDistribution,
-		app.tkeyDistribution,
+		// app.tkeyDistribution,
 		app.keySlashing,
 		app.keyParams,
 		app.tkeyParams,

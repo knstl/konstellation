@@ -2,9 +2,9 @@ include Makefile.ledger
 all: lint install
 
 install: go.sum
-		go install -mod=readonly $(BUILD_FLAGS) ./cmd/konstellation
+		go install $(BUILD_FLAGS) ./cmd/konstellation
 		test -f ~/go/bin/kd && echo "kd exists" || ln -s ~/go/bin/konstellation ~/go/bin/kd
-		go install -mod=readonly $(BUILD_FLAGS) ./cmd/konstellationcli
+		go install $(BUILD_FLAGS) ./cmd/konstellationcli
 		test -f ~/go/bin/kcli && echo "kcli exists" || ln -s ~/go/bin/konstellationcli ~/go/bin/kcli
 
 go.sum: go.mod
