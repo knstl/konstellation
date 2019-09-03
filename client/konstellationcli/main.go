@@ -18,7 +18,8 @@ import (
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
 
 	"github.com/konstellation/konstellation/app"
-	kinit "github.com/konstellation/konstellation/init"
+	"github.com/konstellation/konstellation/coin"
+	"github.com/konstellation/konstellation/prefix"
 )
 
 func main() {
@@ -26,7 +27,8 @@ func main() {
 
 	cdc := app.MakeCodec()
 
-	kinit.Init()
+	coin.RegisterNativeCoinUnits()
+	prefix.RegisterBech32Prefix()
 
 	rootCmd := &cobra.Command{
 		Use:   "konstellationcli",
