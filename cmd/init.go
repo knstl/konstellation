@@ -19,7 +19,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
-	"github.com/cosmos/cosmos-sdk/x/staking"
+
+	"github.com/konstellation/konstellation/x/staking"
 )
 
 type printInfo struct {
@@ -27,7 +28,6 @@ type printInfo struct {
 }
 
 func newPrintInfo(appMessage json.RawMessage) printInfo {
-
 	return printInfo{
 		AppMessage: appMessage,
 	}
@@ -46,8 +46,7 @@ func displayInfo(cdc *codec.Codec, info printInfo) error {
 
 // InitCmd returns a command that initializes all files needed for Tendermint
 // and the respective application.
-func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager,
-	defaultNodeHome string) *cobra.Command { // nolint: golint
+func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager, defaultNodeHome string) *cobra.Command { // nolint: golint
 	initCmd := genutilcli.InitCmd(ctx, cdc, mbm, defaultNodeHome)
 
 	cmd := &cobra.Command{
@@ -76,18 +75,10 @@ func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager,
 				panic(err)
 			}
 
-			// TODO move init genesis to konstellation staking module
+			// TODO move init genesis to konstellation modules
 			// -------------
 
-			var genesisState staking.GenesisState
-			err = cdc.UnmarshalJSON(appState[staking.ModuleName], &genesisState)
-			if err != nil {
-				panic(err)
-			}
-
-			genesisState.Params.BondDenom = "darc"
-
-			appState[staking.ModuleName] = cdc.MustMarshalJSON(genesisState)
+			staking.InitGenesis(cdc, appState)
 
 			// --------------
 

@@ -4,9 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/konstellation/konstellation/cmd"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/cli"
@@ -21,6 +19,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 
 	"github.com/konstellation/konstellation/app"
+	"github.com/konstellation/konstellation/cmd"
 	"github.com/konstellation/konstellation/coin"
 	"github.com/konstellation/konstellation/prefix"
 )
@@ -41,12 +40,11 @@ func main() {
 		PersistentPreRunE: server.PersistentPreRunEFn(ctx),
 	}
 
-	viper.Set("amount", "100000000darc")
-
 	// CLI commands to initialize the chain
 	rootCmd.AddCommand(
 		cmd.InitCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome),
-		genutilcli.GenTxCmd(ctx, cdc, app.ModuleBasics, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}, app.DefaultNodeHome, app.DefaultCLIHome),
+		// cmd.ConfigCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome),
+		cmd.GenTxCmd(ctx, cdc, app.ModuleBasics, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}, app.DefaultNodeHome, app.DefaultCLIHome),
 		genutilcli.CollectGenTxsCmd(ctx, cdc, genaccounts.AppModuleBasic{}, app.DefaultNodeHome),
 		genaccountscli.AddGenesisAccountCmd(ctx, cdc, app.DefaultNodeHome, app.DefaultCLIHome),
 		genutilcli.ValidateGenesisCmd(ctx, cdc, app.ModuleBasics),

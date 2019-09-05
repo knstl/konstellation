@@ -6,6 +6,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.37.0
 	github.com/gorilla/mux v1.7.0
 	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/procfs v0.0.0-20190328153300-af7bedc223fb // indirect
 	github.com/spf13/afero v1.2.2 // indirect
@@ -19,5 +20,3 @@ require (
 	google.golang.org/appengine v1.4.0 // indirect
 	google.golang.org/genproto v0.0.0-20190327125643-d831d65fe17d // indirect
 )
-
-replace github.com/cosmos/cosmos-sdk => ../../go/src/github.com/konstellation/cosmos-sdk

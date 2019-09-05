@@ -1,11 +1,13 @@
 include Makefile.ledger
+# The below include contains the tools target.
+include contrib/devtools/Makefile
 all: lint install
 
 install: go.sum
 		go install $(BUILD_FLAGS) ./client/konstellation
-		test -f ~/go/bin/kd && echo "kd exists" || ln -s ~/go/bin/konstellation ~/go/bin/kd
+# 		test -f ~/go/bin/kd && echo "kd exists" || ln -s ~/go/bin/konstellation ~/go/bin/kd
 		go install $(BUILD_FLAGS) ./client/konstellationcli
-		test -f ~/go/bin/kcli && echo "kcli exists" || ln -s ~/go/bin/konstellationcli ~/go/bin/kcli
+# 		test -f ~/go/bin/kcli && echo "kcli exists" || ln -s ~/go/bin/konstellationcli ~/go/bin/kcli
 
 go.sum: go.mod
 		@echo "--> Ensure dependencies have not been modified"

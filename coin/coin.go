@@ -14,6 +14,10 @@ const (
 	ADARC = "adarc" // 10^-18 (atto)
 )
 
+var (
+	DefaultBondDenom = DARC
+)
+
 func RegisterNativeCoinUnits() {
 	_ = sdk.RegisterDenom(DARC, sdk.OneDec())
 	_ = sdk.RegisterDenom(MDARC, sdk.NewDecWithPrec(1, 3))

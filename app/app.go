@@ -204,7 +204,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		supply.NewAppModule(app.supplyKeeper, app.accountKeeper),
 		distribution.NewAppModule(app.distributionKeeper, app.supplyKeeper),
 		slashing.NewAppModule(app.slashingKeeper, app.stakingKeeper),
-		staking.NewAppModule(app.stakingKeeper, app.accountKeeper, app.supplyKeeper),
+		staking.NewAppModule(app.stakingKeeper, app.distributionKeeper, app.accountKeeper, app.supplyKeeper),
 	)
 
 	app.mm.SetOrderBeginBlockers(distribution.ModuleName, slashing.ModuleName)
