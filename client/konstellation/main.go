@@ -43,7 +43,7 @@ func main() {
 	// CLI commands to initialize the chain
 	rootCmd.AddCommand(
 		cmd.InitCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome),
-		// cmd.ConfigCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome),
+		cmd.ConfigCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome),
 		cmd.GenTxCmd(ctx, cdc, app.ModuleBasics, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}, app.DefaultNodeHome, app.DefaultCLIHome),
 		genutilcli.CollectGenTxsCmd(ctx, cdc, genaccounts.AppModuleBasic{}, app.DefaultNodeHome),
 		genaccountscli.AddGenesisAccountCmd(ctx, cdc, app.DefaultNodeHome, app.DefaultCLIHome),
