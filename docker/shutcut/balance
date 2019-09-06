@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# ----------------------------------------------------------------------
+#
+# Shortcut for query balance by ${key_name} or ${address}(43)
+#
+# ----------------------------------------------------------------------
+
+param=$1
+if [[ ${#param} == 43 ]]; then
+    konstellationcli bank account ${param}
+else
+    # shellcheck disable=SC2046
+    konstellationcli bank account $(konstellationcli keys show -a ${param})
+fi
