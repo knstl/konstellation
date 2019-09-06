@@ -1,0 +1,87 @@
+version: '3'
+
+services:
+  konstellation_node_0:
+    container_name: konstellation-node-0
+    image: konstellation:darchub
+    environment:
+      - CHAIN_ID=darchub-1
+      - MONIKER=dm-0
+      - KEY_NAME=satoshi
+      - KEY_PASSWORD=12345678
+      - COIN_GENESIS=100000000darc
+      - COIN_DELEGATE=100000darc
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+#    command: /bin/bash -c 'konstellation start --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.2
+
+  konstellation_node_1:
+    container_name: konstellation-node-1
+    image: konstellation:darchub
+    environment:
+     - CHAIN_ID=darchub-1
+     - MONIKER=dm-1
+     - KEY_NAME=nakamoto
+     - KEY_PASSWORD=12345678
+     - COIN_GENESIS=100000000darc
+     - COIN_DELEGATE=100000darc
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+#    command: /bin/bash -c 'konstellation start --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.3
+
+  konstellation_node_2:
+    container_name: konstellation-node-2
+    image: konstellation:darchub
+    environment:
+      - CHAIN_ID=darchub-1
+      - MONIKER=dm-2
+      - KEY_NAME=vitalik
+      - KEY_PASSWORD=12345678
+      - COIN_GENESIS=100000000darc
+      - COIN_DELEGATE=100000darc
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+#    command: /bin/bash -c 'konstellation start --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+  konstellation_node_3:
+    container_name: konstellation-node-3
+    image: konstellation:darchub
+    environment:
+      - CHAIN_ID=darchub-1
+      - MONIKER=dm-3
+      - KEY_NAME=buterin
+      - KEY_PASSWORD=12345678
+      - COIN_GENESIS=100000000darc
+      - COIN_DELEGATE=100000darc
+    ports:
+    - "26663-26664:26656-26657"
+    volumes:
+    - ./build:/home
+#    command: /bin/bash -c 'konstellation start --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.5
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 192.168.10.0/16

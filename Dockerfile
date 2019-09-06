@@ -36,11 +36,6 @@ RUN make install
 
 FROM ubuntu:18.04
 
-#FROM alpine:edge
-#
-# Install ca-certificates // for alpine:edge
-#RUN apk add --update ca-certificates
-
 # p2p port
 EXPOSE 26656
 # rpc port
@@ -52,6 +47,9 @@ RUN apt update && \
     apt install -y iputils-ping net-tools vim curl wget musl-dev && \
     apt clean && apt autoclean
 
+# Bash: konstellation: No such file or directory
+# ldd /usr/local/bin/konstellation
+# libc.musl-x86_64.so.1 => not found
 RUN ln -s /usr/lib/x86_64-linux-musl/libc.so /lib/libc.musl-x86_64.so.1
 
 # Copy over binaries from the build

@@ -22,8 +22,7 @@ function init_full_node() {
     exit 1
   fi
 
-  # shellcheck disable=SC2086
-  konstellation init ${MONIKER} --chain-id ${CHAIN_ID}
+  konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"
   # shellcheck disable=SC2164
   cd /root/.konstellation/config
   #    rm -f config.toml genesis.json
@@ -44,13 +43,12 @@ function init_full_node() {
 # ------------------------------------------------------------------------------
 function init_private_single() {
   # Create private key for first delegation
-  echo "${KEY_PASSWORD}" | konstellationcli keys add ${KEY_NAME}
+  echo "${KEY_PASSWORD}" | konstellationcli keys add "${KEY_NAME}"
 
-  # Init konstellation chaincc
-  # shellcheck disable=SC2086
-  konstellation init ${MONIKER} --chain-id ${CHAIN_ID}
-  konstellation add-genesis-account ${KEY_NAME} ${COIN_GENESIS}
-  echo "${KEY_PASSWORD}" | konstellation gentx --name ${KEY_NAME} --amount ${COIN_DELEGATE}
+  # Init konstellation chain
+  konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"
+  konstellation add-genesis-account "${KEY_NAME}" "${COIN_GENESIS}"
+  echo "${KEY_PASSWORD}" | konstellation gentx --name "${KEY_NAME}" --amount "${COIN_DELEGATE}"
   konstellation collect-gentxs
 }
 
@@ -119,18 +117,15 @@ fi
 # Print env variables
 #
 # ------------------------------------------------------------------------------
-# shellcheck disable=SC2086
-echo "Chain id" ${CHAIN_ID}
-# shellcheck disable=SC2086
-echo "Moniker" ${MONIKER}
+echo "Chain id" "${CHAIN_ID}"
+echo "Moniker" "${MONIKER}"
 
 # ------------------------------------------------------------------------------
 #
 # Config client global settings
 #
 # ------------------------------------------------------------------------------
-# shellcheck disable=SC2086
-/usr/local/bin/konstellationcli config chain-id ${CHAIN_ID}
+konstellationcli config chain-id "${CHAIN_ID}"
 konstellationcli config trust-node true
 konstellationcli config output json
 konstellationcli config indent true
