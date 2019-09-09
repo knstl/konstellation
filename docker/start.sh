@@ -22,10 +22,20 @@ function init_full_node() {
     exit 1
   fi
 
+  echo "${KEY_PASSWORD}"
+  echo "${KEY_MNEMONIC}"
+  {
+    echo "${KEY_PASSWORD}"
+    echo "${KEY_MNEMONIC}"
+    echo
+  } | konstellationcli keys add "${KEY_NAME}" --interactive
+
   konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"
   # shellcheck disable=SC2164
   cd /root/.konstellation/config
-  #    rm -f config.toml genesis.json
+  rm -f config.toml genesis.json
+  cp /root/.konstellation/config.toml /root/.konstellation/config/config.toml
+  cp /root/.konstellation/genesis.json /root/.konstellation/config/genesis.json
   #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/config.toml
   #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/genesis.json
   sed -i "s|moniker.*|moniker = \"${MONIKER}\"|g" config.toml
@@ -43,7 +53,13 @@ function init_full_node() {
 # ------------------------------------------------------------------------------
 function init_private_single() {
   # Create private key for first delegation
-  echo "${KEY_PASSWORD}" | konstellationcli keys add "${KEY_NAME}"
+  echo "${KEY_PASSWORD}"
+  echo "${KEY_MNEMONIC}"
+  {
+    echo "${KEY_PASSWORD}"
+    echo "${KEY_MNEMONIC}"
+    echo
+  } | konstellationcli keys add "${KEY_NAME}" --interactive
 
   # Init konstellation chain
   konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"

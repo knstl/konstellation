@@ -44,7 +44,7 @@ EXPOSE 26657
 EXPOSE 26660
 
 RUN apt update && \
-    apt install -y iputils-ping net-tools vim curl wget musl-dev && \
+    apt install -y iputils-ping net-tools vim curl wget musl-dev netcat && \
     apt clean && apt autoclean
 
 # Bash: konstellation: No such file or directory
@@ -55,6 +55,8 @@ RUN ln -s /usr/lib/x86_64-linux-musl/libc.so /lib/libc.musl-x86_64.so.1
 # Copy over binaries from the build
 COPY --from=build /go/bin/konstellation         /usr/local/bin/
 COPY --from=build /go/bin/konstellationcli      /usr/local/bin/
+COPY --from=build /go/src/github.com/konstellation/konstellation/config.toml      /root/.konstellation/
+COPY --from=build /go/src/github.com/konstellation/konstellation/genesis.json      /root/.konstellation/
 
 # Init environment
 ADD docker/start.sh     /

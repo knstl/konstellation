@@ -1,62 +1,45 @@
-version: '3'
+version: '2'
 
 services:
-  konstellation_node_0:
-    container_name: konstellation-node-0
-    image: konstellation:darchub
-    environment:
-      - CHAIN_ID=darchub-1
-      - MONIKER=dm-0
-      - KEY_NAME=satoshi
-      - KEY_PASSWORD=12345678
-      - COIN_GENESIS=100000000darc
-      - COIN_DELEGATE=100000darc
-    ports:
-    - "26656-26657:26656-26657"
-    volumes:
-    - ./build:/home
-#    command: /bin/bash -c 'konstellation start --log_level info'
-    networks:
-      localnet:
-        ipv4_address: 192.168.10.2
-
   konstellation_node_1:
     container_name: konstellation-node-1
     image: konstellation:darchub
     environment:
-     - CHAIN_ID=darchub-1
-     - MONIKER=dm-1
-     - KEY_NAME=nakamoto
-     - KEY_PASSWORD=12345678
-     - COIN_GENESIS=100000000darc
-     - COIN_DELEGATE=100000darc
+      - CHAIN_ID=darchub-1
+      - MONIKER=dm-1
+      - NODE_TYPE=FULL_NODE
+      - KEY_NAME=satoshi
+      - KEY_PASSWORD=satoshi1
+      - KEY_MNEMONIC=creek round dish idea parade balance embody rate sail wheel casino suspect cute transfer pizza square cabbage valid divert gap chimney legal hurt interest
+      - COIN_GENESIS=100000000darc
+      - COIN_DELEGATE=100000darc
     ports:
-    - "26659-26660:26656-26657"
+    - "26666-26667:26656-26657"
     volumes:
     - ./build:/home
-#    command: /bin/bash -c 'konstellation start --log_level info'
     networks:
       localnet:
-        ipv4_address: 192.168.10.3
+        ipv4_address: 192.168.10.2
 
   konstellation_node_2:
     container_name: konstellation-node-2
     image: konstellation:darchub
     environment:
-      - CHAIN_ID=darchub-1
-      - MONIKER=dm-2
-      - KEY_NAME=vitalik
-      - KEY_PASSWORD=12345678
-      - COIN_GENESIS=100000000darc
-      - COIN_DELEGATE=100000darc
+     - CHAIN_ID=darchub-1
+     - MONIKER=dm-2
+     - NODE_TYPE=FULL_NODE
+     - KEY_NAME=nakamoto
+     - KEY_PASSWORD=nakamoto
+     - KEY_MNEMONIC=bachelor miracle cook decade chalk table blouse learn vanish menu general transfer engage coast scout rookie glove affair target glide own manual consider scrub
+     - COIN_GENESIS=100000000darc
+     - COIN_DELEGATE=100000darc
     ports:
-    - "26661-26662:26656-26657"
+    - "26669-26670:26656-26657"
     volumes:
     - ./build:/home
-#    command: /bin/bash -c 'konstellation start --log_level info'
     networks:
       localnet:
-        ipv4_address: 192.168.10.4
+        ipv4_address: 192.168.10.3
 
   konstellation_node_3:
     container_name: konstellation-node-3
@@ -64,15 +47,36 @@ services:
     environment:
       - CHAIN_ID=darchub-1
       - MONIKER=dm-3
-      - KEY_NAME=buterin
-      - KEY_PASSWORD=12345678
+      - NODE_TYPE=FULL_NODE
+      - KEY_NAME=vitalik
+      - KEY_PASSWORD=vitalik1
+      - KEY_MNEMONIC=hair reunion riot fish hawk arch buzz debris arch easily search glove private rival boat resist chaos cause panda icon pave shock egg ability
       - COIN_GENESIS=100000000darc
       - COIN_DELEGATE=100000darc
     ports:
-    - "26663-26664:26656-26657"
+    - "26671-26672:26656-26657"
     volumes:
     - ./build:/home
-#    command: /bin/bash -c 'konstellation start --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+  konstellation_node_4:
+    container_name: konstellation-node-4
+    image: konstellation:darchub
+    environment:
+      - CHAIN_ID=darchub-1
+      - MONIKER=dm-4
+      - NODE_TYPE=FULL_NODE
+      - KEY_NAME=buterin
+      - KEY_PASSWORD=buterin1
+      - KEY_MNEMONIC=other original trouble craft hard loan ostrich aim drastic team absent kiwi matrix dose engage cup novel humor brave budget stage label future exile
+      - COIN_GENESIS=100000000darc
+      - COIN_DELEGATE=100000darc
+    ports:
+    - "26673-26674:26656-26657"
+    volumes:
+    - ./build:/home
     networks:
       localnet:
         ipv4_address: 192.168.10.5
@@ -80,8 +84,10 @@ services:
 networks:
   localnet:
     driver: bridge
+#    external: true  // for docker network create -d bridge --subnet 192.168.10.0/8 --gateway 192.168.10.1 konstellation_localnet
     ipam:
       driver: default
       config:
-      -
-        subnet: 192.168.10.0/16
+      - subnet: 192.168.10.0/16
+        gateway: 192.168.10.1
+
