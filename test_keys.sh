@@ -4,6 +4,7 @@
 
 # "address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j"
 # "pubkey": "darcpub1addwnpepq2evdf2hzflltqamfkqld3sc59ex40m68d7udzhj93569p5ltq4s54ntuxa"
+# shellcheck disable=SC2034
 declare -A key1=(
   [name]="mask"
   [password]="mask1234"
@@ -12,6 +13,7 @@ declare -A key1=(
 
 # "address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl"
 # "pubkey": "darcpub1addwnpepqvz0qh2yha89c4shy5nseptsfqmwd3m9xudkkzagc9jkxdnkctwl56sqvxf"
+# shellcheck disable=SC2034
 declare -A key2=(
   [name]="satoshi"
   [password]="satoshi1"
@@ -20,6 +22,7 @@ declare -A key2=(
 
 # "address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq
 # "pubkey": "darcpub1addwnpepqf3eyh3tq4gf5n8eh7xg8vf5q3k6k7c00q2nx4lrp6r0e9zrz66lj4d5rf9"
+# shellcheck disable=SC2034
 declare -A key3=(
   [name]="nakamoto"
   [password]="nakamoto"
@@ -28,6 +31,7 @@ declare -A key3=(
 
 #  "address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf"
 #  "pubkey": "darcpub1addwnpepqdszyhp5ypp5lx27gr933wwn2yek4u9m7twzwjge8ycf2jg7wyry6nncd73"
+# shellcheck disable=SC2034
 declare -A key4=(
   [name]="vitalik"
   [password]="vitalik1"
@@ -36,6 +40,7 @@ declare -A key4=(
 
 #  "address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc"
 #  "pubkey": "darcpub1addwnpepqdgyr7nptmtu9fkqcqyhatq6dg2zat53lynfd8tkzfurgtj82np7qx00dxc"
+# shellcheck disable=SC2034
 declare -A key5=(
   [name]="buterin"
   [password]="buterin1"
