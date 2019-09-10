@@ -22,13 +22,16 @@ function init_full_node() {
     exit 1
   fi
 
-  echo "${KEY_PASSWORD}"
-  echo "${KEY_MNEMONIC}"
-  {
+  if [ -n "${KEY_NAME}" ]
+  then
     echo "${KEY_PASSWORD}"
     echo "${KEY_MNEMONIC}"
-    echo
-  } | konstellationcli keys add "${KEY_NAME}" --interactive
+    {
+      echo "${KEY_PASSWORD}"
+      echo "${KEY_MNEMONIC}"
+      echo
+    } | konstellationcli keys add "${KEY_NAME}" --interactive
+  fi
 
   konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"
   # shellcheck disable=SC2164
@@ -39,6 +42,11 @@ function init_full_node() {
   #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/config.toml
   #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/genesis.json
   sed -i "s|moniker.*|moniker = \"${MONIKER}\"|g" config.toml
+
+  if [ -n "$SEED" ]
+  then
+    sed -i "s|seed_mode.*|seed_mode = true|g" config.toml
+  fi
 }
 
 # ------------------------------------------------------------------------------

@@ -53,14 +53,17 @@ for key in "${keys[@]}"; do
   KEY_PASSWORD="${key}[password]"
   KEY_MNEMONIC="${key}[mnemonic]"
 
-  echo "--------------------------------------"
-  echo "${!KEY_NAME}"
-  echo "${!KEY_PASSWORD}"
-  echo "${!KEY_MNEMONIC}"
+  if [ -n "${!KEY_NAME}" ]
+  then
+    echo "--------------------------------------"
+    echo "${!KEY_NAME}"
+    echo "${!KEY_PASSWORD}"
+    echo "${!KEY_MNEMONIC}"
 
-  {
-#    echo "${!KEY_PASSWORD}";
-    echo "${!KEY_MNEMONIC}";
-    echo;
-  } | konstellationcli keys add "${!KEY_NAME}" --dry-run --interactive
+    {
+      #    echo "${!KEY_PASSWORD}";
+      echo "${!KEY_MNEMONIC}"
+      echo
+    } | konstellationcli keys add "${!KEY_NAME}" --dry-run --interactive
+  fi
 done

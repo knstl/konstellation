@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  konstellation_node_1:
-    container_name: konstellation-node-1
+  konstellation_node_1_full_node:
+    container_name: konstellation-node-1-full_node
     image: konstellation:darchub
     environment:
       - CHAIN_ID=darchub-1
@@ -21,8 +21,8 @@ services:
       localnet:
         ipv4_address: 192.168.10.2
 
-  konstellation_node_2:
-    container_name: konstellation-node-2
+  konstellation_node_2_full_node:
+    container_name: konstellation-node-2-full_node
     image: konstellation:darchub
     environment:
      - CHAIN_ID=darchub-1
@@ -41,8 +41,8 @@ services:
       localnet:
         ipv4_address: 192.168.10.3
 
-  konstellation_node_3:
-    container_name: konstellation-node-3
+  konstellation_node_3_full_node:
+    container_name: konstellation-node-3-full_node
     image: konstellation:darchub
     environment:
       - CHAIN_ID=darchub-1
@@ -61,8 +61,8 @@ services:
       localnet:
         ipv4_address: 192.168.10.4
 
-  konstellation_node_4:
-    container_name: konstellation-node-4
+  konstellation_node_4_full_node:
+    container_name: konstellation-node-4-full_node
     image: konstellation:darchub
     environment:
       - CHAIN_ID=darchub-1
@@ -81,6 +81,22 @@ services:
       localnet:
         ipv4_address: 192.168.10.5
 
+  konstellation_node_5_seed:
+    container_name: konstellation-node-5-seed
+    image: konstellation:darchub
+    environment:
+      - CHAIN_ID=darchub-1
+      - MONIKER=dm-5
+      - NODE_TYPE=FULL_NODE
+      - SEED=true
+    ports:
+    - "26675-26676:26656-26657"
+    volumes:
+    - ./build:/home
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.6
+
 networks:
   localnet:
     driver: bridge
@@ -90,4 +106,3 @@ networks:
       config:
       - subnet: 192.168.10.0/16
         gateway: 192.168.10.1
-
