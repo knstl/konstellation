@@ -39,9 +39,14 @@ function init_full_node() {
   rm -f config.toml genesis.json
   cp /root/.konstellation/config.toml /root/.konstellation/config/config.toml
   cp /root/.konstellation/genesis.json /root/.konstellation/config/genesis.json
+  konstellation unsafe-reset-all
   #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/config.toml
   #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/genesis.json
   sed -i "s|moniker.*|moniker = \"${MONIKER}\"|g" config.toml
+  sed -i "s|seeds.*|seeds = \"${SEEDS}\"|g" config.toml
+
+  ip=$(ifconfig eth0 | head -2 | awk '{print $2}' | sed -n 2p)
+  sed -i "s|external_address.*|external_address = \"${ip}\"|g" config.toml
 
   if [ -n "$SEED" ]
   then

@@ -13,6 +13,7 @@ services:
       - KEY_MNEMONIC=creek round dish idea parade balance embody rate sail wheel casino suspect cute transfer pizza square cabbage valid divert gap chimney legal hurt interest
       - COIN_GENESIS=100000000darc
       - COIN_DELEGATE=100000darc
+      - SEEDS=5b97506737ec2475b4b02f4c3a26476c950d14cd@192.168.10.152:26656
     ports:
     - "26666-26667:26656-26657"
     volumes:
@@ -33,6 +34,7 @@ services:
      - KEY_MNEMONIC=bachelor miracle cook decade chalk table blouse learn vanish menu general transfer engage coast scout rookie glove affair target glide own manual consider scrub
      - COIN_GENESIS=100000000darc
      - COIN_DELEGATE=100000darc
+     - SEEDS=5b97506737ec2475b4b02f4c3a26476c950d14cd@192.168.10.152:26656
     ports:
     - "26669-26670:26656-26657"
     volumes:
@@ -53,6 +55,7 @@ services:
       - KEY_MNEMONIC=hair reunion riot fish hawk arch buzz debris arch easily search glove private rival boat resist chaos cause panda icon pave shock egg ability
       - COIN_GENESIS=100000000darc
       - COIN_DELEGATE=100000darc
+      - SEEDS=5b97506737ec2475b4b02f4c3a26476c950d14cd@192.168.10.152:26656
     ports:
     - "26671-26672:26656-26657"
     volumes:
@@ -73,6 +76,7 @@ services:
       - KEY_MNEMONIC=other original trouble craft hard loan ostrich aim drastic team absent kiwi matrix dose engage cup novel humor brave budget stage label future exile
       - COIN_GENESIS=100000000darc
       - COIN_DELEGATE=100000darc
+      - SEEDS=5b97506737ec2475b4b02f4c3a26476c950d14cd@192.168.10.152:26656
     ports:
     - "26673-26674:26656-26657"
     volumes:
@@ -89,6 +93,7 @@ services:
       - MONIKER=dm-5
       - NODE_TYPE=FULL_NODE
       - SEED=true
+      - SEEDS=5b97506737ec2475b4b02f4c3a26476c950d14cd@192.168.10.152:26656
     ports:
     - "26675-26676:26656-26657"
     volumes:
@@ -100,9 +105,10 @@ services:
 networks:
   localnet:
     driver: bridge
-#    external: true  // for docker network create -d bridge --subnet 192.168.10.0/8 --gateway 192.168.10.1 konstellation_localnet
+##    // for docker network create -d bridge --subnet 192.168.10.0/8 --gateway 192.168.10.1 konstellation_localnet
+#    external: true
     ipam:
       driver: default
       config:
-      - subnet: 192.168.10.0/16
+      - subnet: 192.168.10.0/24
         gateway: 192.168.10.1

@@ -55,8 +55,8 @@ RUN ln -s /usr/lib/x86_64-linux-musl/libc.so /lib/libc.musl-x86_64.so.1
 # Copy over binaries from the build
 COPY --from=build /go/bin/konstellation         /usr/local/bin/
 COPY --from=build /go/bin/konstellationcli      /usr/local/bin/
-COPY --from=build /go/src/github.com/konstellation/konstellation/config.toml      /root/.konstellation/
-COPY --from=build /go/src/github.com/konstellation/konstellation/genesis.json      /root/.konstellation/
+COPY --from=build /go/src/github.com/konstellation/konstellation/docker/config.toml      /root/.konstellation/
+COPY --from=build /go/src/github.com/konstellation/konstellation/docker/genesis.json      /root/.konstellation/
 
 # Init environment
 ADD docker/start.sh     /
