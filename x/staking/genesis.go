@@ -15,11 +15,11 @@ func InitGenesis(cdc *codec.Codec, appState map[string]json.RawMessage) {
 		panic(err)
 	}
 
-	updateGenesis(&genesisState)
+	updateBondDenom(&genesisState)
 
 	appState[staking.ModuleName] = cdc.MustMarshalJSON(genesisState)
 }
 
-func updateGenesis(genesisState *staking.GenesisState) {
+func updateBondDenom(genesisState *staking.GenesisState) {
 	genesisState.Params.BondDenom = coin.DefaultBondDenom
 }

@@ -48,7 +48,7 @@ func main() {
 		genutilcli.CollectGenTxsCmd(ctx, cdc, genaccounts.AppModuleBasic{}, app.DefaultNodeHome),
 		genaccountscli.AddGenesisAccountCmd(ctx, cdc, app.DefaultNodeHome, app.DefaultCLIHome),
 		genutilcli.ValidateGenesisCmd(ctx, cdc, app.ModuleBasics),
-		cmd.TestnetFilesCmd(ctx, cdc, app.ModuleBasics),
+		cmd.TestnetFilesCmd(ctx, cdc, app.ModuleBasics, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}),
 	)
 
 	server.AddCommands(ctx, cdc, rootCmd, newApp, exportAppStateAndTMValidators)

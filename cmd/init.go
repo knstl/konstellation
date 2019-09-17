@@ -2,8 +2,6 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
-	"os"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -15,34 +13,13 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/server"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
+	"github.com/konstellation/konstellation/utils"
 	"github.com/konstellation/konstellation/x/staking"
 )
-
-type printInfo struct {
-	AppMessage json.RawMessage `json:"app_message" yaml:"app_message"`
-}
-
-func newPrintInfo(appMessage json.RawMessage) printInfo {
-	return printInfo{
-		AppMessage: appMessage,
-	}
-}
-
-func displayInfo(cdc *codec.Codec, info printInfo) error {
-	fmt.Println()
-	out, err := codec.MarshalJSONIndent(cdc, info)
-	if err != nil {
-		return err
-	}
-
-	_, err = fmt.Fprintf(os.Stderr, "%s\n", string(sdk.MustSortJSON(out)))
-	return err
-}
 
 // InitCmd returns a command that initializes all files needed for Tendermint
 // and the respective application.
@@ -87,8 +64,8 @@ func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager, def
 				return errors.Wrap(err, "Failed to export genesis file")
 			}
 
-			toPrint := newPrintInfo(genDoc.AppState)
-			return displayInfo(cdc, toPrint)
+			toPrint := utils.NewPrintInfo(config.Moniker, chainID, "", "", genDoc.AppState)
+			return utils.DisplayInfo(cdc, toPrint)
 		},
 	}
 

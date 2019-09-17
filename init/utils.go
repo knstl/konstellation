@@ -3,12 +3,13 @@ package init
 import (
 	"path/filepath"
 
-	"github.com/cosmos/cosmos-sdk/server"
 	cfg "github.com/tendermint/tendermint/config"
 	"github.com/tendermint/tendermint/crypto"
 	"github.com/tendermint/tendermint/libs/common"
 	"github.com/tendermint/tendermint/p2p"
 	"github.com/tendermint/tendermint/privval"
+
+	"github.com/cosmos/cosmos-sdk/server"
 )
 
 // InitializeNodeValidatorFiles creates private validator and p2p configuration files.

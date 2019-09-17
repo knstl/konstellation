@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/konstellation/konstellation/coin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -11,6 +10,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
+
+	"github.com/konstellation/konstellation/coin"
 )
 
 // InitCmd returns a command that initializes all files needed for Tendermint

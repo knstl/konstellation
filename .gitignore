@@ -9,6 +9,7 @@
 vendor
 .vendor-new
 build
+testnet
 
 # IDE
 .idea/
