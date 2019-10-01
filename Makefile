@@ -5,9 +5,8 @@ all: lint install
 
 install: go.sum
 		go install $(BUILD_FLAGS) ./client/konstellation
-# 		test -f ~/go/bin/kd && echo "kd exists" || ln -s ~/go/bin/konstellation ~/go/bin/kd
 		go install $(BUILD_FLAGS) ./client/konstellationcli
-# 		test -f ~/go/bin/kcli && echo "kcli exists" || ln -s ~/go/bin/konstellationcli ~/go/bin/kcli
+		go install $(BUILD_FLAGS) ./client/konstellationlcd
 
 go.sum: go.mod
 		@echo "--> Ensure dependencies have not been modified"

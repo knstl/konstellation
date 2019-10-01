@@ -54,7 +54,7 @@ func main() {
 		client.LineBreak,
 	)
 
-	executor := cli.PrepareMainCmd(rootCmd, "KONSTELLATION", app.DefaultCLIHome)
+	executor := cli.PrepareMainCmd(rootCmd, app.EnvPrefixCLI, app.DefaultCLIHome)
 	err := executor.Execute()
 	if err != nil {
 		panic(err)

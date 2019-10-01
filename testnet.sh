@@ -27,7 +27,7 @@ function node_count() {
 function create_testnet() {
   params="-e CHAIN_ID=${CHAIN_ID} -e NODE_TYPE=PRIVATE_TESTNET "
   if [[ -d "testnet" ]]; then
-    rm -rf testnet >/dev/null
+    sudo rm -rdf testnet
   fi
   if [[ "" != "$(docker ps | grep ${TEMP_CONTAINER})" ]]; then
     docker rm -f ${TEMP_CONTAINER} >/dev/null

@@ -25,11 +25,19 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/supply"
 )
 
-const appName = "konstellation"
+const (
+	appName       = "konstellation"
+	EnvPrefixCLI  = "KONSTELLATIONCLI"
+	EnvPrefixNode = "KONSTELLATION"
+	EnvPrefixLCD  = "KONSTELLATIONLCD"
+)
 
 var (
 	// Default home directories for the application CLI
 	DefaultCLIHome = os.ExpandEnv("$HOME/.konstellationcli")
+
+	// Default home directories for the application REST server
+	DefaultLCDHome = os.ExpandEnv("$HOME/.konstellationlcd")
 
 	// DefaultNodeHome sets the folder where the application data and configuration will be stored
 	DefaultNodeHome = os.ExpandEnv("$HOME/.konstellation")
@@ -218,6 +226,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		auth.ModuleName,
 		bank.ModuleName,
 		slashing.ModuleName,
+		supply.ModuleName,
 		genutil.ModuleName,
 	)
 
