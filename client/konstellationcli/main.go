@@ -11,15 +11,14 @@ import (
 	"github.com/tendermint/tendermint/libs/cli"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/keys"
 	"github.com/cosmos/cosmos-sdk/client/lcd"
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
 
 	"github.com/konstellation/konstellation/app"
-	"github.com/konstellation/konstellation/coin"
-	"github.com/konstellation/konstellation/prefix"
+	"github.com/konstellation/konstellation/cmd/keys"
+	"github.com/konstellation/konstellation/types"
 )
 
 func main() {
@@ -27,8 +26,8 @@ func main() {
 
 	cdc := app.MakeCodec()
 
-	coin.RegisterNativeCoinUnits()
-	prefix.RegisterBech32Prefix()
+	types.RegisterNativeCoinUnits()
+	types.RegisterBech32Prefix()
 
 	rootCmd := &cobra.Command{
 		Use:   "konstellationcli",
