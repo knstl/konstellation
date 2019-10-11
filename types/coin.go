@@ -1,4 +1,4 @@
-package coin
+package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -12,11 +12,10 @@ const (
 	PDARC = "pdarc" // 10^-12 (pico)
 	FDARC = "fdarc" // 10^-15 (femto)
 	ADARC = "adarc" // 10^-18 (atto)
-)
 
-var (
-	DefaultBondDenom = DARC
-	StakeDenom       = DARC
+	DefaultBondDenom      = ADARC
+	StakeDenom            = ADARC
+	DefaultConsensusPower = 1000000000000000
 )
 
 func RegisterNativeCoinUnits() {

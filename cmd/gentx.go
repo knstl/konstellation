@@ -11,7 +11,7 @@ import (
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 
-	"github.com/konstellation/konstellation/coin"
+	"github.com/konstellation/konstellation/types"
 )
 
 // InitCmd returns a command that initializes all files needed for Tendermint
@@ -21,7 +21,7 @@ func GenTxCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager, sm
 	ipDefault, _ := server.ExternalIP()
 	_, _, _, flagAmount, _ := smbh.CreateValidatorMsgHelpers(ipDefault)
 
-	viper.Set(flagAmount, sdk.TokensFromConsensusPower(100).String()+coin.DefaultBondDenom)
+	viper.Set(flagAmount, sdk.TokensFromConsensusPower(types.DefaultConsensusPower).String()+types.DefaultBondDenom)
 
 	return genutilcli.GenTxCmd(ctx, cdc, mbm, smbh, genAccIterator, defaultNodeHome, defaultCLIHome)
 }

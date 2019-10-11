@@ -20,8 +20,7 @@ import (
 
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/cmd"
-	"github.com/konstellation/konstellation/coin"
-	"github.com/konstellation/konstellation/prefix"
+	"github.com/konstellation/konstellation/types"
 )
 
 func main() {
@@ -29,8 +28,8 @@ func main() {
 
 	cdc := app.MakeCodec()
 
-	coin.RegisterNativeCoinUnits()
-	prefix.RegisterBech32Prefix()
+	types.RegisterNativeCoinUnits()
+	types.RegisterBech32Prefix()
 
 	ctx := server.NewDefaultContext()
 
@@ -42,13 +41,13 @@ func main() {
 
 	// CLI commands to initialize the chain
 	rootCmd.AddCommand(
-		cmd.InitCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome),
+		cmd.InitCmd(ctx, cdc, app.ModuleBasics, app.GenesisUpdaters, app.DefaultNodeHome),
 		cmd.ConfigCmd(ctx),
 		cmd.GenTxCmd(ctx, cdc, app.ModuleBasics, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}, app.DefaultNodeHome, app.DefaultCLIHome),
 		genutilcli.CollectGenTxsCmd(ctx, cdc, genaccounts.AppModuleBasic{}, app.DefaultNodeHome),
 		genaccountscli.AddGenesisAccountCmd(ctx, cdc, app.DefaultNodeHome, app.DefaultCLIHome),
 		genutilcli.ValidateGenesisCmd(ctx, cdc, app.ModuleBasics),
-		cmd.TestnetFilesCmd(ctx, cdc, app.ModuleBasics, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}),
+		cmd.TestnetFilesCmd(ctx, cdc, app.ModuleBasics, app.GenesisUpdaters, staking.AppModuleBasic{}, genaccounts.AppModuleBasic{}),
 	)
 
 	server.AddCommands(ctx, cdc, rootCmd, newApp, exportAppStateAndTMValidators)
@@ -62,14 +61,14 @@ func main() {
 }
 
 func newApp(logger log.Logger, db dbm.DB, _ io.Writer) abci.Application {
-	return app.NewKonstellationApp(logger, db)
+	return app.NewKonstellationApp(logger, db, uint(1))
 }
 
 func exportAppStateAndTMValidators(
 	logger log.Logger, db dbm.DB, _ io.Writer, height int64, forZeroHeight bool,
 	jailWhiteList []string) (json.RawMessage, []tmtypes.GenesisValidator, error) {
 	if height != -1 {
-		kApp := app.NewKonstellationApp(logger, db)
+		kApp := app.NewKonstellationApp(logger, db, uint(1))
 		err := kApp.LoadHeight(height)
 		if err != nil {
 			return nil, nil, err
@@ -78,7 +77,7 @@ func exportAppStateAndTMValidators(
 		return kApp.ExportAppStateAndValidators(forZeroHeight, jailWhiteList)
 	}
 
-	kApp := app.NewKonstellationApp(logger, db)
+	kApp := app.NewKonstellationApp(logger, db, uint(1))
 
 	return kApp.ExportAppStateAndValidators(forZeroHeight, jailWhiteList)
 }

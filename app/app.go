@@ -16,13 +16,25 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/bank"
+	"github.com/cosmos/cosmos-sdk/x/crisis"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 	"github.com/cosmos/cosmos-sdk/x/genaccounts"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
+	"github.com/cosmos/cosmos-sdk/x/gov"
+	"github.com/cosmos/cosmos-sdk/x/mint"
 	"github.com/cosmos/cosmos-sdk/x/params"
+	paramsclient "github.com/cosmos/cosmos-sdk/x/params/client"
 	"github.com/cosmos/cosmos-sdk/x/slashing"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/cosmos/cosmos-sdk/x/supply"
+
+	"github.com/konstellation/konstellation/types"
+	kcrisis "github.com/konstellation/konstellation/x/crisis"
+	kdistribution "github.com/konstellation/konstellation/x/distribution"
+	kgenaccounts "github.com/konstellation/konstellation/x/genaccounts"
+	kgov "github.com/konstellation/konstellation/x/gov"
+	kmint "github.com/konstellation/konstellation/x/mint"
+	kstaking "github.com/konstellation/konstellation/x/staking"
 )
 
 const (
@@ -48,17 +60,33 @@ var (
 		genutil.AppModuleBasic{},
 		auth.AppModuleBasic{},
 		bank.AppModuleBasic{},
-		params.AppModuleBasic{},
 		staking.AppModuleBasic{},
+		mint.AppModuleBasic{},
 		distribution.AppModuleBasic{},
+		gov.NewAppModuleBasic(paramsclient.ProposalHandler, distribution.ProposalHandler),
+		params.AppModuleBasic{},
+		crisis.AppModuleBasic{},
 		slashing.AppModuleBasic{},
 		supply.AppModuleBasic{},
+	)
+
+	// GenesisUpdaters is in charge of changing default genesis provided by cosmos sdk modules
+	GenesisUpdaters = types.NewGenesisUpdaters(
+		kgenaccounts.GenesisUpdater{},
+		kcrisis.GenesisUpdater{},
+		kstaking.GenesisUpdater{},
+		kdistribution.GenesisUpdater{},
+		kmint.GenesisUpdater{},
+		kgov.GenesisUpdater{},
 	)
 
 	// Account permissions
 	maccPerms = map[string][]string{
 		auth.FeeCollectorName:   nil,
 		distribution.ModuleName: nil,
+		mint.ModuleName: {
+			supply.Minter,
+		},
 		staking.BondedPoolName: {
 			supply.Burner,
 			supply.Staking,
@@ -66,6 +94,9 @@ var (
 		staking.NotBondedPoolName: {
 			supply.Burner,
 			supply.Staking,
+		},
+		gov.ModuleName: {
+			supply.Burner,
 		},
 	}
 )
@@ -84,17 +115,11 @@ type KonstellationApp struct {
 	*bam.BaseApp
 	cdc *codec.Codec
 
-	// Keys to access the substores
-	keyMain         *sdk.KVStoreKey
-	keyAccount      *sdk.KVStoreKey
-	keySupply       *sdk.KVStoreKey
-	keyStaking      *sdk.KVStoreKey
-	tkeyStaking     *sdk.TransientStoreKey
-	keyDistribution *sdk.KVStoreKey
-	// tkeyDistribution *sdk.TransientStoreKey
-	keyParams   *sdk.KVStoreKey
-	tkeyParams  *sdk.TransientStoreKey
-	keySlashing *sdk.KVStoreKey
+	invCheckPeriod uint
+
+	// keys to access the substores
+	keys  map[string]*sdk.KVStoreKey
+	tkeys map[string]*sdk.TransientStoreKey
 
 	// Keepers
 	accountKeeper      auth.AccountKeeper
@@ -102,7 +127,10 @@ type KonstellationApp struct {
 	supplyKeeper       supply.Keeper
 	stakingKeeper      staking.Keeper
 	slashingKeeper     slashing.Keeper
+	mintKeeper         mint.Keeper
 	distributionKeeper distribution.Keeper
+	govKeeper          gov.Keeper
+	crisisKeeper       crisis.Keeper
 	paramsKeeper       params.Keeper
 
 	// Module Manager
@@ -110,7 +138,7 @@ type KonstellationApp struct {
 }
 
 // NewKonstellationApp is a constructor function for KonstellationApp
-func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
+func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *KonstellationApp {
 
 	// First define the top level codec that will be shared by the different modules
 	cdc := MakeCodec()
@@ -118,35 +146,41 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 	// BaseApp handles interactions with Tendermint through the ABCI protocol
 	bApp := bam.NewBaseApp(appName, logger, db, auth.DefaultTxDecoder(cdc))
 
+	keys := sdk.NewKVStoreKeys(
+		bam.MainStoreKey,
+		auth.StoreKey,
+		staking.StoreKey,
+		supply.StoreKey,
+		mint.StoreKey,
+		distribution.StoreKey,
+		slashing.StoreKey,
+		gov.StoreKey,
+		params.StoreKey,
+	)
+
+	tkeys := sdk.NewTransientStoreKeys(staking.TStoreKey, params.TStoreKey)
+
 	// Here you initialize your application with the store keys it requires
 	var app = &KonstellationApp{
-		BaseApp: bApp,
-		cdc:     cdc,
-
-		keyMain:         sdk.NewKVStoreKey(bam.MainStoreKey),
-		keyAccount:      sdk.NewKVStoreKey(auth.StoreKey),
-		keySupply:       sdk.NewKVStoreKey(supply.StoreKey),
-		keyStaking:      sdk.NewKVStoreKey(staking.StoreKey),
-		tkeyStaking:     sdk.NewTransientStoreKey(staking.TStoreKey),
-		keyDistribution: sdk.NewKVStoreKey(distribution.StoreKey),
-		// tkeyDistribution: sdk.NewTransientStoreKey(distribution.TStoreKey),
-		keyParams:   sdk.NewKVStoreKey(params.StoreKey),
-		tkeyParams:  sdk.NewTransientStoreKey(params.TStoreKey),
-		keySlashing: sdk.NewKVStoreKey(slashing.StoreKey),
+		BaseApp:        bApp,
+		cdc:            cdc,
+		invCheckPeriod: invCheckPeriod,
+		keys:           keys,
+		tkeys:          tkeys,
 	}
 
 	// The ParamsKeeper handles parameter storage for the application
 	app.paramsKeeper = params.NewKeeper(
 		app.cdc,
-		app.keyParams,
-		app.tkeyParams,
+		keys[params.StoreKey],
+		tkeys[params.TStoreKey],
 		params.DefaultCodespace,
 	)
 
 	// The AccountKeeper handles address -> account lookups
 	app.accountKeeper = auth.NewAccountKeeper(
 		app.cdc,
-		app.keyAccount,
+		keys[auth.StoreKey],
 		app.paramsKeeper.Subspace(auth.DefaultParamspace),
 		auth.ProtoBaseAccount,
 	)
@@ -156,69 +190,111 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		app.accountKeeper,
 		app.paramsKeeper.Subspace(bank.DefaultParamspace),
 		bank.DefaultCodespace,
-		map[string]bool{},
+		app.ModuleAccountAddrs(),
 	)
 
 	// The SupplyKeeper collects transaction fees and renders them to the fee distribution module
 	app.supplyKeeper = supply.NewKeeper(
 		app.cdc,
-		app.keySupply,
+		keys[supply.StoreKey],
 		app.accountKeeper,
 		app.bankKeeper,
-		// supply.DefaultCodespace,
 		maccPerms,
 	)
 
-	// The staking keeper
 	stakingKeeper := staking.NewKeeper(
 		app.cdc,
-		app.keyStaking,
-		app.tkeyStaking,
+		keys[staking.StoreKey],
+		tkeys[staking.TStoreKey],
 		app.supplyKeeper,
 		app.paramsKeeper.Subspace(staking.DefaultParamspace),
 		staking.DefaultCodespace,
 	)
 
+	app.mintKeeper = mint.NewKeeper(
+		app.cdc,
+		keys[mint.StoreKey],
+		app.paramsKeeper.Subspace(mint.DefaultParamspace),
+		&stakingKeeper,
+		app.supplyKeeper,
+		auth.FeeCollectorName,
+	)
+
 	app.distributionKeeper = distribution.NewKeeper(
 		app.cdc,
-		app.keyDistribution,
+		keys[distribution.StoreKey],
 		app.paramsKeeper.Subspace(distribution.DefaultParamspace),
 		&stakingKeeper,
 		app.supplyKeeper,
 		distribution.DefaultCodespace,
 		auth.FeeCollectorName,
-		map[string]bool{},
+		app.ModuleAccountAddrs(),
 	)
 
 	app.slashingKeeper = slashing.NewKeeper(
 		app.cdc,
-		app.keySlashing,
+		keys[slashing.StoreKey],
 		&stakingKeeper,
 		app.paramsKeeper.Subspace(slashing.DefaultParamspace),
 		slashing.DefaultCodespace,
 	)
+	app.crisisKeeper = crisis.NewKeeper(
+		app.paramsKeeper.Subspace(crisis.DefaultParamspace),
+		invCheckPeriod,
+		app.supplyKeeper,
+		auth.FeeCollectorName,
+	)
 
+	// register the proposal types
+	govRouter := gov.NewRouter().
+		AddRoute(gov.RouterKey, gov.ProposalHandler).
+		AddRoute(params.RouterKey, params.NewParamChangeProposalHandler(app.paramsKeeper)).
+		AddRoute(distribution.RouterKey, distribution.NewCommunityPoolSpendProposalHandler(app.distributionKeeper))
+
+	app.govKeeper = gov.NewKeeper(
+		app.cdc,
+		keys[gov.StoreKey],
+		app.paramsKeeper,
+		app.paramsKeeper.Subspace(gov.DefaultParamspace),
+		app.supplyKeeper,
+		&stakingKeeper,
+		gov.DefaultCodespace,
+		govRouter,
+	)
+
+	// register the staking hooks
+	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
 	app.stakingKeeper = *stakingKeeper.SetHooks(
 		staking.NewMultiStakingHooks(
 			app.distributionKeeper.Hooks(),
 			app.slashingKeeper.Hooks()),
 	)
 
+	// NOTE: Any module instantiated in the module manager that is later modified
+	// must be passed by reference here.
 	app.mm = module.NewManager(
 		genaccounts.NewAppModule(app.accountKeeper),
 		genutil.NewAppModule(app.accountKeeper, app.stakingKeeper, app.BaseApp.DeliverTx),
 		auth.NewAppModule(app.accountKeeper),
 		bank.NewAppModule(app.bankKeeper, app.accountKeeper),
+		crisis.NewAppModule(&app.crisisKeeper),
 		supply.NewAppModule(app.supplyKeeper, app.accountKeeper),
 		distribution.NewAppModule(app.distributionKeeper, app.supplyKeeper),
+		gov.NewAppModule(app.govKeeper, app.supplyKeeper),
+		mint.NewAppModule(app.mintKeeper),
 		slashing.NewAppModule(app.slashingKeeper, app.stakingKeeper),
 		staking.NewAppModule(app.stakingKeeper, app.distributionKeeper, app.accountKeeper, app.supplyKeeper),
 	)
 
-	app.mm.SetOrderBeginBlockers(distribution.ModuleName, slashing.ModuleName)
-	app.mm.SetOrderEndBlockers(staking.ModuleName)
+	// During begin block slashing happens after distribution.BeginBlocker so that
+	// there is nothing left over in the validator fee pool, so as to keep the
+	// CanWithdrawInvariant invariant.
+	app.mm.SetOrderBeginBlockers(mint.ModuleName, distribution.ModuleName, slashing.ModuleName)
+	app.mm.SetOrderEndBlockers(crisis.ModuleName, gov.ModuleName, staking.ModuleName)
 
 	// Sets the order of Genesis - Order matters, genutil is to always come last
+	// NOTE: The genutils module must occur after staking so that pools are
+	// properly initialized with tokens from genesis accounts.
 	app.mm.SetOrderInitGenesis(
 		genaccounts.ModuleName,
 		distribution.ModuleName,
@@ -226,18 +302,24 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 		auth.ModuleName,
 		bank.ModuleName,
 		slashing.ModuleName,
+		gov.ModuleName,
+		mint.ModuleName,
 		supply.ModuleName,
+		crisis.ModuleName,
 		genutil.ModuleName,
 	)
 
+	app.mm.RegisterInvariants(&app.crisisKeeper)
 	// register all module routes and module queriers
 	app.mm.RegisterRoutes(app.Router(), app.QueryRouter())
+
+	// initialize stores
+	app.MountKVStores(keys)
+	app.MountTransientStores(tkeys)
 
 	// The initChainer handles translating the genesis.json file into initial state for the network
 	app.SetInitChainer(app.InitChainer)
 	app.SetBeginBlocker(app.BeginBlocker)
-	app.SetEndBlocker(app.EndBlocker)
-
 	// The AnteHandler handles signature verification and transaction pre-processing
 	app.SetAnteHandler(
 		auth.NewAnteHandler(
@@ -246,21 +328,9 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 			auth.DefaultSigVerificationGasConsumer,
 		),
 	)
+	app.SetEndBlocker(app.EndBlocker)
 
-	app.MountStores(
-		app.keyMain,
-		app.keyAccount,
-		app.keySupply,
-		app.keyStaking,
-		app.tkeyStaking,
-		app.keyDistribution,
-		// app.tkeyDistribution,
-		app.keySlashing,
-		app.keyParams,
-		app.tkeyParams,
-	)
-
-	err := app.LoadLatestVersion(app.keyMain)
+	err := app.LoadLatestVersion(app.keys[bam.MainStoreKey])
 	if err != nil {
 		cmn.Exit(err.Error())
 	}
@@ -270,10 +340,6 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB) *KonstellationApp {
 
 // GenesisState represents chain state at the start of the chain. Any initial state (account balances) are stored here.
 type GenesisState map[string]json.RawMessage
-
-// func NewDefaultGenesisState() GenesisState {
-// 	return ModuleBasics.DefaultGenesis()
-// }
 
 func (app *KonstellationApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
 	var genesisState GenesisState
@@ -293,7 +359,17 @@ func (app *KonstellationApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBloc
 	return app.mm.EndBlock(ctx, req)
 }
 func (app *KonstellationApp) LoadHeight(height int64) error {
-	return app.LoadVersion(height, app.keyMain)
+	return app.LoadVersion(height, app.keys[bam.MainStoreKey])
+}
+
+// ModuleAccountAddrs returns all the app's module account addresses.
+func (app *KonstellationApp) ModuleAccountAddrs() map[string]bool {
+	modAccAddrs := make(map[string]bool)
+	for acc := range maccPerms {
+		modAccAddrs[supply.NewModuleAddress(acc).String()] = true
+	}
+
+	return modAccAddrs
 }
 
 // _________________________________________________________

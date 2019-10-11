@@ -12,7 +12,6 @@ import (
 	cfg "github.com/tendermint/tendermint/config"
 	"github.com/tendermint/tendermint/crypto"
 	"github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/types"
 	tmtypes "github.com/tendermint/tendermint/types"
 	tmtime "github.com/tendermint/tendermint/types/time"
 
@@ -29,10 +28,8 @@ import (
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 
-	"github.com/konstellation/konstellation/coin"
-	kinit "github.com/konstellation/konstellation/init"
-	"github.com/konstellation/konstellation/utils"
-	kstaking "github.com/konstellation/konstellation/x/staking"
+	"github.com/konstellation/konstellation/common/utils"
+	"github.com/konstellation/konstellation/types"
 )
 
 var (
@@ -77,7 +74,8 @@ func TestnetFilesCmd(
 	ctx *server.Context,
 	cdc *codec.Codec,
 	mbm module.BasicManager,
-	smbh genutilcli.StakingMsgBuildingHelpers,
+	gus types.GenesisUpdaters,
+	_ genutilcli.StakingMsgBuildingHelpers,
 	genAccIterator genutiltypes.GenesisAccountsIterator,
 ) *cobra.Command {
 
@@ -118,7 +116,7 @@ Example:
 				return err
 			}
 
-			if err := initGenFiles(cdc, mbm, nodes, accs); err != nil {
+			if err := initGenFiles(cdc, mbm, gus, nodes, accs); err != nil {
 				return err
 			}
 
@@ -156,8 +154,7 @@ Example:
 	cmd.Flags().String(client.FlagChainID, "", "genesis file chain-id, if left blank will be randomly created")
 
 	cmd.Flags().String(
-
-		server.FlagMinGasPrices, fmt.Sprintf("0.000006%s", coin.StakeDenom),
+		server.FlagMinGasPrices, fmt.Sprintf("0.000006%s", types.StakeDenom),
 		"Minimum gas prices to accept for transactions; All fees in a tx must meet this minimum (e.g. 0.01apple,0.001darc)",
 	)
 
@@ -193,7 +190,7 @@ func configNodes(config *cfg.Config, configFile *srvconfig.Config) (nodes []*Nod
 		configFilePath := filepath.Join(nodeDir, "config/konstellation.toml")
 		srvconfig.WriteConfigFile(configFilePath, configFile)
 
-		nodeID, valPubKey, err := kinit.InitializeNodeValidatorFiles(config)
+		nodeID, valPubKey, err := genutil.InitializeNodeValidatorFiles(config)
 		if err != nil {
 			_ = os.RemoveAll(outDir)
 			return nil, err
@@ -246,7 +243,7 @@ func genAccounts(nodes []*Node) (accs []*genaccounts.GenesisAccount, err error) 
 		genacc := &genaccounts.GenesisAccount{
 			Address: addr,
 			Coins: sdk.NewCoins(
-				sdk.NewCoin(coin.StakeDenom, sdk.TokensFromConsensusPower(500)),
+				sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(types.DefaultConsensusPower)),
 			),
 		}
 
@@ -257,15 +254,23 @@ func genAccounts(nodes []*Node) (accs []*genaccounts.GenesisAccount, err error) 
 	return
 }
 
-func initGenFiles(cdc *codec.Codec, mbm module.BasicManager, nodes []*Node, accs []*genaccounts.GenesisAccount) error {
+func initGenFiles(cdc *codec.Codec, mbm module.BasicManager, gus types.GenesisUpdaters, nodes []*Node, accs []*genaccounts.GenesisAccount) error {
 	appGenState := mbm.DefaultGenesis()
 
 	appGenState[genaccounts.ModuleName] = cdc.MustMarshalJSON(accs)
-	kstaking.InitGenesis(cdc, appGenState)
+
+	// Update default genesis
+	for _, gu := range gus {
+		gu.UpdateGenesis(cdc, appGenState)
+	}
+
+	if err := mbm.ValidateGenesis(appGenState); err != nil {
+		return fmt.Errorf("error validating genesis: %s", err.Error())
+	}
 
 	appState := cdc.MustMarshalJSON(appGenState)
 
-	genDoc := &types.GenesisDoc{}
+	genDoc := &tmtypes.GenesisDoc{}
 	genDoc.ChainID = chainID
 	genDoc.Validators = nil
 	genDoc.AppState = appState
@@ -316,7 +321,7 @@ func genTxs(
 			return err
 		}
 
-		c := sdk.NewCoin(coin.StakeDenom, sdk.TokensFromConsensusPower(100))
+		c := sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(100))
 		coins := sdk.NewCoins(c)
 		err = genutil.ValidateAccountInGenesis(genesisState, genAccIterator, key.GetAddress(), coins, cdc)
 		if err != nil {

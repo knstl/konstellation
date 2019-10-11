@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -9,7 +10,7 @@ import (
 	"github.com/spf13/viper"
 
 	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/types"
+	tmtypes "github.com/tendermint/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/server"
@@ -17,13 +18,19 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
-	"github.com/konstellation/konstellation/utils"
-	"github.com/konstellation/konstellation/x/staking"
+	"github.com/konstellation/konstellation/common/utils"
+	"github.com/konstellation/konstellation/types"
 )
 
 // InitCmd returns a command that initializes all files needed for Tendermint
 // and the respective application.
-func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager, defaultNodeHome string) *cobra.Command { // nolint: golint
+func InitCmd(
+	ctx *server.Context,
+	cdc *codec.Codec,
+	mbm module.BasicManager,
+	gus types.GenesisUpdaters,
+	defaultNodeHome string,
+) *cobra.Command { // nolint: golint
 	initCmd := genutilcli.InitCmd(ctx, cdc, mbm, defaultNodeHome)
 
 	cmd := &cobra.Command{
@@ -41,7 +48,7 @@ func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager, def
 			config.SetRoot(viper.GetString(tmcli.HomeFlag))
 
 			genFile := config.GenesisFile()
-			genDoc, err := types.GenesisDocFromFile(genFile)
+			genDoc, err := tmtypes.GenesisDocFromFile(genFile)
 			if err != nil {
 				panic(err)
 			}
@@ -52,12 +59,14 @@ func InitCmd(ctx *server.Context, cdc *codec.Codec, mbm module.BasicManager, def
 				panic(err)
 			}
 
-			// TODO move init genesis to konstellation modules
-			// -------------
+			// Update default genesis
+			for _, gu := range gus {
+				gu.UpdateGenesis(cdc, appState)
+			}
 
-			staking.InitGenesis(cdc, appState)
-
-			// --------------
+			if err = mbm.ValidateGenesis(appState); err != nil {
+				return fmt.Errorf("error validating genesis: %s", err.Error())
+			}
 
 			genDoc.AppState = cdc.MustMarshalJSON(appState)
 			if err = genutil.ExportGenesisFile(genDoc, genFile); err != nil {
