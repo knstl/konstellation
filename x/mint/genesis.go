@@ -5,6 +5,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/x/mint"
+
 	"github.com/konstellation/konstellation/types"
 )
 

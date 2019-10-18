@@ -6,6 +6,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/x/staking"
+
 	"github.com/konstellation/konstellation/types"
 )
 

@@ -13,8 +13,8 @@ const (
 	FDARC = "fdarc" // 10^-15 (femto)
 	ADARC = "adarc" // 10^-18 (atto)
 
-	DefaultBondDenom      = ADARC
-	StakeDenom            = ADARC
+	DefaultBondDenom      = DARC
+	StakeDenom            = DARC
 	DefaultConsensusPower = 1000000000000000
 )
 

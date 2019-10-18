@@ -16,12 +16,12 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/bank"
-	"github.com/cosmos/cosmos-sdk/x/crisis"
+	// "github.com/cosmos/cosmos-sdk/x/crisis"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 	"github.com/cosmos/cosmos-sdk/x/genaccounts"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	"github.com/cosmos/cosmos-sdk/x/gov"
-	"github.com/cosmos/cosmos-sdk/x/mint"
+	// "github.com/cosmos/cosmos-sdk/x/mint"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	paramsclient "github.com/cosmos/cosmos-sdk/x/params/client"
 	"github.com/cosmos/cosmos-sdk/x/slashing"
@@ -29,16 +29,15 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/supply"
 
 	"github.com/konstellation/konstellation/types"
-	kcrisis "github.com/konstellation/konstellation/x/crisis"
 	kdistribution "github.com/konstellation/konstellation/x/distribution"
 	kgenaccounts "github.com/konstellation/konstellation/x/genaccounts"
 	kgov "github.com/konstellation/konstellation/x/gov"
-	kmint "github.com/konstellation/konstellation/x/mint"
 	kstaking "github.com/konstellation/konstellation/x/staking"
 )
 
 const (
 	appName       = "konstellation"
+
 	EnvPrefixCLI  = "KONSTELLATIONCLI"
 	EnvPrefixNode = "KONSTELLATION"
 	EnvPrefixLCD  = "KONSTELLATIONLCD"
@@ -61,11 +60,11 @@ var (
 		auth.AppModuleBasic{},
 		bank.AppModuleBasic{},
 		staking.AppModuleBasic{},
-		mint.AppModuleBasic{},
+		// mint.AppModuleBasic{},
 		distribution.AppModuleBasic{},
 		gov.NewAppModuleBasic(paramsclient.ProposalHandler, distribution.ProposalHandler),
 		params.AppModuleBasic{},
-		crisis.AppModuleBasic{},
+		// crisis.AppModuleBasic{},
 		slashing.AppModuleBasic{},
 		supply.AppModuleBasic{},
 	)
@@ -73,10 +72,10 @@ var (
 	// GenesisUpdaters is in charge of changing default genesis provided by cosmos sdk modules
 	GenesisUpdaters = types.NewGenesisUpdaters(
 		kgenaccounts.GenesisUpdater{},
-		kcrisis.GenesisUpdater{},
+		// kcrisis.GenesisUpdater{},
 		kstaking.GenesisUpdater{},
 		kdistribution.GenesisUpdater{},
-		kmint.GenesisUpdater{},
+		// kmint.GenesisUpdater{},
 		kgov.GenesisUpdater{},
 	)
 
@@ -84,9 +83,9 @@ var (
 	maccPerms = map[string][]string{
 		auth.FeeCollectorName:   nil,
 		distribution.ModuleName: nil,
-		mint.ModuleName: {
-			supply.Minter,
-		},
+		// mint.ModuleName: {
+		// 	supply.Minter,
+		// },
 		staking.BondedPoolName: {
 			supply.Burner,
 			supply.Staking,
@@ -127,10 +126,10 @@ type KonstellationApp struct {
 	supplyKeeper       supply.Keeper
 	stakingKeeper      staking.Keeper
 	slashingKeeper     slashing.Keeper
-	mintKeeper         mint.Keeper
+	// mintKeeper         mint.Keeper
 	distributionKeeper distribution.Keeper
 	govKeeper          gov.Keeper
-	crisisKeeper       crisis.Keeper
+	// crisisKeeper       crisis.Keeper
 	paramsKeeper       params.Keeper
 
 	// Module Manager
@@ -151,7 +150,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		auth.StoreKey,
 		staking.StoreKey,
 		supply.StoreKey,
-		mint.StoreKey,
+		// mint.StoreKey,
 		distribution.StoreKey,
 		slashing.StoreKey,
 		gov.StoreKey,
@@ -211,14 +210,14 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		staking.DefaultCodespace,
 	)
 
-	app.mintKeeper = mint.NewKeeper(
-		app.cdc,
-		keys[mint.StoreKey],
-		app.paramsKeeper.Subspace(mint.DefaultParamspace),
-		&stakingKeeper,
-		app.supplyKeeper,
-		auth.FeeCollectorName,
-	)
+	// app.mintKeeper = mint.NewKeeper(
+	// 	app.cdc,
+	// 	keys[mint.StoreKey],
+	// 	app.paramsKeeper.Subspace(mint.DefaultParamspace),
+	// 	&stakingKeeper,
+	// 	app.supplyKeeper,
+	// 	auth.FeeCollectorName,
+	// )
 
 	app.distributionKeeper = distribution.NewKeeper(
 		app.cdc,
@@ -238,12 +237,12 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		app.paramsKeeper.Subspace(slashing.DefaultParamspace),
 		slashing.DefaultCodespace,
 	)
-	app.crisisKeeper = crisis.NewKeeper(
-		app.paramsKeeper.Subspace(crisis.DefaultParamspace),
-		invCheckPeriod,
-		app.supplyKeeper,
-		auth.FeeCollectorName,
-	)
+	// app.crisisKeeper = crisis.NewKeeper(
+	// 	app.paramsKeeper.Subspace(crisis.DefaultParamspace),
+	// 	invCheckPeriod,
+	// 	app.supplyKeeper,
+	// 	auth.FeeCollectorName,
+	// )
 
 	// register the proposal types
 	govRouter := gov.NewRouter().
@@ -277,11 +276,11 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		genutil.NewAppModule(app.accountKeeper, app.stakingKeeper, app.BaseApp.DeliverTx),
 		auth.NewAppModule(app.accountKeeper),
 		bank.NewAppModule(app.bankKeeper, app.accountKeeper),
-		crisis.NewAppModule(&app.crisisKeeper),
+		// crisis.NewAppModule(&app.crisisKeeper),
 		supply.NewAppModule(app.supplyKeeper, app.accountKeeper),
 		distribution.NewAppModule(app.distributionKeeper, app.supplyKeeper),
 		gov.NewAppModule(app.govKeeper, app.supplyKeeper),
-		mint.NewAppModule(app.mintKeeper),
+		// mint.NewAppModule(app.mintKeeper),
 		slashing.NewAppModule(app.slashingKeeper, app.stakingKeeper),
 		staking.NewAppModule(app.stakingKeeper, app.distributionKeeper, app.accountKeeper, app.supplyKeeper),
 	)
@@ -289,8 +288,10 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 	// During begin block slashing happens after distribution.BeginBlocker so that
 	// there is nothing left over in the validator fee pool, so as to keep the
 	// CanWithdrawInvariant invariant.
-	app.mm.SetOrderBeginBlockers(mint.ModuleName, distribution.ModuleName, slashing.ModuleName)
-	app.mm.SetOrderEndBlockers(crisis.ModuleName, gov.ModuleName, staking.ModuleName)
+	app.mm.SetOrderBeginBlockers(distribution.ModuleName, slashing.ModuleName)
+	// app.mm.SetOrderBeginBlockers(mint.ModuleName, distribution.ModuleName, slashing.ModuleName)
+	app.mm.SetOrderEndBlockers(gov.ModuleName, staking.ModuleName)
+	// app.mm.SetOrderEndBlockers(crisis.ModuleName, gov.ModuleName, staking.ModuleName)
 
 	// Sets the order of Genesis - Order matters, genutil is to always come last
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -303,13 +304,13 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		bank.ModuleName,
 		slashing.ModuleName,
 		gov.ModuleName,
-		mint.ModuleName,
+		// mint.ModuleName,
 		supply.ModuleName,
-		crisis.ModuleName,
+		// crisis.ModuleName,
 		genutil.ModuleName,
 	)
 
-	app.mm.RegisterInvariants(&app.crisisKeeper)
+	// app.mm.RegisterInvariants(&app.crisisKeeper)
 	// register all module routes and module queriers
 	app.mm.RegisterRoutes(app.Router(), app.QueryRouter())
 
