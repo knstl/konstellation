@@ -32,21 +32,23 @@ function create_testnet() {
   if [[ "" != "$(docker ps | grep ${TEMP_CONTAINER})" ]]; then
     docker rm -f ${TEMP_CONTAINER} >/dev/null
   fi
-  docker run -d --name ${TEMP_CONTAINER} ${params} konstellation:${CHAIN_ID}
+  docker run -d --name ${TEMP_CONTAINER} ${params} konst:${CHAIN_ID}
   #    docker run -d --name ${TEMP_CONTAINER} ${params} konstellation/konstellation:${CHAIN_ID} > /dev/null
   docker exec ${TEMP_CONTAINER} sh -c "konstellation testnet --chain-id ${CHAIN_ID} --output-dir /testnet"
   docker cp ${TEMP_CONTAINER}:/testnet ./
   docker rm -f ${TEMP_CONTAINER} >/dev/null
 }
 
-function run() {
+function create() {
   # Create a network for connections between nodes
   if [[ "" == "$(docker network ls | grep ${DOCKER_NETWORK})" ]]; then
     docker network create ${DOCKER_NETWORK}
   fi
 
   create_testnet
+}
 
+function run() {
   # Create new container for each node
   for ((i = 0; i < $(node_count); i++)); do
     NODE_ROOT=$(pwd)/testnet/node${i}
@@ -66,7 +68,7 @@ function run() {
       -e NODE_TYPE=PRIVATE_TESTNET \
       -v ${NODE_ROOT}/konstellation:/root/.konstellation \
       -v ${NODE_ROOT}/konstellationcli:/root/.konstellationcli \
-      konstellation:${CHAIN_ID}
+      konst:${CHAIN_ID}
     echo "Done !"
   done
 }
@@ -105,6 +107,9 @@ if [[ $# != "${PARAM_COUNT}" ]]; then
 fi
 
 case "${COMMAND}" in
+"create")
+  run
+  ;;
 "run")
   run
   ;;
