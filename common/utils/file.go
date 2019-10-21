@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"github.com/tendermint/tendermint/libs/common"
@@ -21,4 +23,14 @@ func WriteFile(name string, dir string, contents []byte) error {
 	}
 
 	return nil
+}
+
+func ReadFile(name string) ([]byte, error) {
+	file, err := os.Open(name)
+	defer file.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	return ioutil.ReadAll(file)
 }

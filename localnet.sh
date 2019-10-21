@@ -5,11 +5,11 @@ COMMAND=$1
 CHAIN_ID=$2
 NODE_PREFIX="testnode-"
 DOCKER_NETWORK="konstellation-network"
-TEMP_CONTAINER="temp-testnet"
+TEMP_CONTAINER="temp-localnet"
 
 function usage() {
   echo "Usage:"
-  echo "  ./testnet.sh command chain-id"
+  echo "  ./localnet.sh command chain-id"
   echo ""
   echo "Command:"
   echo "  create   Create network. "
@@ -22,21 +22,21 @@ function usage() {
 
 function node_count() {
   # shellcheck disable=SC2010
-  ls -1 testnet | grep node -c
+  ls -1 localnet | grep node -c
 }
 
-function create_testnet() {
+function create_localnet() {
   params="-e CHAIN_ID=${CHAIN_ID} -e NODE_TYPE=PRIVATE_TESTNET "
-  if [[ -d "testnet" ]]; then
-    sudo rm -rdf testnet
+  if [[ -d "localnet" ]]; then
+    sudo rm -rdf localnet
   fi
   if [[ "" != "$(docker ps | grep ${TEMP_CONTAINER})" ]]; then
     docker rm -f ${TEMP_CONTAINER} >/dev/null
   fi
   docker run -d --name ${TEMP_CONTAINER} ${params} konstellation:${CHAIN_ID}
   #    docker run -d --name ${TEMP_CONTAINER} ${params} konstellation:${CHAIN_ID} > /dev/null
-  docker exec ${TEMP_CONTAINER} sh -c "konstellation testnet --chain-id ${CHAIN_ID} --output-dir /testnet"
-  docker cp ${TEMP_CONTAINER}:/testnet ./
+  docker exec ${TEMP_CONTAINER} sh -c "konstellation localnet --chain-id ${CHAIN_ID} --output-dir /localnet"
+  docker cp ${TEMP_CONTAINER}:/localnet ./
   docker rm -f ${TEMP_CONTAINER} >/dev/null
 }
 
@@ -46,13 +46,13 @@ function create() {
     docker network create ${DOCKER_NETWORK}
   fi
 
-  create_testnet
+  create_localnet
 }
 
 function run() {
   # Create new container for each node
   for ((i = 0; i < $(node_count); i++)); do
-    NODE_ROOT=$(pwd)/testnet/node${i}
+    NODE_ROOT=$(pwd)/localnet/node${i}
     if [[ ! -d ${NODE_ROOT} ]]; then
       echo "Node${i}'s config DOSE NOT exist !"
       echo "" >&2
