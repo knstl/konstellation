@@ -22,6 +22,9 @@ docker run -d \
   -e CHAIN_ID=${CHAIN_ID} \
   -e MONIKER=NODE_NAME \
   -e NODE_TYPE=PRIVATE_TESTNET \
+  -p 26666:26656 \
+  -p 26667:26657 \
+  -p 26670:26660 \
   -v ${NODE_ROOT}/konstellation:/root/.konstellation \
   -v ${NODE_ROOT}/konstellationcli:/root/.konstellationcli \
   ${IMAGE_OWNER}/konstellation:${CHAIN_ID}
