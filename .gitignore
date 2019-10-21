@@ -10,6 +10,7 @@ vendor
 .vendor-new
 build
 testnet
+localnet
 
 # IDE
 .idea/
