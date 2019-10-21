@@ -19,6 +19,7 @@ fi
 echo -n "Create ${NODE_NAME} ... "
 docker run -d \
   --name ${NODE_NAME} \
+  --net=host \
   -e CHAIN_ID=${CHAIN_ID} \
   -e MONIKER=NODE_NAME \
   -e NODE_TYPE=PRIVATE_TESTNET \
