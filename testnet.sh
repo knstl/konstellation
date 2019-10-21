@@ -12,6 +12,7 @@ function usage() {
   echo "  ./testnet.sh command chain-id"
   echo ""
   echo "Command:"
+  echo "  create   Create network. "
   echo "  run      Create new container for each node. "
   echo "  start    Start exist containers. "
   echo "  stop     Stop exist containers. "
@@ -32,8 +33,8 @@ function create_testnet() {
   if [[ "" != "$(docker ps | grep ${TEMP_CONTAINER})" ]]; then
     docker rm -f ${TEMP_CONTAINER} >/dev/null
   fi
-  docker run -d --name ${TEMP_CONTAINER} ${params} konst:${CHAIN_ID}
-  #    docker run -d --name ${TEMP_CONTAINER} ${params} konstellation/konstellation:${CHAIN_ID} > /dev/null
+  docker run -d --name ${TEMP_CONTAINER} ${params} konstellation:${CHAIN_ID}
+  #    docker run -d --name ${TEMP_CONTAINER} ${params} konstellation:${CHAIN_ID} > /dev/null
   docker exec ${TEMP_CONTAINER} sh -c "konstellation testnet --chain-id ${CHAIN_ID} --output-dir /testnet"
   docker cp ${TEMP_CONTAINER}:/testnet ./
   docker rm -f ${TEMP_CONTAINER} >/dev/null
@@ -68,7 +69,7 @@ function run() {
       -e NODE_TYPE=PRIVATE_TESTNET \
       -v ${NODE_ROOT}/konstellation:/root/.konstellation \
       -v ${NODE_ROOT}/konstellationcli:/root/.konstellationcli \
-      konst:${CHAIN_ID}
+      konstellation:${CHAIN_ID}
     echo "Done !"
   done
 }
@@ -108,7 +109,7 @@ fi
 
 case "${COMMAND}" in
 "create")
-  run
+  create
   ;;
 "run")
   run
