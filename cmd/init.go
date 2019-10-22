@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 
 	tmcli "github.com/tendermint/tendermint/libs/cli"
+	"github.com/tendermint/tendermint/libs/common"
 	tmtypes "github.com/tendermint/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -41,22 +43,32 @@ func InitCmd(
 		RunE: func(c *cobra.Command, args []string) error {
 			err := initCmd.RunE(c, args)
 			if err != nil {
-				panic(err)
+				return err
 			}
 
 			config := ctx.Config
 			config.SetRoot(viper.GetString(tmcli.HomeFlag))
 
+			chainID := viper.GetString(client.FlagChainID)
+			if chainID == "" {
+				chainID = fmt.Sprintf("test-chain-%v", common.RandStr(6))
+			}
+
+			nodeID, _, err := genutil.InitializeNodeValidatorFiles(config)
+			if err != nil {
+				return err
+			}
+
 			genFile := config.GenesisFile()
 			genDoc, err := tmtypes.GenesisDocFromFile(genFile)
 			if err != nil {
-				panic(err)
+				return err
 			}
 
 			var appState map[string]json.RawMessage
 			err = cdc.UnmarshalJSON(genDoc.AppState, &appState)
 			if err != nil {
-				panic(err)
+				return err
 			}
 
 			// Update default genesis
@@ -73,7 +85,7 @@ func InitCmd(
 				return errors.Wrap(err, "Failed to export genesis file")
 			}
 
-			toPrint := utils.NewPrintInfo(config.Moniker, chainID, "", "", genDoc.AppState)
+			toPrint := utils.NewPrintInfo(config.Moniker, chainID, nodeID, "", genDoc.AppState)
 			return utils.DisplayInfo(cdc, toPrint)
 		},
 	}

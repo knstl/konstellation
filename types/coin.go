@@ -15,7 +15,7 @@ const (
 
 	DefaultBondDenom      = DARC
 	StakeDenom            = DARC
-	DefaultConsensusPower = 1000000000000000
+	DefaultConsensusPower = 100
 )
 
 func RegisterNativeCoinUnits() {
