@@ -12,7 +12,7 @@ import (
 
 const (
 	ModuleName       = gov.ModuleName
-	MinDepositTokens = 10000000000000
+	MinDepositTokens = 1000
 )
 
 // GenesisUpdater implements an genesis updater for the gov module.
@@ -38,7 +38,7 @@ func (GenesisUpdater) UpdateGenesis(cdc *codec.Codec, appState map[string]json.R
 
 func updateGenesisParams(genesisState *gov.GenesisState) {
 	genesisState.DepositParams = gov.DepositParams{
-		MinDeposit:       sdk.Coins{sdk.NewCoin(types.DefaultBondDenom, sdk.TokensFromConsensusPower(MinDepositTokens))},
+		MinDeposit:       sdk.Coins{sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(MinDepositTokens))},
 		MaxDepositPeriod: gov.DefaultPeriod,
 	}
 }

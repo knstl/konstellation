@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -38,13 +40,14 @@ var (
 	flagNodeDaemonHome    = "node-daemon-home"
 	flagNodeCliHome       = "node-cli-home"
 	flagStartingIPAddress = "starting-ip-address"
+	flagNodesInfoFile     = "nodes-info"
 
 	outDir             = ""
 	gentxsDir          = ""
+	configDir          = ""
 	chainID            = ""
 	nodeDaemonHomeName = ""
 	nodeCliHomeName    = ""
-	numValidators      = 0
 )
 
 const nodeDirPerm = 0755
@@ -68,26 +71,31 @@ necessary files (private validator, genesis, config, etc.).
 Note, strict routability for addresses is turned off in the config file.
 
 Example:
-	konstellation localnet --v 4 --output-dir ./output --starting-ip-address 192.168.10.2
+	konstellation localnet --output-dir ./output --starting-ip-address 192.168.10.2
 	`,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			config := ctx.Config
 			configFile := srvconfig.DefaultConfig()
 			configFile.MinGasPrices = viper.GetString(server.FlagMinGasPrices)
+			nodesInfoFile := viper.GetString(flagNodesInfoFile)
 
 			nodeDaemonHomeName = viper.GetString(flagNodeDaemonHome)
 			nodeCliHomeName = viper.GetString(flagNodeCliHome)
-			numValidators = viper.GetInt(flagNumValidators)
 
 			outDir = viper.GetString(flagOutputDir)
 			gentxsDir = filepath.Join(outDir, "gentxs")
+			configDir = filepath.Join(outDir)
 
 			chainID = viper.GetString(client.FlagChainID)
 			if chainID == "" {
 				chainID = fmt.Sprintf("test-chain-%v", common.RandStr(6))
 			}
 
-			nodes, err := configLocalNodes(config, configFile)
+			if err := configClientNodes(config, configFile); err != nil {
+				return err
+			}
+
+			nodes, err := configNodes(config, configFile, nodesInfoFile)
 			if err != nil {
 				return err
 			}
@@ -97,7 +105,7 @@ Example:
 				return err
 			}
 
-			if err := initGenFiles(cdc, mbm, gus, nodes, accs); err != nil {
+			if err := initGenFiles(cdc, mbm, gus, nodes, accs, config); err != nil {
 				return err
 			}
 
@@ -109,14 +117,11 @@ Example:
 				return err
 			}
 
-			fmt.Printf("Successfully initialized %d node directories\n", numValidators)
+			fmt.Printf("Successfully initialized %d node directories\n", len(nodes))
 			return nil
 		},
 	}
 
-	cmd.Flags().Int(flagNumValidators, 4,
-		"Number of validators to initialize the localnet with",
-	)
 	cmd.Flags().StringP(flagOutputDir, "o", "./localnet",
 		"Directory to store initialization data for the localnet",
 	)
@@ -128,6 +133,9 @@ Example:
 	)
 	cmd.Flags().String(flagNodeCliHome, "konstellationcli",
 		"Home directory of the node's cli configuration",
+	)
+	cmd.Flags().String(flagNodesInfoFile, "./config/localnet.json",
+		"Nodes configuration file",
 	)
 	cmd.Flags().String(flagStartingIPAddress, "testnode",
 		"Starting IP address (testnode results in persistent peers list ID0@testnode-0:26656, ID1@testnode-1:26656, ...)")
@@ -142,17 +150,32 @@ Example:
 	return cmd
 }
 
-func configNode(config *cfg.Config, configFile *srvconfig.Config, nodeDirName string, ip string, index int) (node *types.Node, err error) {
-	nodeDir := filepath.Join(outDir, nodeDirName, nodeDaemonHomeName)
-	clientDir := filepath.Join(outDir, nodeDirName, nodeCliHomeName)
+func configClientNodes(config *cfg.Config, configFile *srvconfig.Config) (err error) {
+	config.SetRoot(configDir)
+
+	err = os.MkdirAll(filepath.Join(configDir, "config"), nodeDirPerm)
+	if err != nil {
+		_ = os.RemoveAll(outDir)
+		return err
+	}
+
+	configFilePath := filepath.Join(configDir, "config/konstellation.toml")
+	srvconfig.WriteConfigFile(configFilePath, configFile)
+
+	return nil
+}
+
+func configNode(config *cfg.Config, configFile *srvconfig.Config, info types.NodeInfo) (node *types.Node, err error) {
+	nodeDir := filepath.Join(outDir, info.Name, nodeDaemonHomeName)
+	clientDir := filepath.Join(outDir, info.Name, nodeCliHomeName)
 	nodeConfig := types.NodeConfig{
-		DirName:   nodeDirName,
+		DirName:   info.Name,
 		DaemonDir: nodeDir,
 		CliDir:    clientDir,
 	}
 
 	config.SetRoot(nodeDir)
-	config.Moniker = nodeDirName
+	config.Moniker = info.Name
 
 	err = os.MkdirAll(clientDir, nodeDirPerm)
 	if err != nil {
@@ -175,33 +198,39 @@ func configNode(config *cfg.Config, configFile *srvconfig.Config, nodeDirName st
 		return nil, err
 	}
 
-	memo := fmt.Sprintf("%s@%s:26656", nodeID, ip)
+	memo := fmt.Sprintf("%s@%s:26656", nodeID, info.IP)
 
 	return &types.Node{
-		Index:     index,
-		Moniker:   nodeDirName,
+		Index:     info.Index,
+		Moniker:   info.Name,
 		Config:    nodeConfig,
 		GenFile:   config.GenesisFile(),
 		Memo:      memo,
 		ID:        nodeID,
 		ChainID:   chainID,
+		Cors:      info.Cors,
 		ValPubKey: valPubKey,
+		IP:        info.IP,
 	}, nil
 }
 
-func configLocalNodes(config *cfg.Config, configFile *srvconfig.Config) (nodes []*types.Node, err error) {
-	for i := 0; i < numValidators; i++ {
-		nodeDirName := fmt.Sprintf("%s%d", viper.GetString(flagNodeDirPrefix), i)
+func configNodes(config *cfg.Config, configFile *srvconfig.Config, nodesInfoFile string) (nodes []*types.Node, err error) {
+	var nodeInfos []types.NodeInfo
+	err = utils.ReadJson(nodesInfoFile, &nodeInfos)
+	if err != nil {
+		panic(err)
+	}
 
-		ip := fmt.Sprintf("%s-%d", viper.GetString(flagStartingIPAddress), i)
-
-		node, err := configNode(config, configFile, nodeDirName, ip, i)
+	index := 0
+	for _, nodeInfo := range nodeInfos {
+		node, err := configNode(config, configFile, nodeInfo)
 		if err != nil {
 			return nil, err
 		}
-
 		nodes = append(nodes, node)
+		index++
 	}
+
 	return
 }
 
@@ -243,7 +272,7 @@ func genAccounts(nodes []*types.Node) (accs []*genaccounts.GenesisAccount, err e
 	return
 }
 
-func initGenFiles(cdc *codec.Codec, mbm module.BasicManager, gus types.GenesisUpdaters, nodes []*types.Node, accs []*genaccounts.GenesisAccount) error {
+func initGenFiles(cdc *codec.Codec, mbm module.BasicManager, gus types.GenesisUpdaters, nodes []*types.Node, accs []*genaccounts.GenesisAccount, config *cfg.Config) error {
 	appGenState := mbm.DefaultGenesis()
 
 	appGenState[genaccounts.ModuleName] = cdc.MustMarshalJSON(accs)
@@ -274,6 +303,12 @@ func initGenFiles(cdc *codec.Codec, mbm module.BasicManager, gus types.GenesisUp
 		if err := utils.DisplayInfo(cdc, toPrint); err != nil {
 			return err
 		}
+	}
+
+	config.SetRoot(configDir)
+	fmt.Println(config.GenesisFile())
+	if err := genutil.ExportGenesisFile(genDoc, config.GenesisFile()); err != nil {
+		return err
 	}
 
 	return nil
@@ -356,13 +391,19 @@ func collectGenFiles(
 	genAccIterator genutiltypes.GenesisAccountsIterator,
 	nodes []*types.Node,
 ) error {
-
 	var appState json.RawMessage
+	var addressesIPs []string
 	genTime := tmtime.Now()
 
 	for _, node := range nodes {
 		config.SetRoot(node.Config.DaemonDir)
 		config.Moniker = node.Moniker
+		if node.Cors != "" {
+			config.RPC.CORSAllowedOrigins = strings.Split(node.Cors, ",")
+		} else {
+			config.RPC.CORSAllowedOrigins = []string{}
+		}
+
 		initCfg := genutil.NewInitConfig(chainID, gentxsDir, node.Moniker, node.ID, node.ValPubKey)
 
 		genDoc, err := tmtypes.GenesisDocFromFile(node.GenFile)
@@ -387,7 +428,15 @@ func collectGenFiles(
 		if err != nil {
 			return err
 		}
-	}
 
-	return nil
+		addressesIPs = append(addressesIPs, node.Memo)
+	}
+	sort.Strings(addressesIPs)
+
+	config.SetRoot(configDir)
+	config.Moniker = ""
+	config.RPC.CORSAllowedOrigins = []string{"*"}
+	config.P2P.PersistentPeers = strings.Join(addressesIPs, ",")
+	cfg.WriteConfigFile(filepath.Join(config.RootDir, "config", "config.toml"), config)
+	return genutil.ExportGenesisFileWithTime(config.GenesisFile(), chainID, nil, appState, genTime)
 }

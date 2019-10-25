@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	cfg "github.com/tendermint/tendermint/config"
 	"github.com/tendermint/tendermint/libs/common"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -19,12 +18,7 @@ import (
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 
-	"github.com/konstellation/konstellation/common/utils"
 	"github.com/konstellation/konstellation/types"
-)
-
-var (
-	flagNodesInfoFile = "nodes-info"
 )
 
 // get cmd to initialize all files for tendermint testnet and application
@@ -46,7 +40,7 @@ necessary files (private validator, genesis, config, etc.).
 Note, strict routability for addresses is turned off in the config file.
 
 Example:
-	konstellation testnet --v 4 --output-dir ./output --starting-ip-address 192.168.10.2
+	konstellation testnet --output-dir ./output --starting-ip-address 192.168.10.2
 	`,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			config := ctx.Config
@@ -56,17 +50,21 @@ Example:
 
 			nodeDaemonHomeName = viper.GetString(flagNodeDaemonHome)
 			nodeCliHomeName = viper.GetString(flagNodeCliHome)
-			numValidators = viper.GetInt(flagNumValidators)
 
 			outDir = viper.GetString(flagOutputDir)
 			gentxsDir = filepath.Join(outDir, "gentxs")
+			configDir = filepath.Join(outDir)
 
 			chainID = viper.GetString(client.FlagChainID)
 			if chainID == "" {
 				chainID = fmt.Sprintf("test-chain-%v", common.RandStr(6))
 			}
 
-			nodes, err := configTestNodes(config, configFile, nodesInfoFile)
+			if err := configClientNodes(config, configFile); err != nil {
+				return err
+			}
+
+			nodes, err := configNodes(config, configFile, nodesInfoFile)
 			if err != nil {
 				return err
 			}
@@ -76,7 +74,7 @@ Example:
 				return err
 			}
 
-			if err := initGenFiles(cdc, mbm, gus, nodes, accs); err != nil {
+			if err := initGenFiles(cdc, mbm, gus, nodes, accs, config); err != nil {
 				return err
 			}
 
@@ -105,7 +103,7 @@ Example:
 	cmd.Flags().String(flagNodeCliHome, "konstellationcli",
 		"Home directory of the node's cli configuration",
 	)
-	cmd.Flags().String(flagNodesInfoFile, "./config/nodes.json",
+	cmd.Flags().String(flagNodesInfoFile, "./config/testnet.json",
 		"Nodes configuration file",
 	)
 	cmd.Flags().String(flagStartingIPAddress, "testnode",
@@ -119,24 +117,4 @@ Example:
 	)
 
 	return cmd
-}
-
-func configTestNodes(config *cfg.Config, configFile *srvconfig.Config, nodesInfoFile string) (nodes []*types.Node, err error) {
-	var nodeInfos []types.NodeInfo
-	err = utils.ReadJson(nodesInfoFile, &nodeInfos)
-	if err != nil {
-		panic(err)
-	}
-
-	index := 0
-	for _, nodeInfo := range nodeInfos {
-		node, err := configNode(config, configFile, nodeInfo.Name, nodeInfo.IP, nodeInfo.Index)
-		if err != nil {
-			return nil, err
-		}
-		nodes = append(nodes, node)
-		index++
-	}
-
-	return
 }

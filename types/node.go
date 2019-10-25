@@ -16,6 +16,7 @@ type NodeInfo struct {
 	Name  string `json:"name"`
 	IP    string `json:"ip"`
 	Index int    `json:"index"`
+	Cors  string `json:"cors"`
 }
 
 type Node struct {
@@ -28,5 +29,7 @@ type Node struct {
 	GenAccount *genaccounts.GenesisAccount
 	Pass       string
 	Memo       string
+	Cors       string
 	ValPubKey  crypto.PubKey
+	IP         string
 }

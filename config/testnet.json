@@ -2,7 +2,8 @@
   {
     "name": "net1",
     "ip": "95.216.212.119",
-    "index": 1
+    "index": 1,
+    "cors": "*"
   },
   {
     "name": "net2",
