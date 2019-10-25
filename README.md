@@ -42,9 +42,13 @@ Run in shell from project dir
 ```shell script
 ./scripts/testnet.sh create
 ```
-#### Run testnet
+#### Deploy testnet
 ```shell script
 ./scripts/testnet.sh deploy
+```
+#### Run testnet nodes on the server side
+```shell script
+./scripts/testnet.sh run
 ```
 #### Copy config and genesis to konstellation dir
 ```shell script
@@ -55,6 +59,11 @@ Run in shell from project dir
 konstellation unsafe-reset-all
 konstellation config set moniker {MONIKER}
 konstellation start
+```
+
+#### Run full node
+```shell script
+./scripts/fullnode.sh
 ```
 
 ## Konstellation Hub Mainnet

@@ -8,6 +8,7 @@ function usage() {
   echo "  ./testnet.sh command [chain-id]"
   echo ""
   echo "Command:"
+  echo "  run       Run testnet full node on the server side. "
   echo "  deploy    Deploy testnet to testnodes. "
   echo "  copy      Copy config and genesis to yout konstellation dir. "
   echo ""
@@ -21,14 +22,48 @@ function create() {
   konstellation testnet --chain-id "$CHAIN_ID"
 }
 
+function run() {
+  source $(pwd)/config/.env
+
+  NODE_NAME=$(hostname)
+
+  if [[ ! -d ${NODE_ROOT} ]]; then
+    echo "Node's config DOSE NOT exist !"
+    echo "" >&2
+    exit 1
+  fi
+
+  containers=$(docker container ls | awk '{print $1}' | sed -n 2p)
+  if [ ! -z "$containers" ]; then
+    echo -n "Remove $containers ... "
+    docker rm -f "$NODE_NAME" >/dev/null
+  fi
+
+  echo -n "Create ${NODE_NAME} ... "
+  echo ""
+  docker run -d \
+    --name "$NODE_NAME" \
+    --net=host \
+    -e CHAIN_ID="$CHAIN_ID" \
+    -e MONIKER="$NODE_NAME" \
+    -e NODE_TYPE=PRIVATE_TESTNET \
+    -p 26666:26656 \
+    -p 26667:26657 \
+    -p 26670:26660 \
+    -v "${NODE_ROOT}"/konstellation:/root/.konstellation \
+    -v "${NODE_ROOT}"/konstellationcli:/root/.konstellationcli \
+    "$IMAGE_OWNER"/konstellation:"$CHAIN_ID"
+  echo "Done !"
+}
+
 function deploy() {
- if [[ -f "./config/testnet.json" ]]; then
- jq -r '
+  if [[ -f "./config/testnet.json" ]]; then
+    jq -r '
     to_entries |
     .[].value |
     @sh "scp -r -i ~/Documents/.ssh/id_rsa.pub ./testnet/\(.name) root@\(.ip):/root/node"
   ' ./config/testnet.json
-fi
+  fi
 }
 
 function copy() {
@@ -59,6 +94,9 @@ fi
 case "${COMMAND}" in
 "create")
   create
+  ;;
+"run")
+  run
   ;;
 "deploy")
   deploy
