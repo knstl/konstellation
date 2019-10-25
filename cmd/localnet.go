@@ -306,7 +306,6 @@ func initGenFiles(cdc *codec.Codec, mbm module.BasicManager, gus types.GenesisUp
 	}
 
 	config.SetRoot(configDir)
-	fmt.Println(config.GenesisFile())
 	if err := genutil.ExportGenesisFile(genDoc, config.GenesisFile()); err != nil {
 		return err
 	}
@@ -345,7 +344,7 @@ func genTxs(
 			return err
 		}
 
-		c := sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(100))
+		c := sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(1000))
 		coins := sdk.NewCoins(c)
 		err = genutil.ValidateAccountInGenesis(genesisState, genAccIterator, key.GetAddress(), coins, cdc)
 		if err != nil {
