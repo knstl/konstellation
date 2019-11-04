@@ -111,7 +111,7 @@ if [[ -z ${COMMAND} ]]; then
 fi
 
 if [[ -z ${CHAIN_ID} ]]; then
-  CHAIN_ID="darchub"
+  source ./config/.env
 fi
 
 if [[ ! -f "./config/localnet.json" ]]; then

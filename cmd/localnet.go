@@ -201,16 +201,18 @@ func configNode(config *cfg.Config, configFile *srvconfig.Config, info types.Nod
 	memo := fmt.Sprintf("%s@%s:26656", nodeID, info.IP)
 
 	return &types.Node{
-		Index:     info.Index,
-		Moniker:   info.Name,
-		Config:    nodeConfig,
-		GenFile:   config.GenesisFile(),
-		Memo:      memo,
-		ID:        nodeID,
-		ChainID:   chainID,
-		Cors:      info.Cors,
-		ValPubKey: valPubKey,
-		IP:        info.IP,
+		Index:       info.Index,
+		Moniker:     info.Description.Moniker,
+		Config:      nodeConfig,
+		GenFile:     config.GenesisFile(),
+		Memo:        memo,
+		ID:          nodeID,
+		ChainID:     chainID,
+		Cors:        info.Cors,
+		ValPubKey:   valPubKey,
+		IP:          info.IP,
+		Key:         info.Key,
+		Description: info.Description,
 	}, nil
 }
 
@@ -236,12 +238,8 @@ func configNodes(config *cfg.Config, configFile *srvconfig.Config, nodesInfoFile
 
 func genAccounts(nodes []*types.Node) (accs []*genaccounts.GenesisAccount, err error) {
 	for _, node := range nodes {
-		// 	"Password for account '%s' (default %s):", nodeDirName, "12345678",
-		// )
-		// keyPass, err := client.GetPassword(prompt, buf)
-		node.Pass = "12345678"
-
-		addr, secret, err := server.GenerateSaveCoinKey(node.Config.CliDir, node.Config.DirName, node.Pass, true)
+		// TODO add mnemonic
+		addr, secret, err := server.GenerateSaveCoinKey(node.Config.CliDir, node.Key.Name, node.Key.Password, true)
 		if err != nil {
 			_ = os.RemoveAll(outDir)
 			return nil, err
@@ -261,7 +259,7 @@ func genAccounts(nodes []*types.Node) (accs []*genaccounts.GenesisAccount, err e
 		genacc := &genaccounts.GenesisAccount{
 			Address: addr,
 			Coins: sdk.NewCoins(
-				sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(types.DefaultConsensusPower)),
+				sdk.NewCoin(types.StakeDenom, sdk.NewInt(node.Key.CoinGenesis)),
 			),
 		}
 
@@ -339,12 +337,12 @@ func genTxs(
 			return err
 		}
 
-		key, err := kb.Get(node.Moniker)
+		key, err := kb.Get(node.Key.Name)
 		if err != nil {
 			return err
 		}
 
-		c := sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(1000))
+		c := sdk.NewCoin(types.StakeDenom, sdk.NewInt(node.Key.CoinDelegate))
 		coins := sdk.NewCoins(c)
 		err = genutil.ValidateAccountInGenesis(genesisState, genAccIterator, key.GetAddress(), coins, cdc)
 		if err != nil {
@@ -355,14 +353,19 @@ func genTxs(
 			sdk.ValAddress(node.GenAccount.Address),
 			node.ValPubKey,
 			c,
-			staking.NewDescription(node.Moniker, "", "", ""),
+			staking.NewDescription(
+				node.Description.Moniker,
+				node.Description.Identity,
+				node.Description.Website,
+				node.Description.Details,
+			),
 			staking.NewCommissionRates(sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec()),
 			sdk.OneInt(),
 		)
 
 		tx := auth.NewStdTx([]sdk.Msg{msg}, auth.StdFee{}, []auth.StdSignature{}, node.Memo)
 		txBldr := auth.NewTxBuilderFromCLI().WithChainID(chainID).WithMemo(node.Memo).WithKeybase(kb)
-		signedTx, err := txBldr.SignStdTx(node.Moniker, node.Pass, tx, false)
+		signedTx, err := txBldr.SignStdTx(node.Key.Name, node.Key.Password, tx, false)
 		if err != nil {
 			_ = os.RemoveAll(outDir)
 			return err
