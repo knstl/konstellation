@@ -6,6 +6,7 @@ import (
 	"path"
 
 	"github.com/rakyll/statik/fs"
+	"github.com/rs/cors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -65,7 +66,7 @@ func setupResponse(w *http.ResponseWriter, _ *http.Request) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
 	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
-	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	(*w).Header().Set("Access-Control-Allow-Headers", "header_content_type, Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	(*w).Header().Set("Content-Type", "application/json")
 }
 
@@ -73,7 +74,19 @@ func setupResponse(w *http.ResponseWriter, _ *http.Request) {
 // NOTE: details on the routes added for each module are in the module documentation
 // NOTE: If making updates here you also need to update the test helper in client/lcd/test_helper.go
 func registerRoutes(rs *lcd.RestServer) {
-	// rs.Mux.Use(cors.Default().Handler)
+	rs.Mux.Methods("OPTIONS").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		setupResponse(&w, r)
+		if (*r).Method == "OPTIONS" {
+			return
+		}
+	})
+	rs.Mux.Use(func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			setupResponse(&w, r)
+			h.ServeHTTP(w, r)
+		})
+	})
+	rs.Mux.Use(cors.Default().Handler)
 
 	rpc.RegisterRPCRoutes(rs.CliCtx, rs.Mux)
 	authrest.RegisterRoutes(rs.CliCtx, rs.Mux, auth.StoreKey)
@@ -88,13 +101,6 @@ func registerRoutes(rs *lcd.RestServer) {
 	govrest.RegisterRESTRoutes(rs.CliCtx, rs.Mux)
 
 	registerSwaggerUI(rs)
-
-	rs.Mux.Methods("OPTIONS").HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		setupResponse(&w, req)
-		if (*req).Method == "OPTIONS" {
-			return
-		}
-	})
 }
 
 func registerSwaggerUI(rs *lcd.RestServer) {
