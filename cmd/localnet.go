@@ -223,14 +223,12 @@ func configNodes(config *cfg.Config, configFile *srvconfig.Config, nodesInfoFile
 		panic(err)
 	}
 
-	index := 0
 	for _, nodeInfo := range nodeInfos {
 		node, err := configNode(config, configFile, nodeInfo)
 		if err != nil {
 			return nil, err
 		}
 		nodes = append(nodes, node)
-		index++
 	}
 
 	return
@@ -440,5 +438,6 @@ func collectGenFiles(
 	config.RPC.CORSAllowedOrigins = []string{"*"}
 	config.P2P.PersistentPeers = strings.Join(addressesIPs, ",")
 	cfg.WriteConfigFile(filepath.Join(config.RootDir, "config", "config.toml"), config)
+
 	return genutil.ExportGenesisFileWithTime(config.GenesisFile(), chainID, nil, appState, genTime)
 }
