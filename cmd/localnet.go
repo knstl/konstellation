@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/konstellation/konstellation/crypto/keybase"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -236,8 +237,7 @@ func configNodes(config *cfg.Config, configFile *srvconfig.Config, nodesInfoFile
 
 func genAccounts(nodes []*types.Node) (accs []*genaccounts.GenesisAccount, err error) {
 	for _, node := range nodes {
-		// TODO add mnemonic
-		addr, secret, err := server.GenerateSaveCoinKey(node.Config.CliDir, node.Key.Name, node.Key.Password, true)
+		addr, secret, err := keybase.SaveCoinKey(node.Config.CliDir, node.Key.Name, node.Key.Password, node.Key.Mnemonic, true)
 		if err != nil {
 			_ = os.RemoveAll(outDir)
 			return nil, err
