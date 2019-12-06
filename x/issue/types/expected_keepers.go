@@ -6,10 +6,12 @@ import (
 )
 
 type CoinKeeper interface {
-	GetCoins(ctx sdk.Context, addr sdk.AccAddress) sdk.Coins
-	AddCoins(ctx sdk.Context, addr sdk.AccAddress, amt sdk.Coins) (sdk.Coins, sdk.Error)
-	SubtractCoins(ctx sdk.Context, addr sdk.AccAddress, amt sdk.Coins) (sdk.Coins, sdk.Error)
-	SendCoins(ctx sdk.Context, fromAddr sdk.AccAddress, toAddr sdk.AccAddress, amt sdk.Coins) sdk.Error
+	GetCoins(sdk.Context, sdk.AccAddress) sdk.Coins
+	AddCoins(sdk.Context, sdk.AccAddress, sdk.Coins) (sdk.Coins, sdk.Error)
+	SubtractCoins(sdk.Context, sdk.AccAddress, sdk.Coins) (sdk.Coins, sdk.Error)
+	SendCoins(sdk.Context, sdk.AccAddress, sdk.AccAddress, sdk.Coins) sdk.Error
+	GetSendEnabled(sdk.Context) bool
+	BlacklistedAddr(sdk.AccAddress) bool
 }
 
 type SupplyKeeper interface {

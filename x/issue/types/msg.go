@@ -6,7 +6,7 @@ const (
 	TypeMsgIssue = "issue"
 )
 
-var _ sdk.Msg = &MsgIssue{}
+var _, _ sdk.Msg = &MsgIssue{}, &MsgTransfer{}
 
 type MsgIssue struct {
 	Owner        sdk.AccAddress `json:"owner" yaml:"owner"`
@@ -65,4 +65,49 @@ func (msg MsgIssue) ValidateBasic() sdk.Error {
 	//	return errors.ErrCoinDescriptionMaxLengthNotValid()
 	//}
 	return nil
+}
+
+// MsgTransfer - high level transaction of the coin module
+type MsgTransfer struct {
+	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
+	ToAddress   sdk.AccAddress `json:"to_address" yaml:"to_address"`
+	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
+}
+
+// NewMsgTransfer - construct arbitrary multi-in, multi-out send msg.
+func NewMsgTransfer(fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) MsgTransfer {
+	return MsgTransfer{FromAddress: fromAddr, ToAddress: toAddr, Amount: amount}
+}
+
+// Route Implements Msg.
+func (msg MsgTransfer) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgTransfer) Type() string { return "send" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgTransfer) ValidateBasic() sdk.Error {
+	if msg.FromAddress.Empty() {
+		return sdk.ErrInvalidAddress("missing sender address")
+	}
+	if msg.ToAddress.Empty() {
+		return sdk.ErrInvalidAddress("missing recipient address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsAllPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgTransfer) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgTransfer) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.FromAddress}
 }

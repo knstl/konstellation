@@ -31,6 +31,11 @@ func KeyAllowed(issueID string, sender sdk.AccAddress, spender sdk.AccAddress) [
 	return []byte(fmt.Sprintf("allowed:%s:%s:%s", issueID, sender.String(), spender.String()))
 }
 
+// Key for getting a specific allowed from the store
+func KeyAllowance(a string) []byte {
+	return []byte(fmt.Sprintf("allowance:%s", a))
+}
+
 func KeyFreeze(issueID string, accAddress sdk.AccAddress) []byte {
 	return []byte(fmt.Sprintf("freeze:%s:%s", issueID, accAddress.String()))
 }
