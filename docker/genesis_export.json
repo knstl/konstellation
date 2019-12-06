@@ -3,12 +3,12 @@
   "app_state": {
     "accounts": [
       {
-        "account_number": "11",
-        "address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+        "account_number": "1",
+        "address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq",
         "coins": [
           {
-            "amount": "3374444",
-            "denom": "adarc"
+            "amount": "900000000",
+            "denom": "darc"
           }
         ],
         "delegated_free": [],
@@ -17,7 +17,61 @@
         "module_name": "",
         "module_permissions": null,
         "original_vesting": [],
-        "sequence_number": "0",
+        "sequence_number": "5",
+        "start_time": "0"
+      },
+      {
+        "account_number": "10",
+        "address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+        "coins": [
+          {
+            "amount": "250028700",
+            "denom": "darc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "9",
+        "start_time": "0"
+      },
+      {
+        "account_number": "12",
+        "address": "darc1fzuxwxa33zrjllg6mg6us4nxw8r49zk2yxjmdm",
+        "coins": [
+          {
+            "amount": "300000",
+            "denom": "darc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "1",
+        "start_time": "0"
+      },
+      {
+        "account_number": "11",
+        "address": "darc1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3sw9u5vv",
+        "coins": [
+          {
+            "amount": "189900000",
+            "denom": "darc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "3",
         "start_time": "0"
       },
       {
@@ -25,8 +79,8 @@
         "address": "darc1fl48vsnmsdzcv85q5d2q4z5ajdha8yu326a75q",
         "coins": [
           {
-            "amount": "2337551401413630250",
-            "denom": "adarc"
+            "amount": "460100000",
+            "denom": "darc"
           }
         ],
         "delegated_free": [],
@@ -44,12 +98,7 @@
       {
         "account_number": "6",
         "address": "darc1tygms3xhhs3yv487phx3dw4a95jn7t7l76p0z5",
-        "coins": [
-          {
-            "amount": "9900099000000",
-            "denom": "adarc"
-          }
-        ],
+        "coins": [],
         "delegated_free": [],
         "delegated_vesting": [],
         "end_time": "0",
@@ -63,9 +112,32 @@
         "start_time": "0"
       },
       {
+        "account_number": "0",
+        "address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
+        "coins": [
+          {
+            "amount": "599970000",
+            "denom": "darc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "10",
+        "start_time": "0"
+      },
+      {
         "account_number": "7",
         "address": "darc10d07y265gmmuvt4z0w9aw880jnsr700j9r85my",
-        "coins": [],
+        "coins": [
+          {
+            "amount": "1300",
+            "denom": "darc"
+          }
+        ],
         "delegated_free": [],
         "delegated_vesting": [],
         "end_time": "0",
@@ -78,30 +150,12 @@
         "start_time": "0"
       },
       {
-        "account_number": "1",
-        "address": "darc1s9y7c7xk9gu80ju6qjws0nu92zzrj5adcs5jr8",
-        "coins": [
-          {
-            "amount": "999999999999699800000",
-            "denom": "adarc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "5",
-        "start_time": "0"
-      },
-      {
         "account_number": "4",
         "address": "darc1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8c7sdyg",
         "coins": [
           {
-            "amount": "495404676968415174",
-            "denom": "adarc"
+            "amount": "2626664",
+            "denom": "darc"
           }
         ],
         "delegated_free": [],
@@ -114,12 +168,12 @@
         "start_time": "0"
       },
       {
-        "account_number": "3",
-        "address": "darc16ear7uh6v4hfll2cklvcwtuvu870swwqzn98y8",
+        "account_number": "2",
+        "address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
         "coins": [
           {
-            "amount": "989999999999901000000",
-            "denom": "adarc"
+            "amount": "900000000",
+            "denom": "darc"
           }
         ],
         "delegated_free": [],
@@ -128,7 +182,25 @@
         "module_name": "",
         "module_permissions": null,
         "original_vesting": [],
-        "sequence_number": "2",
+        "sequence_number": "7",
+        "start_time": "0"
+      },
+      {
+        "account_number": "3",
+        "address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
+        "coins": [
+          {
+            "amount": "699636000",
+            "denom": "darc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "9",
         "start_time": "0"
       },
       {
@@ -144,60 +216,6 @@
         ],
         "original_vesting": [],
         "sequence_number": "0",
-        "start_time": "0"
-      },
-      {
-        "account_number": "0",
-        "address": "darc1uqph2ltxgw3julrg8e40ypkzpvgc9s5wp8x7qe",
-        "coins": [
-          {
-            "amount": "999999999999900000000",
-            "denom": "adarc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "1",
-        "start_time": "0"
-      },
-      {
-        "account_number": "2",
-        "address": "darc1ugv7ukzyedmqn60r3pc7wvc5wsalaustugcajn",
-        "coins": [
-          {
-            "amount": "999999999999900000000",
-            "denom": "adarc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "1",
-        "start_time": "0"
-      },
-      {
-        "account_number": "10",
-        "address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
-        "coins": [
-          {
-            "amount": "11123504865953745281",
-            "denom": "adarc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "45",
         "start_time": "0"
       },
       {
@@ -228,8 +246,8 @@
     },
     "crisis": {
       "constant_fee": {
-        "amount": "1000000000000000000000",
-        "denom": "adarc"
+        "amount": "100000000",
+        "denom": "darc"
       }
     },
     "distribution": {
@@ -238,75 +256,66 @@
       "community_tax": "0.020000000000000000",
       "delegator_starting_infos": [
         {
-          "delegator_address": "darc1s9y7c7xk9gu80ju6qjws0nu92zzrj5adcs5jr8",
+          "delegator_address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq",
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
             "stake": "100000000.000000000000000000"
           },
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
         },
         {
-          "delegator_address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
+          "delegator_address": "darc1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3sw9u5vv",
           "starting_info": {
-            "creation_height": "35974",
-            "previous_period": "22",
-            "stake": "10000000000000.000000000000000000"
+            "creation_height": "75162",
+            "previous_period": "2",
+            "stake": "10100000.000000000000000000"
           },
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
         },
         {
-          "delegator_address": "darc16ear7uh6v4hfll2cklvcwtuvu870swwqzn98y8",
+          "delegator_address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
           "starting_info": {
-            "creation_height": "0",
-            "previous_period": "1",
-            "stake": "100000000.000000000000000000"
+            "creation_height": "125",
+            "previous_period": "2",
+            "stake": "50000000.000000000000000000"
           },
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
-          "delegator_address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
-          "starting_info": {
-            "creation_height": "44236",
-            "previous_period": "14",
-            "stake": "2336824642326030250.000000000000000000"
-          },
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
-        },
-        {
-          "delegator_address": "darc1uqph2ltxgw3julrg8e40ypkzpvgc9s5wp8x7qe",
+          "delegator_address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
             "stake": "100000000.000000000000000000"
           },
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
-          "delegator_address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
-          "starting_info": {
-            "creation_height": "35974",
-            "previous_period": "6",
-            "stake": "726758787600000.000000000000000000"
-          },
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
-        },
-        {
-          "delegator_address": "darc1ugv7ukzyedmqn60r3pc7wvc5wsalaustugcajn",
+          "delegator_address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
             "stake": "100000000.000000000000000000"
           },
-          "validator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m"
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
+          "starting_info": {
+            "creation_height": "0",
+            "previous_period": "1",
+            "stake": "100000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
       "delegator_withdraw_infos": [],
       "fee_pool": {
         "community_pool": [
           {
-            "amount": "79129418878193950.695545516916114374",
-            "denom": "adarc"
+            "amount": "52533.280000000002462590",
+            "denom": "darc"
           }
         ]
       },
@@ -314,107 +323,122 @@
         {
           "outstanding_rewards": [
             {
-              "amount": "31107226204015346.334157331576187810",
-              "denom": "adarc"
+              "amount": "573156.544876543209325826",
+              "denom": "darc"
             }
           ],
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
+        },
+        {
+          "outstanding_rewards": null,
+          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
         },
         {
           "outstanding_rewards": [
             {
-              "amount": "322572304367814335.375697145662182774",
-              "denom": "adarc"
+              "amount": "852990.240925925925115442",
+              "denom": "darc"
             }
           ],
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "outstanding_rewards": [
             {
-              "amount": "31448288088979360.224204619891326214",
-              "denom": "adarc"
+              "amount": "574841.602654320987103622",
+              "denom": "darc"
             }
           ],
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
         },
         {
           "outstanding_rewards": [
             {
-              "amount": "31147439429412181.370395385954188828",
-              "denom": "adarc"
+              "amount": "573142.331543209875992520",
+              "denom": "darc"
             }
           ],
-          "validator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m"
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
-      "previous_proposer": "darcvalcons1qfg5h8wfwdndxr4c5xj9rv0eg0azwe66wjut2m",
+      "previous_proposer": "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz",
       "validator_accumulated_commissions": [
         {
           "accumulated": null,
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
         },
         {
           "accumulated": null,
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
+          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
         },
         {
           "accumulated": null,
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "accumulated": null,
-          "validator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m"
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "accumulated": null,
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
       "validator_current_rewards": [
         {
           "rewards": {
-            "period": "24",
+            "period": "2",
             "rewards": [
               {
-                "amount": "660203836.549465439558024797",
-                "denom": "adarc"
+                "amount": "573156.544876543209325826",
+                "denom": "darc"
               }
             ]
           },
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
         },
         {
           "rewards": {
-            "period": "15",
-            "rewards": [
-              {
-                "amount": "291424866644127624.878931700064908171",
-                "denom": "adarc"
-              }
-            ]
+            "period": "3",
+            "rewards": null
           },
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
+          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
         },
         {
           "rewards": {
-            "period": "7",
+            "period": "3",
             "rewards": [
               {
-                "amount": "300848302090774.644409563083244188",
-                "denom": "adarc"
+                "amount": "842005.015925925925115442",
+                "denom": "darc"
               }
             ]
           },
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "rewards": {
             "period": "2",
             "rewards": [
               {
-                "amount": "31147439429412181.370395385954188828",
-                "denom": "adarc"
+                "amount": "574841.602654320987103622",
+                "denom": "darc"
               }
             ]
           },
-          "validator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m"
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "rewards": {
+            "period": "2",
+            "rewards": [
+              {
+                "amount": "573142.331543209875992520",
+                "denom": "darc"
+              }
+            ]
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
       "validator_historical_rewards": [
@@ -422,35 +446,17 @@
           "period": "1",
           "rewards": {
             "cumulative_reward_ratio": null,
-            "reference_count": 1
-          },
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
-        },
-        {
-          "period": "22",
-          "rewards": {
-            "cumulative_reward_ratio": [
-              {
-                "amount": "311060989.187241502930117488",
-                "denom": "adarc"
-              }
-            ],
-            "reference_count": 1
-          },
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
-        },
-        {
-          "period": "23",
-          "rewards": {
-            "cumulative_reward_ratio": [
-              {
-                "amount": "311060989.299902885052245431",
-                "denom": "adarc"
-              }
-            ],
             "reference_count": 2
           },
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
+        },
+        {
+          "period": "2",
+          "rewards": {
+            "cumulative_reward_ratio": null,
+            "reference_count": 2
+          },
+          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
         },
         {
           "period": "1",
@@ -458,41 +464,20 @@
             "cumulative_reward_ratio": null,
             "reference_count": 1
           },
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
-          "period": "14",
+          "period": "2",
           "rewards": {
             "cumulative_reward_ratio": [
               {
-                "amount": "311474377.236867064829013297",
-                "denom": "adarc"
+                "amount": "0.000109852250000000",
+                "denom": "darc"
               }
             ],
             "reference_count": 2
           },
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
-        },
-        {
-          "period": "1",
-          "rewards": {
-            "cumulative_reward_ratio": null,
-            "reference_count": 1
-          },
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
-        },
-        {
-          "period": "6",
-          "rewards": {
-            "cumulative_reward_ratio": [
-              {
-                "amount": "311474397.868885855786298648",
-                "denom": "adarc"
-              }
-            ],
-            "reference_count": 2
-          },
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "period": "1",
@@ -500,20 +485,18 @@
             "cumulative_reward_ratio": null,
             "reference_count": 2
           },
-          "validator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m"
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "period": "1",
+          "rewards": {
+            "cumulative_reward_ratio": null,
+            "reference_count": 2
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
-      "validator_slash_events": [
-        {
-          "height": "39388",
-          "period": "23",
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400",
-          "validator_slash_event": {
-            "fraction": "0.010000000000000000",
-            "validator_period": "23"
-          }
-        }
-      ],
+      "validator_slash_events": [],
       "withdraw_addr_enabled": true
     },
     "genutil": null,
@@ -522,171 +505,313 @@
         "max_deposit_period": "172800000000000",
         "min_deposit": [
           {
-            "amount": "10000000000000000000",
-            "denom": "adarc"
+            "amount": "1000",
+            "denom": "darc"
           }
         ]
       },
-      "deposits": null,
+      "deposits": [
+        {
+          "amount": [
+            {
+              "amount": "1000",
+              "denom": "darc"
+            }
+          ],
+          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+          "proposal_id": "3"
+        },
+        {
+          "amount": [
+            {
+              "amount": "100",
+              "denom": "darc"
+            }
+          ],
+          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+          "proposal_id": "4"
+        },
+        {
+          "amount": [
+            {
+              "amount": "100",
+              "denom": "darc"
+            }
+          ],
+          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+          "proposal_id": "5"
+        },
+        {
+          "amount": [
+            {
+              "amount": "100",
+              "denom": "darc"
+            }
+          ],
+          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+          "proposal_id": "6"
+        }
+      ],
       "proposals": [
         {
           "content": {
             "type": "cosmos-sdk/TextProposal",
             "value": {
-              "description": "xcvzxcv",
-              "title": "zxcvxcv"
+              "description": "xcvxvxcvxcvxc",
+              "title": "TextProps"
             }
           },
-          "deposit_end_time": "2019-10-12T10:57:10.322539943Z",
+          "deposit_end_time": "2019-11-24T15:16:24.518436272Z",
           "final_tally_result": {
             "abstain": "0",
             "no": "0",
             "no_with_veto": "0",
-            "yes": "2337551401113130249"
+            "yes": "450000000"
           },
           "id": "1",
           "proposal_status": "Passed",
-          "submit_time": "2019-10-10T10:57:10.322539943Z",
+          "submit_time": "2019-11-22T15:16:24.518436272Z",
           "total_deposit": [
             {
-              "amount": "10000000000000000278",
-              "denom": "adarc"
+              "amount": "1000",
+              "denom": "darc"
             }
           ],
-          "voting_end_time": "2019-10-12T16:19:42.098405162Z",
-          "voting_start_time": "2019-10-10T16:19:42.098405162Z"
+          "voting_end_time": "2019-11-24T15:20:59.07914055Z",
+          "voting_start_time": "2019-11-22T15:20:59.07914055Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/ParameterChangeProposal",
+            "value": {
+              "changes": [
+                {
+                  "key": "InflationRateChange",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                },
+                {
+                  "key": "InflationMax",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                },
+                {
+                  "key": "InflationMin",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                }
+              ],
+              "description": "Change inflation rate to 0",
+              "title": "Change inflation rate #1"
+            }
+          },
+          "deposit_end_time": "2019-11-24T15:22:27.413270133Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "450000000"
+          },
+          "id": "2",
+          "proposal_status": "Passed",
+          "submit_time": "2019-11-22T15:22:27.413270133Z",
+          "total_deposit": [
+            {
+              "amount": "1000",
+              "denom": "darc"
+            }
+          ],
+          "voting_end_time": "2019-11-24T15:22:49.53977099Z",
+          "voting_start_time": "2019-11-22T15:22:49.53977099Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/ParameterChangeProposal",
+            "value": {
+              "changes": [
+                {
+                  "key": "InflationRateChange",
+                  "subspace": "mint",
+                  "value": "\"0.130000000000000000\""
+                },
+                {
+                  "key": "InflationMin",
+                  "subspace": "mint",
+                  "value": "\"0.070000000000000000\""
+                },
+                {
+                  "key": "InflationMax",
+                  "subspace": "mint",
+                  "value": "\"0.200000000000000000\""
+                }
+              ],
+              "description": "Enable inflation",
+              "title": "Enable inflation "
+            }
+          },
+          "deposit_end_time": "2019-11-27T16:04:58.417073266Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "0"
+          },
+          "id": "3",
+          "proposal_status": "VotingPeriod",
+          "submit_time": "2019-11-25T16:04:58.417073266Z",
+          "total_deposit": [
+            {
+              "amount": "1000",
+              "denom": "darc"
+            }
+          ],
+          "voting_end_time": "2019-11-27T16:05:31.528053895Z",
+          "voting_start_time": "2019-11-25T16:05:31.528053895Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "vzxcvxzcvxzcvxzcv",
+              "title": "zxc"
+            }
+          },
+          "deposit_end_time": "2019-11-28T10:57:00.402775963Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "0"
+          },
+          "id": "4",
+          "proposal_status": "DepositPeriod",
+          "submit_time": "2019-11-26T10:57:00.402775963Z",
+          "total_deposit": [
+            {
+              "amount": "100",
+              "denom": "darc"
+            }
+          ],
+          "voting_end_time": "0001-01-01T00:00:00Z",
+          "voting_start_time": "0001-01-01T00:00:00Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "xcvzxcvzxcvzxc",
+              "title": "zxcvz"
+            }
+          },
+          "deposit_end_time": "2019-11-28T10:57:22.329029075Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "0"
+          },
+          "id": "5",
+          "proposal_status": "DepositPeriod",
+          "submit_time": "2019-11-26T10:57:22.329029075Z",
+          "total_deposit": [
+            {
+              "amount": "100",
+              "denom": "darc"
+            }
+          ],
+          "voting_end_time": "0001-01-01T00:00:00Z",
+          "voting_start_time": "0001-01-01T00:00:00Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "cvbxcvbxcvb",
+              "title": "xcvbx"
+            }
+          },
+          "deposit_end_time": "2019-11-28T10:59:27.705904543Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "0"
+          },
+          "id": "6",
+          "proposal_status": "DepositPeriod",
+          "submit_time": "2019-11-26T10:59:27.705904543Z",
+          "total_deposit": [
+            {
+              "amount": "100",
+              "denom": "darc"
+            }
+          ],
+          "voting_end_time": "0001-01-01T00:00:00Z",
+          "voting_start_time": "0001-01-01T00:00:00Z"
         }
       ],
-      "starting_proposal_id": "2",
+      "starting_proposal_id": "7",
       "tally_params": {
         "quorum": "0.334000000000000000",
         "threshold": "0.500000000000000000",
         "veto": "0.334000000000000000"
       },
-      "votes": null,
+      "votes": [
+        {
+          "option": "Yes",
+          "proposal_id": "3",
+          "voter": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq"
+        },
+        {
+          "option": "Yes",
+          "proposal_id": "3",
+          "voter": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j"
+        },
+        {
+          "option": "Yes",
+          "proposal_id": "3",
+          "voter": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl"
+        },
+        {
+          "option": "Yes",
+          "proposal_id": "3",
+          "voter": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf"
+        },
+        {
+          "option": "Yes",
+          "proposal_id": "3",
+          "voter": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc"
+        }
+      ],
       "voting_params": {
         "voting_period": "172800000000000"
       }
     },
     "mint": {
       "minter": {
-        "annual_provisions": "524455917155979816613.137767669886968858",
-        "inflation": "0.130984422997386898"
+        "annual_provisions": "0.000000000000000000",
+        "inflation": "0.000000000000000000"
       },
       "params": {
         "blocks_per_year": "6311520",
         "goal_bonded": "0.670000000000000000",
-        "inflation_max": "0.200000000000000000",
-        "inflation_min": "0.070000000000000000",
-        "inflation_rate_change": "0.130000000000000000",
-        "mint_denom": "adarc"
+        "inflation_max": "0.000000000000000000",
+        "inflation_min": "0.000000000000000000",
+        "inflation_rate_change": "0.000000000000000000",
+        "mint_denom": "darc"
       }
     },
     "slashing": {
       "missed_blocks": {
-        "darcvalcons1feknla97vmzeg8r5gvaf4yw58ljq97m359znvn": [
+        "darcvalcons18j5002llfyewm3fxee3ytnzgsmjchlxz9t8phu": [
           {
-            "index": "12",
+            "index": "49",
             "missed": false
-          },
-          {
-            "index": "13",
-            "missed": false
-          },
-          {
-            "index": "20",
-            "missed": false
-          },
-          {
-            "index": "21",
-            "missed": false
-          },
-          {
-            "index": "23",
-            "missed": false
-          },
-          {
-            "index": "24",
-            "missed": false
-          },
-          {
-            "index": "25",
-            "missed": false
-          },
-          {
-            "index": "26",
-            "missed": false
-          },
-          {
-            "index": "27",
-            "missed": false
-          },
-          {
-            "index": "28",
-            "missed": false
-          },
-          {
-            "index": "29",
-            "missed": false
-          },
-          {
-            "index": "30",
-            "missed": false
-          },
-          {
-            "index": "31",
-            "missed": false
-          },
-          {
-            "index": "32",
-            "missed": false
-          },
-          {
-            "index": "33",
-            "missed": false
-          },
-          {
-            "index": "34",
-            "missed": false
-          },
-          {
-            "index": "35",
-            "missed": false
-          },
-          {
-            "index": "36",
-            "missed": false
-          },
+          }
+        ],
+        "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz": [
           {
             "index": "37",
-            "missed": false
-          },
-          {
-            "index": "39",
-            "missed": false
-          },
-          {
-            "index": "40",
-            "missed": false
-          },
-          {
-            "index": "41",
-            "missed": false
-          },
-          {
-            "index": "42",
-            "missed": false
-          },
-          {
-            "index": "43",
-            "missed": false
-          },
-          {
-            "index": "46",
-            "missed": false
-          },
-          {
-            "index": "51",
             "missed": false
           },
           {
@@ -694,167 +819,18 @@
             "missed": false
           },
           {
-            "index": "58",
-            "missed": false
-          },
-          {
-            "index": "82",
-            "missed": false
-          },
-          {
-            "index": "83",
-            "missed": false
-          },
-          {
-            "index": "91",
-            "missed": false
-          },
-          {
-            "index": "92",
+            "index": "53",
             "missed": false
           }
         ],
-        "darcvalcons1qfg5h8wfwdndxr4c5xj9rv0eg0azwe66wjut2m": [],
-        "darcvalcons1qrg8fcva2u6f9qltjxlx49sj33jf5h3fkf2tws": [
-          {
-            "index": "0",
-            "missed": true
-          },
-          {
-            "index": "1",
-            "missed": true
-          }
-        ],
-        "darcvalcons1rf35umeayqn7tccgkc98sxrsmllxzkmhhej957": [
-          {
-            "index": "12",
-            "missed": false
-          },
-          {
-            "index": "13",
-            "missed": false
-          },
-          {
-            "index": "20",
-            "missed": false
-          },
-          {
-            "index": "21",
-            "missed": false
-          },
-          {
-            "index": "23",
-            "missed": false
-          },
-          {
-            "index": "24",
-            "missed": false
-          },
-          {
-            "index": "25",
-            "missed": false
-          },
-          {
-            "index": "26",
-            "missed": false
-          },
-          {
-            "index": "27",
-            "missed": false
-          },
-          {
-            "index": "28",
-            "missed": false
-          },
-          {
-            "index": "29",
-            "missed": false
-          },
-          {
-            "index": "30",
-            "missed": false
-          },
+        "darcvalcons1dqw97rytn6pp0msu65sj9r387egs5uwmytnmlm": [],
+        "darcvalcons1l8s0xgnu3rcwvkhwq592njjkxtq9gdykg4wt77": [
           {
             "index": "31",
             "missed": false
-          },
-          {
-            "index": "32",
-            "missed": false
-          },
-          {
-            "index": "33",
-            "missed": false
-          },
-          {
-            "index": "34",
-            "missed": false
-          },
-          {
-            "index": "35",
-            "missed": false
-          },
-          {
-            "index": "36",
-            "missed": false
-          },
-          {
-            "index": "37",
-            "missed": false
-          },
-          {
-            "index": "39",
-            "missed": false
-          },
-          {
-            "index": "40",
-            "missed": false
-          },
-          {
-            "index": "41",
-            "missed": false
-          },
-          {
-            "index": "42",
-            "missed": false
-          },
-          {
-            "index": "43",
-            "missed": false
-          },
-          {
-            "index": "46",
-            "missed": false
-          },
-          {
-            "index": "51",
-            "missed": false
-          },
-          {
-            "index": "52",
-            "missed": false
-          },
-          {
-            "index": "58",
-            "missed": false
-          },
-          {
-            "index": "82",
-            "missed": false
-          },
-          {
-            "index": "83",
-            "missed": false
-          },
-          {
-            "index": "91",
-            "missed": false
-          },
-          {
-            "index": "92",
-            "missed": false
           }
-        ]
+        ],
+        "darcvalcons1pz5qkdmzqm8a5qdxlrx47tac4kz66hudhzetta": []
       },
       "params": {
         "downtime_jail_duration": "600000000000",
@@ -865,36 +841,44 @@
         "slash_fraction_downtime": "0.010000000000000000"
       },
       "signing_infos": {
-        "darcvalcons1feknla97vmzeg8r5gvaf4yw58ljq97m359znvn": {
-          "address": "darcvalcons1feknla97vmzeg8r5gvaf4yw58ljq97m359znvn",
-          "index_offset": "47816",
+        "darcvalcons18j5002llfyewm3fxee3ytnzgsmjchlxz9t8phu": {
+          "address": "darcvalcons18j5002llfyewm3fxee3ytnzgsmjchlxz9t8phu",
+          "index_offset": "75180",
           "jailed_until": "1970-01-01T00:00:00Z",
           "missed_blocks_counter": "0",
           "start_height": "0",
           "tombstoned": false
         },
-        "darcvalcons1qfg5h8wfwdndxr4c5xj9rv0eg0azwe66wjut2m": {
-          "address": "darcvalcons1qfg5h8wfwdndxr4c5xj9rv0eg0azwe66wjut2m",
-          "index_offset": "47816",
+        "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz": {
+          "address": "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz",
+          "index_offset": "75180",
           "jailed_until": "1970-01-01T00:00:00Z",
           "missed_blocks_counter": "0",
           "start_height": "0",
           "tombstoned": false
         },
-        "darcvalcons1qrg8fcva2u6f9qltjxlx49sj33jf5h3fkf2tws": {
-          "address": "darcvalcons1qrg8fcva2u6f9qltjxlx49sj33jf5h3fkf2tws",
-          "index_offset": "2",
-          "jailed_until": "2019-10-11T13:51:00.763264142Z",
-          "missed_blocks_counter": "2",
-          "start_height": "0",
-          "tombstoned": false
-        },
-        "darcvalcons1rf35umeayqn7tccgkc98sxrsmllxzkmhhej957": {
-          "address": "darcvalcons1rf35umeayqn7tccgkc98sxrsmllxzkmhhej957",
-          "index_offset": "47816",
+        "darcvalcons1dqw97rytn6pp0msu65sj9r387egs5uwmytnmlm": {
+          "address": "darcvalcons1dqw97rytn6pp0msu65sj9r387egs5uwmytnmlm",
+          "index_offset": "75180",
           "jailed_until": "1970-01-01T00:00:00Z",
           "missed_blocks_counter": "0",
           "start_height": "0",
+          "tombstoned": false
+        },
+        "darcvalcons1l8s0xgnu3rcwvkhwq592njjkxtq9gdykg4wt77": {
+          "address": "darcvalcons1l8s0xgnu3rcwvkhwq592njjkxtq9gdykg4wt77",
+          "index_offset": "75180",
+          "jailed_until": "1970-01-01T00:00:00Z",
+          "missed_blocks_counter": "0",
+          "start_height": "0",
+          "tombstoned": false
+        },
+        "darcvalcons1pz5qkdmzqm8a5qdxlrx47tac4kz66hudhzetta": {
+          "address": "darcvalcons1pz5qkdmzqm8a5qdxlrx47tac4kz66hudhzetta",
+          "index_offset": "17",
+          "jailed_until": "1970-01-01T00:00:00Z",
+          "missed_blocks_counter": "0",
+          "start_height": "75162",
           "tombstoned": false
         }
       }
@@ -902,59 +886,62 @@
     "staking": {
       "delegations": [
         {
-          "delegator_address": "darc1s9y7c7xk9gu80ju6qjws0nu92zzrj5adcs5jr8",
+          "delegator_address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq",
           "shares": "100000000.000000000000000000",
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
+          "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
         },
         {
-          "delegator_address": "darc16ear7uh6v4hfll2cklvcwtuvu870swwqzn98y8",
+          "delegator_address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+          "shares": "50000000.000000000000000000",
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
+        },
+        {
+          "delegator_address": "darc1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3sw9u5vv",
+          "shares": "10100000.000000000000000000",
+          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
+        },
+        {
+          "delegator_address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
           "shares": "100000000.000000000000000000",
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
+          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
-          "delegator_address": "darc1uqph2ltxgw3julrg8e40ypkzpvgc9s5wp8x7qe",
+          "delegator_address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
           "shares": "100000000.000000000000000000",
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
         },
         {
-          "delegator_address": "darc1ugv7ukzyedmqn60r3pc7wvc5wsalaustugcajn",
+          "delegator_address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
           "shares": "100000000.000000000000000000",
-          "validator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m"
-        },
-        {
-          "delegator_address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
-          "shares": "10000000000000.000000000000000000",
-          "validator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400"
-        },
-        {
-          "delegator_address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
-          "shares": "2336824642326030250.000000000000000000",
-          "validator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0"
-        },
-        {
-          "delegator_address": "darc1uk4gv6h4jv309z4g8qhy36wujdpksfspdkulrh",
-          "shares": "726758787600000.000000000000000000",
-          "validator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3"
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
       "exported": true,
-      "last_total_power": "2337551401413",
+      "last_total_power": "460",
       "last_validator_powers": [
         {
-          "Address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0",
-          "Power": "2336824642426"
+          "Address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng",
+          "Power": "100"
         },
         {
-          "Address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3",
-          "Power": "726758887"
+          "Address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy",
+          "Power": "10"
         },
         {
-          "Address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m",
+          "Address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h",
+          "Power": "150"
+        },
+        {
+          "Address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p",
+          "Power": "100"
+        },
+        {
+          "Address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s",
           "Power": "100"
         }
       ],
       "params": {
-        "bond_denom": "adarc",
+        "bond_denom": "darc",
         "max_entries": 7,
         "max_validators": 100,
         "unbonding_time": "600000000000"
@@ -969,94 +956,119 @@
               "max_rate": "0.000000000000000000",
               "rate": "0.000000000000000000"
             },
-            "update_time": "2019-10-08T12:42:49.639430386Z"
+            "update_time": "2019-11-22T15:02:16.689534617Z"
           },
-          "consensus_pubkey": "darcvalconspub1zcjduepq84meszxdn8fjveztf93gt4t62cp4h9et5ren33rx2c8kky8xwkkq20n8gd",
-          "delegator_shares": "10000100000000.000000000000000000",
-          "description": {
-            "details": "",
-            "identity": "",
-            "moniker": "node1",
-            "website": ""
-          },
-          "jailed": true,
-          "min_self_delegation": "1",
-          "operator_address": "darcvaloper1s9y7c7xk9gu80ju6qjws0nu92zzrj5adf5y400",
-          "status": 0,
-          "tokens": "9900099000000",
-          "unbonding_height": "39388",
-          "unbonding_time": "2019-10-11T13:51:00.763264142Z"
-        },
-        {
-          "commission": {
-            "commission_rates": {
-              "max_change_rate": "0.000000000000000000",
-              "max_rate": "0.000000000000000000",
-              "rate": "0.000000000000000000"
-            },
-            "update_time": "2019-10-08T12:42:49.639430386Z"
-          },
-          "consensus_pubkey": "darcvalconspub1zcjduepqcm5wwmfd557npkt4rjp6ncl8xqw7n5lzhazmg4nngqv075220c7q3z5n6r",
-          "delegator_shares": "2336824642426030250.000000000000000000",
-          "description": {
-            "details": "",
-            "identity": "",
-            "moniker": "node3",
-            "website": ""
-          },
-          "jailed": false,
-          "min_self_delegation": "1",
-          "operator_address": "darcvaloper16ear7uh6v4hfll2cklvcwtuvu870swwqnh4qg0",
-          "status": 2,
-          "tokens": "2336824642426030250",
-          "unbonding_height": "0",
-          "unbonding_time": "1970-01-01T00:00:00Z"
-        },
-        {
-          "commission": {
-            "commission_rates": {
-              "max_change_rate": "0.000000000000000000",
-              "max_rate": "0.000000000000000000",
-              "rate": "0.000000000000000000"
-            },
-            "update_time": "2019-10-08T12:42:49.639430386Z"
-          },
-          "consensus_pubkey": "darcvalconspub1zcjduepqdasssd7kgvgfy8cz69l5a9epnua9u92lrcytpdmmj7zvpkp5864qlm9rsa",
-          "delegator_shares": "726758887600000.000000000000000000",
-          "description": {
-            "details": "",
-            "identity": "",
-            "moniker": "node0",
-            "website": ""
-          },
-          "jailed": false,
-          "min_self_delegation": "1",
-          "operator_address": "darcvaloper1uqph2ltxgw3julrg8e40ypkzpvgc9s5wsrkev3",
-          "status": 2,
-          "tokens": "726758887600000",
-          "unbonding_height": "0",
-          "unbonding_time": "1970-01-01T00:00:00Z"
-        },
-        {
-          "commission": {
-            "commission_rates": {
-              "max_change_rate": "0.000000000000000000",
-              "max_rate": "0.000000000000000000",
-              "rate": "0.000000000000000000"
-            },
-            "update_time": "2019-10-08T12:42:49.639430386Z"
-          },
-          "consensus_pubkey": "darcvalconspub1zcjduepqgc3l0k63fgc4mp82psc6rrtg0ae9gspgsaa0aad5t4ceq98j747sr29mdu",
+          "consensus_pubkey": "darcvalconspub1zcjduepquy9h8mgakw0yfl90z9f2pgjynej0n577rn2jxzsynrglfyd4hvzqwt3w5g",
           "delegator_shares": "100000000.000000000000000000",
           "description": {
-            "details": "",
+            "details": "2",
             "identity": "",
-            "moniker": "node2",
+            "moniker": "testnode-2",
             "website": ""
           },
           "jailed": false,
           "min_self_delegation": "1",
-          "operator_address": "darcvaloper1ugv7ukzyedmqn60r3pc7wvc5wsalaustdvg67m",
+          "operator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng",
+          "status": 2,
+          "tokens": "100000000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2019-11-27T10:57:20.287498165Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqltyjqzandcpgtp7fumkepgalemkanz838mmt6z4wdacgshhw2gxqqdzgrp",
+          "delegator_shares": "10100000.000000000000000000",
+          "description": {
+            "details": "",
+            "identity": "",
+            "moniker": "dmm0",
+            "website": "cc.com"
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy",
+          "status": 2,
+          "tokens": "10100000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2019-11-22T15:02:16.689534617Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqjm30dzsl9fschldrpvnm9djx4q9wmfjgh8et3ezjdvufmwpz328qgx2m7n",
+          "delegator_shares": "150000000.000000000000000000",
+          "description": {
+            "details": "1",
+            "identity": "",
+            "moniker": "testnode-1",
+            "website": "satoshi.com"
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h",
+          "status": 2,
+          "tokens": "150000000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2019-11-22T15:02:16.689534617Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqm6k6vc6e6gdwu03uvqdx55dghhtmnjfvythhen86af95hkg76juqpqat7k",
+          "delegator_shares": "100000000.000000000000000000",
+          "description": {
+            "details": "3",
+            "identity": "",
+            "moniker": "testnode-3",
+            "website": ""
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p",
+          "status": 2,
+          "tokens": "100000000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2019-11-22T15:02:16.689534617Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepq9hmnjzq4smmsmwgwk7zw5zfhp4806yanueqwj7xwcat436rxy2uslxsxqc",
+          "delegator_shares": "100000000.000000000000000000",
+          "description": {
+            "details": "4",
+            "identity": "",
+            "moniker": "testnode-4",
+            "website": ""
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s",
           "status": 2,
           "tokens": "100000000",
           "unbonding_height": "0",
@@ -1067,8 +1079,8 @@
     "supply": {
       "supply": [
         {
-          "amount": "4003956470843838965149",
-          "denom": "adarc"
+          "amount": "4002562664",
+          "denom": "darc"
         }
       ]
     }
@@ -1089,34 +1101,53 @@
       ]
     }
   },
-  "genesis_time": "2019-10-08T12:42:49.639430386Z",
+  "genesis_time": "2019-11-22T15:02:16.689534617Z",
   "validators": [
     {
       "address": "",
-      "name": "node3",
-      "power": "2336824642426",
-      "pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "xujnbS2lPTDZdRyDqePnMB3p0+K/RbRWc0AY/1FKfjw="
-      }
-    },
-    {
-      "address": "",
-      "name": "node0",
-      "power": "726758887",
-      "pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "b2EIN9ZDEJIfAtF/TpchnzpeFV8eCLC3e5eEwNg0Pqo="
-      }
-    },
-    {
-      "address": "",
-      "name": "node2",
+      "name": "testnode-2",
       "power": "100",
       "pub_key": {
         "type": "tendermint/PubKeyEd25519",
-        "value": "RiP321FKMV2E6gwxoY1of3JUQCiHev71tF1xkBTy9X0="
+        "value": "4Qtz7R2znkT8rxFSoKJEnmT5094c1SMKBJjR9JG1uwQ="
+      }
+    },
+    {
+      "address": "",
+      "name": "dmm0",
+      "power": "10",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "+skgC7NuAoWHyebtkKO/zu3ZiPE+9r0Krm9wiF7uUgw="
+      }
+    },
+    {
+      "address": "",
+      "name": "testnode-1",
+      "power": "150",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "luL2ih8qYYv9owsnsrZGqArtpki58rjkUms4nbgiio4="
+      }
+    },
+    {
+      "address": "",
+      "name": "testnode-3",
+      "power": "100",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "3q2mY1nSGu4+PGAaalGovde5ySwi73zM+upLS9ke1Lg="
+      }
+    },
+    {
+      "address": "",
+      "name": "testnode-4",
+      "power": "100",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "Lfc5CBWG9w25DreE6gk3DU79E7PmQOl4zsdXWOhmIrk="
       }
     }
   ]
 }
+

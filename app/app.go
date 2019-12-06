@@ -2,6 +2,8 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/konstellation/konstellation/x/issue"
+	"github.com/konstellation/konstellation/x/issue/keeper"
 	"os"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -69,6 +71,7 @@ var (
 		crisis.AppModuleBasic{},
 		slashing.AppModuleBasic{},
 		supply.AppModuleBasic{},
+		issue.AppModuleBasic{},
 	)
 
 	// GenesisUpdaters is in charge of changing default genesis provided by cosmos sdk modules
@@ -132,6 +135,7 @@ type KonstellationApp struct {
 	distributionKeeper distribution.Keeper
 	govKeeper          gov.Keeper
 	crisisKeeper       crisis.Keeper
+	issueKeeper        issue.Keeper
 	paramsKeeper       params.Keeper
 
 	// Module Manager
@@ -156,6 +160,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		distribution.StoreKey,
 		slashing.StoreKey,
 		gov.StoreKey,
+		issue.StoreKey,
 		params.StoreKey,
 	)
 
@@ -239,6 +244,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		app.paramsKeeper.Subspace(slashing.DefaultParamspace),
 		slashing.DefaultCodespace,
 	)
+
 	app.crisisKeeper = crisis.NewKeeper(
 		app.paramsKeeper.Subspace(crisis.DefaultParamspace),
 		invCheckPeriod,
@@ -271,6 +277,14 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 			app.slashingKeeper.Hooks()),
 	)
 
+	app.issueKeeper = keeper.NewKeeper(
+		app.cdc,
+		keys[issue.StoreKey],
+		app.bankKeeper,
+		app.supplyKeeper,
+		issue.DefaultCodespace,
+	)
+
 	// NOTE: Any module instantiated in the module manager that is later modified
 	// must be passed by reference here.
 	app.mm = module.NewManager(
@@ -285,6 +299,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		mint.NewAppModule(app.mintKeeper),
 		slashing.NewAppModule(app.slashingKeeper, app.stakingKeeper),
 		staking.NewAppModule(app.stakingKeeper, app.distributionKeeper, app.accountKeeper, app.supplyKeeper),
+		issue.NewAppModule(app.issueKeeper),
 	)
 
 	// During begin block slashing happens after distribution.BeginBlocker so that
@@ -310,6 +325,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		supply.ModuleName,
 		crisis.ModuleName,
 		genutil.ModuleName,
+		issue.ModuleName,
 	)
 
 	app.mm.RegisterInvariants(&app.crisisKeeper)
