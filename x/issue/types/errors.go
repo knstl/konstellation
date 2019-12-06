@@ -26,6 +26,10 @@ func ErrNilOwner(codespace sdk.CodespaceType) sdk.Error {
 	return sdk.NewError(codespace, CodeInvalidInput, "Owner is nil")
 }
 
+func ErrInvalidIssueParams() sdk.Error {
+	return sdk.NewError(DefaultCodespace, CodeInvalidInput, "Invalid issue params")
+}
+
 // Error constructors
 //func ErrOwnerMismatch(issueID string) sdk.Error {
 //	return sdk.NewError(DefaultCodespace, CodeIssuerMismatch, fmt.Sprintf("Owner mismatch with token %s", issueID))

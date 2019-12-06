@@ -95,29 +95,34 @@ func (k Keeper) AddIssue(ctx sdk.Context, issue *types.CoinIssue) {
 }
 
 //Create a issue
-func (k *Keeper) CreateIssue(ctx sdk.Context, issue *types.CoinIssue) (sdk.Coins, sdk.Error) {
+func (k *Keeper) CreateIssue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
 	store := ctx.KVStore(k.key)
 	id, err := k.getNewIssueID(store)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	issue.IssueTime = ctx.BlockHeader().Time.Unix()
 	issue.IssueId = KeyIssueIdStr(id)
 
 	k.AddIssue(ctx, issue)
 
-	coins, err := k.ck.AddCoins(ctx, issue.GetOwner(), issue.ToCoins())
-	if err != nil {
-		return nil, err
+	if err := k.sk.MintCoins(ctx, types.ModuleName, issue.ToCoins()); err != nil {
+		return err
 	}
 
-	// update total supply
-	supply := k.sk.GetSupply(ctx)
-	supply = supply.Inflate(issue.ToCoins())
+	if err := k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, issue.GetOwner(), issue.ToCoins()); err != nil {
+		return err
+	}
 
-	k.sk.SetSupply(ctx, supply)
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeIssue,
+			sdk.NewAttribute(sdk.AttributeKeyAmount, issue.ToCoin().String()),
+			sdk.NewAttribute(types.AttributeKeyIssuer, issue.GetIssuer().String()),
+		),
+	)
 
-	return coins, err
+	return err
 }
 
 //Get address from a issue

@@ -31,33 +31,22 @@ func handleMsgIssue(ctx sdk.Context, msg types.MsgIssue, k Keeper) sdk.Result {
 
 	params, err := types.NewIssueParams(msg.IssueParams)
 	if err != nil {
-		return sdk.Result{}
+		return types.ErrInvalidIssueParams().Result()
 	}
 
 	coinIssue := types.NewCoinIssue(msg.Owner, msg.Issuer, params)
 
-	coins, err := k.CreateIssue(ctx, coinIssue)
-	if err != nil {
-		return sdk.Result{}
+	if err := k.CreateIssue(ctx, coinIssue); err != nil {
+		return err.Result()
 	}
 
-	fmt.Println(coins)
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+			sdk.NewAttribute(sdk.AttributeKeySender, msg.Owner.String()),
+		),
+	)
 
-	return sdk.Result{
-		Data: k.GetCodec().MustMarshalBinaryLengthPrefixed(coinIssue.IssueId),
-	}
-	//err := k.SetWithdrawAddr(ctx, msg.DelegatorAddress, msg.WithdrawAddress)
-	//if err != nil {
-	//	return err.Result()
-	//}
-
-	//ctx.EventManager().EmitEvent(
-	//	sdk.NewEvent(
-	//		sdk.EventTypeMessage,
-	//		sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-	//		sdk.NewAttribute(sdk.AttributeKeySender, msg.DelegatorAddress.String()),
-	//	),
-	//)
-
-	//return sdk.Result{Events: ctx.EventManager().Events()}
+	return sdk.Result{Events: ctx.EventManager().Events()}
 }

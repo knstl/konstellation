@@ -15,5 +15,7 @@ type CoinKeeper interface {
 type SupplyKeeper interface {
 	GetSupply(sdk.Context) exported.SupplyI
 	SetSupply(sdk.Context, exported.SupplyI)
-	MintCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) sdk.Error
+	MintCoins(sdk.Context, string, sdk.Coins) sdk.Error
+	SendCoinsFromModuleToAccount(sdk.Context, string, sdk.AccAddress, sdk.Coins) sdk.Error
+	//BurnCoins(sdk.Context, string, sdk.Coins) sdk.Error
 }

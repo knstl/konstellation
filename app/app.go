@@ -102,6 +102,9 @@ var (
 		gov.ModuleName: {
 			supply.Burner,
 		},
+		issue.ModuleName: {
+			supply.Minter,
+		},
 	}
 )
 
