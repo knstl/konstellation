@@ -18,11 +18,11 @@ func GetQueryParamsPath() string {
 	return fmt.Sprintf("%s/%s/%s", "custom", types.QuerierRoute, types.QueryParams)
 }
 
-func QueryIssueBySymbol(symbol string, cliCtx context.CLIContext) ([]byte, int64, error) {
+func QueryIssueBySymbol(cliCtx context.CLIContext, symbol string) ([]byte, int64, error) {
 	return cliCtx.QueryWithData(GetQueryIssueSearchPath(symbol), nil)
 }
 
-func QueryIssueByID(issueId string, cliCtx context.CLIContext) ([]byte, int64, error) {
+func QueryIssueByID(cliCtx context.CLIContext, issueId string) ([]byte, int64, error) {
 	return cliCtx.QueryWithData(GetQueryIssuePath(issueId), nil)
 }
 

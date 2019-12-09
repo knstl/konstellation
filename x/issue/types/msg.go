@@ -1,12 +1,14 @@
 package types
 
-import sdk "github.com/cosmos/cosmos-sdk/types"
+import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
+)
 
 const (
 	TypeMsgIssue = "issue"
 )
 
-var _, _ sdk.Msg = &MsgIssue{}, &MsgTransfer{}
+var _, _, _ sdk.Msg = &MsgIssue{}, &MsgTransfer{}, &MsgApprove{}
 
 type MsgIssue struct {
 	Owner        sdk.AccAddress `json:"owner" yaml:"owner"`
@@ -110,4 +112,49 @@ func (msg MsgTransfer) GetSignBytes() []byte {
 // GetSigners Implements Msg.
 func (msg MsgTransfer) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.FromAddress}
+}
+
+// MsgApprove - high level transaction of the coin module
+type MsgApprove struct {
+	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
+	Spender sdk.AccAddress `json:"spender" yaml:"spender"`
+	Amount  sdk.Coin       `json:"amount" yaml:"amount"`
+}
+
+// NewMsgApprove - construct arbitrary multi-in, multi-out send msg.
+func NewMsgApprove(owner, spender sdk.AccAddress, amount sdk.Coin) MsgApprove {
+	return MsgApprove{owner, spender, amount}
+}
+
+// Route Implements Msg.
+func (msg MsgApprove) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgApprove) Type() string { return "send" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgApprove) ValidateBasic() sdk.Error {
+	if msg.Owner.Empty() {
+		return sdk.ErrInvalidAddress("missing owner address")
+	}
+	if msg.Spender.Empty() {
+		return sdk.ErrInvalidAddress("missing spender address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgApprove) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgApprove) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Owner}
 }

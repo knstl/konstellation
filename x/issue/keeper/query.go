@@ -12,7 +12,7 @@ import (
 //	}
 //	return bz, nil
 //}
-func QueryIssue(ctx sdk.Context, issueID string, keeper Keeper) ([]byte, sdk.Error) {
+func QueryIssue(ctx sdk.Context, k Keeper, issueID string) ([]byte, sdk.Error) {
 	//issue := keeper.GetIssue(ctx, issueID)
 	//if issue == nil {
 	//	return nil, errors.ErrUnknownIssue(issueID)

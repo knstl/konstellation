@@ -1,8 +1,10 @@
 package types
 
 import (
+	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mitchellh/mapstructure"
+	"math/big"
 	"strings"
 )
 
@@ -17,25 +19,6 @@ const (
 	Custom   = "custom"
 )
 
-type IssueParams struct {
-	Name               string  `json:"name"`
-	Symbol             string  `json:"symbol"`
-	TotalSupply        sdk.Int `json:"total_supply"`
-	Decimals           uint    `json:"decimals"`
-	Description        string  `json:"description"`
-	BurnOwnerDisabled  bool    `json:"burn_owner_disabled"`
-	BurnHolderDisabled bool    `json:"burn_holder_disabled"`
-	BurnFromDisabled   bool    `json:"burn_from_disabled"`
-	MintingFinished    bool    `json:"minting_finished"`
-	FreezeDisabled     bool    `json:"freeze_disabled"`
-}
-
-func NewIssueParams(data interface{}) (*IssueParams, error) {
-	var issue IssueParams
-	err := mapstructure.Decode(data, &issue)
-	return &issue, err
-}
-
 type IIssue interface {
 	GetIssueId() string
 	SetIssueId(string)
@@ -49,7 +32,23 @@ type IIssue interface {
 	GetSymbol() string
 	SetSymbol(string)
 
+	GetDecimals() uint
+	SetDecimals(uint)
+
 	ToCoin() sdk.Coin
+}
+
+type CoinIssues []CoinIssue
+
+//nolint
+func (coinIssues CoinIssues) String() string {
+	out := fmt.Sprintf("%-17s|%-44s|%-10s|%-6s|%-18s|%-8s|%s\n",
+		"IssueID", "Owner", "Name", "Symbol", "TotalSupply", "Decimals", "IssueTime")
+	for _, issue := range coinIssues {
+		out += fmt.Sprintf("%-17s|%-44s|%-10s|%-6s|%-18s|%-8d|%d\n",
+			issue.IssueId, issue.GetOwner().String(), issue.Name, issue.Symbol, issue.TotalSupply.String(), issue.Decimals, issue.IssueTime)
+	}
+	return strings.TrimSpace(out)
 }
 
 type CoinIssue struct {
@@ -112,10 +111,37 @@ func (ci *CoinIssue) SetSymbol(symbol string) {
 	ci.Symbol = symbol
 }
 
+func (ci *CoinIssue) GetDecimals() uint {
+	return ci.Decimals
+}
+func (ci *CoinIssue) SetDecimals(decimals uint) {
+	ci.Decimals = decimals
+}
+
 func (ci *CoinIssue) ToCoin() sdk.Coin {
 	return sdk.NewCoin(ci.IssueId, ci.TotalSupply)
 }
 
 func (ci *CoinIssue) ToCoins() sdk.Coins {
 	return sdk.NewCoins(ci.ToCoin())
+}
+
+func getDecimalsInt(decimals uint) sdk.Int {
+	exp := new(big.Int).Exp(big.NewInt(10), big.NewInt(int64(decimals)), nil)
+	return sdk.NewIntFromBigInt(exp)
+}
+
+func (ci *CoinIssue) QuoDecimals(amount sdk.Int) sdk.Int {
+	return amount.Quo(getDecimalsInt(ci.GetDecimals()))
+}
+
+func IsIssueId(issueID string) bool {
+	return strings.HasPrefix(issueID, IDPreStr)
+}
+
+func CheckIssueId(issueID string) sdk.Error {
+	if !IsIssueId(issueID) {
+		return ErrIssueID(issueID)
+	}
+	return nil
 }

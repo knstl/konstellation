@@ -82,79 +82,6 @@ func (k Keeper) setSymbolIssues(ctx sdk.Context, symbol string, issueIDs []strin
 	store.Set(KeySymbolIssues(symbol), bz)
 }
 
-//Keys add
-//Add a issue
-func (k Keeper) AddIssue(ctx sdk.Context, issue *types.CoinIssue) {
-	k.addAddressIssues(ctx, issue)
-
-	issueIDs := k.GetSymbolIssues(ctx, issue.GetSymbol())
-	issueIDs = append(issueIDs, issue.GetIssueId())
-	k.setSymbolIssues(ctx, issue.GetSymbol(), issueIDs)
-
-	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(issue)
-	store.Set(KeyIssuer(issue.GetIssueId()), bz)
-}
-
-//Create a issue
-func (k *Keeper) CreateIssue(ctx sdk.Context, owner, issuer sdk.AccAddress, params *types.IssueParams) *types.CoinIssue {
-	id := k.ResolveNextIssueID(ctx)
-	issue := types.NewCoinIssue(owner, issuer, params)
-	issue.IssueTime = ctx.BlockHeader().Time.Unix()
-	issue.IssueId = KeyIssueIdStr(id)
-
-	return issue
-}
-
-//Create a issue
-func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
-	k.AddIssue(ctx, issue)
-
-	if err := k.sk.MintCoins(ctx, types.ModuleName, issue.ToCoins()); err != nil {
-		return err
-	}
-
-	if err := k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, issue.GetOwner(), issue.ToCoins()); err != nil {
-		return err
-	}
-
-	k.TestAllowance(ctx)
-
-	ctx.EventManager().EmitEvent(
-		sdk.NewEvent(
-			types.EventTypeIssue,
-			sdk.NewAttribute(sdk.AttributeKeyAmount, issue.ToCoin().String()),
-			sdk.NewAttribute(types.AttributeKeyIssuer, issue.GetIssuer().String()),
-		),
-	)
-
-	return nil
-}
-
-func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, amount sdk.Coins) sdk.Error {
-	if !k.ck.GetSendEnabled(ctx) {
-		return bank.ErrSendDisabled(k.codespace)
-	}
-
-	if k.ck.BlacklistedAddr(to) {
-		return sdk.ErrUnauthorized(fmt.Sprintf("%s is not allowed to receive transactions", to))
-	}
-
-	err := k.ck.SendCoins(ctx, from, to, amount)
-	if err != nil {
-		return err
-	}
-
-	ctx.EventManager().EmitEvent(
-		sdk.NewEvent(
-			sdk.EventTypeMessage,
-			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-		),
-	)
-
-	return nil
-}
-
 //Get address from a issue
 func (k Keeper) GetAddressIssues(ctx sdk.Context, accAddress string) (issueIDs []string) {
 	store := ctx.KVStore(k.key)
@@ -175,6 +102,33 @@ func (k Keeper) GetSymbolIssues(ctx sdk.Context, symbol string) (issueIDs []stri
 	}
 	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issueIDs)
 	return issueIDs
+}
+
+//Returns issue by issueID
+func (k Keeper) GetIssue(ctx sdk.Context, issueID string) *types.CoinIssue {
+	store := ctx.KVStore(k.key)
+	bz := store.Get(KeyIssuer(issueID))
+	if len(bz) == 0 {
+		return nil
+	}
+	var coinIssue types.CoinIssue
+	k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &coinIssue)
+	return &coinIssue
+}
+
+//Returns issues by accAddress
+func (k Keeper) GetIssues(ctx sdk.Context, accAddress string) types.CoinIssues {
+	issueIDs := k.GetAddressIssues(ctx, accAddress)
+	length := len(issueIDs)
+	if length == 0 {
+		return nil
+	}
+	issues := make(types.CoinIssues, 0, length)
+	for _, v := range issueIDs {
+		issues = append(issues, *k.GetIssue(ctx, v))
+	}
+
+	return issues
 }
 
 // Gets the next available issueID and increments it
@@ -198,16 +152,163 @@ func (k Keeper) ResolveNextIssueID(ctx sdk.Context) uint64 {
 	return id
 }
 
-func (k Keeper) TestAllowance(ctx sdk.Context) {
-	var a int64
+func (k Keeper) Iterator(ctx sdk.Context, startIssueId string) sdk.Iterator {
 	store := ctx.KVStore(k.key)
-	bz := store.Get(KeyAllowance("1"))
-	if bz == nil {
-		bz = k.cdc.MustMarshalBinaryLengthPrefixed(1)
+	endIssueId := startIssueId
 
-		//return 0, sdk.NewError(k.codespace, types.CodeInvalidGenesis, "InitialIssueID never set")
+	if len(startIssueId) == 0 {
+		endIssueId = KeyIssueIdStr(types.CoinIssueMaxId)
+		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
+	} else {
+		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
 	}
-	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &a)
-	bz = k.cdc.MustMarshalBinaryLengthPrefixed(a + 1)
-	store.Set(KeyAllowance("1"), bz)
+	iterator := store.ReverseIterator(KeyIssuer(startIssueId), KeyIssuer(endIssueId))
+	return iterator
+}
+
+func (k Keeper) ListAll(ctx sdk.Context) types.CoinIssues {
+	iterator := k.Iterator(ctx, "")
+	defer iterator.Close()
+	list := make(types.CoinIssues, 0)
+	for ; iterator.Valid(); iterator.Next() {
+		bz := iterator.Value()
+		if len(bz) == 0 {
+			continue
+		}
+		var issue types.CoinIssue
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
+		list = append(list, issue)
+	}
+	return list
+}
+
+func (k Keeper) List(ctx sdk.Context, params types.IssuesParams) []types.CoinIssue {
+	if params.Owner != "" {
+		return k.GetIssues(ctx, params.Owner)
+	}
+
+	iterator := k.Iterator(ctx, params.StartIssueId)
+	defer iterator.Close()
+	list := make(types.CoinIssues, 0, params.Limit)
+	for ; iterator.Valid(); iterator.Next() {
+		bz := iterator.Value()
+		if len(bz) == 0 {
+			continue
+		}
+		var issue types.CoinIssue
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
+		list = append(list, issue)
+		if len(list) >= params.Limit {
+			break
+		}
+	}
+	return list
+}
+
+func (k Keeper) Allowance(ctx sdk.Context, owner sdk.AccAddress, spender sdk.AccAddress, issueID string) (amount sdk.Int) {
+	store := ctx.KVStore(k.key)
+	bz := store.Get(KeyAllowance(issueID, owner, spender))
+	if bz == nil {
+		return sdk.ZeroInt()
+	}
+	k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &amount)
+	return amount
+}
+
+//Keys add
+//Add a issue
+func (k Keeper) addIssue(ctx sdk.Context, issue *types.CoinIssue) {
+	k.addAddressIssues(ctx, issue)
+
+	issueIDs := k.GetSymbolIssues(ctx, issue.GetSymbol())
+	issueIDs = append(issueIDs, issue.GetIssueId())
+	k.setSymbolIssues(ctx, issue.GetSymbol(), issueIDs)
+
+	store := ctx.KVStore(k.key)
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(issue)
+	store.Set(KeyIssuer(issue.GetIssueId()), bz)
+}
+
+func (k Keeper) setAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
+	store := ctx.KVStore(k.key)
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(amount.Amount)
+	store.Set(KeyAllowance(amount.Denom, owner, spender), bz)
+}
+
+func (k *Keeper) approve(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
+	k.setAllowance(ctx, owner, spender, amount)
+}
+
+//Create a issue
+func (k *Keeper) CreateIssue(ctx sdk.Context, owner, issuer sdk.AccAddress, params *types.IssueParams) *types.CoinIssue {
+	id := k.ResolveNextIssueID(ctx)
+	issue := types.NewCoinIssue(owner, issuer, params)
+	issue.IssueTime = ctx.BlockHeader().Time.Unix()
+	issue.IssueId = KeyIssueIdStr(id)
+
+	return issue
+}
+
+//Create a issue
+func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
+	k.addIssue(ctx, issue)
+
+	if err := k.sk.MintCoins(ctx, types.ModuleName, issue.ToCoins()); err != nil {
+		return err
+	}
+
+	if err := k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, issue.GetOwner(), issue.ToCoins()); err != nil {
+		return err
+	}
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeIssue,
+			sdk.NewAttribute(sdk.AttributeKeyAmount, issue.ToCoin().String()),
+			sdk.NewAttribute(types.AttributeKeyIssuer, issue.GetIssuer().String()),
+		),
+	)
+
+	return nil
+}
+
+func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, amount sdk.Coins) sdk.Error {
+	if !k.ck.GetSendEnabled(ctx) {
+		return bank.ErrSendDisabled(k.codespace)
+	}
+
+	if k.ck.BlacklistedAddr(to) {
+		return sdk.ErrUnauthorized(fmt.Sprintf("%s is not allowed to receive transactions", to))
+	}
+
+	if err := k.ck.SendCoins(ctx, from, to, amount); err != nil {
+		return err
+	}
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeTransfer,
+			sdk.NewAttribute(sdk.AttributeKeySender, from.String()),
+			sdk.NewAttribute(types.AttributeKeyRecipient, to.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.String()),
+		),
+	)
+
+	return nil
+}
+
+func (k *Keeper) Approve(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) sdk.Error {
+	k.approve(ctx, owner, spender, amount)
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeApprove,
+			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
+			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
+			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.Amount.String()),
+		),
+	)
+
+	return nil
 }

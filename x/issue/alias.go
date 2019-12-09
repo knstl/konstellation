@@ -25,7 +25,6 @@ const (
 var (
 	// functions aliases
 	//NewAccountKeeper                  = keeper.NewAccountKeeper
-	NewQuerier                  = keeper.NewQuerier
 	RegisterCodec               = types.RegisterCodec
 	NewGenesisState             = types.NewGenesisState
 	DefaultGenesisState         = types.DefaultGenesisState

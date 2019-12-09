@@ -9,8 +9,9 @@ import (
 type CodeType = sdk.CodeType
 
 const (
-	DefaultCodespace sdk.CodespaceType = "issue"
-	CodeInvalidInput CodeType          = 999
+	DefaultCodespace    sdk.CodespaceType = "issue"
+	CodeInvalidInput    CodeType          = 103
+	CodeIssueIDNotValid sdk.CodeType      = 1
 )
 
 //convert sdk.Error to error
@@ -28,6 +29,10 @@ func ErrNilOwner(codespace sdk.CodespaceType) sdk.Error {
 
 func ErrInvalidIssueParams() sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeInvalidInput, "Invalid issue params")
+}
+
+func ErrIssueID(issueID string) sdk.Error {
+	return sdk.NewError(DefaultCodespace, CodeIssueIDNotValid, fmt.Sprintf("Issue-id %s is not a valid issueId", issueID))
 }
 
 // Error constructors
