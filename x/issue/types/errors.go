@@ -11,7 +11,9 @@ type CodeType = sdk.CodeType
 const (
 	DefaultCodespace    sdk.CodespaceType = "issue"
 	CodeInvalidInput    CodeType          = 103
-	CodeIssueIDNotValid sdk.CodeType      = 1
+	CodeIssuerMismatch  sdk.CodeType      = 2
+	CodeIssueIDNotValid sdk.CodeType      = 3
+	CodeUnknownIssue    sdk.CodeType      = 10
 )
 
 //convert sdk.Error to error
@@ -35,10 +37,16 @@ func ErrIssueID(issueID string) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeIssueIDNotValid, fmt.Sprintf("Issue-id %s is not a valid issueId", issueID))
 }
 
+func ErrUnknownIssue(issueID string) sdk.Error {
+	return sdk.NewError(DefaultCodespace, CodeUnknownIssue, fmt.Sprintf("Unknown issue with id %s", issueID))
+}
+
+func ErrOwnerMismatch(issueID string) sdk.Error {
+	return sdk.NewError(DefaultCodespace, CodeIssuerMismatch, fmt.Sprintf("Owner mismatch with token %s", issueID))
+}
+
 // Error constructors
-//func ErrOwnerMismatch(issueID string) sdk.Error {
-//	return sdk.NewError(DefaultCodespace, CodeIssuerMismatch, fmt.Sprintf("Owner mismatch with token %s", issueID))
-//}
+
 //func ErrNotEnoughFee() sdk.Error {
 //	return sdk.NewError(DefaultCodespace, CodeNotEnoughFee, fmt.Sprintf("Not enough fee"))
 //}
@@ -69,17 +77,11 @@ func ErrIssueID(issueID string) sdk.Error {
 //func ErrCoinDescriptionMaxLengthNotValid() sdk.Error {
 //	return sdk.NewError(DefaultCodespace, CodeIssueDescriptionNotValid, "Description max length is %d", types.CoinDescriptionMaxLength)
 //}
-//func ErrIssueID(issueID string) sdk.Error {
-//	return sdk.NewError(DefaultCodespace, CodeIssueIDNotValid, fmt.Sprintf("Issue-id %s is not a valid issueId", issueID))
-//}
 //func ErrCanNotMint(issueID string) sdk.Error {
 //	return sdk.NewError(DefaultCodespace, CanNotMint, fmt.Sprintf("Can not mint the token %s", issueID))
 //}
 //func ErrCanNotBurn(issueID string, burnType string) sdk.Error {
 //	return sdk.NewError(DefaultCodespace, CanNotBurn, fmt.Sprintf("Can not burn the token %s by %s", issueID, burnType))
-//}
-//func ErrUnknownIssue(issueID string) sdk.Error {
-//	return sdk.NewError(DefaultCodespace, CodeUnknownIssue, fmt.Sprintf("Unknown issue with id %s", issueID))
 //}
 //func ErrUnknownFeatures() sdk.Error {
 //	return sdk.NewError(DefaultCodespace, CodeUnknownFeature, fmt.Sprintf("Unknown feature"))

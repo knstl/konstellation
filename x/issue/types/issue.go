@@ -11,7 +11,7 @@ import (
 var (
 	CoinMaxTotalSupply, _        = sdk.NewIntFromString("1000000000000000000000000000000000000")
 	CoinIssueMaxId        uint64 = 999999999999
-	CoinIssueMinId        uint64 = 1
+	CoinIssueMinId        uint64 = 100000000000
 )
 
 const (
@@ -34,6 +34,11 @@ type IIssue interface {
 
 	GetDecimals() uint
 	SetDecimals(uint)
+
+	GetTotalSupply() sdk.Int
+	SetTotalSupply(sdk.Int)
+	AddTotalSupply(sdk.Int)
+	SubTotalSupply(sdk.Int)
 
 	ToCoin() sdk.Coin
 }
@@ -114,8 +119,25 @@ func (ci *CoinIssue) SetSymbol(symbol string) {
 func (ci *CoinIssue) GetDecimals() uint {
 	return ci.Decimals
 }
+
 func (ci *CoinIssue) SetDecimals(decimals uint) {
 	ci.Decimals = decimals
+}
+
+func (ci *CoinIssue) GetTotalSupply() sdk.Int {
+	return ci.TotalSupply
+}
+
+func (ci *CoinIssue) SetTotalSupply(totalSupply sdk.Int) {
+	ci.TotalSupply = totalSupply
+}
+
+func (ci *CoinIssue) AddTotalSupply(amount sdk.Int) {
+	ci.TotalSupply.Add(amount)
+}
+
+func (ci *CoinIssue) SubTotalSupply(amount sdk.Int) {
+	ci.TotalSupply.Sub(amount)
 }
 
 func (ci *CoinIssue) ToCoin() sdk.Coin {

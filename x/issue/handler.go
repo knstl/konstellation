@@ -15,7 +15,6 @@ func NewHandler(k Keeper) sdk.Handler {
 			sdk.NewEvent(
 				sdk.EventTypeMessage,
 				sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-				//sdk.NewAttribute(sdk.AttributeKeySender, msg.GetSigners()[0].String()),
 			),
 		)
 
@@ -32,6 +31,10 @@ func NewHandler(k Keeper) sdk.Handler {
 			return handler.HandleMsgIncreaseAllowance(ctx, k, msg)
 		case types.MsgDecreaseAllowance:
 			return handler.HandleMsgDecreaseAllowance(ctx, k, msg)
+		case types.MsgMint:
+			return handler.HandleMsgMint(ctx, k, msg)
+		case types.MsgMintTo:
+			return handler.HandleMsgMintTo(ctx, k, msg)
 
 		default:
 			errMsg := fmt.Sprintf("unrecognized issue message type: %T", msg)
