@@ -21,7 +21,7 @@ const (
 )
 
 type IssueParams struct {
-	Name               string  `json:"name"`
+	Denom              string  `json:"denom"`
 	Symbol             string  `json:"symbol"`
 	TotalSupply        sdk.Int `json:"total_supply"`
 	Decimals           uint    `json:"decimals"`

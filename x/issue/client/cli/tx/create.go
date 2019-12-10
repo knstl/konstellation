@@ -27,7 +27,7 @@ const (
 // GetTxCmdCreate implements issue a coin transaction command.
 func GetTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "create [name] [symbol] [owner] [issuer] [total-supply]",
+		Use:     "create [denom] [symbol] [owner] [issuer] [total-supply]",
 		Args:    cobra.ExactArgs(3),
 		Short:   "Issue a new token",
 		Long:    "Issue a new token",
@@ -45,7 +45,7 @@ func GetTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 			totalSupply = sdk.NewIntWithDecimal(totalSupply.Int64(), cast.ToInt(decimals))
 
 			issueParams := types.IssueParams{
-				Name:               args[0],
+				Denom:              args[0],
 				Symbol:             strings.ToUpper(args[1]),
 				TotalSupply:        totalSupply,
 				Decimals:           decimals,

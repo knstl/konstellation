@@ -9,16 +9,18 @@ import (
 
 // Key for getting a the next available proposalID from the store
 var (
-	KeyDelimiter   = ":"
-	KeyNextIssueID = []byte("newIssueID")
+	KeyDelimiter       = ":"
+	KeyNextIssueID     = []byte("newIssueID")
+	KeyFirstIssueDenom = []byte("firstIssueDenom")
+	KeyLastIssueDenom  = []byte("lastIssueDenom")
 )
 
 //func BytesString(b []byte) string {
 //	return *(*string)(unsafe.Pointer(&b))
 //}
 // Key for getting a specific issuer from the store
-func KeyIssuer(issueIdStr string) []byte {
-	return []byte(fmt.Sprintf("issues:%s", issueIdStr))
+func KeyIssuer(denom string) []byte {
+	return []byte(fmt.Sprintf("issues:%s", denom))
 }
 
 // Key for getting a specific address from the store

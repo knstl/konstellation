@@ -9,9 +9,7 @@ import (
 )
 
 var (
-	CoinMaxTotalSupply, _        = sdk.NewIntFromString("1000000000000000000000000000000000000")
-	CoinIssueMaxId        uint64 = 999999999999
-	CoinIssueMinId        uint64 = 100000000000
+	CoinMaxTotalSupply, _ = sdk.NewIntFromString("1000000000000000000000000000000000000")
 )
 
 const (
@@ -20,8 +18,8 @@ const (
 )
 
 type IIssue interface {
-	GetIssueId() string
-	SetIssueId(string)
+	GetDenom() string
+	SetDenom(string)
 
 	GetIssuer() sdk.AccAddress
 	SetIssuer(sdk.AccAddress)
@@ -50,17 +48,15 @@ func (coinIssues CoinIssues) String() string {
 	out := fmt.Sprintf("%-17s|%-44s|%-10s|%-6s|%-18s|%-8s|%s\n",
 		"IssueID", "Owner", "Name", "Symbol", "TotalSupply", "Decimals", "IssueTime")
 	for _, issue := range coinIssues {
-		out += fmt.Sprintf("%-17s|%-44s|%-10s|%-6s|%-18s|%-8d|%d\n",
-			issue.IssueId, issue.GetOwner().String(), issue.Name, issue.Symbol, issue.TotalSupply.String(), issue.Decimals, issue.IssueTime)
+		out += fmt.Sprintf("%-44s|%-10s|%-6s|%-18s|%-8d|%d\n", issue.GetOwner().String(), issue.Denom, issue.Symbol, issue.TotalSupply.String(), issue.Decimals, issue.IssueTime)
 	}
 	return strings.TrimSpace(out)
 }
 
 type CoinIssue struct {
-	IssueId            string         `json:"issue_id"`
 	Issuer             sdk.AccAddress `json:"issuer"`
 	Owner              sdk.AccAddress `json:"owner"`
-	Name               string         `json:"name"`
+	Denom              string         `json:"denom"`
 	Symbol             string         `json:"symbol"`
 	TotalSupply        sdk.Int        `json:"total_supply"`
 	Decimals           uint           `json:"decimals"`
@@ -83,21 +79,20 @@ func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue 
 
 	return &ci
 }
-
-func (ci *CoinIssue) GetIssueId() string {
-	return ci.IssueId
-}
-
-func (ci *CoinIssue) SetIssueId(issueId string) {
-	ci.IssueId = issueId
-}
-
 func (ci *CoinIssue) GetIssuer() sdk.AccAddress {
 	return ci.Issuer
 }
 
 func (ci *CoinIssue) SetIssuer(issuer sdk.AccAddress) {
 	ci.Issuer = issuer
+}
+
+func (ci *CoinIssue) GetDenom() string {
+	return ci.Denom
+}
+
+func (ci *CoinIssue) SetDenom(denom string) {
+	ci.Denom = denom
 }
 
 func (ci *CoinIssue) GetOwner() sdk.AccAddress {
@@ -141,7 +136,7 @@ func (ci *CoinIssue) SubTotalSupply(amount sdk.Int) {
 }
 
 func (ci *CoinIssue) ToCoin() sdk.Coin {
-	return sdk.NewCoin(ci.IssueId, ci.TotalSupply)
+	return sdk.NewCoin(ci.Denom, ci.TotalSupply)
 }
 
 func (ci *CoinIssue) ToCoins() sdk.Coins {
