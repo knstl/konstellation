@@ -244,8 +244,6 @@ func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Co
 		sdk.NewEvent(
 			types.EventTypeTransfer,
 			sdk.NewAttribute(sdk.AttributeKeySender, from.String()),
-			sdk.NewAttribute(types.AttributeKeyRecipient, to.String()),
-			sdk.NewAttribute(sdk.AttributeKeyAmount, coins.String()),
 		),
 	)
 
@@ -269,6 +267,7 @@ func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, 
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeTransferFrom,
+			sdk.NewAttribute(types.AttributeKeySpender, sender.String()),
 			sdk.NewAttribute(sdk.AttributeKeySender, from.String()),
 			sdk.NewAttribute(types.AttributeKeyRecipient, to.String()),
 			sdk.NewAttribute(sdk.AttributeKeyAmount, coins.String()),
