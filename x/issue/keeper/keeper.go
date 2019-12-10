@@ -261,7 +261,7 @@ func (k *Keeper) IncreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
-			types.EventTypeApprove,
+			types.EventTypeIncreaseAllowance,
 			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
 			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
 			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
@@ -282,7 +282,7 @@ func (k *Keeper) DecreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
-			types.EventTypeApprove,
+			types.EventTypeDecreaseAllowance,
 			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
 			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
 			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),

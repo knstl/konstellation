@@ -2,9 +2,11 @@ package types
 
 // distribution module event types
 const (
-	EventTypeIssue    = "issue"
-	EventTypeApprove  = "approve"
-	EventTypeTransfer = "transfer"
+	EventTypeIssue             = "issue"
+	EventTypeApprove           = "approve"
+	EventTypeIncreaseAllowance = "increase-allowance"
+	EventTypeDecreaseAllowance = "decrease-allowance"
+	EventTypeTransfer          = "transfer"
 
 	AttributeKeyIssuer    = "issuer"
 	AttributeKeyRecipient = "recipient"
