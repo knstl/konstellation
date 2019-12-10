@@ -14,7 +14,7 @@ import (
 func GetTxCmdTransfer(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "transfer [to_address] [amount]",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.ExactArgs(2),
 		Short: "Transfer tokens",
 		Long:  "Transfer tokens",
 		RunE: func(cmd *cobra.Command, args []string) error {
