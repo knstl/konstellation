@@ -11,6 +11,7 @@ var ModuleCdc = codec.New()
 func RegisterCodec(cdc *codec.Codec) {
 	cdc.RegisterConcrete(MsgIssue{}, "issue/MsgIssue", nil)
 	cdc.RegisterConcrete(MsgTransfer{}, "issue/MsgTransfer", nil)
+	cdc.RegisterConcrete(MsgTransferFrom{}, "issue/MsgTransferFrom", nil)
 	cdc.RegisterConcrete(MsgApprove{}, "issue/MsgApprove", nil)
 	cdc.RegisterConcrete(MsgIncreaseAllowance{}, "issue/MsgIncreaseAllowance", nil)
 	cdc.RegisterConcrete(MsgDecreaseAllowance{}, "issue/MsgDecreaseAllowance", nil)

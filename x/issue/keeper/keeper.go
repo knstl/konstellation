@@ -181,6 +181,27 @@ func (k *Keeper) approve(ctx sdk.Context, owner, spender sdk.AccAddress, amount 
 	store.Set(KeyAllowance(amount.Denom, owner, spender), bz)
 }
 
+func (k *Keeper) decreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
+	allowance := k.allowance(ctx, owner, spender, amount.Denom)
+	if allowance.IsGTE(amount) {
+		k.approve(ctx, owner, spender, allowance.Sub(amount))
+	} else {
+		k.approve(ctx, owner, spender, sdk.NewCoin(amount.Denom, sdk.ZeroInt()))
+	}
+}
+
+func (k *Keeper) transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+	if !k.ck.GetSendEnabled(ctx) {
+		return bank.ErrSendDisabled(k.codespace)
+	}
+
+	if k.ck.BlacklistedAddr(to) {
+		return sdk.ErrUnauthorized(fmt.Sprintf("%s is not allowed to receive transactions", to))
+	}
+
+	return k.ck.SendCoins(ctx, from, to, coins)
+}
+
 //Create a issue
 func (k *Keeper) CreateIssue(ctx sdk.Context, owner, issuer sdk.AccAddress, params *types.IssueParams) *types.CoinIssue {
 	id := k.ResolveNextIssueID(ctx)
@@ -214,16 +235,8 @@ func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
 	return nil
 }
 
-func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, amount sdk.Coins) sdk.Error {
-	if !k.ck.GetSendEnabled(ctx) {
-		return bank.ErrSendDisabled(k.codespace)
-	}
-
-	if k.ck.BlacklistedAddr(to) {
-		return sdk.ErrUnauthorized(fmt.Sprintf("%s is not allowed to receive transactions", to))
-	}
-
-	if err := k.ck.SendCoins(ctx, from, to, amount); err != nil {
+func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+	if err := k.transfer(ctx, from, to, coins); err != nil {
 		return err
 	}
 
@@ -232,7 +245,33 @@ func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, amount sdk.C
 			types.EventTypeTransfer,
 			sdk.NewAttribute(sdk.AttributeKeySender, from.String()),
 			sdk.NewAttribute(types.AttributeKeyRecipient, to.String()),
-			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, coins.String()),
+		),
+	)
+
+	return nil
+}
+
+func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+	for i, coin := range coins {
+		allowance := k.allowance(ctx, from, sender, coin.Denom)
+		if allowance.IsGTE(coin) {
+			k.decreaseAllowance(ctx, from, sender, coin)
+		} else {
+			coins = append(coins[:i], coins[i+1:]...)
+		}
+	}
+
+	if err := k.transfer(ctx, from, to, coins); err != nil {
+		return err
+	}
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeTransferFrom,
+			sdk.NewAttribute(sdk.AttributeKeySender, from.String()),
+			sdk.NewAttribute(types.AttributeKeyRecipient, to.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, coins.String()),
 		),
 	)
 
@@ -273,12 +312,7 @@ func (k *Keeper) IncreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 }
 
 func (k *Keeper) DecreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) sdk.Error {
-	allowance := k.allowance(ctx, owner, spender, amount.Denom)
-	if allowance.IsGTE(amount) {
-		k.approve(ctx, owner, spender, allowance.Sub(amount))
-	} else {
-		k.approve(ctx, owner, spender, sdk.NewCoin(amount.Denom, sdk.ZeroInt()))
-	}
+	k.decreaseAllowance(ctx, owner, spender, amount)
 
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
@@ -301,12 +335,13 @@ func (k Keeper) Iterator(ctx sdk.Context, startIssueId string) sdk.Iterator {
 	store := ctx.KVStore(k.key)
 	endIssueId := startIssueId
 
-	if len(startIssueId) == 0 {
+	if startIssueId == "" {
 		endIssueId = KeyIssueIdStr(types.CoinIssueMaxId)
 		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
 	} else {
 		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
 	}
+
 	iterator := store.ReverseIterator(KeyIssuer(startIssueId), KeyIssuer(endIssueId))
 	return iterator
 }
@@ -314,12 +349,14 @@ func (k Keeper) Iterator(ctx sdk.Context, startIssueId string) sdk.Iterator {
 func (k Keeper) ListAll(ctx sdk.Context) types.CoinIssues {
 	iterator := k.Iterator(ctx, "")
 	defer iterator.Close()
+
 	list := make(types.CoinIssues, 0)
 	for ; iterator.Valid(); iterator.Next() {
 		bz := iterator.Value()
 		if len(bz) == 0 {
 			continue
 		}
+
 		var issue types.CoinIssue
 		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
 		list = append(list, issue)
@@ -334,12 +371,14 @@ func (k Keeper) List(ctx sdk.Context, params types.IssuesParams) []types.CoinIss
 
 	iterator := k.Iterator(ctx, params.StartIssueId)
 	defer iterator.Close()
+
 	list := make(types.CoinIssues, 0, params.Limit)
 	for ; iterator.Valid(); iterator.Next() {
 		bz := iterator.Value()
 		if len(bz) == 0 {
 			continue
 		}
+
 		var issue types.CoinIssue
 		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
 		list = append(list, issue)

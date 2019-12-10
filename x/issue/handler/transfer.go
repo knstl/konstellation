@@ -17,7 +17,5 @@ func HandleMsgTransfer(ctx sdk.Context, k keeper.Keeper, msg types.MsgTransfer) 
 		return err.Result()
 	}
 
-	setMessageEvent(ctx, msg.FromAddress.String())
-
 	return sdk.Result{Events: ctx.EventManager().Events()}
 }

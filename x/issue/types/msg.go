@@ -8,7 +8,7 @@ const (
 	TypeMsgIssue = "issue"
 )
 
-var _, _, _ sdk.Msg = &MsgIssue{}, &MsgTransfer{}, &MsgApprove{}
+var _, _, _, _, _, _ sdk.Msg = &MsgIssue{}, &MsgTransfer{}, &MsgApprove{}, &MsgIncreaseAllowance{}, &MsgDecreaseAllowance{}, &MsgTransferFrom{}
 
 type MsgIssue struct {
 	Owner        sdk.AccAddress `json:"owner" yaml:"owner"`
@@ -85,7 +85,7 @@ func NewMsgTransfer(fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) MsgTransf
 func (msg MsgTransfer) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgTransfer) Type() string { return "send" }
+func (msg MsgTransfer) Type() string { return "transfer" }
 
 // ValidateBasic Implements Msg.
 func (msg MsgTransfer) ValidateBasic() sdk.Error {
@@ -114,6 +114,53 @@ func (msg MsgTransfer) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.FromAddress}
 }
 
+type MsgTransferFrom struct {
+	Sender      sdk.AccAddress `json:"sender" yaml:"sender"`
+	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
+	ToAddress   sdk.AccAddress `json:"to_address" yaml:"to_address"`
+	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
+}
+
+func NewMsgTransferFrom(sender, fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) MsgTransferFrom {
+	return MsgTransferFrom{Sender: sender, FromAddress: fromAddr, ToAddress: toAddr, Amount: amount}
+}
+
+// Route Implements Msg.
+func (msg MsgTransferFrom) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgTransferFrom) Type() string { return "transfer_from" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgTransferFrom) ValidateBasic() sdk.Error {
+	if msg.Sender.Empty() {
+		return sdk.ErrInvalidAddress("missing sender address")
+	}
+	if msg.FromAddress.Empty() {
+		return sdk.ErrInvalidAddress("missing from address")
+	}
+	if msg.ToAddress.Empty() {
+		return sdk.ErrInvalidAddress("missing recipient address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsAllPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgTransferFrom) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgTransferFrom) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Sender}
+}
+
 // MsgApprove - high level transaction of the coin module
 type MsgApprove struct {
 	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
@@ -130,7 +177,7 @@ func NewMsgApprove(owner, spender sdk.AccAddress, amount sdk.Coin) MsgApprove {
 func (msg MsgApprove) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgApprove) Type() string { return "send" }
+func (msg MsgApprove) Type() string { return "approve" }
 
 // ValidateBasic Implements Msg.
 func (msg MsgApprove) ValidateBasic() sdk.Error {
@@ -173,7 +220,7 @@ func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coin) Msg
 func (msg MsgIncreaseAllowance) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgIncreaseAllowance) Type() string { return "send" }
+func (msg MsgIncreaseAllowance) Type() string { return "increase_allowance" }
 
 // ValidateBasic Implements Msg.
 func (msg MsgIncreaseAllowance) ValidateBasic() sdk.Error {
@@ -218,7 +265,7 @@ func NewMsgDecreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coin) Msg
 func (msg MsgDecreaseAllowance) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgDecreaseAllowance) Type() string { return "send" }
+func (msg MsgDecreaseAllowance) Type() string { return "decrease_allowance" }
 
 // ValidateBasic Implements Msg.
 func (msg MsgDecreaseAllowance) ValidateBasic() sdk.Error {

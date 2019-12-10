@@ -13,7 +13,5 @@ func HandleMsgApprove(ctx sdk.Context, k keeper.Keeper, msg types.MsgApprove) sd
 		return err.Result()
 	}
 
-	setMessageEvent(ctx, msg.Owner.String())
-
 	return sdk.Result{Events: ctx.EventManager().Events()}
 }

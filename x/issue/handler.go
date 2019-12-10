@@ -11,11 +11,21 @@ func NewHandler(k Keeper) sdk.Handler {
 	return func(ctx sdk.Context, msg sdk.Msg) sdk.Result {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				sdk.EventTypeMessage,
+				sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+				//sdk.NewAttribute(sdk.AttributeKeySender, msg.GetSigners()[0].String()),
+			),
+		)
+
 		switch msg := msg.(type) {
 		case types.MsgIssue:
 			return handler.HandleMsgIssue(ctx, k, msg)
 		case types.MsgTransfer:
 			return handler.HandleMsgTransfer(ctx, k, msg)
+		case types.MsgTransferFrom:
+			return handler.HandleMsgTransferFrom(ctx, k, msg)
 		case types.MsgApprove:
 			return handler.HandleMsgApprove(ctx, k, msg)
 		case types.MsgIncreaseAllowance:

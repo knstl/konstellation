@@ -11,7 +11,7 @@ import (
 var (
 	CoinMaxTotalSupply, _        = sdk.NewIntFromString("1000000000000000000000000000000000000")
 	CoinIssueMaxId        uint64 = 999999999999
-	CoinIssueMinId        uint64 = 100000000000
+	CoinIssueMinId        uint64 = 1
 )
 
 const (

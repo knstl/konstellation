@@ -6,20 +6,14 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgIssue(ctx sdk.Context, k keeper.Keeper, msg types.MsgIssue) sdk.Result {
+func HandleMsgTransferFrom(ctx sdk.Context, k keeper.Keeper, msg types.MsgTransferFrom) sdk.Result {
 	// Sub fee from sender
 	//fee := keeper.GetParams(ctx).IssueFee
 	//if err := keeper.Fee(ctx, msg.Sender, fee); err != nil {
 	//	return err.Result()
-	//}
+	//} sdk.AccAddress, amt sdk.Coin{}
 
-	params, errr := types.NewIssueParams(msg.IssueParams)
-	if errr != nil {
-		return types.ErrInvalidIssueParams().Result()
-	}
-
-	ci := k.CreateIssue(ctx, msg.Owner, msg.Issuer, params)
-	if err := k.Issue(ctx, ci); err != nil {
+	if err := k.TransferFrom(ctx, msg.Sender, msg.FromAddress, msg.ToAddress, msg.Amount); err != nil {
 		return err.Result()
 	}
 

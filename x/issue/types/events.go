@@ -4,9 +4,10 @@ package types
 const (
 	EventTypeIssue             = "issue"
 	EventTypeApprove           = "approve"
-	EventTypeIncreaseAllowance = "increase-allowance"
-	EventTypeDecreaseAllowance = "decrease-allowance"
+	EventTypeIncreaseAllowance = "increase_allowance"
+	EventTypeDecreaseAllowance = "decrease_allowance"
 	EventTypeTransfer          = "transfer"
+	EventTypeTransferFrom      = "transfer_from"
 
 	AttributeKeyIssuer    = "issuer"
 	AttributeKeyRecipient = "recipient"

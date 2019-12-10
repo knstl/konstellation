@@ -13,7 +13,5 @@ func HandleMsgIncreaseAllowance(ctx sdk.Context, k keeper.Keeper, msg types.MsgI
 		return err.Result()
 	}
 
-	setMessageEvent(ctx, msg.Owner.String())
-
 	return sdk.Result{Events: ctx.EventManager().Events()}
 }

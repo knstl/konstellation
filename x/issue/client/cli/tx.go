@@ -24,6 +24,7 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 		tx.GetTxCmdApprove(cdc),
 		tx.GetTxCmdIncreaseAllowance(cdc),
 		tx.GetTxCmdDecreaseAllowance(cdc),
+		tx.GetTxCmdTransferFrom(cdc),
 	) {
 		_ = c.MarkFlagRequired(client.FlagFrom)
 		txCmd.AddCommand(c)
