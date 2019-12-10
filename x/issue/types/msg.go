@@ -158,3 +158,91 @@ func (msg MsgApprove) GetSignBytes() []byte {
 func (msg MsgApprove) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
+
+type MsgIncreaseAllowance struct {
+	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
+	Spender sdk.AccAddress `json:"spender" yaml:"spender"`
+	Amount  sdk.Coin       `json:"amount" yaml:"amount"`
+}
+
+func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coin) MsgIncreaseAllowance {
+	return MsgIncreaseAllowance{owner, spender, amount}
+}
+
+// Route Implements Msg.
+func (msg MsgIncreaseAllowance) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgIncreaseAllowance) Type() string { return "send" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgIncreaseAllowance) ValidateBasic() sdk.Error {
+	if msg.Owner.Empty() {
+		return sdk.ErrInvalidAddress("missing owner address")
+	}
+	if msg.Spender.Empty() {
+		return sdk.ErrInvalidAddress("missing spender address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgIncreaseAllowance) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgIncreaseAllowance) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Owner}
+}
+
+// MsgApprove - high level transaction of the coin module
+type MsgDecreaseAllowance struct {
+	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
+	Spender sdk.AccAddress `json:"spender" yaml:"spender"`
+	Amount  sdk.Coin       `json:"amount" yaml:"amount"`
+}
+
+// NewMsgApprove - construct arbitrary multi-in, multi-out send msg.
+func NewMsgDecreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coin) MsgDecreaseAllowance {
+	return MsgDecreaseAllowance{owner, spender, amount}
+}
+
+// Route Implements Msg.
+func (msg MsgDecreaseAllowance) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgDecreaseAllowance) Type() string { return "send" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgDecreaseAllowance) ValidateBasic() sdk.Error {
+	if msg.Owner.Empty() {
+		return sdk.ErrInvalidAddress("missing owner address")
+	}
+	if msg.Spender.Empty() {
+		return sdk.ErrInvalidAddress("missing spender address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgDecreaseAllowance) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgDecreaseAllowance) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Owner}
+}

@@ -152,71 +152,6 @@ func (k Keeper) ResolveNextIssueID(ctx sdk.Context) uint64 {
 	return id
 }
 
-func (k Keeper) Iterator(ctx sdk.Context, startIssueId string) sdk.Iterator {
-	store := ctx.KVStore(k.key)
-	endIssueId := startIssueId
-
-	if len(startIssueId) == 0 {
-		endIssueId = KeyIssueIdStr(types.CoinIssueMaxId)
-		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
-	} else {
-		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
-	}
-	iterator := store.ReverseIterator(KeyIssuer(startIssueId), KeyIssuer(endIssueId))
-	return iterator
-}
-
-func (k Keeper) ListAll(ctx sdk.Context) types.CoinIssues {
-	iterator := k.Iterator(ctx, "")
-	defer iterator.Close()
-	list := make(types.CoinIssues, 0)
-	for ; iterator.Valid(); iterator.Next() {
-		bz := iterator.Value()
-		if len(bz) == 0 {
-			continue
-		}
-		var issue types.CoinIssue
-		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
-		list = append(list, issue)
-	}
-	return list
-}
-
-func (k Keeper) List(ctx sdk.Context, params types.IssuesParams) []types.CoinIssue {
-	if params.Owner != "" {
-		return k.GetIssues(ctx, params.Owner)
-	}
-
-	iterator := k.Iterator(ctx, params.StartIssueId)
-	defer iterator.Close()
-	list := make(types.CoinIssues, 0, params.Limit)
-	for ; iterator.Valid(); iterator.Next() {
-		bz := iterator.Value()
-		if len(bz) == 0 {
-			continue
-		}
-		var issue types.CoinIssue
-		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
-		list = append(list, issue)
-		if len(list) >= params.Limit {
-			break
-		}
-	}
-	return list
-}
-
-func (k Keeper) Allowance(ctx sdk.Context, owner sdk.AccAddress, spender sdk.AccAddress, issueID string) (amount sdk.Int) {
-	store := ctx.KVStore(k.key)
-	bz := store.Get(KeyAllowance(issueID, owner, spender))
-	if bz == nil {
-		return sdk.ZeroInt()
-	}
-	k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &amount)
-	return amount
-}
-
-//Keys add
-//Add a issue
 func (k Keeper) addIssue(ctx sdk.Context, issue *types.CoinIssue) {
 	k.addAddressIssues(ctx, issue)
 
@@ -229,14 +164,21 @@ func (k Keeper) addIssue(ctx sdk.Context, issue *types.CoinIssue) {
 	store.Set(KeyIssuer(issue.GetIssueId()), bz)
 }
 
-func (k Keeper) setAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
+func (k Keeper) allowance(ctx sdk.Context, owner sdk.AccAddress, spender sdk.AccAddress, issueID string) sdk.Coin {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(amount.Amount)
-	store.Set(KeyAllowance(amount.Denom, owner, spender), bz)
+	bz := store.Get(KeyAllowance(issueID, owner, spender))
+	if bz == nil {
+		return sdk.NewCoin(issueID, sdk.ZeroInt())
+	}
+	var amount sdk.Int
+	k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &amount)
+	return sdk.NewCoin(issueID, amount)
 }
 
 func (k *Keeper) approve(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
-	k.setAllowance(ctx, owner, spender, amount)
+	store := ctx.KVStore(k.key)
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(amount.Amount)
+	store.Set(KeyAllowance(amount.Denom, owner, spender), bz)
 }
 
 //Create a issue
@@ -311,4 +253,99 @@ func (k *Keeper) Approve(ctx sdk.Context, owner, spender sdk.AccAddress, amount 
 	)
 
 	return nil
+}
+
+func (k *Keeper) IncreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) sdk.Error {
+	allowance := k.allowance(ctx, owner, spender, amount.Denom)
+	k.approve(ctx, owner, spender, allowance.Add(amount))
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeApprove,
+			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
+			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
+			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.Amount.String()),
+		),
+	)
+
+	return nil
+}
+
+func (k *Keeper) DecreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) sdk.Error {
+	allowance := k.allowance(ctx, owner, spender, amount.Denom)
+	if allowance.IsGTE(amount) {
+		k.approve(ctx, owner, spender, allowance.Sub(amount))
+	} else {
+		k.approve(ctx, owner, spender, sdk.NewCoin(amount.Denom, sdk.ZeroInt()))
+	}
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeApprove,
+			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
+			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
+			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.Amount.String()),
+		),
+	)
+
+	return nil
+}
+
+func (k Keeper) Allowance(ctx sdk.Context, owner sdk.AccAddress, spender sdk.AccAddress, issueID string) (amount sdk.Coin) {
+	return k.allowance(ctx, owner, spender, issueID)
+}
+
+func (k Keeper) Iterator(ctx sdk.Context, startIssueId string) sdk.Iterator {
+	store := ctx.KVStore(k.key)
+	endIssueId := startIssueId
+
+	if len(startIssueId) == 0 {
+		endIssueId = KeyIssueIdStr(types.CoinIssueMaxId)
+		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
+	} else {
+		startIssueId = KeyIssueIdStr(types.CoinIssueMinId - 1)
+	}
+	iterator := store.ReverseIterator(KeyIssuer(startIssueId), KeyIssuer(endIssueId))
+	return iterator
+}
+
+func (k Keeper) ListAll(ctx sdk.Context) types.CoinIssues {
+	iterator := k.Iterator(ctx, "")
+	defer iterator.Close()
+	list := make(types.CoinIssues, 0)
+	for ; iterator.Valid(); iterator.Next() {
+		bz := iterator.Value()
+		if len(bz) == 0 {
+			continue
+		}
+		var issue types.CoinIssue
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
+		list = append(list, issue)
+	}
+	return list
+}
+
+func (k Keeper) List(ctx sdk.Context, params types.IssuesParams) []types.CoinIssue {
+	if params.Owner != "" {
+		return k.GetIssues(ctx, params.Owner)
+	}
+
+	iterator := k.Iterator(ctx, params.StartIssueId)
+	defer iterator.Close()
+	list := make(types.CoinIssues, 0, params.Limit)
+	for ; iterator.Valid(); iterator.Next() {
+		bz := iterator.Value()
+		if len(bz) == 0 {
+			continue
+		}
+		var issue types.CoinIssue
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &issue)
+		list = append(list, issue)
+		if len(list) >= params.Limit {
+			break
+		}
+	}
+	return list
 }

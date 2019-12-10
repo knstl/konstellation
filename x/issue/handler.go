@@ -18,6 +18,10 @@ func NewHandler(k Keeper) sdk.Handler {
 			return handler.HandleMsgTransfer(ctx, k, msg)
 		case types.MsgApprove:
 			return handler.HandleMsgApprove(ctx, k, msg)
+		case types.MsgIncreaseAllowance:
+			return handler.HandleMsgIncreaseAllowance(ctx, k, msg)
+		case types.MsgDecreaseAllowance:
+			return handler.HandleMsgDecreaseAllowance(ctx, k, msg)
 
 		default:
 			errMsg := fmt.Sprintf("unrecognized issue message type: %T", msg)

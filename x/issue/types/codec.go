@@ -12,23 +12,13 @@ func RegisterCodec(cdc *codec.Codec) {
 	cdc.RegisterConcrete(MsgIssue{}, "issue/MsgIssue", nil)
 	cdc.RegisterConcrete(MsgTransfer{}, "issue/MsgTransfer", nil)
 	cdc.RegisterConcrete(MsgApprove{}, "issue/MsgApprove", nil)
-	//cdc.RegisterConcrete(bank.MsgSend{}, "issue/MsgMint", nil)
-	//cdc.RegisterInterface((*exported.GenesisAccount)(nil), nil)
-	//cdc.RegisterInterface((*exported.Account)(nil), nil)
-	//cdc.RegisterConcrete(&BaseAccount{}, "cosmos-sdk/Account", nil)
-	//cdc.RegisterConcrete(StdTx{}, "cosmos-sdk/StdTx", nil)
+	cdc.RegisterConcrete(MsgIncreaseAllowance{}, "issue/MsgIncreaseAllowance", nil)
+	cdc.RegisterConcrete(MsgDecreaseAllowance{}, "issue/MsgDecreaseAllowance", nil)
 
 	cdc.RegisterInterface((*IIssue)(nil), nil)
 	cdc.RegisterConcrete(&CoinIssue{}, "issue/CoinIssue", nil)
 }
 
-// RegisterAccountTypeCodec registers an external account type defined in
-// another module for the internal ModuleCdc.
-//func RegisterAccountTypeCodec(o interface{}, name string) {
-//	ModuleCdc.RegisterConcrete(o, name, nil)
-//}
-
 func init() {
 	RegisterCodec(ModuleCdc)
-	//codec.RegisterCrypto(ModuleCdc)
 }

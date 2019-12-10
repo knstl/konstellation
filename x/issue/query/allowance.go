@@ -12,10 +12,10 @@ func Allowance(ctx sdk.Context, k keeper.Keeper, issueID string, owner string, s
 	spenderAddress, _ := sdk.AccAddressFromBech32(spender)
 	amount := k.Allowance(ctx, ownerAddress, spenderAddress, issueID)
 
-	if amount.GT(sdk.ZeroInt()) {
-		issue := k.GetIssue(ctx, issueID)
-		amount = issue.QuoDecimals(amount)
-	}
+	//if amount.GT(sdk.ZeroInt()) {
+	//	issue := k.GetIssue(ctx, issueID)
+	//	amount = issue.QuoDecimals(amount)
+	//}
 
 	bz, err := codec.MarshalJSONIndent(k.GetCodec(), types.NewAllowance(amount))
 	if err != nil {

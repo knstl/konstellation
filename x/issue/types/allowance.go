@@ -9,8 +9,8 @@ type Allowance struct {
 	Amount sdk.Int `json:"amount"`
 }
 
-func NewAllowance(amount sdk.Int) Allowance {
-	return Allowance{amount}
+func NewAllowance(amount sdk.Coin) Allowance {
+	return Allowance{amount.Amount}
 }
 
 func (a Allowance) String() string {
