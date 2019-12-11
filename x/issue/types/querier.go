@@ -7,17 +7,12 @@ import (
 
 // querier keys
 const (
-	QueryParams                      = "params"
-	QueryIssue                       = "query"
-	QueryIssues                      = "list"
-	QuerySearch                      = "search"
-	QueryAllowance                   = "allowance"
-	QueryValidatorOutstandingRewards = "validator_outstanding_rewards"
-
-	ParamCommunityTax        = "community_tax"
-	ParamBaseProposerReward  = "base_proposer_reward"
-	ParamBonusProposerReward = "bonus_proposer_reward"
-	ParamWithdrawAddrEnabled = "withdraw_addr_enabled"
+	QueryParams    = "params"
+	QueryIssue     = "query"
+	QueryIssues    = "list"
+	QueryIssuesAll = "list-all"
+	QuerySearch    = "search"
+	QueryAllowance = "allowance"
 )
 
 type IssueParams struct {
@@ -40,11 +35,10 @@ func NewIssueParams(data interface{}) (*IssueParams, error) {
 }
 
 type IssuesParams struct {
-	StartIssueId string `json:"start_issue_id"`
-	Owner        string `json:"owner"`
-	Limit        int    `json:"limit"`
+	Owner string `json:"owner"`
+	Limit int    `json:"limit"`
 }
 
-func NewIssuesParams(startIssueId string, owner string, limit int) IssuesParams {
-	return IssuesParams{startIssueId, owner, limit}
+func NewIssuesParams(owner string, limit int) IssuesParams {
+	return IssuesParams{owner, limit}
 }

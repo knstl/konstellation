@@ -7,10 +7,10 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func Allowance(ctx sdk.Context, k keeper.Keeper, issueID string, owner string, spender string) ([]byte, sdk.Error) {
+func Allowance(ctx sdk.Context, k keeper.Keeper, denom string, owner string, spender string) ([]byte, sdk.Error) {
 	ownerAddress, _ := sdk.AccAddressFromBech32(owner)
 	spenderAddress, _ := sdk.AccAddressFromBech32(spender)
-	amount := k.Allowance(ctx, ownerAddress, spenderAddress, issueID)
+	amount := k.Allowance(ctx, ownerAddress, spenderAddress, denom)
 
 	//if amount.GT(sdk.ZeroInt()) {
 	//	issue := k.GetIssue(ctx, issueID)

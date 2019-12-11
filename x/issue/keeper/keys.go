@@ -3,16 +3,14 @@ package keeper
 import (
 	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/konstellation/konstellation/x/issue/types"
 	"strings"
 )
 
 // Key for getting a the next available proposalID from the store
 var (
-	KeyDelimiter       = ":"
-	KeyNextIssueID     = []byte("newIssueID")
 	KeyFirstIssueDenom = []byte("firstIssueDenom")
 	KeyLastIssueDenom  = []byte("lastIssueDenom")
+	KeyLastIssueId     = []byte("lastIssueId")
 )
 
 //func BytesString(b []byte) string {
@@ -24,7 +22,7 @@ func KeyIssuer(denom string) []byte {
 }
 
 // Key for getting a specific address from the store
-func KeyAddressIssues(addr string) []byte {
+func KeyAddressDenoms(addr string) []byte {
 	return []byte(fmt.Sprintf("address:%s", addr))
 }
 
@@ -41,10 +39,10 @@ func PrefixFreeze(issueID string) []byte {
 	return []byte(fmt.Sprintf("freeze:%s", issueID))
 }
 
-func KeySymbolIssues(symbol string) []byte {
+func KeySymbolDenom(symbol string) []byte {
 	return []byte(fmt.Sprintf("symbol:%s", strings.ToUpper(symbol)))
 }
 
-func KeyIssueIdStr(seq uint64) string {
-	return fmt.Sprintf("%s%x", types.IDPreStr, seq)
+func KeyIdDenom(id uint64) []byte {
+	return []byte(fmt.Sprintf("id:%x", id))
 }

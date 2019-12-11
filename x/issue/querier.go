@@ -16,6 +16,8 @@ func NewQuerier(k keeper.Keeper) sdk.Querier {
 			return query.Issue(ctx, k, path[1])
 		case types.QueryIssues:
 			return query.Issues(ctx, k, req.Data)
+		case types.QueryIssuesAll:
+			return query.IssuesAll(ctx, k)
 		case types.QueryAllowance:
 			return query.Allowance(ctx, k, path[1], path[2], path[3])
 		default:

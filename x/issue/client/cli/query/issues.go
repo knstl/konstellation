@@ -11,11 +11,9 @@ import (
 )
 
 const (
-	flagAddress      = "address"
-	flagStartIssueId = "start-issue-id"
-	flagLimit        = "limit"
-	flagSymbol       = "symbol"
-	flagMintTo       = "to"
+	flagAddress = "address"
+	flagLimit   = "limit"
+	flagSymbol  = "symbol"
 )
 
 func pathQueryIssues() string {
@@ -44,7 +42,6 @@ func GetQueryCmdIssues(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 			qp := types.NewIssuesParams(
-				viper.GetString(flagStartIssueId),
 				address.String(),
 				viper.GetInt(flagLimit),
 			)
@@ -62,7 +59,6 @@ func GetQueryCmdIssues(cdc *codec.Codec) *cobra.Command {
 	}
 
 	cmd.Flags().String(flagAddress, "", "Token owner address")
-	cmd.Flags().String(flagStartIssueId, "", "Start issueId of issues")
 	cmd.Flags().Int32(flagLimit, 30, "Query number of issue results per page returned")
 	return cmd
 }

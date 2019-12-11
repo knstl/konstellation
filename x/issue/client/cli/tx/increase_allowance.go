@@ -26,12 +26,12 @@ func GetTxCmdIncreaseAllowance(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
-			coin, err := sdk.ParseCoin(args[1])
+			coins, err := sdk.ParseCoins(args[1])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgIncreaseAllowance(cliCtx.GetFromAddress(), spender, coin)
+			msg := types.NewMsgIncreaseAllowance(cliCtx.GetFromAddress(), spender, coins)
 			validateErr := msg.ValidateBasic()
 			if validateErr != nil {
 				return validateErr

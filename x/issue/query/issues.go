@@ -18,5 +18,6 @@ func Issues(ctx sdk.Context, k keeper.Keeper, data []byte) ([]byte, sdk.Error) {
 	if err != nil {
 		return nil, sdk.ErrInternal(sdk.AppendMsgToErr("could not marshal result to JSON", err.Error()))
 	}
+
 	return bz, nil
 }

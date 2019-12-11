@@ -13,11 +13,15 @@ var (
 )
 
 const (
-	IDPreStr = "coin"
-	Custom   = "custom"
+	InitLastId uint64 = 1
+	//CoinIssueMaxId        uint64 = 999999999999
+	Custom = "custom"
 )
 
 type IIssue interface {
+	GetId() uint64
+	SetId(uint64)
+
 	GetDenom() string
 	SetDenom(string)
 
@@ -32,6 +36,9 @@ type IIssue interface {
 
 	GetDecimals() uint
 	SetDecimals(uint)
+
+	GetIssueTime() int
+	SetIssueTime(int)
 
 	GetTotalSupply() sdk.Int
 	SetTotalSupply(sdk.Int)
@@ -54,6 +61,7 @@ func (coinIssues CoinIssues) String() string {
 }
 
 type CoinIssue struct {
+	Id                 uint64         `json:"id"`
 	Issuer             sdk.AccAddress `json:"issuer"`
 	Owner              sdk.AccAddress `json:"owner"`
 	Denom              string         `json:"denom"`
@@ -79,12 +87,13 @@ func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue 
 
 	return &ci
 }
-func (ci *CoinIssue) GetIssuer() sdk.AccAddress {
-	return ci.Issuer
+
+func (ci *CoinIssue) GetId() uint64 {
+	return ci.Id
 }
 
-func (ci *CoinIssue) SetIssuer(issuer sdk.AccAddress) {
-	ci.Issuer = issuer
+func (ci *CoinIssue) SetId(id uint64) {
+	ci.Id = id
 }
 
 func (ci *CoinIssue) GetDenom() string {
@@ -93,6 +102,14 @@ func (ci *CoinIssue) GetDenom() string {
 
 func (ci *CoinIssue) SetDenom(denom string) {
 	ci.Denom = denom
+}
+
+func (ci *CoinIssue) GetIssuer() sdk.AccAddress {
+	return ci.Issuer
+}
+
+func (ci *CoinIssue) SetIssuer(issuer sdk.AccAddress) {
+	ci.Issuer = issuer
 }
 
 func (ci *CoinIssue) GetOwner() sdk.AccAddress {
@@ -128,11 +145,19 @@ func (ci *CoinIssue) SetTotalSupply(totalSupply sdk.Int) {
 }
 
 func (ci *CoinIssue) AddTotalSupply(amount sdk.Int) {
-	ci.TotalSupply.Add(amount)
+	ci.TotalSupply = ci.TotalSupply.Add(amount)
 }
 
 func (ci *CoinIssue) SubTotalSupply(amount sdk.Int) {
-	ci.TotalSupply.Sub(amount)
+	ci.TotalSupply = ci.TotalSupply.Sub(amount)
+}
+
+func (ci *CoinIssue) GetIssueTime() int64 {
+	return ci.IssueTime
+}
+
+func (ci *CoinIssue) SetIssueTime(time int64) {
+	ci.IssueTime = time
 }
 
 func (ci *CoinIssue) ToCoin() sdk.Coin {
@@ -150,15 +175,4 @@ func getDecimalsInt(decimals uint) sdk.Int {
 
 func (ci *CoinIssue) QuoDecimals(amount sdk.Int) sdk.Int {
 	return amount.Quo(getDecimalsInt(ci.GetDecimals()))
-}
-
-func IsIssueId(issueID string) bool {
-	return strings.HasPrefix(issueID, IDPreStr)
-}
-
-func CheckIssueId(issueID string) sdk.Error {
-	if !IsIssueId(issueID) {
-		return ErrIssueID(issueID)
-	}
-	return nil
 }
