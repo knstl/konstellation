@@ -150,6 +150,9 @@ func (ci *CoinIssue) AddTotalSupply(amount sdk.Int) {
 
 func (ci *CoinIssue) SubTotalSupply(amount sdk.Int) {
 	ci.TotalSupply = ci.TotalSupply.Sub(amount)
+	if ci.TotalSupply.IsNegative() {
+		ci.TotalSupply = sdk.ZeroInt()
+	}
 }
 
 func (ci *CoinIssue) GetIssueTime() int64 {

@@ -35,6 +35,10 @@ func NewHandler(k Keeper) sdk.Handler {
 			return handler.HandleMsgMint(ctx, k, msg)
 		case types.MsgMintTo:
 			return handler.HandleMsgMintTo(ctx, k, msg)
+		case types.MsgBurn:
+			return handler.HandleMsgBurn(ctx, k, msg)
+		case types.MsgBurnFrom:
+			return handler.HandleMsgBurnFrom(ctx, k, msg)
 
 		default:
 			errMsg := fmt.Sprintf("unrecognized issue message type: %T", msg)

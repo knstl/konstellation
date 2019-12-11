@@ -8,7 +8,16 @@ const (
 	TypeMsgIssue = "issue"
 )
 
-var _, _, _, _, _, _, _, _ sdk.Msg = &MsgIssue{}, &MsgTransfer{}, &MsgApprove{}, &MsgIncreaseAllowance{}, &MsgDecreaseAllowance{}, &MsgTransferFrom{}, &MsgMint{}, &MsgMintTo{}
+var _ sdk.Msg = &MsgIssue{}
+var _ sdk.Msg = &MsgTransfer{}
+var _ sdk.Msg = &MsgApprove{}
+var _ sdk.Msg = &MsgIncreaseAllowance{}
+var _ sdk.Msg = &MsgDecreaseAllowance{}
+var _ sdk.Msg = &MsgTransferFrom{}
+var _ sdk.Msg = &MsgMint{}
+var _ sdk.Msg = &MsgMintTo{}
+var _ sdk.Msg = &MsgBurn{}
+var _ sdk.Msg = &MsgBurnFrom{}
 
 type MsgIssue struct {
 	Owner        sdk.AccAddress `json:"owner" yaml:"owner"`
@@ -374,4 +383,86 @@ func (msg MsgMintTo) GetSignBytes() []byte {
 // GetSigners Implements Msg.
 func (msg MsgMintTo) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Minter}
+}
+
+type MsgBurn struct {
+	Burner sdk.AccAddress `json:"burner" yaml:"burner"`
+	Amount sdk.Coins      `json:"amount" yaml:"amount"`
+}
+
+func NewMsgBurn(burner sdk.AccAddress, amount sdk.Coins) MsgBurn {
+	return MsgBurn{Burner: burner, Amount: amount}
+}
+
+// Route Implements Msg.
+func (msg MsgBurn) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgBurn) Type() string { return "burn" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgBurn) ValidateBasic() sdk.Error {
+	if msg.Burner.Empty() {
+		return sdk.ErrInvalidAddress("missing minter address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsAllPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgBurn) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgBurn) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Burner}
+}
+
+type MsgBurnFrom struct {
+	Burner      sdk.AccAddress `json:"burner" yaml:"burner"`
+	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
+	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
+}
+
+func NewMsgBurnFrom(burner, fromAddr sdk.AccAddress, amount sdk.Coins) MsgBurnFrom {
+	return MsgBurnFrom{Burner: burner, FromAddress: fromAddr, Amount: amount}
+}
+
+// Route Implements Msg.
+func (msg MsgBurnFrom) Route() string { return RouterKey }
+
+// Type Implements Msg.
+func (msg MsgBurnFrom) Type() string { return "burn_from" }
+
+// ValidateBasic Implements Msg.
+func (msg MsgBurnFrom) ValidateBasic() sdk.Error {
+	if msg.Burner.Empty() {
+		return sdk.ErrInvalidAddress("missing burner address")
+	}
+	if msg.FromAddress.Empty() {
+		return sdk.ErrInvalidAddress("missing recipient address")
+	}
+	if !msg.Amount.IsValid() {
+		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+	}
+	if !msg.Amount.IsAllPositive() {
+		return sdk.ErrInsufficientCoins("send amount must be positive")
+	}
+	return nil
+}
+
+// GetSignBytes Implements Msg.
+func (msg MsgBurnFrom) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+}
+
+// GetSigners Implements Msg.
+func (msg MsgBurnFrom) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Burner}
 }

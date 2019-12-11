@@ -9,11 +9,12 @@ import (
 type CodeType = sdk.CodeType
 
 const (
-	DefaultCodespace    sdk.CodespaceType = "issue"
-	CodeInvalidInput    CodeType          = 103
-	CodeIssuerMismatch  sdk.CodeType      = 2
-	CodeIssueIDNotValid sdk.CodeType      = 3
-	CodeUnknownIssue    sdk.CodeType      = 10
+	DefaultCodespace         sdk.CodespaceType = "issue"
+	CodeInvalidInput         CodeType          = 103
+	CodeIssuerMismatch       sdk.CodeType      = 2
+	CodeIssueIDNotValid      sdk.CodeType      = 3
+	CodeAmountLowerAllowance sdk.CodeType      = 4
+	CodeUnknownIssue         sdk.CodeType      = 10
 )
 
 //convert sdk.Error to error
@@ -21,20 +22,16 @@ func Errorf(err sdk.Error) error {
 	return fmt.Errorf(err.Stacktrace().Error())
 }
 
-func ErrNil(codespace sdk.CodespaceType) sdk.Error {
-	return sdk.NewError(codespace, CodeInvalidInput, "is nil")
-}
-
-func ErrNilOwner(codespace sdk.CodespaceType) sdk.Error {
-	return sdk.NewError(codespace, CodeInvalidInput, "Owner is nil")
-}
+//func ErrNil(codespace sdk.CodespaceType) sdk.Error {
+//	return sdk.NewError(codespace, CodeInvalidInput, "is nil")
+//}
+//
+//func ErrNilOwner(codespace sdk.CodespaceType) sdk.Error {
+//	return sdk.NewError(codespace, CodeInvalidInput, "Owner is nil")
+//}
 
 func ErrInvalidIssueParams() sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeInvalidInput, "Invalid issue params")
-}
-
-func ErrIssueID(issueID string) sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeIssueIDNotValid, fmt.Sprintf("Issue-id %s is not a valid issueId", issueID))
 }
 
 func ErrUnknownIssue(issueID string) sdk.Error {
@@ -43,6 +40,10 @@ func ErrUnknownIssue(issueID string) sdk.Error {
 
 func ErrOwnerMismatch(issueID string) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeIssuerMismatch, fmt.Sprintf("Owner mismatch with token %s", issueID))
+}
+
+func ErrAmountGreaterThanAllowance(amt sdk.Coin, allowance sdk.Coin) sdk.Error {
+	return sdk.NewError(DefaultCodespace, CodeAmountLowerAllowance, fmt.Sprintf("Amount greater than allowance %x > %x", amt.String(), allowance.String()))
 }
 
 // Error constructors

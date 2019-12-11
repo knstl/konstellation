@@ -104,6 +104,7 @@ var (
 		},
 		issue.ModuleName: {
 			supply.Minter,
+			supply.Burner,
 		},
 	}
 )
@@ -283,6 +284,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 	app.issueKeeper = keeper.NewKeeper(
 		app.cdc,
 		keys[issue.StoreKey],
+		app.accountKeeper,
 		app.bankKeeper,
 		app.supplyKeeper,
 		issue.DefaultCodespace,
@@ -395,8 +397,8 @@ func (app *KonstellationApp) ModuleAccountAddrs() map[string]bool {
 }
 
 // _________________________________________________________
-
-func (app *KonstellationApp) ExportAppStateAndValidators(forZeroHeight bool, jailWhiteList []string,
+//forZeroHeight bool, jailWhiteList []string,
+func (app *KonstellationApp) ExportAppStateAndValidators(_ bool, _ []string,
 ) (appState json.RawMessage, validators []tmtypes.GenesisValidator, err error) {
 
 	// as if they could withdraw from the start of the next block

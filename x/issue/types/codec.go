@@ -17,6 +17,8 @@ func RegisterCodec(cdc *codec.Codec) {
 	cdc.RegisterConcrete(MsgDecreaseAllowance{}, "issue/MsgDecreaseAllowance", nil)
 	cdc.RegisterConcrete(MsgMint{}, "issue/MsgMint", nil)
 	cdc.RegisterConcrete(MsgMintTo{}, "issue/MsgMintTo", nil)
+	cdc.RegisterConcrete(MsgBurn{}, "issue/MsgBurn", nil)
+	cdc.RegisterConcrete(MsgBurnFrom{}, "issue/MsgBurnFrom", nil)
 
 	cdc.RegisterInterface((*IIssue)(nil), nil)
 	cdc.RegisterConcrete(&CoinIssue{}, "issue/CoinIssue", nil)

@@ -10,13 +10,18 @@ const (
 	EventTypeTransferFrom      = "transfer_from"
 	EventTypeMint              = "mint"
 	EventTypeMintTo            = "mint_to"
+	EventTypeBurn              = "burn"
+	EventTypeBurnFrom          = "burn_from"
 
 	AttributeKeyIssuer    = "issuer"
 	AttributeKeyRecipient = "recipient"
 	AttributeKeyOwner     = "owner"
+	AttributeKeyFrom      = "from"
+	AttributeKeyTo        = "to"
 	AttributeKeySpender   = "spender"
 	AttributeKeyIssueId   = "issueId"
 	AttributeKeyMinter    = "minter"
+	AttributeKeyBurner    = "burner"
 
 	AttributeValueCategory = ModuleName
 )
