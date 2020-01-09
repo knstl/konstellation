@@ -7,43 +7,7 @@
         "address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq",
         "coins": [
           {
-            "amount": "900000000",
-            "denom": "darc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "5",
-        "start_time": "0"
-      },
-      {
-        "account_number": "10",
-        "address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-        "coins": [
-          {
-            "amount": "250028700",
-            "denom": "darc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "9",
-        "start_time": "0"
-      },
-      {
-        "account_number": "12",
-        "address": "darc1fzuxwxa33zrjllg6mg6us4nxw8r49zk2yxjmdm",
-        "coins": [
-          {
-            "amount": "300000",
+            "amount": "999000000",
             "denom": "darc"
           }
         ],
@@ -57,29 +21,11 @@
         "start_time": "0"
       },
       {
-        "account_number": "11",
-        "address": "darc1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3sw9u5vv",
-        "coins": [
-          {
-            "amount": "189900000",
-            "denom": "darc"
-          }
-        ],
-        "delegated_free": [],
-        "delegated_vesting": [],
-        "end_time": "0",
-        "module_name": "",
-        "module_permissions": null,
-        "original_vesting": [],
-        "sequence_number": "3",
-        "start_time": "0"
-      },
-      {
         "account_number": "5",
         "address": "darc1fl48vsnmsdzcv85q5d2q4z5ajdha8yu326a75q",
         "coins": [
           {
-            "amount": "460100000",
+            "amount": "3000000",
             "denom": "darc"
           }
         ],
@@ -98,7 +44,12 @@
       {
         "account_number": "6",
         "address": "darc1tygms3xhhs3yv487phx3dw4a95jn7t7l76p0z5",
-        "coins": [],
+        "coins": [
+          {
+            "amount": "100000",
+            "denom": "darc"
+          }
+        ],
         "delegated_free": [],
         "delegated_vesting": [],
         "end_time": "0",
@@ -116,7 +67,7 @@
         "address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
         "coins": [
           {
-            "amount": "599970000",
+            "amount": "999900000",
             "denom": "darc"
           }
         ],
@@ -126,18 +77,13 @@
         "module_name": "",
         "module_permissions": null,
         "original_vesting": [],
-        "sequence_number": "10",
+        "sequence_number": "1",
         "start_time": "0"
       },
       {
         "account_number": "7",
         "address": "darc10d07y265gmmuvt4z0w9aw880jnsr700j9r85my",
-        "coins": [
-          {
-            "amount": "1300",
-            "denom": "darc"
-          }
-        ],
+        "coins": [],
         "delegated_free": [],
         "delegated_vesting": [],
         "end_time": "0",
@@ -154,7 +100,7 @@
         "address": "darc1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8c7sdyg",
         "coins": [
           {
-            "amount": "2626664",
+            "amount": "2296",
             "denom": "darc"
           }
         ],
@@ -172,7 +118,7 @@
         "address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
         "coins": [
           {
-            "amount": "900000000",
+            "amount": "999000000",
             "denom": "darc"
           }
         ],
@@ -182,7 +128,7 @@
         "module_name": "",
         "module_permissions": null,
         "original_vesting": [],
-        "sequence_number": "7",
+        "sequence_number": "1",
         "start_time": "0"
       },
       {
@@ -190,7 +136,7 @@
         "address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
         "coins": [
           {
-            "amount": "699636000",
+            "amount": "999000000",
             "denom": "darc"
           }
         ],
@@ -200,7 +146,7 @@
         "module_name": "",
         "module_permissions": null,
         "original_vesting": [],
-        "sequence_number": "9",
+        "sequence_number": "1",
         "start_time": "0"
       },
       {
@@ -260,34 +206,16 @@
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
-            "stake": "100000000.000000000000000000"
+            "stake": "1000000.000000000000000000"
           },
           "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
-        },
-        {
-          "delegator_address": "darc1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3sw9u5vv",
-          "starting_info": {
-            "creation_height": "75162",
-            "previous_period": "2",
-            "stake": "10100000.000000000000000000"
-          },
-          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
-        },
-        {
-          "delegator_address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-          "starting_info": {
-            "creation_height": "125",
-            "previous_period": "2",
-            "stake": "50000000.000000000000000000"
-          },
-          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "delegator_address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
-            "stake": "100000000.000000000000000000"
+            "stake": "100000.000000000000000000"
           },
           "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
@@ -296,7 +224,7 @@
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
-            "stake": "100000000.000000000000000000"
+            "stake": "1000000.000000000000000000"
           },
           "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
         },
@@ -305,7 +233,7 @@
           "starting_info": {
             "creation_height": "0",
             "previous_period": "1",
-            "stake": "100000000.000000000000000000"
+            "stake": "1000000.000000000000000000"
           },
           "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
@@ -314,7 +242,7 @@
       "fee_pool": {
         "community_pool": [
           {
-            "amount": "52533.280000000002462590",
+            "amount": "45.920000000000002181",
             "denom": "darc"
           }
         ]
@@ -323,7 +251,7 @@
         {
           "outstanding_rewards": [
             {
-              "amount": "573156.544876543209325826",
+              "amount": "748.659999999999999273",
               "denom": "darc"
             }
           ],
@@ -331,21 +259,12 @@
         },
         {
           "outstanding_rewards": null,
-          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
-        },
-        {
-          "outstanding_rewards": [
-            {
-              "amount": "852990.240925925925115442",
-              "denom": "darc"
-            }
-          ],
           "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "outstanding_rewards": [
             {
-              "amount": "574841.602654320987103622",
+              "amount": "744.559999999999999273",
               "denom": "darc"
             }
           ],
@@ -354,22 +273,18 @@
         {
           "outstanding_rewards": [
             {
-              "amount": "573142.331543209875992520",
+              "amount": "756.859999999999999273",
               "denom": "darc"
             }
           ],
           "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
-      "previous_proposer": "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz",
+      "previous_proposer": "darcvalcons17xf5wwvs779w6m9hxqnskh25x4tw4w74l55n4f",
       "validator_accumulated_commissions": [
         {
           "accumulated": null,
           "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
-        },
-        {
-          "accumulated": null,
-          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
         },
         {
           "accumulated": null,
@@ -390,7 +305,7 @@
             "period": "2",
             "rewards": [
               {
-                "amount": "573156.544876543209325826",
+                "amount": "748.659999999999999273",
                 "denom": "darc"
               }
             ]
@@ -399,20 +314,8 @@
         },
         {
           "rewards": {
-            "period": "3",
+            "period": "2",
             "rewards": null
-          },
-          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
-        },
-        {
-          "rewards": {
-            "period": "3",
-            "rewards": [
-              {
-                "amount": "842005.015925925925115442",
-                "denom": "darc"
-              }
-            ]
           },
           "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
@@ -421,7 +324,7 @@
             "period": "2",
             "rewards": [
               {
-                "amount": "574841.602654320987103622",
+                "amount": "744.559999999999999273",
                 "denom": "darc"
               }
             ]
@@ -433,7 +336,7 @@
             "period": "2",
             "rewards": [
               {
-                "amount": "573142.331543209875992520",
+                "amount": "756.859999999999999273",
                 "denom": "darc"
               }
             ]
@@ -451,30 +354,9 @@
           "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
         },
         {
-          "period": "2",
-          "rewards": {
-            "cumulative_reward_ratio": null,
-            "reference_count": 2
-          },
-          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
-        },
-        {
           "period": "1",
           "rewards": {
             "cumulative_reward_ratio": null,
-            "reference_count": 1
-          },
-          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
-        },
-        {
-          "period": "2",
-          "rewards": {
-            "cumulative_reward_ratio": [
-              {
-                "amount": "0.000109852250000000",
-                "denom": "darc"
-              }
-            ],
             "reference_count": 2
           },
           "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
@@ -510,327 +392,41 @@
           }
         ]
       },
-      "deposits": [
-        {
-          "amount": [
-            {
-              "amount": "1000",
-              "denom": "darc"
-            }
-          ],
-          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-          "proposal_id": "3"
-        },
-        {
-          "amount": [
-            {
-              "amount": "100",
-              "denom": "darc"
-            }
-          ],
-          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-          "proposal_id": "4"
-        },
-        {
-          "amount": [
-            {
-              "amount": "100",
-              "denom": "darc"
-            }
-          ],
-          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-          "proposal_id": "5"
-        },
-        {
-          "amount": [
-            {
-              "amount": "100",
-              "denom": "darc"
-            }
-          ],
-          "depositor": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-          "proposal_id": "6"
-        }
-      ],
-      "proposals": [
-        {
-          "content": {
-            "type": "cosmos-sdk/TextProposal",
-            "value": {
-              "description": "xcvxvxcvxcvxc",
-              "title": "TextProps"
-            }
-          },
-          "deposit_end_time": "2019-11-24T15:16:24.518436272Z",
-          "final_tally_result": {
-            "abstain": "0",
-            "no": "0",
-            "no_with_veto": "0",
-            "yes": "450000000"
-          },
-          "id": "1",
-          "proposal_status": "Passed",
-          "submit_time": "2019-11-22T15:16:24.518436272Z",
-          "total_deposit": [
-            {
-              "amount": "1000",
-              "denom": "darc"
-            }
-          ],
-          "voting_end_time": "2019-11-24T15:20:59.07914055Z",
-          "voting_start_time": "2019-11-22T15:20:59.07914055Z"
-        },
-        {
-          "content": {
-            "type": "cosmos-sdk/ParameterChangeProposal",
-            "value": {
-              "changes": [
-                {
-                  "key": "InflationRateChange",
-                  "subspace": "mint",
-                  "value": "\"0\""
-                },
-                {
-                  "key": "InflationMax",
-                  "subspace": "mint",
-                  "value": "\"0\""
-                },
-                {
-                  "key": "InflationMin",
-                  "subspace": "mint",
-                  "value": "\"0\""
-                }
-              ],
-              "description": "Change inflation rate to 0",
-              "title": "Change inflation rate #1"
-            }
-          },
-          "deposit_end_time": "2019-11-24T15:22:27.413270133Z",
-          "final_tally_result": {
-            "abstain": "0",
-            "no": "0",
-            "no_with_veto": "0",
-            "yes": "450000000"
-          },
-          "id": "2",
-          "proposal_status": "Passed",
-          "submit_time": "2019-11-22T15:22:27.413270133Z",
-          "total_deposit": [
-            {
-              "amount": "1000",
-              "denom": "darc"
-            }
-          ],
-          "voting_end_time": "2019-11-24T15:22:49.53977099Z",
-          "voting_start_time": "2019-11-22T15:22:49.53977099Z"
-        },
-        {
-          "content": {
-            "type": "cosmos-sdk/ParameterChangeProposal",
-            "value": {
-              "changes": [
-                {
-                  "key": "InflationRateChange",
-                  "subspace": "mint",
-                  "value": "\"0.130000000000000000\""
-                },
-                {
-                  "key": "InflationMin",
-                  "subspace": "mint",
-                  "value": "\"0.070000000000000000\""
-                },
-                {
-                  "key": "InflationMax",
-                  "subspace": "mint",
-                  "value": "\"0.200000000000000000\""
-                }
-              ],
-              "description": "Enable inflation",
-              "title": "Enable inflation "
-            }
-          },
-          "deposit_end_time": "2019-11-27T16:04:58.417073266Z",
-          "final_tally_result": {
-            "abstain": "0",
-            "no": "0",
-            "no_with_veto": "0",
-            "yes": "0"
-          },
-          "id": "3",
-          "proposal_status": "VotingPeriod",
-          "submit_time": "2019-11-25T16:04:58.417073266Z",
-          "total_deposit": [
-            {
-              "amount": "1000",
-              "denom": "darc"
-            }
-          ],
-          "voting_end_time": "2019-11-27T16:05:31.528053895Z",
-          "voting_start_time": "2019-11-25T16:05:31.528053895Z"
-        },
-        {
-          "content": {
-            "type": "cosmos-sdk/TextProposal",
-            "value": {
-              "description": "vzxcvxzcvxzcvxzcv",
-              "title": "zxc"
-            }
-          },
-          "deposit_end_time": "2019-11-28T10:57:00.402775963Z",
-          "final_tally_result": {
-            "abstain": "0",
-            "no": "0",
-            "no_with_veto": "0",
-            "yes": "0"
-          },
-          "id": "4",
-          "proposal_status": "DepositPeriod",
-          "submit_time": "2019-11-26T10:57:00.402775963Z",
-          "total_deposit": [
-            {
-              "amount": "100",
-              "denom": "darc"
-            }
-          ],
-          "voting_end_time": "0001-01-01T00:00:00Z",
-          "voting_start_time": "0001-01-01T00:00:00Z"
-        },
-        {
-          "content": {
-            "type": "cosmos-sdk/TextProposal",
-            "value": {
-              "description": "xcvzxcvzxcvzxc",
-              "title": "zxcvz"
-            }
-          },
-          "deposit_end_time": "2019-11-28T10:57:22.329029075Z",
-          "final_tally_result": {
-            "abstain": "0",
-            "no": "0",
-            "no_with_veto": "0",
-            "yes": "0"
-          },
-          "id": "5",
-          "proposal_status": "DepositPeriod",
-          "submit_time": "2019-11-26T10:57:22.329029075Z",
-          "total_deposit": [
-            {
-              "amount": "100",
-              "denom": "darc"
-            }
-          ],
-          "voting_end_time": "0001-01-01T00:00:00Z",
-          "voting_start_time": "0001-01-01T00:00:00Z"
-        },
-        {
-          "content": {
-            "type": "cosmos-sdk/TextProposal",
-            "value": {
-              "description": "cvbxcvbxcvb",
-              "title": "xcvbx"
-            }
-          },
-          "deposit_end_time": "2019-11-28T10:59:27.705904543Z",
-          "final_tally_result": {
-            "abstain": "0",
-            "no": "0",
-            "no_with_veto": "0",
-            "yes": "0"
-          },
-          "id": "6",
-          "proposal_status": "DepositPeriod",
-          "submit_time": "2019-11-26T10:59:27.705904543Z",
-          "total_deposit": [
-            {
-              "amount": "100",
-              "denom": "darc"
-            }
-          ],
-          "voting_end_time": "0001-01-01T00:00:00Z",
-          "voting_start_time": "0001-01-01T00:00:00Z"
-        }
-      ],
-      "starting_proposal_id": "7",
+      "deposits": null,
+      "proposals": [],
+      "starting_proposal_id": "1",
       "tally_params": {
         "quorum": "0.334000000000000000",
         "threshold": "0.500000000000000000",
         "veto": "0.334000000000000000"
       },
-      "votes": [
-        {
-          "option": "Yes",
-          "proposal_id": "3",
-          "voter": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq"
-        },
-        {
-          "option": "Yes",
-          "proposal_id": "3",
-          "voter": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j"
-        },
-        {
-          "option": "Yes",
-          "proposal_id": "3",
-          "voter": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl"
-        },
-        {
-          "option": "Yes",
-          "proposal_id": "3",
-          "voter": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf"
-        },
-        {
-          "option": "Yes",
-          "proposal_id": "3",
-          "voter": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc"
-        }
-      ],
+      "votes": null,
       "voting_params": {
         "voting_period": "172800000000000"
       }
     },
+    "issue": {
+      "params": {}
+    },
     "mint": {
       "minter": {
-        "annual_provisions": "0.000000000000000000",
-        "inflation": "0.000000000000000000"
+        "annual_provisions": "520002592.131726331834570936",
+        "inflation": "0.130000576077612724"
       },
       "params": {
         "blocks_per_year": "6311520",
         "goal_bonded": "0.670000000000000000",
-        "inflation_max": "0.000000000000000000",
-        "inflation_min": "0.000000000000000000",
-        "inflation_rate_change": "0.000000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "inflation_rate_change": "0.130000000000000000",
         "mint_denom": "darc"
       }
     },
     "slashing": {
       "missed_blocks": {
-        "darcvalcons18j5002llfyewm3fxee3ytnzgsmjchlxz9t8phu": [
-          {
-            "index": "49",
-            "missed": false
-          }
-        ],
-        "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz": [
-          {
-            "index": "37",
-            "missed": false
-          },
-          {
-            "index": "52",
-            "missed": false
-          },
-          {
-            "index": "53",
-            "missed": false
-          }
-        ],
-        "darcvalcons1dqw97rytn6pp0msu65sj9r387egs5uwmytnmlm": [],
-        "darcvalcons1l8s0xgnu3rcwvkhwq592njjkxtq9gdykg4wt77": [
-          {
-            "index": "31",
-            "missed": false
-          }
-        ],
-        "darcvalcons1pz5qkdmzqm8a5qdxlrx47tac4kz66hudhzetta": []
+        "darcvalcons17xf5wwvs779w6m9hxqnskh25x4tw4w74l55n4f": [],
+        "darcvalcons1n78kvvhfzwgnmqmhv6fftyauulrpp03q2russ6": [],
+        "darcvalcons1sv2v0hqx95ktm3au84dxrlzp9x8kzjrm7xm3j5": []
       },
       "params": {
         "downtime_jail_duration": "600000000000",
@@ -841,44 +437,28 @@
         "slash_fraction_downtime": "0.010000000000000000"
       },
       "signing_infos": {
-        "darcvalcons18j5002llfyewm3fxee3ytnzgsmjchlxz9t8phu": {
-          "address": "darcvalcons18j5002llfyewm3fxee3ytnzgsmjchlxz9t8phu",
-          "index_offset": "75180",
+        "darcvalcons17xf5wwvs779w6m9hxqnskh25x4tw4w74l55n4f": {
+          "address": "darcvalcons17xf5wwvs779w6m9hxqnskh25x4tw4w74l55n4f",
+          "index_offset": "27",
           "jailed_until": "1970-01-01T00:00:00Z",
           "missed_blocks_counter": "0",
           "start_height": "0",
           "tombstoned": false
         },
-        "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz": {
-          "address": "darcvalcons19zta3jvzafnqkdz6vahlwlgx75967tk5yggkcz",
-          "index_offset": "75180",
+        "darcvalcons1n78kvvhfzwgnmqmhv6fftyauulrpp03q2russ6": {
+          "address": "darcvalcons1n78kvvhfzwgnmqmhv6fftyauulrpp03q2russ6",
+          "index_offset": "27",
           "jailed_until": "1970-01-01T00:00:00Z",
           "missed_blocks_counter": "0",
           "start_height": "0",
           "tombstoned": false
         },
-        "darcvalcons1dqw97rytn6pp0msu65sj9r387egs5uwmytnmlm": {
-          "address": "darcvalcons1dqw97rytn6pp0msu65sj9r387egs5uwmytnmlm",
-          "index_offset": "75180",
+        "darcvalcons1sv2v0hqx95ktm3au84dxrlzp9x8kzjrm7xm3j5": {
+          "address": "darcvalcons1sv2v0hqx95ktm3au84dxrlzp9x8kzjrm7xm3j5",
+          "index_offset": "27",
           "jailed_until": "1970-01-01T00:00:00Z",
           "missed_blocks_counter": "0",
           "start_height": "0",
-          "tombstoned": false
-        },
-        "darcvalcons1l8s0xgnu3rcwvkhwq592njjkxtq9gdykg4wt77": {
-          "address": "darcvalcons1l8s0xgnu3rcwvkhwq592njjkxtq9gdykg4wt77",
-          "index_offset": "75180",
-          "jailed_until": "1970-01-01T00:00:00Z",
-          "missed_blocks_counter": "0",
-          "start_height": "0",
-          "tombstoned": false
-        },
-        "darcvalcons1pz5qkdmzqm8a5qdxlrx47tac4kz66hudhzetta": {
-          "address": "darcvalcons1pz5qkdmzqm8a5qdxlrx47tac4kz66hudhzetta",
-          "index_offset": "17",
-          "jailed_until": "1970-01-01T00:00:00Z",
-          "missed_blocks_counter": "0",
-          "start_height": "75162",
           "tombstoned": false
         }
       }
@@ -887,57 +467,39 @@
       "delegations": [
         {
           "delegator_address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq",
-          "shares": "100000000.000000000000000000",
+          "shares": "1000000.000000000000000000",
           "validator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng"
         },
         {
-          "delegator_address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
-          "shares": "50000000.000000000000000000",
-          "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
-        },
-        {
-          "delegator_address": "darc1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3sw9u5vv",
-          "shares": "10100000.000000000000000000",
-          "validator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy"
-        },
-        {
           "delegator_address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
-          "shares": "100000000.000000000000000000",
+          "shares": "100000.000000000000000000",
           "validator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h"
         },
         {
           "delegator_address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
-          "shares": "100000000.000000000000000000",
+          "shares": "1000000.000000000000000000",
           "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
         },
         {
           "delegator_address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
-          "shares": "100000000.000000000000000000",
+          "shares": "1000000.000000000000000000",
           "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
         }
       ],
       "exported": true,
-      "last_total_power": "460",
+      "last_total_power": "3",
       "last_validator_powers": [
         {
           "Address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng",
-          "Power": "100"
-        },
-        {
-          "Address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy",
-          "Power": "10"
-        },
-        {
-          "Address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h",
-          "Power": "150"
+          "Power": "1"
         },
         {
           "Address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p",
-          "Power": "100"
+          "Power": "1"
         },
         {
           "Address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s",
-          "Power": "100"
+          "Power": "1"
         }
       ],
       "params": {
@@ -956,10 +518,10 @@
               "max_rate": "0.000000000000000000",
               "rate": "0.000000000000000000"
             },
-            "update_time": "2019-11-22T15:02:16.689534617Z"
+            "update_time": "2019-12-26T12:56:32.825360841Z"
           },
-          "consensus_pubkey": "darcvalconspub1zcjduepquy9h8mgakw0yfl90z9f2pgjynej0n577rn2jxzsynrglfyd4hvzqwt3w5g",
-          "delegator_shares": "100000000.000000000000000000",
+          "consensus_pubkey": "darcvalconspub1zcjduepqvjuymtavwrnxsqnx4n8p5k3n6rwvyn0qk8aqwjhp6ya6u54zfk7q3269zt",
+          "delegator_shares": "1000000.000000000000000000",
           "description": {
             "details": "2",
             "identity": "",
@@ -970,7 +532,7 @@
           "min_self_delegation": "1",
           "operator_address": "darcvaloper1z6u8hddknlp33z79rra7q4gjlw3thwqrux5xng",
           "status": 2,
-          "tokens": "100000000",
+          "tokens": "1000000",
           "unbonding_height": "0",
           "unbonding_time": "1970-01-01T00:00:00Z"
         },
@@ -981,46 +543,21 @@
               "max_rate": "0.000000000000000000",
               "rate": "0.000000000000000000"
             },
-            "update_time": "2019-11-27T10:57:20.287498165Z"
+            "update_time": "2019-12-26T12:56:32.825360841Z"
           },
-          "consensus_pubkey": "darcvalconspub1zcjduepqltyjqzandcpgtp7fumkepgalemkanz838mmt6z4wdacgshhw2gxqqdzgrp",
-          "delegator_shares": "10100000.000000000000000000",
-          "description": {
-            "details": "",
-            "identity": "",
-            "moniker": "dmm0",
-            "website": "cc.com"
-          },
-          "jailed": false,
-          "min_self_delegation": "1",
-          "operator_address": "darcvaloper1ftxz9hp4uv9uq9jar3ey6msc3pfs6g3slpvnqy",
-          "status": 2,
-          "tokens": "10100000",
-          "unbonding_height": "0",
-          "unbonding_time": "1970-01-01T00:00:00Z"
-        },
-        {
-          "commission": {
-            "commission_rates": {
-              "max_change_rate": "0.000000000000000000",
-              "max_rate": "0.000000000000000000",
-              "rate": "0.000000000000000000"
-            },
-            "update_time": "2019-11-22T15:02:16.689534617Z"
-          },
-          "consensus_pubkey": "darcvalconspub1zcjduepqjm30dzsl9fschldrpvnm9djx4q9wmfjgh8et3ezjdvufmwpz328qgx2m7n",
-          "delegator_shares": "150000000.000000000000000000",
+          "consensus_pubkey": "darcvalconspub1zcjduepqt49f4d2rqlalcskq0xm7qa2twdtwm4vnt8jca993netrn947lxus6gvfgh",
+          "delegator_shares": "100000.000000000000000000",
           "description": {
             "details": "1",
             "identity": "",
             "moniker": "testnode-1",
-            "website": "satoshi.com"
+            "website": ""
           },
           "jailed": false,
           "min_self_delegation": "1",
           "operator_address": "darcvaloper1d22ccl8xpzzzldl28l9gs9htrgaatkaxr2q36h",
-          "status": 2,
-          "tokens": "150000000",
+          "status": 0,
+          "tokens": "100000",
           "unbonding_height": "0",
           "unbonding_time": "1970-01-01T00:00:00Z"
         },
@@ -1031,10 +568,10 @@
               "max_rate": "0.000000000000000000",
               "rate": "0.000000000000000000"
             },
-            "update_time": "2019-11-22T15:02:16.689534617Z"
+            "update_time": "2019-12-26T12:56:32.825360841Z"
           },
-          "consensus_pubkey": "darcvalconspub1zcjduepqm6k6vc6e6gdwu03uvqdx55dghhtmnjfvythhen86af95hkg76juqpqat7k",
-          "delegator_shares": "100000000.000000000000000000",
+          "consensus_pubkey": "darcvalconspub1zcjduepq0ydakqawdm5pm5eg7tw4tyzakp06g55tkkfjwvl25p3q9vg875fqkf3696",
+          "delegator_shares": "1000000.000000000000000000",
           "description": {
             "details": "3",
             "identity": "",
@@ -1045,7 +582,7 @@
           "min_self_delegation": "1",
           "operator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p",
           "status": 2,
-          "tokens": "100000000",
+          "tokens": "1000000",
           "unbonding_height": "0",
           "unbonding_time": "1970-01-01T00:00:00Z"
         },
@@ -1056,10 +593,10 @@
               "max_rate": "0.000000000000000000",
               "rate": "0.000000000000000000"
             },
-            "update_time": "2019-11-22T15:02:16.689534617Z"
+            "update_time": "2019-12-26T12:56:32.825360841Z"
           },
-          "consensus_pubkey": "darcvalconspub1zcjduepq9hmnjzq4smmsmwgwk7zw5zfhp4806yanueqwj7xwcat436rxy2uslxsxqc",
-          "delegator_shares": "100000000.000000000000000000",
+          "consensus_pubkey": "darcvalconspub1zcjduepqek9e5nxuymrz2708s4l5zq2jecgp3avfzakvepwrfyuyh57jxedsj7vnuz",
+          "delegator_shares": "1000000.000000000000000000",
           "description": {
             "details": "4",
             "identity": "",
@@ -1070,7 +607,7 @@
           "min_self_delegation": "1",
           "operator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s",
           "status": 2,
-          "tokens": "100000000",
+          "tokens": "1000000",
           "unbonding_height": "0",
           "unbonding_time": "1970-01-01T00:00:00Z"
         }
@@ -1079,7 +616,7 @@
     "supply": {
       "supply": [
         {
-          "amount": "4002562664",
+          "amount": "4000002296",
           "denom": "darc"
         }
       ]
@@ -1101,53 +638,34 @@
       ]
     }
   },
-  "genesis_time": "2019-11-22T15:02:16.689534617Z",
+  "genesis_time": "2019-12-26T12:56:32.825360841Z",
   "validators": [
     {
       "address": "",
       "name": "testnode-2",
-      "power": "100",
+      "power": "1",
       "pub_key": {
         "type": "tendermint/PubKeyEd25519",
-        "value": "4Qtz7R2znkT8rxFSoKJEnmT5094c1SMKBJjR9JG1uwQ="
-      }
-    },
-    {
-      "address": "",
-      "name": "dmm0",
-      "power": "10",
-      "pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "+skgC7NuAoWHyebtkKO/zu3ZiPE+9r0Krm9wiF7uUgw="
-      }
-    },
-    {
-      "address": "",
-      "name": "testnode-1",
-      "power": "150",
-      "pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "luL2ih8qYYv9owsnsrZGqArtpki58rjkUms4nbgiio4="
+        "value": "ZLhNr6xw5mgCZqzOGloz0NzCTeCx+gdK4dE7rlKiTbw="
       }
     },
     {
       "address": "",
       "name": "testnode-3",
-      "power": "100",
+      "power": "1",
       "pub_key": {
         "type": "tendermint/PubKeyEd25519",
-        "value": "3q2mY1nSGu4+PGAaalGovde5ySwi73zM+upLS9ke1Lg="
+        "value": "eRvbA65u6B3TKPLdVZBdsF+kUou1kycz6qBiArEH9RI="
       }
     },
     {
       "address": "",
       "name": "testnode-4",
-      "power": "100",
+      "power": "1",
       "pub_key": {
         "type": "tendermint/PubKeyEd25519",
-        "value": "Lfc5CBWG9w25DreE6gk3DU79E7PmQOl4zsdXWOhmIrk="
+        "value": "zYuaTNwmxiV554V/QQFSzhAY9YkXbMyFw0k4S9PSNls="
       }
     }
   ]
 }
-

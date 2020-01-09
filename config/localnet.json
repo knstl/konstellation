@@ -13,7 +13,7 @@
       "name": "satoshi",
       "password": "satoshi1",
       "mnemonic": "creek round dish idea parade balance embody rate sail wheel casino suspect cute transfer pizza square cabbage valid divert gap chimney legal hurt interest",
-      "coin_delegate": 100000000,
+      "coin_delegate": 100000,
       "coin_genesis": 1000000000
     },
     "cors": "*",
@@ -33,7 +33,7 @@
       "name": "nakamoto",
       "password": "nakamoto",
       "mnemonic": "bachelor miracle cook decade chalk table blouse learn vanish menu general transfer engage coast scout rookie glove affair target glide own manual consider scrub",
-      "coin_delegate": 100000000,
+      "coin_delegate": 1000000,
       "coin_genesis": 1000000000
     }
   },
@@ -51,7 +51,7 @@
       "name": "vitalik",
       "password": "vitalik1",
       "mnemonic": "hair reunion riot fish hawk arch buzz debris arch easily search glove private rival boat resist chaos cause panda icon pave shock egg ability",
-      "coin_delegate": 100000000,
+      "coin_delegate": 1000000,
       "coin_genesis": 1000000000
     }
   },
@@ -69,7 +69,7 @@
       "name": "buterin",
       "password": "buterin1",
       "mnemonic": "other original trouble craft hard loan ostrich aim drastic team absent kiwi matrix dose engage cup novel humor brave budget stage label future exile",
-      "coin_delegate": 100000000,
+      "coin_delegate": 1000000,
       "coin_genesis": 1000000000
     }
   }
