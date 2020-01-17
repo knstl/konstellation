@@ -17,8 +17,8 @@ func getIssueAllowance(cliCtx context.CLIContext, owner sdk.AccAddress, spender 
 	return cliCtx.QueryWithData(pathQueryIssueAllowance(owner, spender, issueID), nil)
 }
 
-// GetQueryCmdAllowance implements the query issue command.
-func GetQueryCmdAllowance(cdc *codec.Codec) *cobra.Command {
+// getQueryCmdAllowance implements the query issue command.
+func getQueryCmdAllowance(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "allowance [owner] [spender] [denom]",
 		Short: "Query allowance",

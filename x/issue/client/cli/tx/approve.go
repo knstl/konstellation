@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdApprove Sets `amount` as the allowance of `spender` over the caller's tokens.
-func GetTxCmdApprove(cdc *codec.Codec) *cobra.Command {
+// getTxCmdApprove Sets `amount` as the allowance of `spender` over the caller's tokens.
+func getTxCmdApprove(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "approve [spender] [amount]",
 		Args:  cobra.ExactArgs(2),

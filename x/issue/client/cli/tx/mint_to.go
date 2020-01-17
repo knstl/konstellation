@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdMintTo implements mint function to recipient
-func GetTxCmdMintTo(cdc *codec.Codec) *cobra.Command {
+// getTxCmdMintTo implements mint function to recipient
+func getTxCmdMintTo(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "mint-to [to_address] [amount]",
 		Args:  cobra.ExactArgs(2),

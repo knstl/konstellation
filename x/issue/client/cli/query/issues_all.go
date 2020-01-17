@@ -16,8 +16,8 @@ func getIssuesListAll(cliCtx context.CLIContext) ([]byte, int64, error) {
 	return cliCtx.QueryWithData(pathQueryIssuesAll(), nil)
 }
 
-// GetQueryCmdIssuesAll implements the query issue command.
-func GetQueryCmdIssuesAll(cdc *codec.Codec) *cobra.Command {
+// getQueryCmdIssuesAll implements the query issue command.
+func getQueryCmdIssuesAll(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list-all",
 		Short: "Query all issues ",

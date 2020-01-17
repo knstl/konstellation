@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdTransfer implements transfer function
-func GetTxCmdTransfer(cdc *codec.Codec) *cobra.Command {
+// getTxCmdTransfer implements transfer function
+func getTxCmdTransfer(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "transfer [to_address] [amount]",
 		Args:  cobra.ExactArgs(2),
@@ -21,7 +21,7 @@ func GetTxCmdTransfer(cdc *codec.Codec) *cobra.Command {
 			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 
-			to, err := sdk.AccAddressFromBech32(args[0])
+			toAddr, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
 				return err
 			}
@@ -31,7 +31,7 @@ func GetTxCmdTransfer(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgTransfer(cliCtx.GetFromAddress(), to, coins)
+			msg := types.NewMsgTransfer(cliCtx.GetFromAddress(), toAddr, coins)
 			validateErr := msg.ValidateBasic()
 			if validateErr != nil {
 				return validateErr

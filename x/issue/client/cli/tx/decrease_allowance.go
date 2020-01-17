@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdDecreaseAllowance Decreases the allowance granted to `spender` by the caller.
-func GetTxCmdDecreaseAllowance(cdc *codec.Codec) *cobra.Command {
+// getTxCmdDecreaseAllowance Decreases the allowance granted to `spender` by the caller.
+func getTxCmdDecreaseAllowance(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "decrease-allowance [spender] [amount]",
 		Args:  cobra.ExactArgs(2),

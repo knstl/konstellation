@@ -10,10 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdTransferFrom Moves `amount` tokens from `sender` to `recipient` using the
+// getTxCmdTransferFrom Moves `amount` tokens from `sender` to `recipient` using the
 //     * allowance mechanism. `amount` is then deducted from the caller's
 //     * allowance.
-func GetTxCmdTransferFrom(cdc *codec.Codec) *cobra.Command {
+func getTxCmdTransferFrom(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "transfer-from [from_address] [to_address] [amount]",
 		Args:  cobra.ExactArgs(3),
@@ -23,12 +23,12 @@ func GetTxCmdTransferFrom(cdc *codec.Codec) *cobra.Command {
 			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 
-			from, err := sdk.AccAddressFromBech32(args[0])
+			fromAddr, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
 				return err
 			}
 
-			to, err := sdk.AccAddressFromBech32(args[1])
+			toAddr, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
 			}
@@ -38,7 +38,7 @@ func GetTxCmdTransferFrom(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgTransferFrom(cliCtx.GetFromAddress(), from, to, coins)
+			msg := types.NewMsgTransferFrom(cliCtx.GetFromAddress(), fromAddr, toAddr, coins)
 			validateErr := msg.ValidateBasic()
 			if validateErr != nil {
 				return validateErr

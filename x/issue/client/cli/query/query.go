@@ -1,31 +1,27 @@
 package query
 
 import (
-	"fmt"
-	"github.com/cosmos/cosmos-sdk/client/context"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/konstellation/konstellation/x/issue/types"
+	"github.com/spf13/cobra"
 )
 
-func GetQueryIssuePath(issueID string) string {
-	return fmt.Sprintf("%s/%s/%s/%s", "custom", types.QuerierRoute, types.QueryIssue, issueID)
-}
+// GetQueryCmd returns the transaction commands for this module
+func GetQueryCmd(cdc *codec.Codec) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:                        types.ModuleName,
+		Short:                      "Querying commands for the issue module",
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
 
-func GetQueryIssueSearchPath(symbol string) string {
-	return fmt.Sprintf("%s/%s/%s/%s", "custom", types.QuerierRoute, types.QuerySearch, symbol)
-}
+	cmd.AddCommand(
+		getQueryCmdIssues(cdc),
+		getQueryCmdIssuesAll(cdc),
+		getQueryCmdAllowance(cdc),
+	)
 
-func GetQueryParamsPath() string {
-	return fmt.Sprintf("%s/%s/%s", "custom", types.QuerierRoute, types.QueryParams)
-}
-
-func QueryIssueBySymbol(cliCtx context.CLIContext, symbol string) ([]byte, int64, error) {
-	return cliCtx.QueryWithData(GetQueryIssueSearchPath(symbol), nil)
-}
-
-func QueryIssueByID(cliCtx context.CLIContext, issueId string) ([]byte, int64, error) {
-	return cliCtx.QueryWithData(GetQueryIssuePath(issueId), nil)
-}
-
-func QueryParams(cliCtx context.CLIContext) ([]byte, int64, error) {
-	return cliCtx.QueryWithData(GetQueryParamsPath(), nil)
+	return cmd
 }

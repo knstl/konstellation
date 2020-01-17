@@ -28,8 +28,8 @@ func getIssuesList(cliCtx context.CLIContext, params types.IssuesParams) ([]byte
 	return cliCtx.QueryWithData(pathQueryIssues(), bz)
 }
 
-// GetCmdQueryIssues implements the query issue command.
-func GetQueryCmdIssues(cdc *codec.Codec) *cobra.Command {
+// getCmdQueryIssues implements the query issue command.
+func getQueryCmdIssues(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "Query issue list",

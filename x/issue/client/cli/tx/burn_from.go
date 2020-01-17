@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdBurnFrom implements burn  function
-func GetTxCmdBurnFrom(cdc *codec.Codec) *cobra.Command {
+// getTxCmdBurnFrom implements burn  function
+func getTxCmdBurnFrom(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "burn-from [from_address] [amount]",
 		Args:  cobra.ExactArgs(2),

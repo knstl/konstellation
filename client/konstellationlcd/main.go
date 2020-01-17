@@ -26,6 +26,7 @@ import (
 	slashingrest "github.com/cosmos/cosmos-sdk/x/slashing/client/rest"
 	stakingrest "github.com/cosmos/cosmos-sdk/x/staking/client/rest"
 	supplyrest "github.com/cosmos/cosmos-sdk/x/supply/client/rest"
+	issuerest "github.com/konstellation/konstellation/x/issue/client/rest"
 
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/types"
@@ -98,6 +99,7 @@ func registerRoutes(rs *lcd.RestServer) {
 	mintrest.RegisterRoutes(rs.CliCtx, rs.Mux)
 	govrest := gov.NewAppModuleBasic(paramsclient.ProposalHandler, distribution.ProposalHandler)
 	govrest.RegisterRESTRoutes(rs.CliCtx, rs.Mux)
+	issuerest.RegisterRoutes(rs.CliCtx, rs.Mux)
 
 	registerSwaggerUI(rs)
 }

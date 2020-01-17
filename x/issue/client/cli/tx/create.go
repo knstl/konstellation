@@ -24,8 +24,8 @@ const (
 	flagDescription        = "description"
 )
 
-// GetTxCmdCreate implements issue a coin transaction command.
-func GetTxCmdCreate(cdc *codec.Codec) *cobra.Command {
+// getTxCmdCreate implements issue a coin transaction command.
+func getTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "create [denom] [symbol] [owner] [issuer] [total-supply]",
 		Args:    cobra.ExactArgs(3),
@@ -57,10 +57,9 @@ func GetTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 				FreezeDisabled:     viper.GetBool(flagFreezeDisabled),
 			}
 
-			msg := types.NewMsgIssue(account, account, &issueParams)
-			validateErr := msg.ValidateBasic()
-			if validateErr != nil {
-				return validateErr
+			msg := types.NewMsgIssueCreate(account, account, &issueParams)
+			if err := msg.ValidateBasic(); err != nil {
+				return err
 			}
 
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})

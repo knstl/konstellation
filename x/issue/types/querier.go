@@ -3,6 +3,7 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mitchellh/mapstructure"
+	"github.com/spf13/cast"
 )
 
 // querier keys
@@ -34,6 +35,10 @@ func NewIssueParams(data interface{}) (*IssueParams, error) {
 	return &issue, err
 }
 
+func (ip *IssueParams) AddTotalSupply(totalSupply *sdk.Int) {
+	ip.TotalSupply = sdk.NewIntWithDecimal(totalSupply.Int64(), cast.ToInt(ip.Decimals))
+}
+
 type IssuesParams struct {
 	Owner string `json:"owner"`
 	Limit int    `json:"limit"`
@@ -41,4 +46,12 @@ type IssuesParams struct {
 
 func NewIssuesParams(owner string, limit int) IssuesParams {
 	return IssuesParams{owner, limit}
+}
+
+func (ip *IssuesParams) AddOwner(owner string) {
+	ip.Owner = owner
+}
+
+func (ip *IssuesParams) AddLimit(limit int) {
+	ip.Limit = limit
 }

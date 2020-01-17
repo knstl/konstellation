@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdIncreaseAllowance Increases the allowance granted to `spender` by the caller.
-func GetTxCmdIncreaseAllowance(cdc *codec.Codec) *cobra.Command {
+// getTxCmdIncreaseAllowance Increases the allowance granted to `spender` by the caller.
+func getTxCmdIncreaseAllowance(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "increase-allowance [spender] [amount]",
 		Args:  cobra.ExactArgs(2),

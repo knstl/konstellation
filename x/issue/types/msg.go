@@ -5,10 +5,19 @@ import (
 )
 
 const (
-	TypeMsgIssue = "issue"
+	TypeMsgIssueCreate       = "issue_create"
+	TypeMsgTransfer          = "transfer"
+	TypeMsgTransferFrom      = "transfer_from"
+	TypeMsgApprove           = "approve"
+	TypeMsgIncreaseAllowance = "increase_allowance"
+	TypeMsgDecreaseAllowance = "decrease_allowance"
+	TypeMsgMint              = "mint"
+	TypeMsgMintTo            = "mint_to"
+	TypeMsgBurn              = "burn"
+	TypeMsgBurnFrom          = "burn_from"
 )
 
-var _ sdk.Msg = &MsgIssue{}
+var _ sdk.Msg = &MsgIssueCreate{}
 var _ sdk.Msg = &MsgTransfer{}
 var _ sdk.Msg = &MsgApprove{}
 var _ sdk.Msg = &MsgIncreaseAllowance{}
@@ -19,36 +28,36 @@ var _ sdk.Msg = &MsgMintTo{}
 var _ sdk.Msg = &MsgBurn{}
 var _ sdk.Msg = &MsgBurnFrom{}
 
-type MsgIssue struct {
+type MsgIssueCreate struct {
 	Owner        sdk.AccAddress `json:"owner" yaml:"owner"`
 	Issuer       sdk.AccAddress `json:"issuer" yaml:"issuer"`
 	*IssueParams `json:"params"`
 }
 
-func NewMsgIssue(owner, issuer sdk.AccAddress, params *IssueParams) MsgIssue {
-	return MsgIssue{
+func NewMsgIssueCreate(owner, issuer sdk.AccAddress, params *IssueParams) MsgIssueCreate {
+	return MsgIssueCreate{
 		owner,
 		issuer,
 		params,
 	}
 }
 
-func (msg MsgIssue) Route() string { return ModuleName }
-func (msg MsgIssue) Type() string  { return TypeMsgIssue }
+func (msg MsgIssueCreate) Route() string { return ModuleName }
+func (msg MsgIssueCreate) Type() string  { return TypeMsgIssueCreate }
 
 // Return address that must sign over msg.GetSignBytes()
-func (msg MsgIssue) GetSigners() []sdk.AccAddress {
+func (msg MsgIssueCreate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
 // get the bytes for the message signer to sign on
-func (msg MsgIssue) GetSignBytes() []byte {
+func (msg MsgIssueCreate) GetSignBytes() []byte {
 	bz := ModuleCdc.MustMarshalJSON(msg)
 	return sdk.MustSortJSON(bz)
 }
 
 // quick validity check
-func (msg MsgIssue) ValidateBasic() sdk.Error {
+func (msg MsgIssueCreate) ValidateBasic() sdk.Error {
 	if msg.Owner.Empty() {
 		//return ErrNilOwner(DefaultCodespace)
 		return sdk.ErrInvalidAddress("Owner address cannot be empty")
@@ -94,7 +103,7 @@ func NewMsgTransfer(fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) MsgTransf
 func (msg MsgTransfer) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgTransfer) Type() string { return "transfer" }
+func (msg MsgTransfer) Type() string { return TypeMsgTransfer }
 
 // ValidateBasic Implements Msg.
 func (msg MsgTransfer) ValidateBasic() sdk.Error {
@@ -138,7 +147,7 @@ func NewMsgTransferFrom(sender, fromAddr, toAddr sdk.AccAddress, amount sdk.Coin
 func (msg MsgTransferFrom) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgTransferFrom) Type() string { return "transfer_from" }
+func (msg MsgTransferFrom) Type() string { return TypeMsgTransferFrom }
 
 // ValidateBasic Implements Msg.
 func (msg MsgTransferFrom) ValidateBasic() sdk.Error {
@@ -186,7 +195,7 @@ func NewMsgApprove(owner, spender sdk.AccAddress, amount sdk.Coins) MsgApprove {
 func (msg MsgApprove) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgApprove) Type() string { return "approve" }
+func (msg MsgApprove) Type() string { return TypeMsgApprove }
 
 // ValidateBasic Implements Msg.
 func (msg MsgApprove) ValidateBasic() sdk.Error {
@@ -229,7 +238,7 @@ func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) Ms
 func (msg MsgIncreaseAllowance) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgIncreaseAllowance) Type() string { return "increase_allowance" }
+func (msg MsgIncreaseAllowance) Type() string { return TypeMsgIncreaseAllowance }
 
 // ValidateBasic Implements Msg.
 func (msg MsgIncreaseAllowance) ValidateBasic() sdk.Error {
@@ -274,7 +283,7 @@ func NewMsgDecreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) Ms
 func (msg MsgDecreaseAllowance) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgDecreaseAllowance) Type() string { return "decrease_allowance" }
+func (msg MsgDecreaseAllowance) Type() string { return TypeMsgDecreaseAllowance }
 
 // ValidateBasic Implements Msg.
 func (msg MsgDecreaseAllowance) ValidateBasic() sdk.Error {
@@ -316,7 +325,7 @@ func NewMsgMint(minter sdk.AccAddress, amount sdk.Coins) MsgMint {
 func (msg MsgMint) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgMint) Type() string { return "mint" }
+func (msg MsgMint) Type() string { return TypeMsgMint }
 
 // ValidateBasic Implements Msg.
 func (msg MsgMint) ValidateBasic() sdk.Error {
@@ -356,7 +365,7 @@ func NewMsgMintTo(minter, toAddr sdk.AccAddress, amount sdk.Coins) MsgMintTo {
 func (msg MsgMintTo) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgMintTo) Type() string { return "mint_to" }
+func (msg MsgMintTo) Type() string { return TypeMsgMintTo }
 
 // ValidateBasic Implements Msg.
 func (msg MsgMintTo) ValidateBasic() sdk.Error {
@@ -398,7 +407,7 @@ func NewMsgBurn(burner sdk.AccAddress, amount sdk.Coins) MsgBurn {
 func (msg MsgBurn) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgBurn) Type() string { return "burn" }
+func (msg MsgBurn) Type() string { return TypeMsgBurn }
 
 // ValidateBasic Implements Msg.
 func (msg MsgBurn) ValidateBasic() sdk.Error {
@@ -438,7 +447,7 @@ func NewMsgBurnFrom(burner, fromAddr sdk.AccAddress, amount sdk.Coins) MsgBurnFr
 func (msg MsgBurnFrom) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgBurnFrom) Type() string { return "burn_from" }
+func (msg MsgBurnFrom) Type() string { return TypeMsgBurnFrom }
 
 // ValidateBasic Implements Msg.
 func (msg MsgBurnFrom) ValidateBasic() sdk.Error {

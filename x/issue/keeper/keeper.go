@@ -277,11 +277,8 @@ func (k *Keeper) setIssue(ctx sdk.Context, issue *types.CoinIssue) {
 
 func (k *Keeper) getIssues(ctx sdk.Context, denoms []string) types.CoinIssues {
 	length := len(denoms)
-	if length == 0 {
-		return nil
-	}
-
 	issues := make(types.CoinIssues, 0, length)
+
 	for _, v := range denoms {
 		issues = append(issues, *k.getIssue(ctx, v))
 	}

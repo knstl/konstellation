@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmdMint implements transfer function
-func GetTxCmdMint(cdc *codec.Codec) *cobra.Command {
+// getTxCmdMint implements transfer function
+func getTxCmdMint(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "mint [amount]",
 		Args:  cobra.ExactArgs(1),

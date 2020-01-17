@@ -55,8 +55,7 @@ func main() {
 
 	// prepare and add flags
 	executor := cli.PrepareBaseCmd(rootCmd, app.EnvPrefixNode, app.DefaultNodeHome)
-	err := executor.Execute()
-	if err != nil {
+	if err := executor.Execute(); err != nil {
 		panic(err)
 	}
 }
