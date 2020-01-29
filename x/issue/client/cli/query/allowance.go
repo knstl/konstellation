@@ -21,6 +21,7 @@ func getIssueAllowance(cliCtx context.CLIContext, owner sdk.AccAddress, spender 
 func getQueryCmdAllowance(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "allowance [owner] [spender] [denom]",
+		Args:  cobra.ExactArgs(3),
 		Short: "Query allowance",
 		Long:  "Query the amount of tokens that an owner allowed to a spender",
 		RunE: func(cmd *cobra.Command, args []string) error {

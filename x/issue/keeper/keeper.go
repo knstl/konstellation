@@ -382,6 +382,21 @@ func (k *Keeper) approve(ctx sdk.Context, owner, spender sdk.AccAddress, amount 
 	)
 }
 
+func (k *Keeper) increaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
+	allowance := k.allowance(ctx, owner, spender, amount.Denom)
+	k.approve(ctx, owner, spender, allowance.Add(amount))
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeIncreaseAllowance,
+			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
+			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
+			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
+			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.Amount.String()),
+		),
+	)
+}
+
 func (k *Keeper) decreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
 	allowance := k.allowance(ctx, owner, spender, amount.Denom)
 	if allowance.IsGTE(amount) {
@@ -393,21 +408,6 @@ func (k *Keeper) decreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeDecreaseAllowance,
-			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
-			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
-			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
-			sdk.NewAttribute(sdk.AttributeKeyAmount, amount.Amount.String()),
-		),
-	)
-}
-
-func (k *Keeper) increaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
-	allowance := k.allowance(ctx, owner, spender, amount.Denom)
-	k.approve(ctx, owner, spender, allowance.Add(amount))
-
-	ctx.EventManager().EmitEvent(
-		sdk.NewEvent(
-			types.EventTypeIncreaseAllowance,
 			sdk.NewAttribute(types.AttributeKeyIssueId, amount.Denom),
 			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
 			sdk.NewAttribute(types.AttributeKeySpender, spender.String()),
