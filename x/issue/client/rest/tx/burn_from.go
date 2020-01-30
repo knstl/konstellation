@@ -10,17 +10,17 @@ import (
 )
 
 type (
-	// decreaseAllowanceRequest defines the properties of transfer issues body.
-	decreaseAllowanceRequest struct {
+	// burnFromRequest defines the properties of transfer issues body.
+	burnFromRequest struct {
 		BaseReq rest.BaseReq `json:"base_req" yaml:"base_req"`
-		Spender string       `json:"spender" yaml:"spender"`
+		From    string       `json:"from" yaml:"from"`
 		Amount  sdk.Coins    `json:"amount" yaml:"amount"`
 	}
 )
 
-func decreaseAllowanceHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
+func burnFromHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req decreaseAllowanceRequest
+		var req burnFromRequest
 		if !rest.ReadRESTReq(w, r, cliCtx.Codec, &req) {
 			return
 		}
@@ -30,19 +30,19 @@ func decreaseAllowanceHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		ownerAddr, err := sdk.AccAddressFromBech32(req.BaseReq.From)
+		burnerAddr, err := sdk.AccAddressFromBech32(req.BaseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
-		spenderAddr, err := sdk.AccAddressFromBech32(req.Spender)
+		fromAddr, err := sdk.AccAddressFromBech32(req.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
-		msg := types.NewMsgDecreaseAllowance(ownerAddr, spenderAddr, req.Amount)
+		msg := types.NewMsgBurnFrom(burnerAddr, fromAddr, req.Amount)
 		if err := msg.ValidateBasic(); err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return

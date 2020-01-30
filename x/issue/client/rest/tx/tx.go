@@ -31,4 +31,20 @@ func RegisterTxRoutes(cliCtx context.CLIContext, r *mux.Router) {
 		"/issue/decrease_allowance",
 		decreaseAllowanceHandlerFn(cliCtx),
 	).Methods("POST")
+	r.HandleFunc(
+		"/issue/mint",
+		mintHandlerFn(cliCtx),
+	).Methods("POST")
+	r.HandleFunc(
+		"/issue/mint_to",
+		mintToHandlerFn(cliCtx),
+	).Methods("POST")
+	r.HandleFunc(
+		"/issue/burn",
+		burnHandlerFn(cliCtx),
+	).Methods("POST")
+	r.HandleFunc(
+		"/issue/burn_from",
+		burnFromHandlerFn(cliCtx),
+	).Methods("POST")
 }
