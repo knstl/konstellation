@@ -20,8 +20,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
+	"github.com/konstellation/kn-sdk/types"
 	"github.com/konstellation/konstellation/common/utils"
-	"github.com/konstellation/konstellation/types"
 )
 
 // InitCmd returns a command that initializes all files needed for Tendermint

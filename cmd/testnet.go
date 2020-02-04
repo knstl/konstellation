@@ -18,7 +18,7 @@ import (
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 
-	"github.com/konstellation/konstellation/types"
+	"github.com/konstellation/kn-sdk/types"
 )
 
 // get cmd to initialize all files for tendermint testnet and application

@@ -26,10 +26,10 @@ import (
 	slashingrest "github.com/cosmos/cosmos-sdk/x/slashing/client/rest"
 	stakingrest "github.com/cosmos/cosmos-sdk/x/staking/client/rest"
 	supplyrest "github.com/cosmos/cosmos-sdk/x/supply/client/rest"
-	issuerest "github.com/konstellation/konstellation/x/issue/client/rest"
+	issuerest "github.com/konstellation/kn-sdk/x/issue/client/rest"
 
+	"github.com/konstellation/kn-sdk/types"
 	"github.com/konstellation/konstellation/app"
-	"github.com/konstellation/konstellation/types"
 )
 
 func main() {

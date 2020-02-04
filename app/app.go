@@ -2,8 +2,8 @@ package app
 
 import (
 	"encoding/json"
-	"github.com/konstellation/konstellation/x/issue"
-	"github.com/konstellation/konstellation/x/issue/keeper"
+	"github.com/konstellation/kn-sdk/x/issue"
+	"github.com/konstellation/kn-sdk/x/issue/keeper"
 	"os"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -30,13 +30,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/cosmos/cosmos-sdk/x/supply"
 
-	"github.com/konstellation/konstellation/types"
-	kcrisis "github.com/konstellation/konstellation/x/crisis"
-	kdistribution "github.com/konstellation/konstellation/x/distribution"
-	kgenaccounts "github.com/konstellation/konstellation/x/genaccounts"
-	kgov "github.com/konstellation/konstellation/x/gov"
-	kmint "github.com/konstellation/konstellation/x/mint"
-	kstaking "github.com/konstellation/konstellation/x/staking"
+	"github.com/konstellation/kn-sdk/types"
+	kcrisis "github.com/konstellation/kn-sdk/x/crisis"
+	kdistribution "github.com/konstellation/kn-sdk/x/distribution"
+	kgenaccounts "github.com/konstellation/kn-sdk/x/genaccounts"
+	kgov "github.com/konstellation/kn-sdk/x/gov"
+	kmint "github.com/konstellation/kn-sdk/x/mint"
+	kstaking "github.com/konstellation/kn-sdk/x/staking"
 )
 
 const (

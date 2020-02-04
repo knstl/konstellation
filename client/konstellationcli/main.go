@@ -16,9 +16,9 @@ import (
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
 
+	"github.com/konstellation/kn-sdk/types"
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/cmd/keys"
-	"github.com/konstellation/konstellation/types"
 )
 
 func main() {

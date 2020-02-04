@@ -30,8 +30,8 @@ import (
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 
+	"github.com/konstellation/kn-sdk/types"
 	"github.com/konstellation/konstellation/common/utils"
-	"github.com/konstellation/konstellation/types"
 )
 
 var (

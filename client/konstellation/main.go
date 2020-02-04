@@ -18,9 +18,9 @@ import (
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 
+	"github.com/konstellation/kn-sdk/types"
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/cmd"
-	"github.com/konstellation/konstellation/types"
 )
 
 func main() {
