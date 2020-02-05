@@ -31,7 +31,7 @@ func main() {
 
 	rootCmd := &cobra.Command{
 		Use:   "konstellationcli",
-		Short: "Konstellation Client",
+		Short: "kncli",
 	}
 
 	// Add --chain-id to persistent flags and mark it required
@@ -54,8 +54,7 @@ func main() {
 	)
 
 	executor := cli.PrepareMainCmd(rootCmd, app.EnvPrefixCLI, app.DefaultCLIHome)
-	err := executor.Execute()
-	if err != nil {
+	if err := executor.Execute(); err != nil {
 		panic(err)
 	}
 }

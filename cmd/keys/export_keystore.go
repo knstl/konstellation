@@ -9,18 +9,17 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/keys"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/konstellation/konstellation/crypto/keystore"
+	"github.com/konstellation/kn-sdk/crypto/keystore"
 )
 
 func exportKeyStoreCommand() *cobra.Command {
-	cmd := &cobra.Command{
+	return &cobra.Command{
 		Use:   "export-keystore <name>",
 		Short: "Export account to key store",
 		Long:  `Export account to key store in encrypted format.`,
 		Args:  cobra.ExactArgs(1),
 		RunE:  runExportKeyStoreCmd,
 	}
-	return cmd
 }
 
 func runExportKeyStoreCmd(cmd *cobra.Command, args []string) error {
