@@ -27,3 +27,5 @@ require (
 	github.com/tendermint/tendermint v0.32.2
 	github.com/tendermint/tm-db v0.1.1
 )
+
+replace github.com/konstellation/kn-sdk => ../kn-sdk
