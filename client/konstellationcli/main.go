@@ -11,7 +11,6 @@ import (
 	"github.com/tendermint/tendermint/libs/cli"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/lcd"
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
@@ -47,8 +46,6 @@ func main() {
 		queryCmd(cdc),
 		txCmd(cdc),
 		client.LineBreak,
-		lcd.ServeCommand(cdc, registerRoutes),
-		client.LineBreak,
 		keys.Commands(),
 		client.LineBreak,
 	)
@@ -57,11 +54,6 @@ func main() {
 	if err := executor.Execute(); err != nil {
 		panic(err)
 	}
-}
-
-func registerRoutes(rs *lcd.RestServer) {
-	client.RegisterRoutes(rs.CliCtx, rs.Mux)
-	app.ModuleBasics.RegisterRESTRoutes(rs.CliCtx, rs.Mux)
 }
 
 func queryCmd(cdc *amino.Codec) *cobra.Command {

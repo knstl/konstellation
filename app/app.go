@@ -212,6 +212,21 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		maccPerms,
 	)
 
+	app.issueKeeper = keeper.NewKeeper(
+		app.cdc,
+		keys[issue.StoreKey],
+		app.accountKeeper,
+		app.bankKeeper,
+		app.supplyKeeper,
+		issue.DefaultCodespace,
+		app.paramsKeeper,
+		app.paramsKeeper.Subspace(issue.DefaultParamspace),
+	)
+
+	//app.bankKeeper = *bankKeeper.SetHooks(
+	//	NewBankHooks(app.issueKeeper.Hooks()),
+	//)
+
 	stakingKeeper := staking.NewKeeper(
 		app.cdc,
 		keys[staking.StoreKey],
@@ -279,15 +294,6 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		staking.NewMultiStakingHooks(
 			app.distributionKeeper.Hooks(),
 			app.slashingKeeper.Hooks()),
-	)
-
-	app.issueKeeper = keeper.NewKeeper(
-		app.cdc,
-		keys[issue.StoreKey],
-		app.accountKeeper,
-		app.bankKeeper,
-		app.supplyKeeper,
-		issue.DefaultCodespace,
 	)
 
 	// NOTE: Any module instantiated in the module manager that is later modified
