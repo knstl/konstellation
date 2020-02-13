@@ -10,7 +10,7 @@
 FROM golang:alpine as build
 
 # Set up dependencies
-ENV PACKAGES make gcc git libc-dev bash linux-headers eudev-dev
+RUN apk add --no-cache make gcc git libc-dev bash linux-headers eudev-dev
 
 # Add env variable
 ENV GOBIN /go/bin
@@ -25,7 +25,6 @@ COPY . /go/src/github.com/konstellation/konstellation
 WORKDIR /go/src/github.com/konstellation/konstellation
 
 # Install minimum necessary dependencies, run unit tests
-RUN apk add --no-cache $PACKAGES
 RUN make tools
 RUN make install
 #RUN make test_unit

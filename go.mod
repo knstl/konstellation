@@ -11,7 +11,7 @@ require (
 	github.com/elastic/gosigar v0.10.5 // indirect
 	github.com/ethereum/go-ethereum v1.9.6
 	github.com/google/uuid v1.0.0
-	github.com/konstellation/kn-sdk v0.1.3
+	github.com/konstellation/kn-sdk v0.1.4
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/pkg/errors v0.8.1
@@ -27,5 +27,3 @@ require (
 	github.com/tendermint/tendermint v0.32.2
 	github.com/tendermint/tm-db v0.1.1
 )
-
-replace github.com/konstellation/kn-sdk => ../kn-sdk
