@@ -212,17 +212,6 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		maccPerms,
 	)
 
-	app.issueKeeper = keeper.NewKeeper(
-		app.cdc,
-		keys[issue.StoreKey],
-		app.accountKeeper,
-		app.bankKeeper,
-		app.supplyKeeper,
-		issue.DefaultCodespace,
-		app.paramsKeeper,
-		app.paramsKeeper.Subspace(issue.DefaultParamspace),
-	)
-
 	//app.bankKeeper = *bankKeeper.SetHooks(
 	//	NewBankHooks(app.issueKeeper.Hooks()),
 	//)
@@ -254,6 +243,17 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, invCheckPeriod uint) *Kon
 		distribution.DefaultCodespace,
 		auth.FeeCollectorName,
 		app.ModuleAccountAddrs(),
+	)
+
+	app.issueKeeper = keeper.NewKeeper(
+		app.cdc,
+		keys[issue.StoreKey],
+		app.accountKeeper,
+		app.bankKeeper,
+		app.supplyKeeper,
+		auth.FeeCollectorName,
+		app.paramsKeeper,
+		app.paramsKeeper.Subspace(issue.DefaultParamspace),
 	)
 
 	app.slashingKeeper = slashing.NewKeeper(
