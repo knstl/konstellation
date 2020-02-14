@@ -21,18 +21,16 @@ jobs:
     <<: *build_defaults
     steps:
       - checkout
-#      - run: go get -u github.com/golang/dep/cmd/dep
       - run:
-          name: build konstellation
+          name: run build konstellation
           command: |
-#            dep ensure
             go build -v ./client/konstellation
       - run:
-          name: build konstellationcli
+          name: run build konstellationcli
           command: |
             go build -v ./client/konstellationcli
       - run:
-          name: build konstellationlcd
+          name: run build konstellationlcd
           command: |
             go build -v ./client/konstellationlcd
       - run:
