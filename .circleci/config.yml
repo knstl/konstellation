@@ -38,8 +38,7 @@ jobs:
     <<: *build_defaults
     steps:
       - checkout
-#      - run: mkdir -p /tmp/workspace/bin
-      - run: mkdir -p /dist
+      - run: mkdir -p /tmp/workspace/dist
       - *dependencies
       - restore_cache:
           keys:
@@ -55,9 +54,9 @@ jobs:
       - run:
           name: cross compile
           command: |
-            gox -os="linux darwin windows" -arch="amd64 386" -output="/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
-            gox -os="linux darwin windows" -arch="amd64 386" -output="/dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
-            cd dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
+            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
+            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
+            cd /tmp/workspace/dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
@@ -67,22 +66,22 @@ jobs:
 #          paths:
 #            - bin
       - store_artifacts:
-          path: /dist/linux_386/konstellation
+          path: /tmp/workspace/dist/linux_386/konstellation
           destination: linux/386/konstellation
       - store_artifacts:
-          path: /dist/linux_amd64/konstellation
+          path: /tmp/workspace/dist/linux_amd64/konstellation
           destination: linux/amd64/konstellation
       - store_artifacts:
-          path: /dist/windows_386/konstellation
+          path: /tmp/workspace/dist/windows_386/konstellation
           destination: windows/386/konstellation
       - store_artifacts:
-          path: /dist/windows_amd64/konstellation
+          path: /tmp/workspace/dist/windows_amd64/konstellation
           destination: windows/amd64/konstellation
       - store_artifacts:
-          path: /dist/darwin_386/konstellation
+          path: /tmp/workspace/dist/darwin_386/konstellation
           destination: macos/386/konstellation
       - store_artifacts:
-          path: /dist/darwin_amd64/konstellation
+          path: /tmp/workspace/dist/darwin_amd64/konstellation
           destination: macos/amd64/konstellation
 #      - store_artifacts:
 #          path: /tmp/workspace/bin/konstellationcli
