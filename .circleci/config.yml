@@ -9,13 +9,13 @@ defaults: &build_defaults
     - image: circleci/golang:1.13
   environment:
     GOBIN: /tmp/workspace/bin
-#    GOPATH: /home/circleci/go
+    GOPATH: /home/circleci/go
 
 deps: &dependencies
   run:
     name: dependencies
     command: |
-      export PATH="$PATH:$GOBIN"
+      export PATH="$PATH:$GOBIN:$GOPATH/bin"
 
 jobs:
   build:
@@ -46,6 +46,8 @@ jobs:
       - run: go env
       - run: go get -u github.com/mitchellh/gox
       - run: go get github.com/mitchellh/gox
+      - run: ls /tmp/workspace
+      - run: ls /tmp/workspace/bin
 #      - run: go get -u github.com/tcnksm/ghr
 #      - run: go get -u github.com/stevenmatthewt/semantics
       - run:
