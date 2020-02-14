@@ -48,11 +48,8 @@ jobs:
       - run:
           name: cross compile
           command: |
-#             env GOOS=darwin GOARCH=amd64 go build -o konstellationcli ./client/konstellationcli
-#             env GOOS=darwin GOARCH=386 go build -o konstellationcli ./client/konstellationcli
             gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
             gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
-#            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationcli" ./client/konstellationcli
             cd /tmp/workspace/dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
