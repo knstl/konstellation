@@ -39,6 +39,7 @@ jobs:
     steps:
       - checkout
 #      - run: mkdir -p /tmp/workspace/bin
+      - run: mkdir -p /dist
       - *dependencies
       - restore_cache:
           keys:
@@ -54,8 +55,8 @@ jobs:
       - run:
           name: cross compile
           command: |
-            gox -os="linux darwin windows" -arch="amd64 386" -output="dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
-            gox -os="linux darwin windows" -arch="amd64 386" -output="dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
+            gox -os="linux darwin windows" -arch="amd64 386" -output="/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
+            gox -os="linux darwin windows" -arch="amd64 386" -output="/dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
             cd dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
