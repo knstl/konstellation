@@ -44,11 +44,8 @@ jobs:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
       - run: go env
-      - run: go get -u github.com/mitchellh/gox
-      - run: go get github.com/mitchellh/gox
-#      - run: ls /tmp/workspace
-#      - run: ls /tmp/workspace/bin
       - run: echo $PATH
+      - run: go get github.com/mitchellh/gox
 #      - run: go get -u github.com/tcnksm/ghr
 #      - run: go get -u github.com/stevenmatthewt/semantics
       - run:
@@ -61,10 +58,6 @@ jobs:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
             - "/go/pkg/mod"
-#      - persist_to_workspace:
-#          root: /tmp/workspace
-#          paths:
-#            - bin
       - store_artifacts:
           path: /tmp/workspace/dist/linux_386/konstellation
           destination: linux/386/konstellation
@@ -85,7 +78,8 @@ jobs:
           destination: macos/amd64/konstellation
       - store_artifacts:
           path: /tmp/workspace/dist
-#      - store_artifacts:
+          destination: dist
+  #      - store_artifacts:
 #          path: /tmp/workspace/bin/konstellationcli
 #          destination: linux/konstellationcli
 #      - store_artifacts:
@@ -103,22 +97,6 @@ jobs:
 #            else
 #              echo "The commit message(s) did not indicate a major/minor/patch version."
 #            fi
-
-#  build:
-#    steps:
-#      - checkout
-
-#      - run:
-#          name: tools
-#          command: |
-#            export PATH="$GOBIN:$PATH"
-#            make tools
-#      - *dependencies
-#      - run:
-#          name: binaries
-#          command: |
-#            export PATH="$GOBIN:$PATH"
-#            make install
 
 workflows:
   version: 2
