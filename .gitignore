@@ -9,6 +9,7 @@
 vendor
 .vendor-new
 build
+dist
 docs
 testnet
 localnet

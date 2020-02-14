@@ -22,7 +22,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: run build konstellation
+          name: run build
           command: |
             go build -v ./client/konstellation
             go build -v ./client/konstellationcli
@@ -33,15 +33,72 @@ jobs:
             go fmt ./...
             go vet ./...
             go test -v ./...
+  deploy:
+    <<: *build_defaults
+    steps:
+      - checkout
+      - run: mkdir -p /tmp/workspace/bin
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ checksum "go.sum" }}
+      - run: go get -u github.com/mitchellh/gox
+#      - run: go get -u github.com/tcnksm/ghr
+#      - run: go get -u github.com/stevenmatthewt/semantics
+      - run:
+          name: cross compile
+          command: |
+            gox -os="linux darwin windows" -arch="amd64 386" -output="dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
+            gox -os="linux darwin windows" -arch="amd64 386" -output="dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
+            cd dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+#      - persist_to_workspace:
+#          root: /tmp/workspace
+#          paths:
+#            - bin
+      - store_artifacts:
+          path: /dist/linux_386/konstellation
+          destination: linux/386/konstellation
+      - store_artifacts:
+          path: /dist/linux_amd64/konstellation
+          destination: linux/amd64/konstellation
+      - store_artifacts:
+          path: /dist/windows_386/konstellation
+          destination: windows/386/konstellation
+      - store_artifacts:
+          path: /dist/windows_amd64/konstellation
+          destination: windows/amd64/konstellation
+      - store_artifacts:
+          path: /dist/darwin_386/konstellation
+          destination: macos/386/konstellation
+      - store_artifacts:
+          path: /dist/darwin_amd64/konstellation
+          destination: macos/amd64/konstellation
+#      - store_artifacts:
+#          path: /tmp/workspace/bin/konstellationcli
+#          destination: linux/konstellationcli
+#      - store_artifacts:
+#          path: /tmp/workspace/bin/konstellationlcd
+#          destination: linux/konstellationlcd
+#      - add_ssh_keys:
+#          fingerprints:
+#            - "37:e7:cd:57:3d:2e:58:5d:15:a4:d0:71:ab:15:75:57"
+#      - run:
+#          name: create release
+#          command: |
+#            tag=$(semantics --output-tag)
+#            if [ "$tag" ]; then
+#              ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag dist/
+#            else
+#              echo "The commit message(s) did not indicate a major/minor/patch version."
+#            fi
 
 #  build:
 #    steps:
-#      - run: mkdir -p /tmp/workspace/bin
-#      - run: mkdir -p /tmp/workspace/profiles
 #      - checkout
-#      - restore_cache:
-#          keys:
-#            - go-mod-v1-{{ checksum "go.sum" }}
+
 #      - run:
 #          name: tools
 #          command: |
@@ -53,24 +110,6 @@ jobs:
 #          command: |
 #            export PATH="$GOBIN:$PATH"
 #            make install
-#      - save_cache:
-#          key: go-mod-v1-{{ checksum "go.sum" }}
-#          paths:
-#            - "/go/pkg/mod"
-#      - persist_to_workspace:
-#          root: /tmp/workspace
-#          paths:
-#            - bin
-#            - profiles
-#      - store_artifacts:
-#          path: /tmp/workspace/bin/konstellation
-#          destination: linux/konstellation
-#      - store_artifacts:
-#          path: /tmp/workspace/bin/konstellationcli
-#          destination: linux/konstellationcli
-#      - store_artifacts:
-#          path: /tmp/workspace/bin/konstellationlcd
-#          destination: linux/konstellationlcd
 
 workflows:
   version: 2
