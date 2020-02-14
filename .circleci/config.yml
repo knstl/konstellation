@@ -15,7 +15,7 @@ deps: &dependencies
   run:
     name: dependencies
     command: |
-      export PATH="$GOPATH/bin:$GOBIN:$PATH"
+      export PATH="$PATH:$GOPATH/bin:$GOBIN"
 
 jobs:
   build:
