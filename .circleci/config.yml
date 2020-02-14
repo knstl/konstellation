@@ -25,13 +25,7 @@ jobs:
           name: run build konstellation
           command: |
             go build -v ./client/konstellation
-      - run:
-          name: run build konstellationcli
-          command: |
             go build -v ./client/konstellationcli
-      - run:
-          name: run build konstellationlcd
-          command: |
             go build -v ./client/konstellationlcd
       - run:
           name: run tests
