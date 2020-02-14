@@ -46,21 +46,27 @@ jobs:
           paths:
             - bin
             - profiles
+      - run:
+          name: chmod
+          command:
+            chmod +x /tmp/workspace/bin/konstellation
+            chmod +x /tmp/workspace/bin/konstellationcli
+            chmod +x /tmp/workspace/bin/konstellationlcd
       - store_artifacts:
           path: /tmp/workspace/bin/konstellation
-          destination: konstellation
+          destination: linux/konstellation
       - store_artifacts:
           path: /tmp/workspace/bin/konstellationcli
-          destination: konstellationcli
+          destination: linux/konstellationcli
       - store_artifacts:
           path: /tmp/workspace/bin/konstellationlcd
-          destination: konstellationlcd
+          destination: linux/konstellationlcd
       - store_artifacts:
           path: /tmp/bin
 
 workflows:
   version: 2
-  test-suite:
+  build-konstellation:
     jobs:
       - build:
           # filters here are needed to enable this job also for tags
