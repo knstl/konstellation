@@ -15,6 +15,7 @@ deps: &dependencies
     name: dependencies
     command: |
       export PATH="$PATH:$GOBIN"
+      export PATH="$PATH:/tmp/workspace/bin"
 
 jobs:
   build:
