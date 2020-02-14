@@ -8,14 +8,14 @@ defaults: &build_defaults
   docker:
     - image: circleci/golang:1.13
   environment:
-    GOBIN: /tmp/workspace/bin
+#    GOBIN: /tmp/workspace/bin
 
 deps: &dependencies
   run:
     name: dependencies
     command: |
       export PATH="$PATH:$GOBIN"
-      export PATH="$PATH:/tmp/workspace/bin"
+#      export PATH="$PATH:/tmp/workspace/bin"
 
 jobs:
   build:
@@ -38,7 +38,7 @@ jobs:
     <<: *build_defaults
     steps:
       - checkout
-      - run: mkdir -p /tmp/workspace/bin
+#      - run: mkdir -p /tmp/workspace/bin
       - *dependencies
       - restore_cache:
           keys:
@@ -46,8 +46,8 @@ jobs:
       - run: go env
       - run: go get -u github.com/mitchellh/gox
       - run: go get github.com/mitchellh/gox
-      - run: ls /tmp/workspace
-      - run: ls /tmp/workspace/bin
+#      - run: ls /tmp/workspace
+#      - run: ls /tmp/workspace/bin
       - run: echo $PATH
 #      - run: go get -u github.com/tcnksm/ghr
 #      - run: go get -u github.com/stevenmatthewt/semantics
