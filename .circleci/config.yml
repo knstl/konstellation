@@ -44,7 +44,7 @@ jobs:
       - run: echo $PATH
       - run: go get github.com/mitchellh/gox
       - run: go get -u github.com/tcnksm/ghr
-      - run: go get -u github.com/stevenmatthewt/semantics
+#      - run: go get -u github.com/stevenmatthewt/semantics
       - run:
           name: cross compile
           command: |
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: create release
           command: |
-            tag=$(semantic)
+            tag=$(git describe --tags)
             if [ "$tag" ]; then
               ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag /tmp/workspace/dist/
             else
