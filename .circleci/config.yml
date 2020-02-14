@@ -9,13 +9,13 @@ defaults: &build_defaults
     - image: circleci/golang:1.13
   environment:
     GOBIN: /tmp/workspace/bin
-    GOPATH: /go
+#    GOPATH: /home/circleci/go
 
 deps: &dependencies
   run:
     name: dependencies
     command: |
-      export PATH="$PATH:$GOBIN:$GOPATH/bin"
+      export PATH="$PATH:$GOBIN"
 
 jobs:
   build:
