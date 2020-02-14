@@ -83,6 +83,8 @@ jobs:
       - store_artifacts:
           path: /tmp/workspace/dist/darwin_amd64/konstellation
           destination: macos/amd64/konstellation
+      - store_artifacts:
+          path: /tmp/workspace/dist
 #      - store_artifacts:
 #          path: /tmp/workspace/bin/konstellationcli
 #          destination: linux/konstellationcli
