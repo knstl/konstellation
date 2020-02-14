@@ -49,9 +49,9 @@ jobs:
       - run:
           name: chmod
           command: |
-            chmod +x /tmp/workspace/bin/konstellation
-            chmod +x /tmp/workspace/bin/konstellationcli
-            chmod +x /tmp/workspace/bin/konstellationlcd
+            bash -c "chmod +x /tmp/workspace/bin/konstellation"
+            bash -c "chmod +x /tmp/workspace/bin/konstellationcli"
+            bash -c "chmod +x /tmp/workspace/bin/konstellationlcd"
       - store_artifacts:
           path: /tmp/workspace/bin/konstellation
           destination: linux/konstellation
