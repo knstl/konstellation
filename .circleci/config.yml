@@ -48,7 +48,7 @@ jobs:
             - profiles
       - run:
           name: chmod
-          command:
+          command: |
             chmod +x /tmp/workspace/bin/konstellation
             chmod +x /tmp/workspace/bin/konstellationcli
             chmod +x /tmp/workspace/bin/konstellationlcd
