@@ -53,38 +53,33 @@ jobs:
           command: |
             gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
             gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
+            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationcli" ./client/konstellationcli
             cd /tmp/workspace/dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
             - "/go/pkg/mod"
-      - store_artifacts:
-          path: /tmp/workspace/dist/linux_386/konstellation
-          destination: linux/386/konstellation
-      - store_artifacts:
-          path: /tmp/workspace/dist/linux_amd64/konstellation
-          destination: linux/amd64/konstellation
-      - store_artifacts:
-          path: /tmp/workspace/dist/windows_386/konstellation
-          destination: windows/386/konstellation
-      - store_artifacts:
-          path: /tmp/workspace/dist/windows_amd64/konstellation
-          destination: windows/amd64/konstellation
-      - store_artifacts:
-          path: /tmp/workspace/dist/darwin_386/konstellation
-          destination: macos/386/konstellation
-      - store_artifacts:
-          path: /tmp/workspace/dist/darwin_amd64/konstellation
-          destination: macos/amd64/konstellation
+  #      - store_artifacts:
+  #          path: /tmp/workspace/dist/linux_386/konstellation
+  #          destination: linux/386/konstellation
+  #      - store_artifacts:
+  #          path: /tmp/workspace/dist/linux_amd64/konstellation
+  #          destination: linux/amd64/konstellation
+  #      - store_artifacts:
+  #          path: /tmp/workspace/dist/windows_386/konstellation
+  #          destination: windows/386/konstellation
+  #      - store_artifacts:
+  #          path: /tmp/workspace/dist/windows_amd64/konstellation
+  #          destination: windows/amd64/konstellation
+  #      - store_artifacts:
+  #          path: /tmp/workspace/dist/darwin_386/konstellation
+  #          destination: macos/386/konstellation
+  #      - store_artifacts:
+  #          path: /tmp/workspace/dist/darwin_amd64/konstellation
+  #          destination: macos/amd64/konstellation
       - store_artifacts:
           path: /tmp/workspace/dist
           destination: dist
-  #      - store_artifacts:
-#          path: /tmp/workspace/bin/konstellationcli
-#          destination: linux/konstellationcli
-#      - store_artifacts:
-#          path: /tmp/workspace/bin/konstellationlcd
-#          destination: linux/konstellationlcd
 #      - add_ssh_keys:
 #          fingerprints:
 #            - "37:e7:cd:57:3d:2e:58:5d:15:a4:d0:71:ab:15:75:57"
