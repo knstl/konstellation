@@ -60,7 +60,7 @@ jobs:
           destination: dist
       - add_ssh_keys:
           fingerprints:
-            - "b4:d9:f2:79:a6:43:8d:4a:a6:e6:63:4d:f4:82:ba:1a"
+            - "d0:91:bc:b3:41:44:5d:ee:8b:18:ea:14:ba:96:5a:8c"
       - run:
           name: create release
           command: |
@@ -76,11 +76,11 @@ workflows:
   build-konstellation:
     jobs:
       - build:
-          # filters here are needed to enable this job also for tags
-          filters:
-            tags:
-              only:
-                - /^v.*/
+#          # filters here are needed to enable this job also for tags
+#          filters:
+#            tags:
+#              only:
+#                - /^v.*/
       - deploy:
           requires:
             - build

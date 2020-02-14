@@ -33,6 +33,7 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/steakknife/bloomfilter v0.0.0-20180922174646-6819c0d2a570 // indirect
 	github.com/steakknife/hamming v0.0.0-20180906055917-c99c65617cd3 // indirect
+	github.com/stevenmatthewt/semantics v2.0.4+incompatible // indirect
 	github.com/tendermint/go-amino v0.15.0
 	github.com/tendermint/tendermint v0.32.2
 	github.com/tendermint/tm-db v0.1.1
