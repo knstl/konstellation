@@ -121,3 +121,6 @@ workflows:
             tags:
               only:
                 - /^v.*/
+      - deploy:
+          requires:
+            - build
