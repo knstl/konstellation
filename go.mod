@@ -11,7 +11,7 @@ require (
 	github.com/elastic/gosigar v0.10.5 // indirect
 	github.com/ethereum/go-ethereum v1.9.6
 	github.com/google/uuid v1.0.0
-	github.com/konstellation/kn-sdk v0.1.4
+	github.com/konstellation/kn-sdk v0.1.5
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/pkg/errors v0.8.1
