@@ -46,12 +46,6 @@ jobs:
           paths:
             - bin
             - profiles
-      - run:
-          name: chmod
-          command: |
-            bash -c "chmod +x /tmp/workspace/bin/konstellation"
-            bash -c "chmod +x /tmp/workspace/bin/konstellationcli"
-            bash -c "chmod +x /tmp/workspace/bin/konstellationlcd"
       - store_artifacts:
           path: /tmp/workspace/bin/konstellation
           destination: linux/konstellation
@@ -61,8 +55,6 @@ jobs:
       - store_artifacts:
           path: /tmp/workspace/bin/konstellationlcd
           destination: linux/konstellationlcd
-      - store_artifacts:
-          path: /tmp/bin
 
 workflows:
   version: 2
