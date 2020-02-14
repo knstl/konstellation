@@ -3,7 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 
-defaults: &linux_defaults
+defaults: &build_defaults
   working_directory: /go/src/github.com/konstellation/konstellation
   docker:
     - image: circleci/golang:1.13
@@ -18,15 +18,23 @@ deps: &dependencies
 
 jobs:
   build:
-    <<: *linux_defaults
+    <<: *build_defaults
     steps:
       - checkout
-      - run: go get -u github.com/golang/dep/cmd/dep
+#      - run: go get -u github.com/golang/dep/cmd/dep
       - run:
-          name: run build
+          name: build konstellation
           command: |
-            dep ensure
-            go build -v
+#            dep ensure
+            go build -v ./client/konstellation
+      - run:
+          name: build konstellationcli
+          command: |
+            go build -v ./client/konstellationcli
+      - run:
+          name: build konstellationlcd
+          command: |
+            go build -v ./client/konstellationlcd
       - run:
           name: run tests
           command: |
