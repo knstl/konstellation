@@ -17,7 +17,7 @@ deps: &dependencies
       export PATH="$GOBIN:$PATH"
 
 jobs:
-  setup_dependencies:
+  build:
     <<: *linux_defaults
     steps:
       - run: mkdir -p /tmp/workspace/bin
@@ -46,6 +46,17 @@ jobs:
           paths:
             - bin
             - profiles
+      - store_artifacts:
+          path: /tmp/workspace/bin/konstellation
+          destination: konstellation
+      - store_artifacts:
+          path: /tmp/workspace/bin/konstellationcli
+          destination: konstellationcli
+      - store_artifacts:
+          path: /tmp/workspace/bin/konstellationlcd
+          destination: konstellationlcd
+      - store_artifacts:
+          path: /tmp/bin
 
 workflows:
   version: 2
