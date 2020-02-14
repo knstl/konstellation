@@ -9,12 +9,13 @@ defaults: &build_defaults
     - image: circleci/golang:1.13
   environment:
     GOBIN: /tmp/workspace/bin
+    GOPATH: /go
 
 deps: &dependencies
   run:
     name: dependencies
     command: |
-      export PATH="$GOBIN:$PATH"
+      export PATH="$GOPATH/bin:$GOBIN:$PATH"
 
 jobs:
   build:
@@ -38,6 +39,7 @@ jobs:
     steps:
       - checkout
       - run: mkdir -p /tmp/workspace/bin
+      - *dependencies
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
