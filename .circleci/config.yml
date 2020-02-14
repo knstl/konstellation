@@ -20,41 +20,57 @@ jobs:
   build:
     <<: *linux_defaults
     steps:
-      - run: mkdir -p /tmp/workspace/bin
-      - run: mkdir -p /tmp/workspace/profiles
       - checkout
-      - restore_cache:
-          keys:
-            - go-mod-v1-{{ checksum "go.sum" }}
+      - run: go get -u github.com/golang/dep/cmd/dep
       - run:
-          name: tools
+          name: run build
           command: |
-            export PATH="$GOBIN:$PATH"
-            make tools
-      - *dependencies
+            dep ensure
+            go build -v
       - run:
-          name: binaries
+          name: run tests
           command: |
-            export PATH="$GOBIN:$PATH"
-            make install
-      - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
-          paths:
-            - "/go/pkg/mod"
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - bin
-            - profiles
-      - store_artifacts:
-          path: /tmp/workspace/bin/konstellation
-          destination: linux/konstellation
-      - store_artifacts:
-          path: /tmp/workspace/bin/konstellationcli
-          destination: linux/konstellationcli
-      - store_artifacts:
-          path: /tmp/workspace/bin/konstellationlcd
-          destination: linux/konstellationlcd
+            go fmt ./...
+            go vet ./...
+            go test -v ./...
+
+#  build:
+#    steps:
+#      - run: mkdir -p /tmp/workspace/bin
+#      - run: mkdir -p /tmp/workspace/profiles
+#      - checkout
+#      - restore_cache:
+#          keys:
+#            - go-mod-v1-{{ checksum "go.sum" }}
+#      - run:
+#          name: tools
+#          command: |
+#            export PATH="$GOBIN:$PATH"
+#            make tools
+#      - *dependencies
+#      - run:
+#          name: binaries
+#          command: |
+#            export PATH="$GOBIN:$PATH"
+#            make install
+#      - save_cache:
+#          key: go-mod-v1-{{ checksum "go.sum" }}
+#          paths:
+#            - "/go/pkg/mod"
+#      - persist_to_workspace:
+#          root: /tmp/workspace
+#          paths:
+#            - bin
+#            - profiles
+#      - store_artifacts:
+#          path: /tmp/workspace/bin/konstellation
+#          destination: linux/konstellation
+#      - store_artifacts:
+#          path: /tmp/workspace/bin/konstellationcli
+#          destination: linux/konstellationcli
+#      - store_artifacts:
+#          path: /tmp/workspace/bin/konstellationlcd
+#          destination: linux/konstellationlcd
 
 workflows:
   version: 2
