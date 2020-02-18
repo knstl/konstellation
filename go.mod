@@ -18,7 +18,7 @@ require (
 	github.com/google/uuid v1.0.0
 	github.com/hashicorp/go-version v1.2.0 // indirect
 	github.com/jmank88/nuts v0.4.0 // indirect
-	github.com/konstellation/kn-sdk v0.1.5
+	github.com/konstellation/kn-sdk v0.1.6
 	github.com/mitchellh/gox v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/nightlyone/lockfile v0.0.0-20200124072040-edb130adc195 // indirect
@@ -38,3 +38,5 @@ require (
 	github.com/tendermint/tendermint v0.32.2
 	github.com/tendermint/tm-db v0.1.1
 )
+
+replace github.com/konstellation/kn-sdk => ../kn-sdk

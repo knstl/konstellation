@@ -38,18 +38,22 @@ func SetConfigCmd(ctx *server.Context) *cobra.Command {
 			config := ctx.Config
 
 			var configValues map[string]interface{}
-			_ = mapstructure.Decode(config, &configValues)
+			if err := mapstructure.Decode(config, &configValues); err != nil {
+				return err
+			}
 
 			path := strings.Split(args[0], ".")
 			if len(path) > 1 {
 				var groupConfigs map[string]interface{}
 				_ = mapstructure.Decode(configValues[path[0]], &groupConfigs)
 				groupConfigs[path[1]] = args[1]
-				_ = mapstructure.Decode(groupConfigs, configValues[path[0]])
+				configValues[path[0]] = groupConfigs
 			} else {
 				configValues[args[0]] = args[1]
 			}
-			_ = mapstructure.Decode(configValues, &config)
+			if err := mapstructure.Decode(configValues, config); err != nil {
+				return err
+			}
 
 			cfg.WriteConfigFile(filepath.Join(config.RootDir, "config", "config.toml"), config)
 			return nil
