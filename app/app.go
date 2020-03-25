@@ -41,6 +41,7 @@ import (
 
 const (
 	appName = "konstellation"
+	Version = "0.1.28"
 
 	EnvPrefixCLI  = "KONSTELLATIONCLI"
 	EnvPrefixNode = "KONSTELLATION"
