@@ -2,16 +2,16 @@
 
 COMMAND=$1
 CHAIN_ID=$2
+MONIKER=$3
+KEY=$4
 
 function usage() {
   echo "Usage:"
   echo "  ./testnet.sh [command] [chain-id] [params]"
   echo ""
   echo "Command:"
-  echo "  connect   Creates new net conf files "
-  echo "  run       Run testnet full node on the server side. "
-  echo "  deploy    Deploy testnet to testnodes. "
-  echo "  copy      Copy config and genesis to yout konstellation dir. "
+  echo "  connect   Connect to testnet "
+  echo "  validator Become validator "
   echo ""
 }
 
