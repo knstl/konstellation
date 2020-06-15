@@ -7,7 +7,7 @@ KEY_NAME=$4
 
 function usage() {
   echo "Usage:"
-  echo "  ./testnet.sh [command] [chain-id] [params]"
+  echo "  ./testnet.sh [command] [chain-id] [[MONIKER] [KEY_NAME]"
   echo ""
   echo "Command:"
   echo "  connect   Connect to testnet "
@@ -43,12 +43,12 @@ function connect() {
 
 function validator() {
   if [[ -z ${MONIKER} ]]; then
-    error "MONIKER must be set!"
     usage
+    error "MONIKER must be set!"
   fi
   if [[ -z ${KEY_NAME} ]]; then
-    error "KEY_NAME must be set!"
     usage
+    error "KEY_NAME must be set!"
   fi
 
   konstellationcli tx staking create-validator --moniker "$MONIKER" --pubkey $(konstellation tendermint show-validator) --amount 100000000darc --from "$KEY_NAME" --commission-max-rate 0 --commission-rate 0 --commission-max-change-rate 0  --min-self-delegation 1 --chain-id "$CHAIN_ID"
@@ -56,11 +56,12 @@ function validator() {
 
 
 if [[ -z ${COMMAND} ]]; then
-  error "Command must be set!"
   usage
+  error "Command must be set!"
 fi
 
 if [[ -z ${CHAIN_ID} ]]; then
+  usage
   error "CHAIN_ID must be set!"
 fi
 
