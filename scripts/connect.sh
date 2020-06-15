@@ -3,7 +3,7 @@
 COMMAND=$1
 CHAIN_ID=$2
 MONIKER=$3
-KEY=$4
+KEY_NAME=$4
 
 function usage() {
   echo "Usage:"
@@ -13,6 +13,14 @@ function usage() {
   echo "  connect   Connect to testnet "
   echo "  validator Become validator "
   echo ""
+}
+
+function error() {
+  echo "" >&2
+  echo "Error: " >&2
+  echo "    $1" >&2
+  echo "" >&2
+  exit 1
 }
 
 #konstellation unsafe-reset-all
@@ -35,25 +43,25 @@ function connect() {
 
 function validator() {
   if [[ -z ${MONIKER} ]]; then
-    error "Moniker must be set !"
+    error "MONIKER must be set!"
     usage
   fi
-  if [[ -z ${KEY} ]]; then
-    error "Key must be set !"
+  if [[ -z ${KEY_NAME} ]]; then
+    error "KEY_NAME must be set!"
     usage
   fi
 
-  konstellationcli tx staking create-validator --moniker "$MONIKER" --pubkey $(konstellation tendermint show-validator) --amount 100000000darc --from "$KEY" --commission-max-rate 0 --commission-rate 0 --commission-max-change-rate 0  --min-self-delegation 1 --chain-id "$CHAIN_ID"
+  konstellationcli tx staking create-validator --moniker "$MONIKER" --pubkey $(konstellation tendermint show-validator) --amount 100000000darc --from "$KEY_NAME" --commission-max-rate 0 --commission-rate 0 --commission-max-change-rate 0  --min-self-delegation 1 --chain-id "$CHAIN_ID"
 }
 
 
 if [[ -z ${COMMAND} ]]; then
-  error "Command must be set !"
+  error "Command must be set!"
   usage
 fi
 
 if [[ -z ${CHAIN_ID} ]]; then
-  CHAIN_ID="darchub"
+  error "CHAIN_ID must be set!"
 fi
 
 case "${COMMAND}" in

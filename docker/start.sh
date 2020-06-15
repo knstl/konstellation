@@ -129,7 +129,7 @@ function error() {
 #
 # ------------------------------------------------------------------------------
 if [[ -z ${CHAIN_ID} ]]; then
-  error "Environment CHAIN_ID must be set !"
+  error "Environment CHAIN_ID must be set!"
 else
   echo "Chain ${CHAIN_ID}"
 fi
