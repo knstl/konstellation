@@ -11,7 +11,7 @@ function usage() {
   echo ""
   echo "Command:"
   echo "  connect   Connect to testnet "
-  echo "  validator Become validator "
+  echo "  validator Become a validator "
   echo ""
 }
 
@@ -23,22 +23,17 @@ function error() {
   exit 1
 }
 
-#konstellation unsafe-reset-all
-
-#konstellation config set moniker mmm
-
 function connect() {
   konstellation unsafe-reset-all
 
   echo "Getting genesis"
   curl -o ~/.konstellation/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/"$CHAIN_ID"/genesis.json
   echo "Getting app.toml"
-  curl -o ~/.konstellation/config/app.toml https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/app.toml
+  curl -o ~/.konstellation/config/app.toml https://raw.githubusercontent.com/Konstellation/testnet/master/"$CHAIN_ID"/app.toml
   echo "Getting config..."
-  curl -o ~/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/config.toml
+  curl -o ~/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/"$CHAIN_ID"/config.toml
 
   konstellation config set moniker mmm
-
 }
 
 function validator() {
