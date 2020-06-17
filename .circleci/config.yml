@@ -77,7 +77,6 @@ workflows:
   build-konstellation:
     jobs:
       - build
-          # filters here are needed to enable this job also for tags
           filters:
             tags:
               only:
