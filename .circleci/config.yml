@@ -76,7 +76,7 @@ workflows:
   version: 2
   build-konstellation:
     jobs:
-      - build
+      - build:
           filters:
             tags:
               only: /v.*/
