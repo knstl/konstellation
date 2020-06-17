@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://circleci.com/gh/Konstellation/konstellation)
+
 # Konstellation network
 
 #### Run singlenet
@@ -30,5 +32,5 @@ See the
 
 ## Resources
 
-* [Explorer]: https://www.konsteplorer.io/#/home
-* [Demo wallet]: https://www.konstebox.io/#/home
+// * [Explorer]: https://www.konsteplorer.io/#/home
+// * [Demo wallet]: https://www.konstebox.io/#/home

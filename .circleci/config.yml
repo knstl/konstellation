@@ -77,11 +77,11 @@ workflows:
   build-konstellation:
     jobs:
       - build
-#          # filters here are needed to enable this job also for tags
-#          filters:
-#            tags:
-#              only:
-#                - /^v.*/
+          # filters here are needed to enable this job also for tags
+          filters:
+            tags:
+              only:
+                - /^v.*/
       - deploy:
           requires:
             - build
