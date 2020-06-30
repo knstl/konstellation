@@ -29,8 +29,3 @@ To join the mainnet, follow
 
 See the 
 [install instructions]
-
-## Resources
-
-// * [Explorer]: https://www.konsteplorer.io/#/home
-// * [Demo wallet]: https://www.konstebox.io/#/home
