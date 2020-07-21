@@ -10,7 +10,7 @@ require (
 	github.com/armon/go-radix v1.0.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/cespare/cp v1.1.1 // indirect
-	github.com/cosmos/cosmos-sdk v0.37.0
+	github.com/cosmos/cosmos-sdk v0.37.13
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/elastic/gosigar v0.10.5 // indirect
 	github.com/ethereum/go-ethereum v1.9.11
@@ -29,12 +29,12 @@ require (
 	github.com/rs/cors v1.7.0
 	github.com/sdboyer/constext v0.0.0-20170321163424-836a14457353 // indirect
 	github.com/spf13/cobra v0.0.5
-	github.com/spf13/pflag v1.0.3
-	github.com/spf13/viper v1.4.0
+	github.com/spf13/pflag v1.0.5
+	github.com/spf13/viper v1.6.1
 	github.com/stevenmatthewt/semantics v2.0.4+incompatible // indirect
 	github.com/tendermint/go-amino v0.15.0
-	github.com/tendermint/tendermint v0.32.2
-	github.com/tendermint/tm-db v0.1.1
+	github.com/tendermint/tendermint v0.32.12
+	github.com/tendermint/tm-db v0.2.0
 )
 
 // replace github.com/konstellation/kn-sdk => ../kn-sdk
