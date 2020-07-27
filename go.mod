@@ -18,7 +18,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/hashicorp/go-version v1.2.0 // indirect
 	github.com/jmank88/nuts v0.4.0 // indirect
-	github.com/konstellation/kn-sdk v0.1.10
+	github.com/konstellation/kn-sdk v0.1.11
 	github.com/mitchellh/gox v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/nightlyone/lockfile v0.0.0-20200124072040-edb130adc195 // indirect

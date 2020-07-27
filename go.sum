@@ -281,6 +281,8 @@ github.com/konstellation/kn-sdk v0.1.8 h1:IH9w0BLff/9EByGsjsvFHddKqX55P3zcQXJuKb
 github.com/konstellation/kn-sdk v0.1.8/go.mod h1:DcWJTagAeAD5FIYIfDeQWcHF7/AGh41fWKqT6oSS4P4=
 github.com/konstellation/kn-sdk v0.1.10 h1:uCaLB8zCTf4awkaCYXJR35XmdgJqBIhFT3Ft3+xKTvs=
 github.com/konstellation/kn-sdk v0.1.10/go.mod h1:8YFUythoWIJzjqNUYdVJtuLk/i1eJcfALrO5oCX9BVA=
+github.com/konstellation/kn-sdk v0.1.11 h1:nn4jJ8afVYcS/tWRuPFOtttT2LuMrMAwTyNAJOj7+20=
+github.com/konstellation/kn-sdk v0.1.11/go.mod h1:3wt/691VIaXyJPLkmdRUtxJ+dhyQSOYMrywAQ68pBqo=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj2vyii2bbUNDw3kt9VxK2EY=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
