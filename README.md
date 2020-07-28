@@ -58,11 +58,38 @@ nano ~/.konstellation/config/config.toml
 # Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
 # Name your node
 konstellation config set moniker {MONIKER}
+```
+
+You can edit this moniker later, in the ~/.gaiad/config/config.toml file:
+```bash
+# A custom human readable name for this node
+moniker = "<your_custom_moniker>"
+You can edit the ~/.gaiad/config/app.toml file in order to enable the anti spam mechanism and reject incoming transactions with less than the minimum gas prices:
+```
+```
+# This is a TOML config file.
+# For more information, see https://github.com/toml-lang/toml
+
+##### main base config options #####
+
+# The minimum gas prices a validator is willing to accept for processing a
+# transaction. A transaction's fees must meet the minimum of any denomination
+# specified in this config (e.g. 10uatom).
+
+minimum-gas-prices = ""
+```
+Your full node has been initialized!
+
+### Run a full node
+```
 # Start Konstellation
 konstellation start
 # Check your node's status with konstellationcli
 konstellationcli status
 ```
+
+### To become a validator follow this steps
+
 
 #### Run singlenet in docker container 
 Run in shell from project dir
