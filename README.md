@@ -50,13 +50,21 @@ Download Genesis, Start your Node, Check your Node Status
 # Initialize data and folders
 # konstellation init {MONIKER} --chain-id {CHAIN_ID}
 konstellation unsafe-reset-all
+```
+
+#### Genesis & Seeds
+```
 # Download genesis.json
 wget -O $HOME/.konstellation/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/{CHAIN_ID}/genesis.json
 wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/{CHAIN_ID}/config.toml
 # Alternatively enter persistant peers to config.toml provided below.
 nano ~/.konstellation/config/config.toml
 # Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
-# Name your node
+```
+
+#### Setting Up a New Node
+Name your node
+```
 konstellation config set moniker {MONIKER}
 ```
 
@@ -64,8 +72,9 @@ You can edit this moniker later, in the ~/.gaiad/config/config.toml file:
 ```bash
 # A custom human readable name for this node
 moniker = "<your_custom_moniker>"
-You can edit the ~/.gaiad/config/app.toml file in order to enable the anti spam mechanism and reject incoming transactions with less than the minimum gas prices:
 ```
+
+You can edit the ~/.gaiad/config/app.toml file in order to enable the anti spam mechanism and reject incoming transactions with less than the minimum gas prices:
 ```
 # This is a TOML config file.
 # For more information, see https://github.com/toml-lang/toml
@@ -80,7 +89,7 @@ minimum-gas-prices = ""
 ```
 Your full node has been initialized!
 
-### Run a full node
+#### Run a full node
 ```
 # Start Konstellation
 konstellation start
@@ -89,9 +98,47 @@ konstellationcli status
 ```
 
 ### To become a validator follow this steps
+Before setting up your validator node, make sure you've already gone through the [Full Node Setup](https://github.com/Konstellation/konstellation#to-join-testnet-follow-this-steps)
 
+#### What is a Validator?
+[Validators](https://hub.cosmos.network/master/validators/overview.html) are responsible for committing new blocks to the blockchain through voting. A validator's stake is slashed if they become unavailable or sign blocks at the same height.
+Please read about [Sentry Node Architecture](https://hub.cosmos.network/master/validators/validator-faq.html#how-can-validators-protect-themselves-from-denial-of-service-attacks) to protect your node from DDOS attacks and to ensure high-availability.
 
-#### Run singlenet in docker container 
+#### Create Your Validator
+
+Your `darcvalconspub` can be used to create a new validator by staking tokens. You can find your validator pubkey by running:
+
+```bash
+konstellation tendermint show-validator
+```
+
+To create your validator, just use the following command:
+ 
+Don't use more `udarc` than you have! 
+
+```bash
+konstellationcli tx staking create-validator \
+  --amount=100000000000udarc \
+  --pubkey=$(konstellation tendermint show-validator) \
+  --moniker="choose a moniker" \
+  --chain-id=<chain_id> \
+  --commission-rate="0.10" \
+  --commission-max-rate="0.20" \
+  --commission-max-change-rate="0.01" \
+  --min-self-delegation="1" \
+  --from=<key_name>
+```
+
+When specifying commission parameters, the `commission-max-change-rate` is used to measure % _point_ change over the `commission-rate`. E.g. 1% to 2% is a 100% rate increase, but only 1 percentage point.
+
+`Min-self-delegation` is a strictly positive integer that represents the minimum amount of self-delegated voting power your validator must always have. A `min-self-delegation` of 1 means your validator will never have a self-delegation lower than `1000000darc`
+
+You can confirm that you are in the validator set by using a third party explorer or using cli tool
+```bash
+konstellationcli q staking validator $(konstlelation tendermint show-validator)
+```
+
+### Run singlenet in docker container 
 Run in shell from project dir
 ```shell script
 ./scripts/singlenet.sh
