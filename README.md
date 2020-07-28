@@ -97,6 +97,34 @@ konstellation start
 konstellationcli status
 ```
 
+### Create a key
+Add new
+``` bash
+konstellationcli keys add <key_name>
+```
+
+Or import via mnemonic
+```bash
+konstellationcli keys add <key_name> -i
+```
+
+As a result, you got
+```bash
+- name: <key_name>
+  type: local
+  address: <key_address>
+  pubkey: <key_pubkey>
+  mnemonic: ""
+  threshold: 0
+  pubkeys: []
+
+
+**Important** write this mnemonic phrase in a safe place.
+It is the only way to recover your account if you ever forget your password.
+
+<key_mnemonic>
+```
+
 ### To become a validator follow this steps
 Before setting up your validator node, make sure you've already gone through the [Full Node Setup](https://github.com/Konstellation/konstellation#to-join-testnet-follow-this-steps)
 
