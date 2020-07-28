@@ -68,13 +68,13 @@ Name your node. Moniker defaults to the machine name
 konstellation config set moniker <your_moniker>
 ```
 
-You can edit this moniker later, in the ~/.gaiad/config/config.toml file:
+You can edit this moniker later, in the ~/.konstellation/config/config.toml file:
 ```bash
 # A custom human readable name for this node
 moniker = "<your_custom_moniker>"
 ```
 
-You can edit the ~/.gaiad/config/app.toml file in order to enable the anti spam mechanism and reject incoming transactions with less than the minimum gas prices:
+You can edit the ~/.konstellation/config/app.toml file in order to enable the anti spam mechanism and reject incoming transactions with less than the minimum gas prices:
 ```
 # This is a TOML config file.
 # For more information, see https://github.com/toml-lang/toml
