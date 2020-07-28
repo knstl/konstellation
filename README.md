@@ -13,13 +13,6 @@ Get testnet config [here](https://github.com/Konstellation/testnet)
 
 This assumes that you're running Linux or MacOS and have installed [Go 1.14+](https://golang.org/dl/).  This guide helps you:
 
-* build and install Konstellation
-* allow you to name your node
-* download config file of add seeds to your config file
-* download genesis state
-* start your node
-* use konstellation to check the status of your node.
-
 Build, Install, and Name your Node
 ```bash
 # Clone Konstellation from the latest release found here: https://github.com/konstellation/konstellation/releases
@@ -33,7 +26,7 @@ make install
 ### Using binaries
 ```bash
 # linux
-wget https://github.com/Konstellation/konstellation/releases/download/{KONSTELLATION_VERSION}/linux_amd64.tar.gz
+wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/linux_amd64.tar.gz
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
 # macos
@@ -41,31 +34,38 @@ wget https://gist.github.com/Konstellation/b9168ec665bf8991a1cd20fd999452fa/raw/
 
 # win
 wget https://gist.github.com/Konstellation/b9168ec665bf8991a1cd20fd999452fa/raw/2c53c4c2fa0d90e7a10a6b7f2b5e28c35bec73d2/windows_amd64.tar.gz
-
 ```
 
+Replace `v0.1.30` with the version that you need
+
 ### To join testnet follow this steps
-Download Genesis, Start your Node, Check your Node Status
+#### Initialize data and folders
 ```bash
-# Initialize data and folders
-# konstellation init {MONIKER} --chain-id {CHAIN_ID}
 konstellation unsafe-reset-all
 ```
 
 #### Genesis & Seeds
+Download genesis.json
 ```
-# Download genesis.json
-wget -O $HOME/.konstellation/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/{CHAIN_ID}/genesis.json
-wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/{CHAIN_ID}/config.toml
-# Alternatively enter persistant peers to config.toml provided below.
+wget -O $HOME/.konstellation/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/genesis.json
+```
+Download config.toml with predefined seeds and persistent peers
+```
+wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml
+```
+
+Replace `knstlhub-1` with the chain id that you need
+
+Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/knstlhub-1)
+```
 nano ~/.konstellation/config/config.toml
 # Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
 ```
 
 #### Setting Up a New Node
-Name your node
+Name your node. Moniker defaults to the machine name
 ```
-konstellation config set moniker {MONIKER}
+konstellation config set moniker <your_moniker>
 ```
 
 You can edit this moniker later, in the ~/.gaiad/config/config.toml file:
