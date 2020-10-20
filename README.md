@@ -30,10 +30,12 @@ wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/li
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
 # macos
-wget https://gist.github.com/Konstellation/b9168ec665bf8991a1cd20fd999452fa/raw/2c53c4c2fa0d90e7a10a6b7f2b5e28c35bec73d2/darwin_amd64.tar.gz
+wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/darwin_amd64.tar.gz
+tar -xvzf linux_amd64.tar.gz
+sudo cp ./linux_amd64/* /usr/local/bin
 
 # win
-wget https://gist.github.com/Konstellation/b9168ec665bf8991a1cd20fd999452fa/raw/2c53c4c2fa0d90e7a10a6b7f2b5e28c35bec73d2/windows_amd64.tar.gz
+wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz
 ```
 
 Replace `v0.1.30` with the version that you need
