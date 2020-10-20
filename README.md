@@ -64,7 +64,7 @@ For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\confi
 
 Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/knstlhub-1)
 
-1) Open ~/.konstellation/config/config.toml (D:\\.konstellation/config/config.toml for Windows). Alternatively you can use cli editor, like nano ``` nano ~/.konstellation/config/config.toml ```
+1) Open ~/.konstellation/config/config.toml with text editor (D:\\.konstellation/config/config.toml for Windows). Alternatively you can use cli editor, like nano ``` nano ~/.konstellation/config/config.toml ```
 2) Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
 
 #### Setting Up a New Node
