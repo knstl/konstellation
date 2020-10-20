@@ -41,12 +41,15 @@ https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows
 Replace `v0.1.30` with the version that you need
 
 ### To join testnet follow this steps
+
+NOTE: If you are using Windows, add flag *--home D:\\.konstellation* or another folder you choose for all commands that will be used as home directory 
+
 #### Initialize data and folders
 ```bash
 konstellation unsafe-reset-all
 ```
 
-Add flag *--home D:\\.konstellation* for Windows
+Remember to add flag *--home D:\\.konstellation* for Windows
 
 #### Genesis & Seeds
 Download genesis.json
