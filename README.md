@@ -33,12 +33,11 @@ sudo cp ./linux_amd64/* /usr/local/bin
 wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/darwin_amd64.tar.gz
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
-
-# win
-wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz
-# untar archive using 7z
-# add path to PATH env variable
 ```
+win
+Download https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz
+untar archive using 7z
+add path to PATH env variable
 
 Replace `v0.1.30` with the version that you need
 
