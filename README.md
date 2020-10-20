@@ -34,10 +34,9 @@ wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/da
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
 # win
-Download from link, untar archive using 7z and move to "C:\\Users\user" folder
+Download from link, untar archive using 7z and move files to "C:\\Users\user" folder
 ```
 https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz
-```
 
 Replace `v0.1.30` with the version that you need
 
