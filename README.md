@@ -34,12 +34,9 @@ wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/da
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
 # win
-download
+Download from link, untar archive using 7z and move to "C:\\Users\user" folder
 ```
 https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz
-```
-untar archive using 7z
-add path to PATH env variable
 ```
 
 Replace `v0.1.30` with the version that you need
@@ -50,7 +47,7 @@ Replace `v0.1.30` with the version that you need
 konstellation unsafe-reset-all
 ```
 
-For Windows add flag *--home D:\.konstellation*
+Add flag *--home D:\\.konstellation* for Windows
 
 #### Genesis & Seeds
 Download genesis.json
@@ -64,11 +61,11 @@ wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.co
 
 Replace `knstlhub-1` with the chain id that you need
 
-For Windows open links in browser -> Save As -> Choose "D:\.konstellation\config" as path
+For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\config" as path
 
 Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/knstlhub-1)
 
-1) Open ~/.konstellation/config/config.toml (D:\.konstellation/config/config.toml for Windows). Alternatively you can use cli editor, like nano ``` nano ~/.konstellation/config/config.toml ```
+1) Open ~/.konstellation/config/config.toml (D:\\.konstellation/config/config.toml for Windows). Alternatively you can use cli editor, like nano ``` nano ~/.konstellation/config/config.toml ```
 2) Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
 
 #### Setting Up a New Node
