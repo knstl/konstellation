@@ -163,7 +163,7 @@ konstellationcli tx staking create-validator \
   --from=<key_name>
 ```
 
-* NOTE: If you have troubles with '\' symbol, run the command in a single line like `konstellationcli tx staking create-validator --amount=100000000000udarc --pubkey=$(konstellation tendermint show-validator) ...`
+* NOTE: If you have troubles with \'\\\' symbol, run the command in a single line like `konstellationcli tx staking create-validator --amount=100000000000udarc --pubkey=$(konstellation tendermint show-validator) ...`
 
 When specifying commission parameters, the `commission-max-change-rate` is used to measure % _point_ change over the `commission-rate`. E.g. 1% to 2% is a 100% rate increase, but only 1 percentage point.
 
