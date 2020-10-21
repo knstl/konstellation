@@ -50,11 +50,11 @@ konstellation unsafe-reset-all
 Remember to add flag *--home D:\\.konstellation* for Windows
 
 #### Genesis & Seeds
-Download genesis.json
+Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/genesis.json)
 ```
 wget -O $HOME/.konstellation/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/genesis.json
 ```
-Download config.toml with predefined seeds and persistent peers
+Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml) with predefined seeds and persistent peers
 ```
 wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml
 ```
