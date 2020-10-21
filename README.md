@@ -154,7 +154,7 @@ Don't use more `udarc` than you have!
 konstellationcli tx staking create-validator \
   --amount=100000000000udarc \
   --pubkey=$(konstellation tendermint show-validator) \
-  --moniker="choose a moniker" \
+  --moniker=<choose a moniker> \
   --chain-id=<chain_id> \
   --commission-rate="0.10" \
   --commission-max-rate="0.20" \
