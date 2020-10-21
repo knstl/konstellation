@@ -40,7 +40,7 @@ Replace `v0.1.30` with the version that you need
 
 ### To join testnet follow this steps
 
-* NOTE: If you are using Windows, add flag *--home D:\\.konstellation* or another folder you choose for all commands.  This folder will be used as home directory and will contain blockchain history.
+* NOTE: If you are using Windows, add flag *--home D:\\.konstellation* or another folder you choose for all commands.  This folder will be used as home directory and will contain blockchain history and it takes up a lot of disk space
 
 #### Initialize data and folders
 ```bash
