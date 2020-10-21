@@ -33,16 +33,14 @@ sudo cp ./linux_amd64/* /usr/local/bin
 wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/darwin_amd64.tar.gz
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
-# win
-Download archive by link, untar archive using 7z and move files to "C:\\Users\user" folder
 ```
-https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz
+* NOTE: For Windows download archive by [link](https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz) , untar archive using 7z and move files to "C:\\Users\user" folder. If you choose a different folder, make sure that it is added to the PATH env variable. [How to add to the PATH on Windows 10](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
 Replace `v0.1.30` with the version that you need
 
 ### To join testnet follow this steps
 
-NOTE: If you are using Windows, add flag *--home D:\\.konstellation* or another folder you choose for all commands.  This folder will be used as home directory and will contain blockchain history.
+* NOTE: If you are using Windows, add flag *--home D:\\.konstellation* or another folder you choose for all commands.  This folder will be used as home directory and will contain blockchain history.
 
 #### Initialize data and folders
 ```bash
@@ -63,7 +61,7 @@ wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.co
 
 Replace `knstlhub-1` with the chain id that you need
 
-For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\config" as path
+* NOTE: For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\config" as path
 
 Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/knstlhub-1)
 
