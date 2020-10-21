@@ -174,6 +174,8 @@ You can confirm that you are in the validator set by using a third party explore
 konstellationcli q staking validator $(konstlelation tendermint show-validator)
 ```
 
+* Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ...` with the necessary options
+
 ### Run singlenet in docker container 
 Run in shell from project dir
 ```shell script
