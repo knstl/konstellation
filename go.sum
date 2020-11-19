@@ -94,6 +94,7 @@ github.com/cosmos/cosmos-sdk v0.37.0 h1:S2I3NDGN2wqfGlY5KqkAHTpfezjhgeqDxrCxhlhd
 github.com/cosmos/cosmos-sdk v0.37.0/go.mod h1:3b/k/Zd+YDuttSmEJdNkxga1H5EIiDUhSYeErAHQN7A=
 github.com/cosmos/cosmos-sdk v0.37.13 h1:mDSfa3nSQxDC0VMGD/KIYEYqxdiOZ92Na3wwDSrAfw0=
 github.com/cosmos/cosmos-sdk v0.37.13/go.mod h1:2ErVllaXXVfjSHD8BZO3TxbcqQ6em0W0mVBDJm+umH8=
+github.com/cosmos/cosmos-sdk v0.37.14/go.mod h1:qKU3AzVJ0GGWARqImZj24CIX35Q4nJEE+WrXVU/CzFo=
 github.com/cosmos/cosmos-sdk v0.38.1 h1:DTuxIJeMpB//ydq+ObAjQgsaiwYBZ8T7NDzXjyiL1Kg=
 github.com/cosmos/cosmos-sdk v0.38.1/go.mod h1:9ZZex0GKpyNCvilvVAPBoB+0n3A/aO1+/UhPVEaiCy4=
 github.com/cosmos/go-bip39 v0.0.0-20180618194314-52158e4697b8 h1:Iwin12wRQtyZhH6FV3ykFcdGNlYEzoeR0jN8Vn+JWsI=
@@ -505,6 +506,7 @@ github.com/tendermint/tendermint v0.32.2 h1:FvZWdksfDg/65vKKr5Lgo57keARFnmhrUEXH
 github.com/tendermint/tendermint v0.32.2/go.mod h1:NwMyx58S8VJ7tEpFKqRVlVWKO9N9zjTHu+Dx96VsnOE=
 github.com/tendermint/tendermint v0.32.12 h1:JFD3aQZFySamBeU1bfDaqOVgFo6w8UpmiKylVB8eV00=
 github.com/tendermint/tendermint v0.32.12/go.mod h1:5/B1XZjNYtVBso8o1l/Eg4A0Mhu42lDcmftoQl95j/E=
+github.com/tendermint/tendermint v0.32.13/go.mod h1:5/B1XZjNYtVBso8o1l/Eg4A0Mhu42lDcmftoQl95j/E=
 github.com/tendermint/tendermint v0.33.0 h1:TW1g9sQs3YSqKM8o1+opL3/VmBy4Ke/VKV9MxYpqNbI=
 github.com/tendermint/tendermint v0.33.0/go.mod h1:s5UoymnPIY+GcA3mMte4P9gpMP8vS7UH7HBXikT1pHI=
 github.com/tendermint/tm-db v0.1.1 h1:G3Xezy3sOk9+ekhjZ/kjArYIs1SmwV+1OUgNkj7RgV0=

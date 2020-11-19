@@ -1,0 +1,2061 @@
+{
+  "app_hash": "",
+  "app_state": {
+    "accounts": [
+      {
+        "account_number": "16",
+        "address": "darc1qfhrm4x5e7gwnruhg0dp67nj57qt6vw3q9ux93",
+        "coins": [
+          {
+            "amount": "20005701432",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "10",
+        "start_time": "0"
+      },
+      {
+        "account_number": "11",
+        "address": "darc1qk4m7ykkczf50su7paahgcghh04l2a0jpsuza4",
+        "coins": [
+          {
+            "amount": "256",
+            "denom": "knstl"
+          },
+          {
+            "amount": "1475581237244",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "11",
+        "start_time": "0"
+      },
+      {
+        "account_number": "0",
+        "address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+        "coins": [
+          {
+            "amount": "999999744",
+            "denom": "knstl"
+          },
+          {
+            "amount": "6022265366309",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "63",
+        "start_time": "0"
+      },
+      {
+        "account_number": "15",
+        "address": "darc1gx2w3zjcnf9ganfctq6226dkcf97d663628xz3",
+        "coins": [
+          {
+            "amount": "492099256",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "4",
+        "start_time": "0"
+      },
+      {
+        "account_number": "13",
+        "address": "darc1ffgzs3kswr3q3zmsyk47sp3fsv9lq0t63fs0jq",
+        "coins": [],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "issue",
+        "module_permissions": [
+          "minter",
+          "burner"
+        ],
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      },
+      {
+        "account_number": "4",
+        "address": "darc1fl48vsnmsdzcv85q5d2q4z5ajdha8yu326a75q",
+        "coins": [
+          {
+            "amount": "1041490241602",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "bonded_tokens_pool",
+        "module_permissions": [
+          "burner",
+          "staking"
+        ],
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      },
+      {
+        "account_number": "5",
+        "address": "darc1tygms3xhhs3yv487phx3dw4a95jn7t7l76p0z5",
+        "coins": [
+          {
+            "amount": "95099020000",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "not_bonded_tokens_pool",
+        "module_permissions": [
+          "burner",
+          "staking"
+        ],
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      },
+      {
+        "account_number": "18",
+        "address": "darc1wmu5pzhlf6fvmmv2p5zudvp7999kf2ha29rkyh",
+        "coins": [
+          {
+            "amount": "400000000",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "5",
+        "start_time": "0"
+      },
+      {
+        "account_number": "12",
+        "address": "darc10gz2f8d224wlzp9n6xz7answu6tfjue8k9ft7q",
+        "coins": [
+          {
+            "amount": "100",
+            "denom": "koko"
+          },
+          {
+            "amount": "205007712",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "15",
+        "start_time": "0"
+      },
+      {
+        "account_number": "6",
+        "address": "darc10d07y265gmmuvt4z0w9aw880jnsr700j9r85my",
+        "coins": [],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "gov",
+        "module_permissions": [
+          "burner"
+        ],
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      },
+      {
+        "account_number": "9",
+        "address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+        "coins": [
+          {
+            "amount": "109658660",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "46",
+        "start_time": "0"
+      },
+      {
+        "account_number": "3",
+        "address": "darc1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8c7sdyg",
+        "coins": [
+          {
+            "amount": "177520349667",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "distribution",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      },
+      {
+        "account_number": "2",
+        "address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
+        "coins": [
+          {
+            "amount": "700000000000",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "8",
+        "start_time": "0"
+      },
+      {
+        "account_number": "17",
+        "address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+        "coins": [
+          {
+            "amount": "10331867264",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "13",
+        "start_time": "0"
+      },
+      {
+        "account_number": "14",
+        "address": "darc148wgkph5e9q5m4d9r9tal4cgfgd5sxe0ujh0g6",
+        "coins": [
+          {
+            "amount": "900",
+            "denom": "koko"
+          },
+          {
+            "amount": "21195832166",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "29",
+        "start_time": "0"
+      },
+      {
+        "account_number": "10",
+        "address": "darc1ct86j4v3lr22pwmdysudmjq4wf0d0kfqet7sfh",
+        "coins": [
+          {
+            "amount": "87227057",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "16",
+        "start_time": "0"
+      },
+      {
+        "account_number": "1",
+        "address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
+        "coins": [
+          {
+            "amount": "700000000000",
+            "denom": "udarc"
+          }
+        ],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "10",
+        "start_time": "0"
+      },
+      {
+        "account_number": "7",
+        "address": "darc1m3h30wlvsf8llruxtpukdvsy0km2kum8hsnf2h",
+        "coins": [],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "mint",
+        "module_permissions": [
+          "minter"
+        ],
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      },
+      {
+        "account_number": "8",
+        "address": "darc17xpfvakm2amg962yls6f84z3kell8c5l0ch3x2",
+        "coins": [],
+        "delegated_free": [],
+        "delegated_vesting": [],
+        "end_time": "0",
+        "module_name": "fee_collector",
+        "module_permissions": null,
+        "original_vesting": [],
+        "sequence_number": "0",
+        "start_time": "0"
+      }
+    ],
+    "auth": {
+      "params": {
+        "max_memo_characters": "256",
+        "sig_verify_cost_ed25519": "590",
+        "sig_verify_cost_secp256k1": "1000",
+        "tx_sig_limit": "7",
+        "tx_size_cost_per_byte": "10"
+      }
+    },
+    "bank": {
+      "send_enabled": true
+    },
+    "crisis": {
+      "constant_fee": {
+        "amount": "100000000000",
+        "denom": "udarc"
+      }
+    },
+    "distribution": {
+      "base_proposer_reward": "0.010000000000000000",
+      "bonus_proposer_reward": "0.040000000000000000",
+      "community_tax": "0.020000000000000000",
+      "delegator_starting_infos": [
+        {
+          "delegator_address": "darc1qfhrm4x5e7gwnruhg0dp67nj57qt6vw3q9ux93",
+          "starting_info": {
+            "creation_height": "1159843",
+            "previous_period": "3",
+            "stake": "99000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "delegator_address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+          "starting_info": {
+            "creation_height": "1356471",
+            "previous_period": "27",
+            "stake": "100000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "starting_info": {
+            "creation_height": "1340179",
+            "previous_period": "24",
+            "stake": "400000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "delegator_address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+          "starting_info": {
+            "creation_height": "1356463",
+            "previous_period": "26",
+            "stake": "5000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "delegator_address": "darc1qk4m7ykkczf50su7paahgcghh04l2a0jpsuza4",
+          "starting_info": {
+            "creation_height": "1192815",
+            "previous_period": "14",
+            "stake": "310000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "starting_info": {
+            "creation_height": "1340120",
+            "previous_period": "15",
+            "stake": "200000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
+          "starting_info": {
+            "creation_height": "0",
+            "previous_period": "1",
+            "stake": "100000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc1qk4m7ykkczf50su7paahgcghh04l2a0jpsuza4",
+          "starting_info": {
+            "creation_height": "1241392",
+            "previous_period": "36",
+            "stake": "299000003477.195971948096894607"
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc10gz2f8d224wlzp9n6xz7answu6tfjue8k9ft7q",
+          "starting_info": {
+            "creation_height": "1340199",
+            "previous_period": "39",
+            "stake": "4269316652.875026375709776251"
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "starting_info": {
+            "creation_height": "1356239",
+            "previous_period": "41",
+            "stake": "4075234460.947379482358133622"
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+          "starting_info": {
+            "creation_height": "1356445",
+            "previous_period": "42",
+            "stake": "9851495993.969024554073017144"
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc148wgkph5e9q5m4d9r9tal4cgfgd5sxe0ujh0g6",
+          "starting_info": {
+            "creation_height": "1192888",
+            "previous_period": "33",
+            "stake": "99000020766.816822337076096637"
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1ct86j4v3lr22pwmdysudmjq4wf0d0kfqet7sfh",
+          "starting_info": {
+            "creation_height": "1340190",
+            "previous_period": "38",
+            "stake": "3784167015.439209194522868894"
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+          "starting_info": {
+            "creation_height": "1356478",
+            "previous_period": "31",
+            "stake": "983000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc1gx2w3zjcnf9ganfctq6226dkcf97d663628xz3",
+          "starting_info": {
+            "creation_height": "1340216",
+            "previous_period": "29",
+            "stake": "517000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "starting_info": {
+            "creation_height": "1176617",
+            "previous_period": "27",
+            "stake": "300000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+          "starting_info": {
+            "creation_height": "1356478",
+            "previous_period": "32",
+            "stake": "5000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc1ct86j4v3lr22pwmdysudmjq4wf0d0kfqet7sfh",
+          "starting_info": {
+            "creation_height": "1340190",
+            "previous_period": "28",
+            "stake": "100000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
+          "starting_info": {
+            "creation_height": "0",
+            "previous_period": "1",
+            "stake": "100000000000.000000000000000000"
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        }
+      ],
+      "delegator_withdraw_infos": [],
+      "fee_pool": {
+        "community_pool": [
+          {
+            "amount": "5513309374.141615811260768568",
+            "denom": "udarc"
+          }
+        ]
+      },
+      "outstanding_rewards": [
+        {
+          "outstanding_rewards": [
+            {
+              "amount": "4999920.877998658721139632",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "outstanding_rewards": [
+            {
+              "amount": "418941650.899877164955626327",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "outstanding_rewards": [
+            {
+              "amount": "85559267045.112775729686405429",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "outstanding_rewards": [
+            {
+              "amount": "1665426372.331379358441157686",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "outstanding_rewards": [
+            {
+              "amount": "84358405303.636353276934902358",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        }
+      ],
+      "previous_proposer": "darcvalcons1j5xqnga6smzrt6d7zt4nmkc7wgwufyjuttun77",
+      "validator_accumulated_commissions": [
+        {
+          "accumulated": [
+            {
+              "amount": "499992.351506952672113962",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "accumulated": null,
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "accumulated": null,
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "accumulated": [
+            {
+              "amount": "166542637.261914625346576030",
+              "denom": "udarc"
+            }
+          ],
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "accumulated": null,
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        }
+      ],
+      "validator_current_rewards": [
+        {
+          "rewards": {
+            "period": "8",
+            "rewards": null
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "rewards": {
+            "period": "28",
+            "rewards": [
+              {
+                "amount": "418941650.899876137608260359",
+                "denom": "udarc"
+              }
+            ]
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "rewards": {
+            "period": "17",
+            "rewards": [
+              {
+                "amount": "1630461540.607108085188185897",
+                "denom": "udarc"
+              }
+            ]
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "rewards": {
+            "period": "43",
+            "rewards": [
+              {
+                "amount": "1498883735.069462930375579400",
+                "denom": "udarc"
+              }
+            ]
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "rewards": {
+            "period": "33",
+            "rewards": [
+              {
+                "amount": "424896976.093612513373584551",
+                "denom": "udarc"
+              }
+            ]
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        }
+      ],
+      "validator_historical_rewards": [
+        {
+          "period": "2",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.000050296889752787",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "period": "3",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.000051323159063819",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "period": "4",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.000070949137220194",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "period": "5",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.000096046595067050",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "period": "6",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.000097047882767439",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "period": "7",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.000097047882767439",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 2
+          },
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "period": "24",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839285159883954531",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "period": "26",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839285159883954531",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "period": "27",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839285159883954531",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 2
+          },
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "period": "1",
+          "rewards": {
+            "cumulative_reward_ratio": null,
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "period": "14",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839288055039216680",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "period": "15",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839288055040641068",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "period": "16",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839288055040641068",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "period": "10",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.018296451205384164",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "28",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.027646762412372240",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "31",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041784879177586504",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "33",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "34",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "36",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "38",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "39",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "41",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "42",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.041785838291182443",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 2
+          },
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "period": "1",
+          "rewards": {
+            "cumulative_reward_ratio": null,
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "period": "27",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.830185152294213224",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "period": "28",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839307715585553373",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "period": "29",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839307715585553373",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "period": "31",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839307715585553373",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 1
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "period": "32",
+          "rewards": {
+            "cumulative_reward_ratio": [
+              {
+                "amount": "0.839307715585553373",
+                "denom": "udarc"
+              }
+            ],
+            "reference_count": 2
+          },
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        }
+      ],
+      "validator_slash_events": [
+        {
+          "height": "1128548",
+          "period": "2",
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe",
+          "validator_slash_event": {
+            "fraction": "0.010000000000000000",
+            "validator_period": "2"
+          }
+        },
+        {
+          "height": "1159908",
+          "period": "4",
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe",
+          "validator_slash_event": {
+            "fraction": "0.010000000000000000",
+            "validator_period": "4"
+          }
+        },
+        {
+          "height": "1192546",
+          "period": "5",
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe",
+          "validator_slash_event": {
+            "fraction": "0.010000000000000000",
+            "validator_period": "5"
+          }
+        },
+        {
+          "height": "1192864",
+          "period": "6",
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe",
+          "validator_slash_event": {
+            "fraction": "0.009999907245086309",
+            "validator_period": "6"
+          }
+        },
+        {
+          "height": "1241437",
+          "period": "7",
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe",
+          "validator_slash_event": {
+            "fraction": "0.009999936497764253",
+            "validator_period": "7"
+          }
+        },
+        {
+          "height": "1084833",
+          "period": "10",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj",
+          "validator_slash_event": {
+            "fraction": "0.009999958733385621",
+            "validator_period": "10"
+          }
+        },
+        {
+          "height": "1162511",
+          "period": "28",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj",
+          "validator_slash_event": {
+            "fraction": "0.009999916459391175",
+            "validator_period": "28"
+          }
+        },
+        {
+          "height": "1191575",
+          "period": "31",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj",
+          "validator_slash_event": {
+            "fraction": "0.009999915482457194",
+            "validator_period": "31"
+          }
+        },
+        {
+          "height": "1233015",
+          "period": "34",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj",
+          "validator_slash_event": {
+            "fraction": "0.009999965228040281",
+            "validator_period": "34"
+          }
+        }
+      ],
+      "withdraw_addr_enabled": true
+    },
+    "genutil": null,
+    "gov": {
+      "deposit_params": {
+        "max_deposit_period": "172800000000000",
+        "min_deposit": [
+          {
+            "amount": "1000",
+            "denom": "udarc"
+          }
+        ]
+      },
+      "deposits": null,
+      "proposals": [
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "cvbcvb",
+              "title": "Text 1"
+            }
+          },
+          "deposit_end_time": "2020-09-04T07:57:26.285123701Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "100200000000"
+          },
+          "id": "1",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-09-02T07:57:26.285123701Z",
+          "total_deposit": [
+            {
+              "amount": "100000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-09-04T07:57:26.285123701Z",
+          "voting_start_time": "2020-09-02T07:57:26.285123701Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "let make test",
+              "title": "test"
+            }
+          },
+          "deposit_end_time": "2020-09-04T08:41:58.358610255Z",
+          "final_tally_result": {
+            "abstain": "1649999999",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "100599999999"
+          },
+          "id": "2",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-09-02T08:41:58.358610255Z",
+          "total_deposit": [
+            {
+              "amount": "100000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-09-04T08:41:58.358610255Z",
+          "voting_start_time": "2020-09-02T08:41:58.358610255Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "zxcvzxcv",
+              "title": "czxvcvzxcv"
+            }
+          },
+          "deposit_end_time": "2020-09-09T23:25:10.381506384Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "100200000000"
+          },
+          "id": "3",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-09-07T23:25:10.381506384Z",
+          "total_deposit": [
+            {
+              "amount": "100000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-09-09T23:25:10.381506384Z",
+          "voting_start_time": "2020-09-07T23:25:10.381506384Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/ParameterChangeProposal",
+            "value": {
+              "changes": [
+                {
+                  "key": "InflationRateChange",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                },
+                {
+                  "key": "InflationMax",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                },
+                {
+                  "key": "InflationMin",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                }
+              ],
+              "description": "STOP inflation, smert vorogam",
+              "title": "STOP inflation"
+            }
+          },
+          "deposit_end_time": "2020-09-09T23:27:45.869985327Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "100200000000"
+          },
+          "id": "4",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-09-07T23:27:45.869985327Z",
+          "total_deposit": [
+            {
+              "amount": "1000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-09-09T23:32:45.546538426Z",
+          "voting_start_time": "2020-09-07T23:32:45.546538426Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "Stop Inflation",
+              "title": "Stop inf"
+            }
+          },
+          "deposit_end_time": "2020-10-29T12:53:17.049180167Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "223841991601"
+          },
+          "id": "5",
+          "proposal_status": "Passed",
+          "submit_time": "2020-10-27T12:53:17.049180167Z",
+          "total_deposit": [
+            {
+              "amount": "100000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-10-29T12:53:17.049180167Z",
+          "voting_start_time": "2020-10-27T12:53:17.049180167Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/ParameterChangeProposal",
+            "value": {
+              "changes": [
+                {
+                  "key": "InflationMax",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                },
+                {
+                  "key": "InflationRateChange",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                },
+                {
+                  "key": "InflationMin",
+                  "subspace": "mint",
+                  "value": "\"0\""
+                }
+              ],
+              "description": "STOP INFLATION to save minions",
+              "title": "STOP INFLATION #3"
+            }
+          },
+          "deposit_end_time": "2020-10-30T09:14:43.728584559Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "327500000000"
+          },
+          "id": "6",
+          "proposal_status": "Passed",
+          "submit_time": "2020-10-28T09:14:43.728584559Z",
+          "total_deposit": [
+            {
+              "amount": "100000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-10-30T09:15:15.838283012Z",
+          "voting_start_time": "2020-10-28T09:15:15.838283012Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "Justice League: Delegators vs Validators",
+              "title": "Delegator/Validator"
+            }
+          },
+          "deposit_end_time": "2020-11-01T09:44:04.065594042Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "443668730835",
+            "no_with_veto": "0",
+            "yes": "399983020766"
+          },
+          "id": "7",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-10-30T09:44:04.065594042Z",
+          "total_deposit": [
+            {
+              "amount": "1000000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-11-01T09:44:04.065594042Z",
+          "voting_start_time": "2020-10-30T09:44:04.065594042Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/TextProposal",
+            "value": {
+              "description": "666",
+              "title": "666"
+            }
+          },
+          "deposit_end_time": "2020-11-04T09:15:34.922103065Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "609000003477",
+            "no_with_veto": "0",
+            "yes": "432490238124"
+          },
+          "id": "8",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-11-02T09:15:34.922103065Z",
+          "total_deposit": [
+            {
+              "amount": "100000000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-11-04T09:15:34.922103065Z",
+          "voting_start_time": "2020-11-02T09:15:34.922103065Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/ParameterChangeProposal",
+            "value": {
+              "changes": [
+                {
+                  "key": "InflationMax",
+                  "subspace": "mint",
+                  "value": "\"0.200000000000000000\""
+                },
+                {
+                  "key": "InflationRateChange",
+                  "subspace": "mint",
+                  "value": "\"0.130000000000000000\""
+                },
+                {
+                  "key": "InflationMin",
+                  "subspace": "mint",
+                  "value": "\"0.070000000000000000\""
+                }
+              ],
+              "description": "inf",
+              "title": "inf"
+            }
+          },
+          "deposit_end_time": "2020-11-04T09:24:24.751389753Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "613975237938",
+            "no_with_veto": "0",
+            "yes": "427515003663"
+          },
+          "id": "9",
+          "proposal_status": "Rejected",
+          "submit_time": "2020-11-02T09:24:24.751389753Z",
+          "total_deposit": [
+            {
+              "amount": "1000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-11-04T09:25:18.35872369Z",
+          "voting_start_time": "2020-11-02T09:25:18.35872369Z"
+        },
+        {
+          "content": {
+            "type": "cosmos-sdk/ParameterChangeProposal",
+            "value": {
+              "changes": [
+                {
+                  "key": "InflationMax",
+                  "subspace": "mint",
+                  "value": "\"0.200000000000000000\""
+                },
+                {
+                  "key": "InflationRateChange",
+                  "subspace": "mint",
+                  "value": "\"0.130000000000000000\""
+                },
+                {
+                  "key": "InflationMin",
+                  "subspace": "mint",
+                  "value": "\"0.070000000000000000\""
+                }
+              ],
+              "description": "enable inflation",
+              "title": "inf on"
+            }
+          },
+          "deposit_end_time": "2020-11-12T20:56:30.203748313Z",
+          "final_tally_result": {
+            "abstain": "0",
+            "no": "0",
+            "no_with_veto": "0",
+            "yes": "1041490241602"
+          },
+          "id": "10",
+          "proposal_status": "Passed",
+          "submit_time": "2020-11-10T20:56:30.203748313Z",
+          "total_deposit": [
+            {
+              "amount": "1000",
+              "denom": "udarc"
+            }
+          ],
+          "voting_end_time": "2020-11-12T21:28:53.774771053Z",
+          "voting_start_time": "2020-11-10T21:28:53.774771053Z"
+        }
+      ],
+      "starting_proposal_id": "11",
+      "tally_params": {
+        "quorum": "0.334000000000000000",
+        "threshold": "0.500000000000000000",
+        "veto": "0.334000000000000000"
+      },
+      "votes": null,
+      "voting_params": {
+        "voting_period": "172800000000000"
+      }
+    },
+    "issue": {
+      "issues": [
+        {
+          "burn_from_disabled": false,
+          "burn_holder_disabled": false,
+          "burn_owner_disabled": false,
+          "decimals": "3",
+          "denom": "koko",
+          "description": "",
+          "freeze_disabled": false,
+          "id": "2",
+          "issue_time": "1605279992",
+          "issuer": "darc148wgkph5e9q5m4d9r9tal4cgfgd5sxe0ujh0g6",
+          "mint_disabled": false,
+          "owner": "darc148wgkph5e9q5m4d9r9tal4cgfgd5sxe0ujh0g6",
+          "symbol": "KOKO",
+          "total_supply": "1000"
+        },
+        {
+          "burn_from_disabled": false,
+          "burn_holder_disabled": false,
+          "burn_owner_disabled": false,
+          "decimals": "0",
+          "denom": "knstl",
+          "description": "",
+          "freeze_disabled": false,
+          "id": "1",
+          "issue_time": "1599120803",
+          "issuer": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+          "mint_disabled": false,
+          "owner": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+          "symbol": "KNSTL",
+          "total_supply": "1000000000"
+        }
+      ],
+      "params": {
+        "burn_fee": {
+          "amount": "1000",
+          "denom": "udarc"
+        },
+        "burn_from_fee": {
+          "amount": "1000",
+          "denom": "udarc"
+        },
+        "freeze_fee": {
+          "amount": "2000",
+          "denom": "udarc"
+        },
+        "issue_fee": {
+          "amount": "2000",
+          "denom": "udarc"
+        },
+        "mint_fee": {
+          "amount": "1000",
+          "denom": "udarc"
+        },
+        "transfer_owner_fee": {
+          "amount": "20000",
+          "denom": "udarc"
+        },
+        "unfreeze_fee": {
+          "amount": "2000",
+          "denom": "udarc"
+        }
+      },
+      "starting_issue_id": "3"
+    },
+    "mint": {
+      "minter": {
+        "annual_provisions": "725161420289.278939301035285725",
+        "inflation": "0.070645564102763711"
+      },
+      "params": {
+        "blocks_per_year": "6311520",
+        "goal_bonded": "0.670000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "inflation_rate_change": "0.130000000000000000",
+        "mint_denom": "udarc"
+      }
+    },
+    "slashing": {
+      "missed_blocks": {
+        "darcvalcons1cxat4nxjmckw6rl69kuge67slagmdvnfl8g729": [
+          {
+            "index": "47",
+            "missed": false
+          },
+          {
+            "index": "48",
+            "missed": false
+          },
+          {
+            "index": "58",
+            "missed": false
+          },
+          {
+            "index": "59",
+            "missed": false
+          },
+          {
+            "index": "60",
+            "missed": false
+          },
+          {
+            "index": "61",
+            "missed": false
+          },
+          {
+            "index": "62",
+            "missed": false
+          },
+          {
+            "index": "86",
+            "missed": false
+          }
+        ],
+        "darcvalcons1dzfmseukd8hrc2r8w6spef4ce6q4rnp9rqtpc7": [
+          {
+            "index": "0",
+            "missed": true
+          },
+          {
+            "index": "1",
+            "missed": true
+          }
+        ],
+        "darcvalcons1j5xqnga6smzrt6d7zt4nmkc7wgwufyjuttun77": [
+          {
+            "index": "0",
+            "missed": false
+          },
+          {
+            "index": "1",
+            "missed": false
+          }
+        ],
+        "darcvalcons1k6w0qsurgezsyz8dwll3dgu5vkd9nnr6fjmuy7": [],
+        "darcvalcons1rvzjjattnztzxs6ele6sdll93g89s3uvtd4j79": [
+          {
+            "index": "30",
+            "missed": false
+          },
+          {
+            "index": "70",
+            "missed": false
+          },
+          {
+            "index": "76",
+            "missed": false
+          },
+          {
+            "index": "80",
+            "missed": false
+          },
+          {
+            "index": "82",
+            "missed": false
+          },
+          {
+            "index": "86",
+            "missed": false
+          },
+          {
+            "index": "91",
+            "missed": false
+          }
+        ]
+      },
+      "params": {
+        "downtime_jail_duration": "600000000000",
+        "max_evidence_age": "120000000000",
+        "min_signed_per_window": "0.500000000000000000",
+        "signed_blocks_window": "100",
+        "slash_fraction_double_sign": "0.050000000000000000",
+        "slash_fraction_downtime": "0.010000000000000000"
+      },
+      "signing_infos": {
+        "darcvalcons1cxat4nxjmckw6rl69kuge67slagmdvnfl8g729": {
+          "address": "darcvalcons1cxat4nxjmckw6rl69kuge67slagmdvnfl8g729",
+          "index_offset": "1411169",
+          "jailed_until": "1970-01-01T00:00:00Z",
+          "missed_blocks_counter": "0",
+          "start_height": "0",
+          "tombstoned": false
+        },
+        "darcvalcons1dzfmseukd8hrc2r8w6spef4ce6q4rnp9rqtpc7": {
+          "address": "darcvalcons1dzfmseukd8hrc2r8w6spef4ce6q4rnp9rqtpc7",
+          "index_offset": "2",
+          "jailed_until": "2020-11-02T09:49:47.091052734Z",
+          "missed_blocks_counter": "2",
+          "start_height": "1128447",
+          "tombstoned": false
+        },
+        "darcvalcons1j5xqnga6smzrt6d7zt4nmkc7wgwufyjuttun77": {
+          "address": "darcvalcons1j5xqnga6smzrt6d7zt4nmkc7wgwufyjuttun77",
+          "index_offset": "169773",
+          "jailed_until": "2020-11-01T21:27:37.450834293Z",
+          "missed_blocks_counter": "0",
+          "start_height": "1049336",
+          "tombstoned": false
+        },
+        "darcvalcons1k6w0qsurgezsyz8dwll3dgu5vkd9nnr6fjmuy7": {
+          "address": "darcvalcons1k6w0qsurgezsyz8dwll3dgu5vkd9nnr6fjmuy7",
+          "index_offset": "1411169",
+          "jailed_until": "1970-01-01T00:00:00Z",
+          "missed_blocks_counter": "0",
+          "start_height": "0",
+          "tombstoned": false
+        },
+        "darcvalcons1rvzjjattnztzxs6ele6sdll93g89s3uvtd4j79": {
+          "address": "darcvalcons1rvzjjattnztzxs6ele6sdll93g89s3uvtd4j79",
+          "index_offset": "1411169",
+          "jailed_until": "1970-01-01T00:00:00Z",
+          "missed_blocks_counter": "0",
+          "start_height": "0",
+          "tombstoned": false
+        }
+      }
+    },
+    "staking": {
+      "delegations": [
+        {
+          "delegator_address": "darc1qfhrm4x5e7gwnruhg0dp67nj57qt6vw3q9ux93",
+          "shares": "100000000000.000000000000000000",
+          "validator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe"
+        },
+        {
+          "delegator_address": "darc1qk4m7ykkczf50su7paahgcghh04l2a0jpsuza4",
+          "shares": "310000000000.000000000000000000",
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc1qk4m7ykkczf50su7paahgcghh04l2a0jpsuza4",
+          "shares": "311265013223.471939891895605288",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+          "shares": "100000000000.000000000000000000",
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "delegator_address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+          "shares": "983000000.000000000000000000",
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc1gx2w3zjcnf9ganfctq6226dkcf97d663628xz3",
+          "shares": "517000000.000000000000000000",
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc10gz2f8d224wlzp9n6xz7answu6tfjue8k9ft7q",
+          "shares": "4444444444.676019150725261040",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "shares": "400000000.000000000000000000",
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "shares": "200000000.000000000000000000",
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "shares": "4242400982.019648867314309123",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1jrs3ulj0frjf2ex3ylxgyzlfdvm9ndrurm4kf4",
+          "shares": "300000000.000000000000000000",
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
+          "shares": "100000000000.000000000000000000",
+          "validator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p"
+        },
+        {
+          "delegator_address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+          "shares": "5000000000.000000000000000000",
+          "validator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw"
+        },
+        {
+          "delegator_address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+          "shares": "10255605335.026754880220429006",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc14x32amyfc568ejr0cenmk9rd45xczv2yr7pv5j",
+          "shares": "5000000000.000000000000000000",
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc148wgkph5e9q5m4d9r9tal4cgfgd5sxe0ujh0g6",
+          "shares": "102030404889.976020293265188022",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1ct86j4v3lr22pwmdysudmjq4wf0d0kfqet7sfh",
+          "shares": "3939393921.078485351729354108",
+          "validator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj"
+        },
+        {
+          "delegator_address": "darc1ct86j4v3lr22pwmdysudmjq4wf0d0kfqet7sfh",
+          "shares": "100000000.000000000000000000",
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        },
+        {
+          "delegator_address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
+          "shares": "100000000000.000000000000000000",
+          "validator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s"
+        }
+      ],
+      "exported": true,
+      "last_total_power": "1041490",
+      "last_validator_powers": [
+        {
+          "Address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw",
+          "Power": "105400"
+        },
+        {
+          "Address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p",
+          "Power": "410200"
+        },
+        {
+          "Address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj",
+          "Power": "418990"
+        },
+        {
+          "Address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s",
+          "Power": "106900"
+        }
+      ],
+      "params": {
+        "bond_denom": "udarc",
+        "max_entries": 7,
+        "max_validators": 100,
+        "unbonding_time": "600000000000"
+      },
+      "redelegations": null,
+      "unbonding_delegations": null,
+      "validators": [
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.010000000000000000",
+              "max_rate": "0.200000000000000000",
+              "rate": "0.100000000000000000"
+            },
+            "update_time": "2020-10-26T10:09:29.453998416Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqnpn7mk607gkh8gkk8kdwhdwazedykeh0lnjkdsazxdxjs9qh9jnqlwt267",
+          "delegator_shares": "100000000000.000000000000000000",
+          "description": {
+            "details": "",
+            "identity": "",
+            "moniker": "DESKTOP-AV6P0S5",
+            "website": ""
+          },
+          "jailed": true,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper1qfhrm4x5e7gwnruhg0dp67nj57qt6vw33pvpfe",
+          "status": 0,
+          "tokens": "95099020000",
+          "unbonding_height": "1241437",
+          "unbonding_time": "2020-11-02T09:49:47.091052734Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2020-07-28T08:42:59.630039Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqeenu88d6nhppx8nwy0dnnpjyqr0jr5a9pu6qc2xz6jemqjhfmhvq2kdr8u",
+          "delegator_shares": "105400000000.000000000000000000",
+          "description": {
+            "details": "testnode-1",
+            "identity": "",
+            "moniker": "hawking",
+            "website": "https://node1.konstellation.tech"
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phs0svuw",
+          "status": 2,
+          "tokens": "105400000000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2020-07-28T08:42:59.630039Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepq34uhhr5txj7tlyrdkdps02yqy9hgh0mf4zs6y5kevk5xhv6kyc4swgshg4",
+          "delegator_shares": "410200000000.000000000000000000",
+          "description": {
+            "details": "testnode-3",
+            "identity": "",
+            "moniker": "kopernik",
+            "website": "https://node3.konstellation.tech"
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper15h6uhzufhe0d0avuk54zcqw0t66qefeyf4uv8p",
+          "status": 2,
+          "tokens": "410200000000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.010000000000000000",
+              "max_rate": "0.200000000000000000",
+              "rate": "0.100000000000000000"
+            },
+            "update_time": "2020-10-21T13:18:29.211997309Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqew3pa9j7zy24huqwk0xnrqndrz44lvjj3hmde8e2cfp3hyx4zw4sl7ysqq",
+          "delegator_shares": "436177262796.248868435150146587",
+          "description": {
+            "details": "",
+            "identity": "",
+            "moniker": "KonTest",
+            "website": ""
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper148wgkph5e9q5m4d9r9tal4cgfgd5sxe0dk8gyj",
+          "status": 2,
+          "tokens": "418990241602",
+          "unbonding_height": "1233015",
+          "unbonding_time": "2020-11-01T21:27:37.450834293Z"
+        },
+        {
+          "commission": {
+            "commission_rates": {
+              "max_change_rate": "0.000000000000000000",
+              "max_rate": "0.000000000000000000",
+              "rate": "0.000000000000000000"
+            },
+            "update_time": "2020-07-28T08:42:59.630039Z"
+          },
+          "consensus_pubkey": "darcvalconspub1zcjduepqsdqsncxlgtjwrze44tg06tmhsmycs5f6ygpgp34khdcdq9zy5reqxk4twp",
+          "delegator_shares": "106900000000.000000000000000000",
+          "description": {
+            "details": "testnode-2",
+            "identity": "",
+            "moniker": "heisenberg",
+            "website": "https://node2.konstellation.tech"
+          },
+          "jailed": false,
+          "min_self_delegation": "1",
+          "operator_address": "darcvaloper1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rwmlt9s",
+          "status": 2,
+          "tokens": "106900000000",
+          "unbonding_height": "0",
+          "unbonding_time": "1970-01-01T00:00:00Z"
+        }
+      ]
+    },
+    "supply": {
+      "supply": [
+        {
+          "amount": "1000000000",
+          "denom": "knstl"
+        },
+        {
+          "amount": "1000",
+          "denom": "koko"
+        },
+        {
+          "amount": "10264783608369",
+          "denom": "udarc"
+        }
+      ]
+    }
+  },
+  "chain_id": "knstlhub-1",
+  "consensus_params": {
+    "block": {
+      "max_bytes": "22020096",
+      "max_gas": "-1",
+      "time_iota_ms": "1000"
+    },
+    "evidence": {
+      "max_age": "100000"
+    },
+    "validator": {
+      "pub_key_types": [
+        "ed25519"
+      ]
+    }
+  },
+  "genesis_time": "2020-07-28T08:42:59.630039Z",
+  "validators": [
+    {
+      "address": "",
+      "name": "hawking",
+      "power": "105400",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "zmfDnbqdwhMebiPbOYZEAN8h06UPNAwowtSzsErp3dg="
+      }
+    },
+    {
+      "address": "",
+      "name": "kopernik",
+      "power": "410200",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "jXl7jos0vL+QbbNDB6iAIW6Lv2mooaJS2WWoa7NWJis="
+      }
+    },
+    {
+      "address": "",
+      "name": "KonTest",
+      "power": "418990",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "y6Iell4RFVvwDrPNMYJtGKtfslKN9tyfKsJDG5DVE6s="
+      }
+    },
+    {
+      "address": "",
+      "name": "heisenberg",
+      "power": "106900",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "g0EJ4N9C5OGLNarQ/S93hsmIUToiAoDGtrtw0BREoPI="
+      }
+    }
+  ]
+}
