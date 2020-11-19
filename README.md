@@ -30,37 +30,43 @@ wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/li
 tar -xvzf linux_amd64.tar.gz
 sudo cp ./linux_amd64/* /usr/local/bin
 # macos
-wget https://gist.github.com/Konstellation/b9168ec665bf8991a1cd20fd999452fa/raw/2c53c4c2fa0d90e7a10a6b7f2b5e28c35bec73d2/darwin_amd64.tar.gz
-
-# win
-wget https://gist.github.com/Konstellation/b9168ec665bf8991a1cd20fd999452fa/raw/2c53c4c2fa0d90e7a10a6b7f2b5e28c35bec73d2/windows_amd64.tar.gz
+wget https://github.com/Konstellation/konstellation/releases/download/v0.1.30/darwin_amd64.tar.gz
+tar -xvzf linux_amd64.tar.gz
+sudo cp ./linux_amd64/* /usr/local/bin
 ```
+* NOTE: For Windows download archive by [link](https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz) , untar archive using 7z and move files to "C:\\Users\user" folder. If you choose a different folder, make sure that it is added to the PATH env variable. [How to add to the PATH on Windows 10](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
 Replace `v0.1.30` with the version that you need
 
 ### To join testnet follow this steps
+
+* NOTE: If you are using Windows, add flag *--home D:\\.konstellation* or another folder you choose for all commands.  This folder will be used as home directory and will contain blockchain history and it takes up a lot of disk space
+
 #### Initialize data and folders
 ```bash
 konstellation unsafe-reset-all
 ```
 
+Remember to add flag *--home D:\\.konstellation* for Windows
+
 #### Genesis & Seeds
-Download genesis.json
+Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/genesis.json)
 ```
 wget -O $HOME/.konstellation/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/genesis.json
 ```
-Download config.toml with predefined seeds and persistent peers
+Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml) with predefined seeds and persistent peers
 ```
 wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml
 ```
 
 Replace `knstlhub-1` with the chain id that you need
 
+* NOTE: For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\config" as path
+
 Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/knstlhub-1)
-```
-nano ~/.konstellation/config/config.toml
-# Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
-```
+
+1) Open ~/.konstellation/config/config.toml with text editor (D:\\.konstellation/config/config.toml for Windows). Alternatively you can use cli editor, like nano ``` nano ~/.konstellation/config/config.toml ```
+2) Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
 
 #### Setting Up a New Node
 Name your node. Moniker defaults to the machine name
@@ -83,7 +89,7 @@ You can edit the ~/.konstellation/config/app.toml file in order to enable the an
 
 # The minimum gas prices a validator is willing to accept for processing a
 # transaction. A transaction's fees must meet the minimum of any denomination
-# specified in this config (e.g. 10uatom).
+# specified in this config (e.g. 10udarc).
 
 minimum-gas-prices = ""
 ```
@@ -148,7 +154,7 @@ Don't use more `udarc` than you have!
 konstellationcli tx staking create-validator \
   --amount=100000000000udarc \
   --pubkey=$(konstellation tendermint show-validator) \
-  --moniker="choose a moniker" \
+  --moniker=<choose a moniker> \
   --chain-id=<chain_id> \
   --commission-rate="0.10" \
   --commission-max-rate="0.20" \
@@ -156,6 +162,8 @@ konstellationcli tx staking create-validator \
   --min-self-delegation="1" \
   --from=<key_name>
 ```
+
+* NOTE: If you have troubles with \'\\\' symbol, run the command in a single line like `konstellationcli tx staking create-validator --amount=100000000000udarc --pubkey=$(konstellation tendermint show-validator) ...`
 
 When specifying commission parameters, the `commission-max-change-rate` is used to measure % _point_ change over the `commission-rate`. E.g. 1% to 2% is a 100% rate increase, but only 1 percentage point.
 
@@ -165,6 +173,8 @@ You can confirm that you are in the validator set by using a third party explore
 ```bash
 konstellationcli q staking validator $(konstlelation tendermint show-validator)
 ```
+
+* Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ... —from <key_name> --chain-id=<chain_id>` with the necessary options
 
 ### Run singlenet in docker container 
 Run in shell from project dir
