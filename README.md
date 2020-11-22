@@ -59,7 +59,8 @@ Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/m
 wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml
 ```
 
-Replace `knstlhub-1` with the chain id that you need. See [testnet repo](https://github.com/Konstellation/testnet) for the latest testnet info.
+Replace `knstlhub-1` with the chain id that you need. 
+* NOTE: See [testnet repo](https://github.com/Konstellation/testnet) for the latest testnet info.
 
 * NOTE: For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\config" as path
 
