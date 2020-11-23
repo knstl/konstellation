@@ -5,7 +5,7 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 # Konstellation network
 
 ## Testnet Full Node Quick Start
-With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on knstlhub-1.
+With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on knstlhub-2.
 
 Get testnet config [here](https://github.com/Konstellation/testnet)
 
