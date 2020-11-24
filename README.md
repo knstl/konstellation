@@ -36,7 +36,7 @@ sudo cp ./linux_amd64/* /usr/local/bin
 ```
 * NOTE: For Windows download archive by [link](https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz) , untar archive using 7z and move files to "C:\\Users\user" folder. If you choose a different folder, make sure that it is added to the PATH env variable. [How to add to the PATH on Windows 10](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
-Replace `v0.1.30` with the version that you need
+Replace `v0.1.30` with the latest version or the one that you need
 
 ### To join testnet follow this steps
 
