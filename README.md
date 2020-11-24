@@ -172,8 +172,9 @@ When specifying commission parameters, the `commission-max-change-rate` is used 
 
 You can check that you are in the validator set by using a third party explorer or using cli tool
 ```bash
-konstellationcli q staking validator $(konstlelation tendermint show-validator)
+konstellationcli q staking validator $(konstellation tendermint show-validator)
 ```
+* NOTE: For Windows copy the result of `konstellation tendermint show-validator` and pass to `konstellationcli q staking validator ___`
 
 * Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ... —from <key_name> --chain-id=<chain_id>` with the necessary options
 
