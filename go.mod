@@ -35,6 +35,7 @@ require (
 	github.com/tendermint/go-amino v0.15.0
 	github.com/tendermint/tendermint v0.32.13
 	github.com/tendermint/tm-db v0.2.0
+	github.com/fsnotify/fsnotify v1.4.9
 )
 
-// replace github.com/konstellation/kn-sdk => ../kn-sdk
+replace github.com/konstellation/kn-sdk => ../kn-sdk

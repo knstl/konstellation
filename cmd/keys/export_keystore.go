@@ -2,13 +2,10 @@ package keys
 
 import (
 	"bufio"
-
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/input"
 	"github.com/cosmos/cosmos-sdk/client/keys"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-
 	"github.com/konstellation/kn-sdk/crypto/keystore"
 )
 
@@ -43,11 +40,7 @@ func runExportKeyStoreCmd(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	encryptedKeyStore, err := keystore.NewKeyStoreV3(
-		sdk.AccAddress(ac.PubKey().Address()).String(),
-		ac.Bytes(),
-		[]byte(encryptPassword),
-	)
+	encryptedKeyStore, err := keystore.NewKeyStoreV3(ac, args[0], []byte(encryptPassword))
 
 	cmd.Println(string(encryptedKeyStore))
 	return err

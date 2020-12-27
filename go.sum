@@ -94,6 +94,7 @@ github.com/cosmos/cosmos-sdk v0.37.0 h1:S2I3NDGN2wqfGlY5KqkAHTpfezjhgeqDxrCxhlhd
 github.com/cosmos/cosmos-sdk v0.37.0/go.mod h1:3b/k/Zd+YDuttSmEJdNkxga1H5EIiDUhSYeErAHQN7A=
 github.com/cosmos/cosmos-sdk v0.37.13 h1:mDSfa3nSQxDC0VMGD/KIYEYqxdiOZ92Na3wwDSrAfw0=
 github.com/cosmos/cosmos-sdk v0.37.13/go.mod h1:2ErVllaXXVfjSHD8BZO3TxbcqQ6em0W0mVBDJm+umH8=
+github.com/cosmos/cosmos-sdk v0.37.14 h1:O+uiYQoYwtSssHPj/kJ3xKSU8DnOhPsJo57lsqT6sLE=
 github.com/cosmos/cosmos-sdk v0.37.14/go.mod h1:qKU3AzVJ0GGWARqImZj24CIX35Q4nJEE+WrXVU/CzFo=
 github.com/cosmos/cosmos-sdk v0.38.1 h1:DTuxIJeMpB//ydq+ObAjQgsaiwYBZ8T7NDzXjyiL1Kg=
 github.com/cosmos/cosmos-sdk v0.38.1/go.mod h1:9ZZex0GKpyNCvilvVAPBoB+0n3A/aO1+/UhPVEaiCy4=
@@ -150,6 +151,8 @@ github.com/fortytw2/leaktest v1.3.0 h1:u8491cBMTQ8ft8aeV+adlcytMZylmA5nnwwkRZjI8
 github.com/fortytw2/leaktest v1.3.0/go.mod h1:jDsjWgpAGjm2CA7WthBh/CdZYEPF31XHquHwclZch5g=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
+github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
+github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
 github.com/garyburd/redigo v1.6.0/go.mod h1:NR3MbYisc3/PwhQ00EMzDiPmrwpPxAn5GI05/YaO1SY=
 github.com/gballet/go-libpcsclite v0.0.0-20190607065134-2772fd86a8ff/go.mod h1:x7DCsMOv1taUwEWCzT4cmDeAkigA5/QCwUodaVOe8Ww=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
@@ -284,6 +287,7 @@ github.com/konstellation/kn-sdk v0.1.10 h1:uCaLB8zCTf4awkaCYXJR35XmdgJqBIhFT3Ft3
 github.com/konstellation/kn-sdk v0.1.10/go.mod h1:8YFUythoWIJzjqNUYdVJtuLk/i1eJcfALrO5oCX9BVA=
 github.com/konstellation/kn-sdk v0.1.11 h1:nn4jJ8afVYcS/tWRuPFOtttT2LuMrMAwTyNAJOj7+20=
 github.com/konstellation/kn-sdk v0.1.11/go.mod h1:3wt/691VIaXyJPLkmdRUtxJ+dhyQSOYMrywAQ68pBqo=
+github.com/konstellation/kn-sdk v0.1.12 h1:gQp37/3J8C7y6P2N5IvhCChabvwMWFwr2wS0SzB8q3o=
 github.com/konstellation/kn-sdk v0.1.12/go.mod h1:+VXWZrNtFZk1eipPRWJEx/WwAdB6pKSPcUPrr89g5Ys=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj2vyii2bbUNDw3kt9VxK2EY=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
@@ -507,6 +511,7 @@ github.com/tendermint/tendermint v0.32.2 h1:FvZWdksfDg/65vKKr5Lgo57keARFnmhrUEXH
 github.com/tendermint/tendermint v0.32.2/go.mod h1:NwMyx58S8VJ7tEpFKqRVlVWKO9N9zjTHu+Dx96VsnOE=
 github.com/tendermint/tendermint v0.32.12 h1:JFD3aQZFySamBeU1bfDaqOVgFo6w8UpmiKylVB8eV00=
 github.com/tendermint/tendermint v0.32.12/go.mod h1:5/B1XZjNYtVBso8o1l/Eg4A0Mhu42lDcmftoQl95j/E=
+github.com/tendermint/tendermint v0.32.13 h1:gmfuBfqmozFbvPSVr1VbJpkfEyWfsxiHN/wHVgp/ujw=
 github.com/tendermint/tendermint v0.32.13/go.mod h1:5/B1XZjNYtVBso8o1l/Eg4A0Mhu42lDcmftoQl95j/E=
 github.com/tendermint/tendermint v0.33.0 h1:TW1g9sQs3YSqKM8o1+opL3/VmBy4Ke/VKV9MxYpqNbI=
 github.com/tendermint/tendermint v0.33.0/go.mod h1:s5UoymnPIY+GcA3mMte4P9gpMP8vS7UH7HBXikT1pHI=
@@ -597,6 +602,7 @@ golang.org/x/sys v0.0.0-20190801041406-cbf593c0f2f3/go.mod h1:h1NjWce9XRLGQEsW7w
 golang.org/x/sys v0.0.0-20190813064441-fde4db37ae7a/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20190912141932-bc967efca4b8 h1:41hwlulw1prEMBxLQSlMSux1zxJf07B3WPsdjJlKZxE=
 golang.org/x/sys v0.0.0-20190912141932-bc967efca4b8/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20191005200804-aed5e4c7ecf9/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20191026070338-33540a1f6037 h1:YyJpGZS1sBuBCzLAR1VEpK193GlqGZbnPFnPV/5Rsb4=
 golang.org/x/sys v0.0.0-20191026070338-33540a1f6037/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20200116001909-b77594299b42 h1:vEOn+mP2zCOVzKckCZy6YsCtDblrpj/w7B9nxGNELpg=
