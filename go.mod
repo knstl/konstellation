@@ -18,7 +18,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/hashicorp/go-version v1.2.0 // indirect
 	github.com/jmank88/nuts v0.4.0 // indirect
-	github.com/konstellation/kn-sdk v0.1.12
+	github.com/konstellation/kn-sdk v0.1.13
 	github.com/mitchellh/gox v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/nightlyone/lockfile v0.0.0-20200124072040-edb130adc195 // indirect
@@ -32,6 +32,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.6.1
 	github.com/stevenmatthewt/semantics v2.0.4+incompatible // indirect
+	github.com/tendermint/crypto v0.0.0-20180820045704-3764759f34a5
 	github.com/tendermint/go-amino v0.15.0
 	github.com/tendermint/tendermint v0.32.13
 	github.com/tendermint/tm-db v0.2.0
