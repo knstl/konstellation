@@ -5,7 +5,7 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 # Konstellation network
 
 ## Testnet Full Node Quick Start
-With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on knstlhub-1.
+With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on knstlhub-2.
 
 Get testnet config [here](https://github.com/Konstellation/testnet)
 
@@ -36,7 +36,7 @@ sudo cp ./linux_amd64/* /usr/local/bin
 ```
 * NOTE: For Windows download archive by [link](https://github.com/Konstellation/konstellation/releases/download/v0.1.30/windows_amd64.tar.gz) , untar archive using 7z and move files to "C:\\Users\user" folder. If you choose a different folder, make sure that it is added to the PATH env variable. [How to add to the PATH on Windows 10](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
-Replace `v0.1.30` with the version that you need
+Replace `v0.1.30` with the latest version or the one that you need
 
 ### To join testnet follow this steps
 
@@ -59,7 +59,8 @@ Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/m
 wget -O $HOME/.konstellation/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/knstlhub-1/config.toml
 ```
 
-Replace `knstlhub-1` with the chain id that you need
+Replace `knstlhub-1` with the latest chain-id
+* NOTE: See [testnet repo](https://github.com/Konstellation/testnet) for the latest testnet info.
 
 * NOTE: For Windows open links in browser -> Save As -> Choose "D:\\.konstellation\config" as path
 
@@ -169,9 +170,9 @@ When specifying commission parameters, the `commission-max-change-rate` is used 
 
 `Min-self-delegation` is a strictly positive integer that represents the minimum amount of self-delegated voting power your validator must always have. A `min-self-delegation` of 1 means your validator will never have a self-delegation lower than `1000000darc`
 
-You can confirm that you are in the validator set by using a third party explorer or using cli tool
+You can check that you are in the validator set by using a third party explorer or using cli tool
 ```bash
-konstellationcli q staking validator $(konstlelation tendermint show-validator)
+konstellationcli q staking validators --chain-id <chain_id>
 ```
 
 * Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ... —from <key_name> --chain-id=<chain_id>` with the necessary options
