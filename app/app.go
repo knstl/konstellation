@@ -84,13 +84,12 @@ import (
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	//	"github.com/konstellation/kn-sdk/types"
-	//	kcrisis "github.com/konstellation/kn-sdk/x/crisis"
-	//	kdistribution "github.com/konstellation/kn-sdk/x/distribution"
-	//	kgenaccounts "github.com/konstellation/kn-sdk/x/genaccounts"
-	//	kgov "github.com/konstellation/kn-sdk/x/gov"
-	//	kmint "github.com/konstellation/kn-sdk/x/mint"
-	//	kstaking "github.com/konstellation/kn-sdk/x/staking"
+	"github.com/konstellation/kn-sdk/types"
+	kcrisis "github.com/konstellation/kn-sdk/x/crisis"
+	kdistribution "github.com/konstellation/kn-sdk/x/distribution"
+	kgov "github.com/konstellation/kn-sdk/x/gov"
+	kmint "github.com/konstellation/kn-sdk/x/mint"
+	kstaking "github.com/konstellation/kn-sdk/x/staking"
 )
 
 const (
@@ -137,14 +136,13 @@ var (
 	)
 
 	// GenesisUpdaters is in charge of changing default genesis provided by cosmos sdk modules
-	//GenesisUpdaters = types.NewGenesisUpdaters(
-	//	kgenaccounts.GenesisUpdater{},
-	//	kcrisis.GenesisUpdater{},
-	//	kstaking.GenesisUpdater{},
-	//	kdistribution.GenesisUpdater{},
-	//	kmint.GenesisUpdater{},
-	//	kgov.GenesisUpdater{},
-	//)
+	GenesisUpdaters = types.NewGenesisUpdaters(
+		kcrisis.GenesisUpdater{},
+		kstaking.GenesisUpdater{},
+		kdistribution.GenesisUpdater{},
+		kmint.GenesisUpdater{},
+		kgov.GenesisUpdater{},
+	)
 
 	// Account permissions
 	maccPerms = map[string][]string{

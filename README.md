@@ -189,3 +189,10 @@ konstellation unsafe-reset-all
 konstellation config set moniker {MONIKER}
 konstellation start
 ```
+
+### Resolving errors
+
+#### Missing ziphash
+```bash
+go get -u go.opencensus.io
+```
