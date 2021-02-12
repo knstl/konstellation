@@ -13,7 +13,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 )
 
-func ConfigCmd(ctx *server.Context) *cobra.Command { // nolint: golint
+func ConfigCmd() *cobra.Command { // nolint: golint
 	cmd := &cobra.Command{
 		Use:   "config",
 		Short: "Configuration commands",
@@ -21,21 +21,22 @@ func ConfigCmd(ctx *server.Context) *cobra.Command { // nolint: golint
 	}
 
 	cmd.AddCommand(
-		SetConfigCmd(ctx),
-		GetConfigCmd(ctx),
+		SetConfigCmd(),
+		GetConfigCmd(),
 	)
 
 	return cmd
 }
 
-func SetConfigCmd(ctx *server.Context) *cobra.Command {
+func SetConfigCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "set [name] [value]",
 		Short: "Change configuration file",
 		Long:  "Change configuration file",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(c *cobra.Command, args []string) error {
-			config := ctx.Config
+			serverCtx := server.GetServerContextFromCmd(c)
+			config := serverCtx.Config
 
 			var configValues map[string]interface{}
 			if err := mapstructure.Decode(config, &configValues); err != nil {
@@ -61,14 +62,15 @@ func SetConfigCmd(ctx *server.Context) *cobra.Command {
 	}
 }
 
-func GetConfigCmd(ctx *server.Context) *cobra.Command {
+func GetConfigCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "get [name]",
 		Short: "Change configuration file",
 		Long:  "Change configuration file",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(c *cobra.Command, args []string) error {
-			config := ctx.Config
+			serverCtx := server.GetServerContextFromCmd(c)
+			config := serverCtx.Config
 
 			var configValues map[string]interface{}
 			_ = mapstructure.Decode(config, &configValues)

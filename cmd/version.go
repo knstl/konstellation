@@ -55,7 +55,7 @@ func AppStatusCmd(ctx *server.Context, cdc codec.JSONMarshaler, mbm module.Basic
 	return cmd
 }
 
-func AppVersionCmd(ctx *server.Context, cdc codec.JSONMarshaler) *cobra.Command { // nolint: golint
+func AppVersionCmd() *cobra.Command { // nolint: golint
 	cmd := &cobra.Command{
 		Use:   "app-version",
 		Short: "Print the konstellation app version",
