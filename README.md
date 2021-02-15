@@ -195,4 +195,6 @@ konstellation start
 #### Missing ziphash
 ```bash
 go get -u go.opencensus.io
+go get gopkg.in/fsnotify/fsnotify.v1
+github.com/fsnotify/fsnotify v1.4.8
 ```

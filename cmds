@@ -1,0 +1,6 @@
+rm -rdf ~/.konstellation
+konstellation init dm --chain-id darchub
+konstellation add-genesis-account hawking 200000000000000udarc
+konstellation gentx hawking 100000000000000udarc --chain-id darchub
+konstellation collect-gentxs
+konstellation start

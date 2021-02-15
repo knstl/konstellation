@@ -35,6 +35,7 @@ import (
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
 	"github.com/konstellation/kn-sdk/types"
+	"github.com/konstellation/kn-sdk/x/wasm"
 	"github.com/konstellation/konstellation/app"
 )
 
@@ -84,8 +85,7 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig app.EncodingConfig) {
 		genutilcli.ValidateGenesisCmd(app.ModuleBasics),
 		AddGenesisAccountCmd(app.DefaultNodeHome),
 		tmcli.NewCompletionCmd(rootCmd, true),
-		// testnetCmd(app.ModuleBasics, banktypes.GenesisBalancesIterator{}),
-		//AddGenesisWasmMsgCmd(app.DefaultNodeHome),
+		AddGenesisWasmMsgCmd(app.DefaultNodeHome),
 		cmd.ConfigCmd(),
 		cmd.AppVersionCmd(),
 		debug.Cmd(),
@@ -104,7 +104,7 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig app.EncodingConfig) {
 
 func addModuleInitFlags(startCmd *cobra.Command) {
 	crisis.AddModuleInitFlags(startCmd)
-	//wasm.AddModuleInitFlags(startCmd)
+	wasm.AddModuleInitFlags(startCmd)
 }
 
 func queryCommand() *cobra.Command {
@@ -203,7 +203,7 @@ func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer, appOpts serverty
 	return app.NewKonstellationApp(logger, db, traceStore, true, skipUpgradeHeights,
 		cast.ToString(appOpts.Get(flags.FlagHome)),
 		cast.ToUint(appOpts.Get(server.FlagInvCheckPeriod)),
-		//app.GetEnabledProposals(),
+		app.GetEnabledProposals(),
 		appOpts,
 		//emptyWasmOpts,
 		baseapp.SetPruning(pruningOpts),
@@ -231,13 +231,13 @@ func createKnstlAppAndExport(
 	}
 	//var emptyWasmOpts []wasm.Option
 	if height != -1 {
-		knstlApp = app.NewKonstellationApp(logger, db, traceStore, false, map[int64]bool{}, homePath, uint(1), appOpts)
+		knstlApp = app.NewKonstellationApp(logger, db, traceStore, false, map[int64]bool{}, homePath, uint(1), app.GetEnabledProposals(), appOpts)
 
 		if err := knstlApp.LoadHeight(height); err != nil {
 			return servertypes.ExportedApp{}, err
 		}
 	} else {
-		knstlApp = app.NewKonstellationApp(logger, db, traceStore, true, map[int64]bool{}, homePath, uint(1), appOpts)
+		knstlApp = app.NewKonstellationApp(logger, db, traceStore, true, map[int64]bool{}, homePath, uint(1), app.GetEnabledProposals(), appOpts)
 	}
 
 	return knstlApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs)

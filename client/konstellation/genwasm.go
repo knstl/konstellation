@@ -1,8 +1,8 @@
 package main
 
 import (
-	wasmcli "github.com/CosmWasm/wasmd/x/wasm/client/cli"
 	"github.com/cosmos/cosmos-sdk/client"
+	wasmcli "github.com/konstellation/kn-sdk/x/wasm/client/cli"
 	"github.com/spf13/cobra"
 )
 

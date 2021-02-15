@@ -15,10 +15,10 @@ require (
 	github.com/cosmos/cosmos-sdk v0.41.0
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/elastic/gosigar v0.10.5 // indirect
-	github.com/ethereum/go-ethereum v1.9.11
-	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/ethereum/go-ethereum v1.9.11 // indirect
+	github.com/fsnotify/fsnotify v1.4.9
 	github.com/golang/dep v0.5.4 // indirect
-	github.com/google/uuid v1.1.2
+	github.com/google/uuid v1.1.2 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/hashicorp/go-version v1.2.0 // indirect
 	github.com/jmank88/nuts v0.4.0 // indirect
@@ -40,14 +40,17 @@ require (
 	github.com/stevenmatthewt/semantics v2.0.4+incompatible // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/stumble/gorocksdb v0.0.3 // indirect
-	github.com/tendermint/crypto v0.0.0-20191022145703-50d29ede1e15
+	github.com/tendermint/crypto v0.0.0-20191022145703-50d29ede1e15 // indirect
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/iavl v0.12.4 // indirect
 	github.com/tendermint/tendermint v0.34.3
 	github.com/tendermint/tm-db v0.6.3
 	go.opencensus.io v0.22.6 // indirect
+	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
 )
 
 replace github.com/konstellation/kn-sdk => ../kn-sdk
+
+replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
 
 replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1

@@ -51,7 +51,7 @@ var DefaultConsensusParams = &abci.ConsensusParams{
 
 func setup(withGenesis bool, invCheckPeriod uint) (*KonstellationApp, GenesisState) {
 	db := dbm.NewMemDB()
-	app := NewKonstellationApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, invCheckPeriod, EmptyBaseAppOptions{})
+	app := NewKonstellationApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, invCheckPeriod, GetEnabledProposals(), EmptyBaseAppOptions{})
 	if withGenesis {
 		return app, NewDefaultGenesisState()
 	}
