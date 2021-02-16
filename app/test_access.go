@@ -31,9 +31,6 @@ func (s TestSupport) IBCKeeper() ibckeeper.Keeper {
 func (s TestSupport) AppCodec() codec.Marshaler {
 	return s.app.appCodec
 }
-func (s TestSupport) ScopedWasmIBCKeeper() capabilitykeeper.ScopedKeeper {
-	return s.app.scopedWasmKeeper
-}
 
 func (s TestSupport) ScopeIBCKeeper() capabilitykeeper.ScopedKeeper {
 	return s.app.scopedIBCKeeper
