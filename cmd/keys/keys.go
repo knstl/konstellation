@@ -7,8 +7,8 @@ import (
 )
 
 // Commands registers a sub-tree of commands to interact with local private key storage.
-func Commands() *cobra.Command {
-	cmd := keys.Commands()
+func Commands(defaultNodeHome string) *cobra.Command {
+	cmd := keys.Commands(defaultNodeHome)
 	cmd.AddCommand(exportKeyStoreCommand())
 
 	return cmd

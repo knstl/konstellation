@@ -79,6 +79,7 @@ import (
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	"github.com/gorilla/mux"
+	cryptorest "github.com/konstellation/kn-sdk/crypto/rest"
 	"github.com/konstellation/kn-sdk/types"
 	kcrisis "github.com/konstellation/kn-sdk/x/crisis"
 	kdistribution "github.com/konstellation/kn-sdk/x/distribution"
@@ -145,7 +146,13 @@ var (
 		mint.AppModuleBasic{},
 		distr.AppModuleBasic{},
 		gov.NewAppModuleBasic(
-			append(wasmclient.ProposalHandlers, paramsclient.ProposalHandler, distrclient.ProposalHandler, upgradeclient.ProposalHandler, upgradeclient.CancelProposalHandler)...,
+			append(
+				wasmclient.ProposalHandlers,
+				paramsclient.ProposalHandler,
+				distrclient.ProposalHandler,
+				upgradeclient.ProposalHandler,
+				upgradeclient.CancelProposalHandler,
+			)...,
 		),
 		params.AppModuleBasic{},
 		wasm.AppModuleBasic{},
@@ -648,6 +655,8 @@ func (app *KonstellationApp) getSubspace(moduleName string) paramstypes.Subspace
 func (app *KonstellationApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	clientCtx := apiSvr.ClientCtx
 	rpc.RegisterRoutes(clientCtx, apiSvr.Router)
+	cryptorest.RegisterRoutes(clientCtx, apiSvr.Router)
+
 	// Register legacy tx routes.
 	authrest.RegisterTxRoutes(clientCtx, apiSvr.Router)
 	// Register new tx routes from grpc-gateway.

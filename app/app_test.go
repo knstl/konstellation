@@ -16,7 +16,7 @@ import (
 
 func TestKonstellationExport(t *testing.T) {
 	db := db.NewMemDB()
-	gapp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, wasm.EnableAllProposals, EmptyBaseAppOptions{}, emptyWasmOpts)
+	gapp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, wasm.EnableAllProposals, EmptyBaseAppOptions{})
 
 	genesisState := NewDefaultGenesisState()
 	stateBytes, err := json.MarshalIndent(genesisState, "", "  ")
@@ -32,15 +32,15 @@ func TestKonstellationExport(t *testing.T) {
 	gapp.Commit()
 
 	// Making a new app object with the db, so that initchain hasn't been called
-	newGapp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, EmptyBaseAppOptions{})
-	_, err = newGapp.ExportAppStateAndValidators(false, []string{})
+	newApp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, wasm.EnableAllProposals, EmptyBaseAppOptions{})
+	_, err = newApp.ExportAppStateAndValidators(false, []string{})
 	require.NoError(t, err, "ExportAppStateAndValidators should not have an error")
 }
 
 // ensure that blocked addresses are properly set in bank keeper
 func TestBlockedAddrs(t *testing.T) {
 	db := db.NewMemDB()
-	gapp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, wasm.EnableAllProposals, EmptyBaseAppOptions{}, emptyWasmOpts)
+	gapp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, wasm.EnableAllProposals, EmptyBaseAppOptions{})
 
 	for acc := range maccPerms {
 		require.Equal(t, !allowedReceivingModAcc[acc], gapp.bankKeeper.BlockedAddr(gapp.accountKeeper.GetModuleAddress(acc)))
@@ -83,7 +83,7 @@ func TestGetEnabledProposals(t *testing.T) {
 	}
 }
 
-func setGenesis(gapp *WasmApp) error {
+func setGenesis(kapp *KonstellationApp) error {
 	genesisState := NewDefaultGenesisState()
 	stateBytes, err := json.MarshalIndent(genesisState, "", " ")
 	if err != nil {
@@ -91,13 +91,13 @@ func setGenesis(gapp *WasmApp) error {
 	}
 
 	// Initialize the chain
-	gapp.InitChain(
+	kapp.InitChain(
 		abci.RequestInitChain{
 			Validators:    []abci.ValidatorUpdate{},
 			AppStateBytes: stateBytes,
 		},
 	)
 
-	gapp.Commit()
+	kapp.Commit()
 	return nil
 }

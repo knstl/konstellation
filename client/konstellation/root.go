@@ -20,7 +20,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/debug"
 	"github.com/cosmos/cosmos-sdk/client/flags"
-	"github.com/cosmos/cosmos-sdk/client/keys"
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	"github.com/cosmos/cosmos-sdk/server"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
@@ -37,6 +36,7 @@ import (
 	"github.com/konstellation/kn-sdk/types"
 	"github.com/konstellation/kn-sdk/x/wasm"
 	"github.com/konstellation/konstellation/app"
+	"github.com/konstellation/konstellation/cmd/keys"
 )
 
 // NewRootCmd creates a new root command for konstellation. It is called once in the
