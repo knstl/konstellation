@@ -6,7 +6,7 @@ version: 2
 defaults: &build_defaults
   working_directory: /go/src/github.com/konstellation/konstellation
   docker:
-    - image: circleci/golang:1.14
+    - image: circleci/golang:1.15
 
 deps: &dependencies
   run:
@@ -23,8 +23,8 @@ jobs:
           name: run build
           command: |
             go build -v ./client/konstellation
-            go build -v ./client/konstellationcli
-            go build -v ./client/konstellationlcd
+      #            go build -v ./client/konstellationcli
+      #            go build -v ./client/konstellationlcd
       - run:
           name: run tests
           command: |
@@ -44,13 +44,11 @@ jobs:
       - run: echo $PATH
       - run: go get github.com/mitchellh/gox
       - run: go get -u github.com/tcnksm/ghr
-#      - run: go get -u github.com/stevenmatthewt/semantics
+      #      - run: go get -u github.com/stevenmatthewt/semantics
       - run:
           name: cross compile
           command: |
             gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
-            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationlcd" ./client/konstellationlcd
-            gox -os="linux windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellationcli" ./client/konstellationcli
             cd /tmp/workspace/dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
@@ -76,13 +74,15 @@ workflows:
   version: 2
   build-konstellation:
     jobs:
-      - build:
-          type: approval
-          filters:
-            tags:
-              only: /v*/
-            branches:
-              only: master
+      - build
       - deploy:
+          type: approval
           requires:
             - build
+          filters:
+            tags:
+              only:
+                - /^v.*/
+#            branches:
+#              only:
+#                - master
