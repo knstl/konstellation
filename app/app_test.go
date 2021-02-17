@@ -14,9 +14,7 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 )
 
-//var emptyWasmOpts []wasm.Option = nil
-
-func TestWasmdExport(t *testing.T) {
+func TestKonstellationExport(t *testing.T) {
 	db := db.NewMemDB()
 	gapp := NewKonstellationApp(log.NewTMLogger(log.NewSyncWriter(os.Stdout)), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, wasm.EnableAllProposals, EmptyBaseAppOptions{}, emptyWasmOpts)
 

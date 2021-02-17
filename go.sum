@@ -35,10 +35,6 @@ github.com/ChainSafe/go-schnorrkel v0.0.0-20200102211924-4bcbc698314f h1:4O1om+U
 github.com/ChainSafe/go-schnorrkel v0.0.0-20200102211924-4bcbc698314f/go.mod h1:URdX5+vg25ts3aCh8H5IFZybJYKWhJHYMTnf+ULtoC4=
 github.com/ChainSafe/go-schnorrkel v0.0.0-20200405005733-88cbf1b4c40d h1:nalkkPQcITbvhmL4+C4cKA87NW0tfm3Kl9VXRoPywFg=
 github.com/ChainSafe/go-schnorrkel v0.0.0-20200405005733-88cbf1b4c40d/go.mod h1:URdX5+vg25ts3aCh8H5IFZybJYKWhJHYMTnf+ULtoC4=
-github.com/CosmWasm/wasmd v0.14.1 h1:lmp5PdHbQlApXFFlBJjjs52nVbwEhx29uUIKM7kqMRA=
-github.com/CosmWasm/wasmd v0.14.1/go.mod h1:74V63BGR+F7YVmaJivZJI+9UImnQ+hwBgijU1CEzn9w=
-github.com/CosmWasm/wasmd v0.15.0 h1:QG0GSnFvynbzI8Lls6V73+JjYFQjY92MZ/zOauDJ1NU=
-github.com/CosmWasm/wasmd v0.15.0/go.mod h1:muLJYc43u0JMZ+j96IMkbyBnkwsvO/gaEx8ZHQIJwvk=
 github.com/CosmWasm/wasmvm v0.13.0 h1:AP8LVcCxI3KLtHY24qLhzVe+ChOXwcR8MNm8Jxkuhwk=
 github.com/CosmWasm/wasmvm v0.13.0/go.mod h1:Id107qllDJyJjVQQsKMOy2YYF98sqPJ2t+jX1QES40A=
 github.com/CosmWasm/wasmvm v0.13.1-0.20210125204657-16df1fdaf712 h1:8gMCeYi0In+3R+ox44SfXoY9a7KXngH8sDwsg+eLwB4=
@@ -514,6 +510,8 @@ github.com/konstellation/kn-sdk v0.1.11 h1:nn4jJ8afVYcS/tWRuPFOtttT2LuMrMAwTyNAJ
 github.com/konstellation/kn-sdk v0.1.11/go.mod h1:3wt/691VIaXyJPLkmdRUtxJ+dhyQSOYMrywAQ68pBqo=
 github.com/konstellation/kn-sdk v0.1.12 h1:gQp37/3J8C7y6P2N5IvhCChabvwMWFwr2wS0SzB8q3o=
 github.com/konstellation/kn-sdk v0.1.12/go.mod h1:+VXWZrNtFZk1eipPRWJEx/WwAdB6pKSPcUPrr89g5Ys=
+github.com/konstellation/kn-sdk v0.1.15 h1:x3kAPdDI2WcySjA8tr6c8T39OWwBNGkyZkz+ij3Sr0E=
+github.com/konstellation/kn-sdk v0.1.15/go.mod h1:jmRKq8TtLKUFzmzyJKXJcPTWMOy75kWfrszvkd9x9Sc=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj2vyii2bbUNDw3kt9VxK2EY=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=

@@ -97,7 +97,7 @@ import (
 
 const (
 	appName = "konstellation"
-	Version = "0.1.32"
+	Version = "0.2.0"
 
 	EnvPrefixCLI  = "KONSTELLATIONCLI"
 	EnvPrefixNode = "KONSTELLATION"
@@ -105,12 +105,6 @@ const (
 )
 
 var (
-	// Default home directories for the application CLI
-	DefaultCLIHome = os.ExpandEnv("$HOME/.konstellationcli")
-
-	// Default home directories for the application REST server
-	DefaultLCDHome = os.ExpandEnv("$HOME/.konstellationlcd")
-
 	// DefaultNodeHome sets the folder where the application data and configuration will be stored
 	DefaultNodeHome = os.ExpandEnv("$HOME/.konstellation")
 

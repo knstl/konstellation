@@ -3,7 +3,6 @@ module github.com/konstellation/konstellation
 go 1.15
 
 require (
-	github.com/CosmWasm/wasmd v0.15.0
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/vcs v1.13.1 // indirect
 	github.com/allegro/bigcache v1.2.1 // indirect
@@ -48,8 +47,6 @@ require (
 	go.opencensus.io v0.22.6 // indirect
 	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
 )
-
-replace github.com/konstellation/kn-sdk => ../kn-sdk
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
 
