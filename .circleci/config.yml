@@ -83,6 +83,6 @@ workflows:
             tags:
               only:
                 - /^v.*/
-#            branches:
-#              only:
-#                - master
+            branches:
+              only:
+                - master
