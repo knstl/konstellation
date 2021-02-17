@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -29,9 +28,9 @@ func NewPrintInfo(moniker, chainID, nodeID, genTxsDir string,
 	}
 }
 
-func DisplayInfo(cdc *codec.Codec, info PrintInfo) error {
+func DisplayInfo(info PrintInfo) error {
 	fmt.Println()
-	out, err := codec.MarshalJSONIndent(cdc, info)
+	out, err := json.MarshalIndent(info, "", " ")
 	if err != nil {
 		return err
 	}

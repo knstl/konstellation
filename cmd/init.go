@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -11,10 +10,8 @@ import (
 	"github.com/spf13/viper"
 
 	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/libs/common"
 	tmtypes "github.com/tendermint/tendermint/types"
 
-	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
@@ -27,13 +24,12 @@ import (
 // InitCmd returns a command that initializes all files needed for Tendermint
 // and the respective application.
 func InitCmd(
-	ctx *server.Context,
-	cdc *codec.Codec,
 	mbm module.BasicManager,
-	gus types.GenesisUpdaters,
+	txEncCfg client.TxEncodingConfig,
 	defaultNodeHome string,
+	gus types.GenesisUpdaters,
 ) *cobra.Command { // nolint: golint
-	initCmd := genutilcli.InitCmd(ctx, cdc, mbm, defaultNodeHome)
+	initCmd := genutilcli.InitCmd(mbm, defaultNodeHome)
 
 	cmd := &cobra.Command{
 		Use:   initCmd.Use,
@@ -46,13 +42,12 @@ func InitCmd(
 				return err
 			}
 
-			config := ctx.Config
-			config.SetRoot(viper.GetString(tmcli.HomeFlag))
+			clientCtx := client.GetClientContextFromCmd(c)
+			cdc := clientCtx.JSONMarshaler
 
-			chainID := viper.GetString(client.FlagChainID)
-			if chainID == "" {
-				chainID = fmt.Sprintf("test-chain-%v", common.RandStr(6))
-			}
+			serverCtx := server.GetServerContextFromCmd(c)
+			config := serverCtx.Config
+			config.SetRoot(viper.GetString(tmcli.HomeFlag))
 
 			nodeID, _, err := genutil.InitializeNodeValidatorFiles(config)
 			if err != nil {
@@ -66,8 +61,7 @@ func InitCmd(
 			}
 
 			var appState map[string]json.RawMessage
-			err = cdc.UnmarshalJSON(genDoc.AppState, &appState)
-			if err != nil {
+			if err := json.Unmarshal(genDoc.AppState, &appState); err != nil {
 				return err
 			}
 
@@ -76,17 +70,18 @@ func InitCmd(
 				gu.UpdateGenesis(cdc, appState)
 			}
 
-			if err = mbm.ValidateGenesis(appState); err != nil {
+			if err = mbm.ValidateGenesis(cdc, txEncCfg, appState); err != nil {
 				return fmt.Errorf("error validating genesis: %s", err.Error())
 			}
 
-			genDoc.AppState = cdc.MustMarshalJSON(appState)
+			genDoc.AppState, err = json.MarshalIndent(appState, "", " ")
+
 			if err = genutil.ExportGenesisFile(genDoc, genFile); err != nil {
 				return errors.Wrap(err, "Failed to export genesis file")
 			}
 
-			toPrint := utils.NewPrintInfo(config.Moniker, chainID, nodeID, "", genDoc.AppState)
-			return utils.DisplayInfo(cdc, toPrint)
+			toPrint := utils.NewPrintInfo(config.Moniker, genDoc.ChainID, nodeID, "", genDoc.AppState)
+			return utils.DisplayInfo(toPrint)
 		},
 	}
 
