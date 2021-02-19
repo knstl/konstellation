@@ -2,7 +2,6 @@
 #set -o errexit -o nounset -o pipefail
 
 KEY_PASSWORD=${KEY_PASSWORD:-1234567890}
-KEY_MNEMONIC=${KEY_MNEMONIC:-"disorder squirrel cage garlic oyster leaf segment casual siren shiver lecture among either wool improve head thunder walnut cram force crystal advice slab sail"}
 KEY_NAME=${KEY_NAME:-validator}
 STAKE=${STAKE_TOKEN:-udarc}
 FEE=${FEE_TOKEN:-udarc}
@@ -25,13 +24,24 @@ echo "Password" "${KEY_PASSWORD}"
 knstld init --chain-id "$CHAIN_ID" "$MONIKER"
 # staking/governance token is hardcoded in config, change this
 sed -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.knstld/config/genesis.json
-  {
-    echo "${KEY_MNEMONIC}"
-    echo "${KEY_PASSWORD}"
-    echo "${KEY_PASSWORD}"
-    echo
-  } | knstld keys add "${KEY_NAME}" --recover
-# hardcode the validator account for this instance
+
+if test -n "${KEY_MNEMONIC-}"
+then
+  echo "$KEY_MNEMONIC"
+    {
+      echo "${KEY_MNEMONIC}"
+      echo "${KEY_PASSWORD}"
+      echo "${KEY_PASSWORD}"
+      echo
+    } | knstld keys add "${KEY_NAME}" --recover
+  # hardcode the validator account for this instance
+else
+    {
+      echo "${KEY_PASSWORD}"
+      echo "${KEY_PASSWORD}"
+      echo
+    } | knstld keys add "${KEY_NAME}"
+fi
 echo "$KEY_PASSWORD" | knstld add-genesis-account "$KEY_NAME" "200000000000$STAKE"
 
 # (optionally) add a few more genesis accounts
