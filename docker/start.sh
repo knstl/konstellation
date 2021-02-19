@@ -3,9 +3,8 @@
 COMMAND=$1
 SUBCOMMAND=$2
 
-
-echo $IMAGE;
 IMAGE=${IMAGE:-"knstld:latest"}
+VOLUME=${VOLUME:-knstld_data}
 CHAIN_ID=${CHAIN_ID:-darchub}
 MONIKER=${MONIKER:-dm0}
 
@@ -29,7 +28,7 @@ function error() {
 
 function setup_volume() {
   docker run --rm -it -e KEY_PASSWORD="$KEY_PASSWORD" -e KEY_NAME="$KEY_NAME" -e KEY_MNEMONIC="$KEY_MNEMONIC" \
-    -v ~/pj/konstellation/docker/:/opt/ --mount type=volume,source=knstld_data,target=/root "$IMAGE" /opt/setup.sh
+    -v ~/pj/konstellation/docker/:/opt/ --mount type=volume,source="$VOLUME",target=/root "$IMAGE" /opt/setup.sh
 }
 
 function setup_bind() {
@@ -41,7 +40,7 @@ function setup_bind() {
 
 function run_volume() {
   docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 \
-      --mount type=volume,source=knstld_data,target=/root \
+      --mount type=volume,source="$VOLUME",target=/root \
       "$IMAGE" /opt/run.sh
 }
 
