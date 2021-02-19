@@ -28,12 +28,11 @@ function error() {
 
 function setup_volume() {
   docker run --rm -it -e KEY_PASSWORD="$KEY_PASSWORD" -e KEY_NAME="$KEY_NAME" -e KEY_MNEMONIC="$KEY_MNEMONIC" \
-    -v ~/pj/konstellation/docker/:/opt/ --mount type=volume,source="$VOLUME",target=/root "$IMAGE" /opt/setup.sh
+   --mount type=volume,source="$VOLUME",target=/root "$IMAGE" /opt/setup.sh
 }
 
 function setup_bind() {
   docker run --rm -it -e KEY_PASSWORD="KEY_PASSWORD" -e KEY_NAME="$KEY_NAME" -e KEY_MNEMONIC="KEY_MNEMONIC" \
-    -v ~/pj/konstellation/docker/:/opt/ \
     -v ~/.knstld:/root/.knstld \
     "$IMAGE" /opt/setup.sh
 }
