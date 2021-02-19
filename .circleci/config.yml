@@ -22,9 +22,7 @@ jobs:
       - run:
           name: run build
           command: |
-            go build -v ./client/konstellation
-      #            go build -v ./client/konstellationcli
-      #            go build -v ./client/konstellationlcd
+            go build -v ./client/knstld
       - run:
           name: run tests
           command: |
@@ -48,7 +46,7 @@ jobs:
       - run:
           name: cross compile
           command: |
-            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/konstellation" ./client/konstellation
+            gox -os="linux darwin windows" -arch="amd64 386" -output="/tmp/workspace/dist/{{.OS}}_{{.Arch}}/knstld" ./client/konstld
             cd /tmp/workspace/dist/ && for dir in ./*; do base=$(basename "$dir"); tar -czf "${base}.tar.gz" $dir; done
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}

@@ -97,17 +97,18 @@ import (
 )
 
 const (
-	appName = "konstellation"
+	appName = "KonstellationApp"
 	Version = "0.2.0"
 
-	EnvPrefixCLI  = "KONSTELLATIONCLI"
-	EnvPrefixNode = "KONSTELLATION"
-	EnvPrefixLCD  = "KONSTELLATIONLCD"
+	NodeDir      = ".knstld"
+	Bech32Prefix = "darc"
+
+	EnvPrefixNode = "knstl"
 )
 
 var (
 	// DefaultNodeHome sets the folder where the application data and configuration will be stored
-	DefaultNodeHome = os.ExpandEnv("$HOME/.konstellation")
+	DefaultNodeHome = os.ExpandEnv("$HOME/") + NodeDir
 
 	// If EnabledSpecificProposals is "", and this is "true", then enable all x/wasm proposals.
 	// If EnabledSpecificProposals is "", and this is not "true", then disable all x/wasm proposals.

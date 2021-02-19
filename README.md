@@ -4,6 +4,8 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 
 # Konstellation network
 
+# *Readme needs to be updated
+
 ## Testnet Full Node Quick Start
 With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on knstlhub-2.
 
@@ -177,10 +179,27 @@ konstellationcli q staking validators --chain-id <chain_id>
 
 * Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ... —from <key_name> --chain-id=<chain_id>` with the necessary options
 
-### Run singlenet in docker container 
-Run in shell from project dir
-```shell script
-./scripts/singlenet.sh
+
+## Dockerized
+
+We provide a docker image to help with test setups. There are two modes to use it
+
+Build: ```docker build -t knstld:latest . or pull from dockerhub kirdb/knstld:latest```
+
+### Dev server
+Bring up a local node with a test account containing tokens
+
+This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
+
+#### Setup
+```
+docker volume rm -f knstld_data
+IMAGE="kirdb/knstld:0.2.0" KEY_PASSWORD="..." KEY_NAME="..." KEY_MNEMONIC="..." ./docker/start.sh setup vol
+```
+
+#### Run 
+```
+IMAGE="kirdb/knstld:0.2.0" ./docker/start.sh run vol
 ```
 
 #### Connect to network

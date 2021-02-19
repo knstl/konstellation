@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"github.com/konstellation/konstellation/app"
+	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
 )
 
@@ -62,7 +62,7 @@ func AppVersionCmd() *cobra.Command { // nolint: golint
 		Long:  "Print the konstellation app version",
 		Args:  cobra.ExactArgs(0),
 		RunE: func(c *cobra.Command, args []string) error {
-			fmt.Println(app.Version)
+			fmt.Println(version.Version)
 			return nil
 		},
 	}

@@ -1,120 +1,24 @@
 #!/usr/bin/env bash
 
-# ------------------------------------------------------------------------------
-#
-# Parameters which might be changed while upgrading.
-#
-# ------------------------------------------------------------------------------
-INITIALIZED_FLAG="/initialized.flag"
+COMMAND=$1
+SUBCOMMAND=$2
 
-# ------------------------------------------------------------------------------
-#
-# Initial Konstellation block chain full node
-#
-#   1. Init server's local configuration
-#   2. Download preset configuration from github
-#   3. Add flag to avoid reinitialization
-#
-# ------------------------------------------------------------------------------
-function init_full_node() {
-  if [[ -z ${MONIKER} ]]; then
-    echo "Environment MONIKER must be set !" >&2
-    exit 1
-  fi
 
-  if [ -n "${KEY_NAME}" ]
-  then
-    echo "${KEY_PASSWORD}"
-    echo "${KEY_MNEMONIC}"
-    {
-      echo "${KEY_PASSWORD}"
-      echo "${KEY_MNEMONIC}"
-      echo
-    } | konstellationcli keys add "${KEY_NAME}" --interactive
-  fi
+echo $IMAGE;
+IMAGE=${IMAGE:-"knstld:latest"}
+CHAIN_ID=${CHAIN_ID:-darchub}
+MONIKER=${MONIKER:-dm0}
 
-  konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"
-  # shellcheck disable=SC2164
-  cd /root/.konstellation/config
-  rm -f config.toml genesis.json
-  cp /root/.konstellation/config.toml /root/.konstellation/config/config.toml
-  cp /root/.konstellation/genesis.json /root/.konstellation/config/genesis.json
-  konstellation unsafe-reset-all
-  #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/config.toml
-  #    wget https://raw.githubusercontent.com/hashgard/testnets/master/sif/${CHAIN_ID}/config/genesis.json
-  sed -i "s|moniker.*|moniker = \"${MONIKER}\"|g" config.toml
-  sed -i "s|seeds.*|seeds = \"${SEEDS}\"|g" config.toml
-
-  ip=$(ifconfig eth0 | head -2 | awk '{print $2}' | sed -n 2p)
-  sed -i "s|external_address.*|external_address = \"${ip}\"|g" config.toml
-
-  if [ -n "$SEED" ]
-  then
-    sed -i "s|seed_mode.*|seed_mode = true|g" config.toml
-  fi
+function usage() {
+  echo "Usage:"
+  echo "  ./start.sh [command] [subcommand]"
+  echo ""
+  echo "Command:"
+  echo "  setup   Setup docker container [vol - volume, b - bind mount]"
+  echo "  run     Run docker container [vol - volume, b - bind mount]"
+  echo ""
 }
 
-# ------------------------------------------------------------------------------
-#
-# Initial Konstellation block chain private single node
-#
-#   1. Generate account
-#   2. Init server's local configuration
-#   3. Assign coins to the account
-#   4. Add account to genesis
-#
-# ------------------------------------------------------------------------------
-function init_private_single() {
-  # Create private key for first delegation
-  echo "${KEY_PASSWORD}"
-  echo "${KEY_MNEMONIC}"
-  {
-    echo "${KEY_PASSWORD}"
-    echo "${KEY_MNEMONIC}"
-    echo
-  } | konstellationcli keys add "${KEY_NAME}" --interactive
-
-  # Init konstellation chain
-  konstellation init "${MONIKER}" --chain-id "${CHAIN_ID}"
-  konstellation add-genesis-account "${KEY_NAME}" "${COIN_GENESIS}"
-  echo "${KEY_PASSWORD}" | konstellation gentx --name "${KEY_NAME}" --amount "${COIN_DELEGATE}"
-  konstellation collect-gentxs
-}
-
-# ------------------------------------------------------------------------------
-#
-# Initial Konstellation block chain private multiple nodes
-#
-#   Folder .konstellation and .konstellationcli had been created by 'konstellation testnet'
-#   and mount to /root/.konstellation and /root/.konstellationcli. So nothing to do.
-#
-# ------------------------------------------------------------------------------
-function init_private_testnet() {
-  echo "nothing to do !" >/dev/null
-}
-
-# ------------------------------------------------------------------------------
-#
-# Initial Konstellation block chain private multiple nodes
-#
-#   Folder .konstellation and .konstellationcli had been created by 'konstellation testnet'
-#   and mount to /root/.konstellation and /root/.konstellationcli. So nothing to do.
-#
-# ------------------------------------------------------------------------------
-function konstellation_start() {
-  konstellation start
-
-  # Hold the container for debugging
-  while true; do
-    sleep 1
-  done
-}
-
-# ------------------------------------------------------------------------------
-#
-# Error prompt and exit abnormally
-#
-# ------------------------------------------------------------------------------
 function error() {
   echo "" >&2
   echo "Error: " >&2
@@ -123,76 +27,82 @@ function error() {
   exit 1
 }
 
-# ------------------------------------------------------------------------------
-#
-# Chain id must be set to environment
-#
-# ------------------------------------------------------------------------------
-if [[ -z ${CHAIN_ID} ]]; then
-  error "Environment CHAIN_ID must be set!"
-else
-  echo "Chain ${CHAIN_ID}"
+function setup_volume() {
+  docker run --rm -it -e KEY_PASSWORD="$KEY_PASSWORD" -e KEY_NAME="$KEY_NAME" -e KEY_MNEMONIC="$KEY_MNEMONIC" \
+    -v ~/pj/konstellation/docker/:/opt/ --mount type=volume,source=knstld_data,target=/root "$IMAGE" /opt/setup.sh
+}
+
+function setup_bind() {
+  docker run --rm -it -e KEY_PASSWORD="KEY_PASSWORD" -e KEY_NAME="$KEY_NAME" -e KEY_MNEMONIC="KEY_MNEMONIC" \
+    -v ~/pj/konstellation/docker/:/opt/ \
+    -v ~/.knstld:/root/.knstld \
+    "$IMAGE" /opt/setup.sh
+}
+
+function run_volume() {
+  docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 \
+      --mount type=volume,source=knstld_data,target=/root \
+      "$IMAGE" /opt/run.sh
+}
+
+function run_bind() {
+  docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 \
+      -v ~/.knstld:/root/.knstld \
+      "$IMAGE" /opt/run.sh
+}
+
+if [[ -z ${COMMAND} ]]; then
+  usage
+  error "Command must be set!"
 fi
 
-# ------------------------------------------------------------------------------
-#
-# For container restart
-#
-# ------------------------------------------------------------------------------
-if [[ -e ${INITIALIZED_FLAG} ]]; then
-  konstellation_start
+if [[ -z ${SUBCOMMAND} ]]; then
+  usage
+  error "Subcommand must be set!"
 fi
 
-# ------------------------------------------------------------------------------
-#
-# Print env variables
-#
-# ------------------------------------------------------------------------------
-echo "Chain id" "${CHAIN_ID}"
-echo "Moniker" "${MONIKER}"
+function run() {
+  case "${SUBCOMMAND}" in
+  "vol")
+    run_volume
+    ;;
+  "b")
+    run_bind
+    ;;
+  *)
+    usage
+    echo "" >&2
+    exit 1
+    ;;
+  esac
+}
 
-# ------------------------------------------------------------------------------
-#
-# Config client global settings
-#
-# ------------------------------------------------------------------------------
-konstellationcli config chain-id "${CHAIN_ID}"
-konstellationcli config trust-node true
-konstellationcli config output json
-konstellationcli config indent true
+function setup() {
+  case "${SUBCOMMAND}" in
+  "vol")
+    setup_volume
+    ;;
+  "b")
+    setup_bind
+    ;;
+  *)
+    usage
+    echo "" >&2
+    exit 1
+    ;;
+  esac
+}
 
-# ------------------------------------------------------------------------------
-#
-# Node type:
-#
-#     FULL_NODE       - Run Konstellation block chain full node which can connect to
-#                       Konstellation testnet and change to validator.
-#     PRIVATE_SINGLE  - Run Konstellation block chain with single node.(Default)
-#     PRIVATE_TESTNET - Run Konstellation block chain with multiple nodes created by
-#                       command 'konstellation testnet'
-#
-# ------------------------------------------------------------------------------
-if [[ -z ${NODE_TYPE} ]]; then
-  NODE_TYPE="PRIVATE_SINGLE"
-fi
-case "${NODE_TYPE}" in
-"FULL_NODE")
-  init_full_node
+case "${COMMAND}" in
+"setup")
+  setup
   ;;
-"PRIVATE_SINGLE")
-  init_private_single$()
-  ;;
-"PRIVATE_TESTNET")
-  init_private_testnet
+"run")
+  run
   ;;
 *)
-  error "Environment NODE_TYPE must be one of FULL_NODE/PRIVATE_SINGLE/PRIVATE_TESTNET !"
+  usage
+  echo "" >&2
+  exit 1
   ;;
 esac
-echo "Node type "${NODE_TYPE}
-
-# Mark initial successfully
-touch ${INITIALIZED_FLAG}
-
-# Start service
-konstellation_start
