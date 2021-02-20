@@ -184,7 +184,7 @@ konstellationcli q staking validators --chain-id <chain_id>
 
 We provide a docker image to help with test setups. There are two modes to use it
 
-Build: ```docker build -t knstld:latest . ``` or pull from dockerhub ```kirdb/knstld:latest```
+Build: ```docker build -t knstld:latest .```  or pull from dockerhub ```kirdb/knstld:latest```
 
 ### Dev server
 Bring up a local node with a test account containing tokens
