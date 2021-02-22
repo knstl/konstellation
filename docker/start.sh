@@ -30,7 +30,8 @@ function setup_volume() {
     # For testing scripts inside container
     #  -v ~/pj/konstellation/docker/:/opt/ \
   docker run --rm -it -e KEY_PASSWORD="$KEY_PASSWORD" -e KEY_NAME="$KEY_NAME" -e KEY_MNEMONIC="$KEY_MNEMONIC" \
-   --mount type=volume,source="$VOLUME",target=/root "$IMAGE" /opt/setup.sh
+   --mount type=volume,source="$VOLUME",target=/root \
+   "$IMAGE" /opt/setup.sh
 }
 
 function setup_bind() {
