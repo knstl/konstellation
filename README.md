@@ -184,7 +184,7 @@ konstellationcli q staking validators --chain-id <chain_id>
 
 We provide a docker image to help with test setups. There are two modes to use it
 
-Build: ```docker build -t knstld:latest . or pull from dockerhub kirdb/knstld:latest```
+Build: ```docker build -t knstld:latest .```  or pull from dockerhub ```kirdb/knstld:latest```
 
 ### Dev server
 Bring up a local node with a test account containing tokens
@@ -192,7 +192,7 @@ Bring up a local node with a test account containing tokens
 This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
 
 #### Setup
-Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create new identity
+Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create a new identity
 ```
 docker volume rm -f knstld_data
 IMAGE="kirdb/knstld:0.2.0" KEY_PASSWORD="..." KEY_NAME="..." KEY_MNEMONIC="..." ./docker/start.sh setup vol
