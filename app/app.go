@@ -79,26 +79,26 @@ import (
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	"github.com/gorilla/mux"
-	cryptorest "github.com/konstellation/kn-sdk/crypto/rest"
-	"github.com/konstellation/kn-sdk/types"
-	kcrisis "github.com/konstellation/kn-sdk/x/crisis"
-	kdistribution "github.com/konstellation/kn-sdk/x/distribution"
-	kgov "github.com/konstellation/kn-sdk/x/gov"
-	kmint "github.com/konstellation/kn-sdk/x/mint"
-	kstaking "github.com/konstellation/kn-sdk/x/staking"
+	cryptorest "github.com/konstellation/konstellation/crypto/rest"
+	"github.com/konstellation/konstellation/types"
+	kcrisis "github.com/konstellation/konstellation/x/crisis"
+	kdistribution "github.com/konstellation/konstellation/x/distribution"
+	kgov "github.com/konstellation/konstellation/x/gov"
+	kmint "github.com/konstellation/konstellation/x/mint"
+	kstaking "github.com/konstellation/konstellation/x/staking"
 	"github.com/rakyll/statik/fs"
 	"github.com/spf13/cast"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	tmos "github.com/tendermint/tendermint/libs/os"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/konstellation/kn-sdk/x/wasm"
-	wasmclient "github.com/konstellation/kn-sdk/x/wasm/client"
+	"github.com/konstellation/konstellation/x/wasm"
+	wasmclient "github.com/konstellation/konstellation/x/wasm/client"
 )
 
 const (
 	appName = "KonstellationApp"
-	Version = "0.2.0"
+	Version = "0.2.1"
 
 	NodeDir      = ".knstld"
 	Bech32Prefix = "darc"
@@ -115,7 +115,7 @@ var (
 	ProposalsEnabled = "false"
 	// If set to non-empty string it must be comma-separated list of values that are all a subset
 	// of "EnableAllProposals" (takes precedence over ProposalsEnabled)
-	// https://github.com/konstellation/kn-sdk/blob/02a54d33ff2c064f3539ae12d75d027d9c665f05/x/wasm/internal/types/proposal.go#L28-L34
+	// https://github.com/konstellation/konstellation/blob/02a54d33ff2c064f3539ae12d75d027d9c665f05/x/wasm/internal/types/proposal.go#L28-L34
 	EnableSpecificProposals = ""
 )
 

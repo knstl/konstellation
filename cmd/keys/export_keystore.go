@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	//"github.com/cosmos/cosmos-sdk/client/input"
 	//"github.com/cosmos/cosmos-sdk/client/keys"
-	//"github.com/konstellation/kn-sdk/crypto/keystore"
+	//"github.com/konstellation/konstellation/crypto/keystore"
 )
 
 func exportKeyStoreCommand() *cobra.Command {

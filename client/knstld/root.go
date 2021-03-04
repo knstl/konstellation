@@ -33,10 +33,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
-	"github.com/konstellation/kn-sdk/types"
-	"github.com/konstellation/kn-sdk/x/wasm"
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/cmd/keys"
+	"github.com/konstellation/konstellation/types"
+	"github.com/konstellation/konstellation/x/wasm"
 )
 
 // NewRootCmd creates a new root command for konstellation. It is called once in the
