@@ -192,7 +192,8 @@ Bring up a local node with a test account containing tokens
 This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
 
 #### Setup
-Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create a new identity
+Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create a new identity.
+Change `vol` to `b` if you want to mount folder into container as volume.
 ```
 docker volume rm -f knstld_data
 IMAGE="kirdb/knstld:0.2.0" KEY_PASSWORD="..." KEY_NAME="..." KEY_MNEMONIC="..." ./docker/start.sh setup vol
@@ -218,3 +219,19 @@ go get -u go.opencensus.io
 go get gopkg.in/fsnotify/fsnotify.v1
 github.com/fsnotify/fsnotify v1.4.8
 ```
+
+INIT=$(jq -n --arg count 31 '{"count":$count}')                                
+
+ konstellation q wasm contract darc1qxxlalvsdjd07p07y3rc5fu6ll8k4tme8a2ggn       
+konstellation q wasm contract-state all darc1qxxlalvsdjd07p07y3rc5fu6ll8k4tme8a2ggn           
+
+ echo -n config | xxd -ps
+ CONTRACT=darc18vd8fpwxzck93qlwghaj6arh4p7c5n89rrvg5r 
+konstellation query wasm contract-state all $CONTRACT $NODE | jq -r '.[0]'      
+ konstellation q wasm contract-state smart $CONTRACT '{}'   
+konstellation tx wasm execute $CONTRACT "{\"increment\":{}}" --from hawking --chain-id darchub
+
+ konstellation query wasm contract-state all $CONTRACT $NODE | jq -r '.[0].value'  
+konstellation tx wasm execute $CONTRACT "{\"decrement\":{}}" --from hawking --chain-id darchub
+
+ konstellation query wasm contract-state all $CONTRACT $NODE 
