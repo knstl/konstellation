@@ -190,18 +190,32 @@ Build: ```docker build -t knstld:latest .```  or pull from dockerhub ```kirdb/kn
 Bring up a local node with a test account containing tokens
 
 This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
+Prepend `VOLTYPE=vol|b` if you want to bind mount or volume into container as storage
+
+#### Init
+Initialize blockchain folder
+```
+IMAGE=kirdb/knstld:0.2.0 ./docker/start.sh init
+```
+
+#### Moniker
+Change moniker
+```
+IMAGE=kirdb/knstld:0.2.0 MONIKER=moniker ./docker/start.sh config
+```
 
 #### Setup
 Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create a new identity.
-Change `vol` to `b` if you want to mount folder into container as volume.
+Setup genaccs, gentxs, collectGentxs
 ```
 docker volume rm -f knstld_data
-IMAGE="kirdb/knstld:0.2.0" KEY_PASSWORD="..." KEY_NAME="..." KEY_MNEMONIC="..." ./docker/start.sh setup vol
+IMAGE="kirdb/knstld:0.2.0" KEY_PASSWORD="..." KEY_NAME="..." KEY_MNEMONIC="..." ./docker/start.sh setup
 ```
 
 #### Run 
+Run blockchain node in container
 ```
-IMAGE="kirdb/knstld:0.2.0" ./docker/start.sh run vol
+IMAGE="kirdb/knstld:0.2.0" ./docker/start.sh run
 ```
 
 #### Connect to network

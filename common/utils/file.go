@@ -11,12 +11,12 @@ func WriteFile(name string, dir string, contents []byte) error {
 	writePath := filepath.Join(dir)
 	file := filepath.Join(writePath, name)
 
-	err := os2.EnsureDir(writePath, 0700)
+	err := os2.EnsureDir(writePath, 0755)
 	if err != nil {
 		return err
 	}
 
-	err = os2.WriteFile(file, contents, 0600)
+	err = os2.WriteFile(file, contents, 0644)
 	if err != nil {
 		return err
 	}
