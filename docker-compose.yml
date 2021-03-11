@@ -43,8 +43,8 @@ services:
       localnet:
         ipv4_address: 172.18.0.4
 
-  konstellation_node_master:
-    container_name: master
+  konstellation_node_host:
+    container_name: host
     image: kirdb/knstld:0.2.0
     environment:
       - CHAIN_ID=darchub
