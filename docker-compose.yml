@@ -37,7 +37,7 @@ services:
 #    ports:
 #    - "26671-26672:26656-26657"
     volumes:
-      - ./localnet/testnet-3/.knstld:/root/.knstld
+      - ./localnet/testnode-3/.knstld:/root/.knstld
     entrypoint: /opt/run.sh
     networks:
       localnet:
@@ -45,14 +45,15 @@ services:
 
   konstellation_node_master:
     container_name: master
-    image: konstellation:darchub
+    image: kirdb/knstld:0.2.0
     environment:
       - CHAIN_ID=darchub
     ports:
-    - "26656-26657:26656-26657"
-    - "1317:1317"
+      - "26656-26657:26656-26657"
+      - "1317:1317"
     volumes:
-    - ~/.knstld:/root/.knstld
+      - ~/.knstld:/root/.knstld
+    entrypoint: /opt/run.sh
     networks:
       localnet:
         ipv4_address: 172.18.0.5

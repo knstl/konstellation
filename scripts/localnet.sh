@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 COMMAND=$1
-SUBCOMMAND=$2
 
 DOCKER_NETWORK=${DOCKER_NETWORK:-"konstellation-network"}
 IMAGE=${IMAGE:-"knstld:latest"}
@@ -44,7 +43,7 @@ function run() {
     while IFS=$'\t' read -r NODE_NAME NODE_IP; do
       NODE_ROOT=$(pwd)/localnet/$NODE_NAME
       if [[ ! -d ${NODE_ROOT} ]]; then
-        echo "$NODE_NAME's config DOSE NOT exist !"
+        echo "$NODE_NAME's config DOES NOT exist !"
         echo "" >&2
         exit 1
       fi
