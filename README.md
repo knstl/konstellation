@@ -241,6 +241,11 @@ export CHAIN_ID=darchub
  ./scripts/localnet.sh run
 ```
 
+#### With docker-compose
+```shell script
+docker-compose up
+```
+
 #### Connect to network
 ```shell script
 ./docker/start.sh init
@@ -256,11 +261,6 @@ export MONIKER=<YOUR_MONIKER>
 
 ```shell script
 ./docker/start.sh run
-```
-
-#### Docker-compose
-```shell script
-docker-compose up
 ```
 ### Resolving errors
 
