@@ -2,11 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
-	"github.com/cosmos/cosmos-sdk/crypto/hd"
-	cmd2 "github.com/cosmos/cosmos-sdk/simapp/simd/cmd"
-	"github.com/cosmos/cosmos-sdk/types/module"
-	"github.com/konstellation/konstellation/cmd"
 	"io"
 	"os"
 	"path/filepath"
@@ -16,13 +11,11 @@ import (
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
-	tmcli "github.com/tendermint/tendermint/libs/cli"
 	"github.com/tendermint/tendermint/libs/log"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/debug"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	"github.com/cosmos/cosmos-sdk/server"
@@ -35,15 +28,12 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/cosmos/cosmos-sdk/x/crisis"
-	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
-
 	"github.com/konstellation/konstellation/app"
-	"github.com/konstellation/konstellation/cmd/keys"
 	"github.com/konstellation/konstellation/types"
 	"github.com/konstellation/konstellation/x/wasm"
 )
 
-// NewRootCmd creates a new root command for konstellation. It is called once in the
+// NewRootCmd creates a new root command for cosmodrome. It is called once in the
 // main function.
 func NewRootCmd() (*cobra.Command, app.EncodingConfig) {
 	encodingConfig := app.MakeEncodingConfig()
@@ -63,12 +53,11 @@ func NewRootCmd() (*cobra.Command, app.EncodingConfig) {
 
 	rootCmd := &cobra.Command{
 		Use:   version.AppName,
-		Short: "Konstellation Daemon (server)",
+		Short: "cosmodrome",
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			if err := client.SetCmdClientContextHandler(initClientCtx, cmd); err != nil {
 				return err
 			}
-
 			return server.InterceptConfigsPreRunHandler(cmd)
 		},
 	}
@@ -82,89 +71,8 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig app.EncodingConfig) {
 	authclient.Codec = encodingConfig.Marshaler
 
 	rootCmd.AddCommand(
-		cmd.InitCmd(app.ModuleBasics, encodingConfig.TxConfig, app.DefaultNodeHome, app.GenesisUpdaters),
-		cmd.GenTxCmd(app.ModuleBasics, encodingConfig.TxConfig, banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome),
-		genutilcli.CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome),
-		genutilcli.MigrateGenesisCmd(),
-		genutilcli.ValidateGenesisCmd(app.ModuleBasics),
-		AddGenesisAccountCmd(app.DefaultNodeHome),
-		tmcli.NewCompletionCmd(rootCmd, true),
-		AddGenesisWasmMsgCmd(app.DefaultNodeHome),
-		cmd.ConfigCmd(),
-		cmd.AppVersionCmd(),
-		testnetCmd(app.ModuleBasics, banktypes.GenesisBalancesIterator{}),
-		debug.Cmd(),
+		GenNetCmd(app.ModuleBasics, app.GenesisUpdaters, banktypes.GenesisBalancesIterator{}),
 	)
-
-	server.AddCommands(rootCmd, app.DefaultNodeHome, newApp, createKnstlAppAndExport, addModuleInitFlags)
-
-	// add keybase, auxiliary RPC, query, and tx child commands
-	rootCmd.AddCommand(
-		rpc.StatusCommand(),
-		queryCommand(),
-		txCommand(),
-		keys.Commands(app.DefaultNodeHome),
-	)
-}
-
-var (
-	flagNodeDirPrefix     = "node-dir-prefix"
-	flagNumValidators     = "v"
-	flagOutputDir         = "output-dir"
-	flagNodeDaemonHome    = "node-daemon-home"
-	flagStartingIPAddress = "starting-ip-address"
-)
-
-// get cmd to initialize all files for tendermint testnet and application
-func testnetCmd(mbm module.BasicManager, genBalIterator banktypes.GenesisBalancesIterator) *cobra.Command {
-	cmdT := &cobra.Command{
-		Use:   "testnet",
-		Short: "Initialize files for a simapp testnet",
-		Long: `testnet will create "v" number of directories and populate each with
-necessary files (private validator, genesis, config, etc.).
-
-Note, strict routability for addresses is turned off in the config file.
-
-Example:
-	simd testnet --v 4 --output-dir ./output --starting-ip-address 192.168.10.2
-	`,
-		RunE: func(cmd *cobra.Command, _ []string) error {
-			clientCtx, err := client.GetClientQueryContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			serverCtx := server.GetServerContextFromCmd(cmd)
-			config := serverCtx.Config
-
-			outputDir, _ := cmd.Flags().GetString(flagOutputDir)
-			keyringBackend, _ := cmd.Flags().GetString(flags.FlagKeyringBackend)
-			chainID, _ := cmd.Flags().GetString(flags.FlagChainID)
-			minGasPrices, _ := cmd.Flags().GetString(server.FlagMinGasPrices)
-			nodeDirPrefix, _ := cmd.Flags().GetString(flagNodeDirPrefix)
-			nodeDaemonHome, _ := cmd.Flags().GetString(flagNodeDaemonHome)
-			startingIPAddress, _ := cmd.Flags().GetString(flagStartingIPAddress)
-			numValidators, _ := cmd.Flags().GetInt(flagNumValidators)
-			algo, _ := cmd.Flags().GetString(flags.FlagKeyAlgorithm)
-
-			return cmd2.InitTestnet(
-				clientCtx, cmd, config, mbm, genBalIterator, outputDir, chainID, minGasPrices,
-				nodeDirPrefix, nodeDaemonHome, startingIPAddress, keyringBackend, algo, numValidators,
-			)
-		},
-	}
-
-	cmdT.Flags().Int(flagNumValidators, 4, "Number of validators to initialize the testnet with")
-	cmdT.Flags().StringP(flagOutputDir, "o", "./mytestnet", "Directory to store initialization data for the testnet")
-	cmdT.Flags().String(flagNodeDirPrefix, "node", "Prefix the directory name for each node with (node results in node0, node1, ...)")
-	cmdT.Flags().String(flagNodeDaemonHome, "simd", "Home directory of the node's daemon configuration")
-	cmdT.Flags().String(flagStartingIPAddress, "192.168.0.1", "Starting IP address (192.168.0.1 results in persistent peers list ID0@192.168.0.1:46656, ID1@192.168.0.2:46656, ...)")
-	cmdT.Flags().String(flags.FlagChainID, "", "genesis file chain-id, if left blank will be randomly created")
-	cmdT.Flags().String(server.FlagMinGasPrices, fmt.Sprintf("0.000006%s", sdk.DefaultBondDenom), "Minimum gas prices to accept for transactions; All fees in a tx must meet this minimum (e.g. 0.01photino,0.001stake)")
-	cmdT.Flags().String(flags.FlagKeyringBackend, flags.DefaultKeyringBackend, "Select keyring's backend (os|file|test)")
-	cmdT.Flags().String(flags.FlagKeyAlgorithm, string(hd.Secp256k1Type), "Key signing algorithm to generate keys for")
-
-	return cmdT
 }
 
 func addModuleInitFlags(startCmd *cobra.Command) {

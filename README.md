@@ -190,48 +190,78 @@ Build: ```docker build -t knstld:latest .```  or pull from dockerhub ```kirdb/kn
 Bring up a local node with a test account containing tokens
 
 This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
+Prepend `VOLTYPE=vol|b` if you want to bind mount or volume into container as storage
+
+#### Set IMAGE env variable
+```shell script
+export IMAGE=kirdb/knstld:0.2.0
+```
+
+#### Init
+Initialize blockchain folder
+```shell script
+./docker/start.sh init
+```
+
+#### Moniker
+Change moniker
+```shell script
+export MONIKER=moniker 
+./docker/start.sh config
+```
 
 #### Setup
 Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create a new identity.
-Change `vol` to `b` if you want to mount folder into container as volume.
-```
+Setup genaccs, gentxs, collectGentxs
+```shell script
 docker volume rm -f knstld_data
-IMAGE="kirdb/knstld:0.2.0" KEY_PASSWORD="..." KEY_NAME="..." KEY_MNEMONIC="..." ./docker/start.sh setup vol
+export KEY_PASSWORD="..."
+export KEY_NAME="..."
+export KEY_MNEMONIC="..."
+./docker/start.sh setup
 ```
 
 #### Run 
+Run blockchain node in container
+```shell script
+./docker/start.sh run
 ```
-IMAGE="kirdb/knstld:0.2.0" ./docker/start.sh run vol
+
+### Localnet
+```shell script
+export IMAGE=kirdb/knstld:0.2.0
+```
+#### Create network files for specified node configs
+```shell script
+export CHAIN_ID=darchub
+./scripts/localnet.sh create
+```
+#### Run network
+```shell script
+ ./scripts/localnet.sh run
 ```
 
 #### Connect to network
 ```shell script
-konstellation unsafe-reset-all
-konstellation config set moniker {MONIKER}
-konstellation start
+./docker/start.sh init
+```
+```shell script
+export MONIKER=<YOUR_MONIKER>
+./docker/start.sh config
 ```
 
+```shell script
+./scripts/localnet.sh copy
+```
+
+```shell script
+./docker/start.sh run
+```
 ### Resolving errors
 
 #### Missing ziphash
-```bash
+```shell script
 go get -u go.opencensus.io
 go get gopkg.in/fsnotify/fsnotify.v1
 github.com/fsnotify/fsnotify v1.4.8
 ```
-
-INIT=$(jq -n --arg count 31 '{"count":$count}')                                
-
- konstellation q wasm contract darc1qxxlalvsdjd07p07y3rc5fu6ll8k4tme8a2ggn       
-konstellation q wasm contract-state all darc1qxxlalvsdjd07p07y3rc5fu6ll8k4tme8a2ggn           
-
- echo -n config | xxd -ps
- CONTRACT=darc18vd8fpwxzck93qlwghaj6arh4p7c5n89rrvg5r 
-konstellation query wasm contract-state all $CONTRACT $NODE | jq -r '.[0]'      
- konstellation q wasm contract-state smart $CONTRACT '{}'   
-konstellation tx wasm execute $CONTRACT "{\"increment\":{}}" --from hawking --chain-id darchub
-
- konstellation query wasm contract-state all $CONTRACT $NODE | jq -r '.[0].value'  
-konstellation tx wasm execute $CONTRACT "{\"decrement\":{}}" --from hawking --chain-id darchub
-
- konstellation query wasm contract-state all $CONTRACT $NODE 
