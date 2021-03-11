@@ -21,10 +21,6 @@ echo "Key name" "${KEY_NAME}"
 echo "Mnemonic" "${KEY_MNEMONIC}"
 echo "Password" "${KEY_PASSWORD}"
 
-knstld init --chain-id "$CHAIN_ID" "$MONIKER"
-# staking/governance token is hardcoded in config, change this
-sed -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.knstld/config/genesis.json
-
 if test -n "${KEY_MNEMONIC-}"
 then
   echo "$KEY_MNEMONIC"

@@ -1,0 +1,264 @@
+{
+  "keys": {
+    "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx": {
+      "name": "hawking",
+      "password": "hawking1",
+      "mnemonic": "disorder squirrel cage garlic oyster leaf segment casual siren shiver lecture among either wool improve head thunder walnut cram force crystal advice slab sail",
+      "keystore": {
+        "address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "07ee1d1f64f0b719b3e8b6788971d87f1f2137b349d5d047c9818cf3bc79872ffcbd50bfbd",
+          "cipherparams": {
+            "iv": "14037fcf066213200bf2695da591cc47"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "4c463a8fefbfb73e11e514a245454f42cea8e45b980120d89c71ebbc581a033c"
+          },
+          "mac": "bd211eab1d8bab79da1cb7b15793ed459dea2c215457e7c2bbe07093fbad9106"
+        },
+        "id": "93a2c265-bdbc-444e-ae56-1276f82801f0",
+        "version": 3
+      }
+    },
+    "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc": {
+      "name": "heisenberg",
+      "password": "heisenberg1",
+      "mnemonic": "other original trouble craft hard loan ostrich aim drastic team absent kiwi matrix dose engage cup novel humor brave budget stage label future exile",
+      "keystore": {
+        "address": "darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "59041d54528ff5d8fa3fdb0652e3b0f06164c62e72f8cfad400f623234b02295b422f1a32d",
+          "cipherparams": {
+            "iv": "4bec336e9e1abdf0fa882fb47d75c2b2"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "3fdf74b65fc288eff52df679ded0b857b347917a61158163e5c5dc4e719a6278"
+          },
+          "mac": "9d29c78736ab12d2402367c8ce72e7a7977bc0d3154324a50b1c0357c5be323e"
+        },
+        "id": "51018df7-5610-451f-949a-83feef308e1b",
+        "version": 3
+      }
+    },
+    "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf": {
+      "name": "kopernik",
+      "password": "kopernik1",
+      "mnemonic": "hair reunion riot fish hawk arch buzz debris arch easily search glove private rival boat resist chaos cause panda icon pave shock egg ability",
+      "keystore": {
+        "address": "darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "a1713e7c17e8cd17b98638bed4a5e9a464899cc3b7c4f3f2353cd11cec6df07d8e5dd39d6c",
+          "cipherparams": {
+            "iv": "9a27d2fe84f1eb5a63b6930548b65a17"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "f9cf70ca366541734369af783bbf50e306a5d3e7b072672cefe3759d090663eb"
+          },
+          "mac": "06f4fc3e31d2b088052f2561ed43507e71b0c2ac971b10f43360d05fe3f4eeae"
+        },
+        "id": "373422d4-507d-41bb-9f9f-d7bf3c440af3",
+        "version": 3
+      }
+    },
+    "darc1f5sehz0tw7c357p0wqect8lu4728etp08jl55a": {
+      "name": "newton",
+      "password": "newton12",
+      "mnemonic": "artefact hip walnut dignity describe opera autumn shallow minimum rigid prison law raccoon together worry silk cushion whale room cram tunnel fault frequent submit",
+      "keystore": {
+        "address": "darc1f5sehz0tw7c357p0wqect8lu4728etp08jl55a",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "09eed7d80729064b7d0bb0c5066cd55efe951e94c2013e53a8b0da1c7a568d662692b0f922",
+          "cipherparams": {
+            "iv": "421b501f4e32fc4ba74fccd0f813137c"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "3e6bf5b7042e2203e1c1e12e4f7986915d7154e9c349285e670dcb8bb99d7542"
+          },
+          "mac": "7873323533fa0d0ce939887fcc42f865f0b71afe98796f069546577450a83b90"
+        },
+        "id": "5544f31d-fa6f-4ed2-a4d7-68defaa7ba33",
+        "version": 3
+      }
+    },
+    "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq": {
+      "name": "kepler",
+      "password": "kepler12",
+      "mnemonic": "bachelor miracle cook decade chalk table blouse learn vanish menu general transfer engage coast scout rookie glove affair target glide own manual consider scrub",
+      "keystore": {
+        "address": "darc1z6u8hddknlp33z79rra7q4gjlw3thwqrdzyplq",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "d9523c3c1fea7898ad12a1d782409767c6de0e7feac6e669ba4ef9bc48390d9429ec75c519",
+          "cipherparams": {
+            "iv": "e8d64c3066baad85102f0ca7715fa6a7"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "2ee4fdfa59a1b80a564c83d1150bc4304264e90850894cda0eb4842513fb9115"
+          },
+          "mac": "595ec957a5610260b1e8bb6ae88fad8316381aae2ff91d5e350d55ab3a01ec94"
+        },
+        "id": "e78a5e34-6ff5-4315-9bdc-a942fad6587f",
+        "version": 3
+      }
+    },
+    "darc1707wrvr797umhs7f8yqpa5v7g5hecdp3hafd0p": {
+      "name": "einstein",
+      "password": "einstein1",
+      "mnemonic": "output dress denial false announce logic orchard winner race bulb fire artefact father high drink oppose scan enough again mirror among fix wet bar",
+      "keystore": {
+        "address": "darc1707wrvr797umhs7f8yqpa5v7g5hecdp3hafd0p",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "7f0937df4c9601a02b8c438679606196c9aef04c355f9544c75b187b142a89be346924ddd1",
+          "cipherparams": {
+            "iv": "a367a43b488b5f0387294822469c00f9"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "1e4f400356c9b5af7015ea82baf31c10f79543b1b5164964721fd0b4edd60999"
+          },
+          "mac": "a88012f701cb59d7f841c468dd8d83d76c414cc1f06747b5de62d9dc17df1d8a"
+        },
+        "id": "2b332347-0f93-427d-ae13-579db651d8af",
+        "version": 3
+      }
+    },
+    "darc15gszq0w4leup59l3ewyv0d4ca8t6v9cyuqm2k6": {
+      "name": "galilei",
+      "password": "galilei1",
+      "mnemonic": "mansion memory fix industry enroll fabric orbit name under ignore letter frown indoor execute immense remind owner size glare around forward slab humble wasp",
+      "keystore": {
+        "address": "darc15gszq0w4leup59l3ewyv0d4ca8t6v9cyuqm2k6",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "2077d8e382f3dffb55e54f39239672ad4662350cd8eee664eee011c26529cbcecf75bfa28e",
+          "cipherparams": {
+            "iv": "480f82b774c471d1c59a59a17bf956ec"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "365978bad6a20cb52edf806084fa213e2a2be00113fe990b1388e379162204a9"
+          },
+          "mac": "3382be54ff8d76dc9077849540d982264a55b773095f553d6cf27b5ac04b76c9"
+        },
+        "id": "95cde210-af56-4ead-985a-b9bfa88c39e0",
+        "version": 3
+      }
+    },
+    "darc1mte8eevm6a766l6gx2tjphcdetr2httsudaqmf": {
+      "name": "penrose",
+      "password": "penrose1",
+      "mnemonic": "negative please screen legal fancy slender guilt gravity column leave curtain age swap away cabin youth table fatal spin insane table risk rally matter",
+      "keystore": {
+        "address": "darc1mte8eevm6a766l6gx2tjphcdetr2httsudaqmf",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "59016e30c497bbd1aebf497e166cc1d434ffdac61e8ec46461e3eef9ffa1df4ea8b5c1649a",
+          "cipherparams": {
+            "iv": "a90ffe8fb75b0ba3c87ff6004e8db940"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "a891c6486480ea2e4bec77ecb498b4258635b45435e79dd28a1d1407234a668c"
+          },
+          "mac": "7e2ae18f7c12ba7829bb109b48c5cdaf7d5b4ab28ca86426f94f9843904bddf8"
+        },
+        "id": "75c6ee4c-6c40-4614-9bfe-c3df609ff755",
+        "version": 3
+      }
+    },
+    "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl": {
+      "name": "dirac",
+      "password": "dirac123",
+      "mnemonic": "creek round dish idea parade balance embody rate sail wheel casino suspect cute transfer pizza square cabbage valid divert gap chimney legal hurt interest",
+      "keystore": {
+        "address": "darc1d22ccl8xpzzzldl28l9gs9htrgaatkaxjwskkl",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "e1eeaeb6058f672578f26ca2f418b847e226afb49e54d289d7c253c0f8b9ba2b391a5bf6c3",
+          "cipherparams": {
+            "iv": "30effe9efc5c45e71336b0440f3a8d8c"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "b5d1e8a326ad2a9ce7eccf050bad3f49b99f564f392b433f3cb41905524acad9"
+          },
+          "mac": "c3fb26d1c02d7cdaa03bc1f5da3aba99e10507b5671d7daa647af473983a1360"
+        },
+        "id": "0dc3971a-5daa-4e22-a92b-b58fe358cc8a",
+        "version": 3
+      }
+    },
+    "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j": {
+      "name": "planck",
+      "password": "planck12",
+      "mnemonic": "remain local lens arena card squeeze fire head ill win legend practice omit broccoli road rocket honey promote drink stamp wet sign van picnic",
+      "keystore": {
+        "address": "darc1x68e44c90hy49ppxqr2n0lawkv5w5vzp98uw4j",
+        "crypto": {
+          "cipher": "aes-128-ctr",
+          "ciphertext": "317908cf29488f6b9971c0065b5827bda4852cb672dda2e0d36411db10da3d4623c6d6a645",
+          "cipherparams": {
+            "iv": "85a64c35d3903fee924391f8dc9e86ad"
+          },
+          "kdf": "scrypt",
+          "kdfparams": {
+            "dklen": 32,
+            "n": 8192,
+            "p": 1,
+            "r": 8,
+            "salt": "29f29c637e42afe99cc9b78354da5e94b6ab0108b2df6ce744b38d3eade6a296"
+          },
+          "mac": "d6735e3be9fbe8e6b0d483e90157e471534c775d621610e5fbfa48aa5436893d"
+        },
+        "id": "13fa54f9-67df-4755-b49a-11f0e723e236",
+        "version": 3
+      }
+    }
+  }
+}
