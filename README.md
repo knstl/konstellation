@@ -257,6 +257,11 @@ export MONIKER=<YOUR_MONIKER>
 ```shell script
 ./docker/start.sh run
 ```
+
+#### Docker-compose
+```shell script
+docker-compose up
+```
 ### Resolving errors
 
 #### Missing ziphash
