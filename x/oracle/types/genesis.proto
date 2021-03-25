@@ -1,0 +1,10 @@
+syntax = "proto3";
+package oracle.v1beta1;
+
+import "gogoproto/gogo.proto";
+
+// GenesisState - genesis state of oracle
+message GenesisState {
+    Params params = 1 [(gogoproto.nullable) = false];
+}
+
