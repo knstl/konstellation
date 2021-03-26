@@ -5,13 +5,11 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-/*
 // MsgSetExchangeRate defines the SetExchangeRate message
 type MsgSetExchangeRate struct {
 	ExchangeRate sdk.Coin       `json:"exchange_rate"`
 	Setter       sdk.AccAddress `json:"setter"`
 }
-*/
 
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
 func NewMsgSetExchangeRate(denom string, exchangeRate sdk.Coin, setter sdk.AccAddress) MsgSetExchangeRate {
@@ -40,10 +38,22 @@ func (msg MsgSetExchangeRate) ValidateBasic() error {
 
 // GetSignBytes encodes the message for signing
 func (msg MsgSetExchangeRate) GetSignBytes() []byte {
-	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+	bz := ModuleCdc.MustMarshalJSON(&msg)
+	return sdk.MustSortJSON(bz)
+
 }
 
 // GetSigners defines whose signature is required
 func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Setter}
+}
+
+func (msg MsgSetExchangeRate) ProtoMessage() {
+}
+
+func (msg MsgSetExchangeRate) Reset() {
+}
+
+func (msg MsgSetExchangeRate) String() string {
+	return msg.Type()
 }

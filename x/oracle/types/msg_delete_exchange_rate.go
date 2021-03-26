@@ -7,16 +7,14 @@ import (
 
 var _ sdk.Msg = &MsgDeleteExchangeRate{}
 
-/*
 type MsgDeleteExchangeRate struct {
-	ID      string         `json:"id" yaml:"id"`
+	Denom   string         `json:"denom" yaml:"denom"`
 	Creator sdk.AccAddress `json:"creator" yaml:"creator"`
 }
-*/
 
-func NewMsgDeleteExchangeRate(id string, creator sdk.AccAddress) MsgDeleteExchangeRate {
+func NewMsgDeleteExchangeRate(denom string, creator sdk.AccAddress) MsgDeleteExchangeRate {
 	return MsgDeleteExchangeRate{
-		ID:      id,
+		Denom:   denom,
 		Creator: creator,
 	}
 }
@@ -34,7 +32,7 @@ func (msg MsgDeleteExchangeRate) GetSigners() []sdk.AccAddress {
 }
 
 func (msg MsgDeleteExchangeRate) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+	bz := ModuleCdc.MustMarshalJSON(&msg)
 	return sdk.MustSortJSON(bz)
 }
 
@@ -43,4 +41,14 @@ func (msg MsgDeleteExchangeRate) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
 	}
 	return nil
+}
+
+func (msg MsgDeleteExchangeRate) ProtoMessage() {
+}
+
+func (msg MsgDeleteExchangeRate) Reset() {
+}
+
+func (msg MsgDeleteExchangeRate) String() string {
+	return msg.Type()
 }

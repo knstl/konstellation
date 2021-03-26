@@ -7,34 +7,22 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
-	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
-	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-// Keeper of the nameservice store
+// Keeper of the oracle store
 type Keeper struct {
-	AuthKeeper           authkeeper.AccountKeeper
-	BankKeeper           bankkeeper.Keeper
-	exchangeRateStoreKey sdk.StoreKey
-	cdc                  codec.Marshaler
-	paramspace           paramtypes.Subspace
+	allowedAddressStoreKey sdk.StoreKey
+	exchangeRateStoreKey   sdk.StoreKey
+	cdc                    *codec.LegacyAmino
 }
 
-// NewKeeper creates a nameservice keeper
-func NewKeeper(cdc codec.Marshaler, key sdk.StoreKey, paramSpace paramtypes.Subspace, bankKeeper bankkeeper.Keeper, authKeeper authkeeper.AccountKeeper) Keeper {
-	// set KeyTable if it has not already been set
-	if !paramSpace.HasKeyTable() {
-		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
-	}
-
+// NewKeeper creates an oracle keeper
+func NewKeeper(cdc *codec.LegacyAmino, allowedAddresskey sdk.StoreKey, exchangeRatekey sdk.StoreKey) Keeper {
 	keeper := Keeper{
-		AuthKeeper:           authKeeper,
-		BankKeeper:           bankKeeper,
-		exchangeRateStoreKey: key,
-		cdc:                  cdc,
-		paramspace:           paramSpace,
+		allowedAddressStoreKey: allowedAddresskey,
+		exchangeRateStoreKey:   exchangeRatekey,
+		cdc:                    cdc,
 	}
 	return keeper
 }
@@ -42,4 +30,43 @@ func NewKeeper(cdc codec.Marshaler, key sdk.StoreKey, paramSpace paramtypes.Subs
 // Logger returns a module-specific logger.
 func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
+}
+
+func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress sdk.AccAddress) {
+	store := ctx.KVStore(k.allowedAddressStoreKey)
+	b := store.Get(types.ParamStoreKeyAllowedAddress)
+	if b == nil {
+		panic("stored allowed address should not have been nil")
+	}
+
+	k.cdc.MustUnmarshalBinaryBare(b, &allowedAddress)
+	return
+}
+
+func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress sdk.AccAddress) {
+	store := ctx.KVStore(k.exchangeRateStoreKey)
+	b := k.cdc.MustMarshalBinaryBare(&allowedAddress)
+	store.Set(types.ParamStoreKeyAllowedAddress, b)
+}
+
+func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
+	store := ctx.KVStore(k.exchangeRateStoreKey)
+	b := store.Get([]byte(exchangeRate.Denom))
+	if b == nil {
+		panic("stored exchange rate should not have been nil")
+	}
+
+	k.cdc.MustUnmarshalBinaryBare(b, &exchangeRate)
+	return
+}
+
+func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
+	store := ctx.KVStore(k.exchangeRateStoreKey)
+	b := k.cdc.MustMarshalBinaryBare(&exchangeRate)
+	store.Set([]byte(exchangeRate.Denom), b)
+}
+
+func (k Keeper) DeleteExchangeRate(ctx sdk.Context, key string) {
+	store := ctx.KVStore(k.exchangeRateStoreKey)
+	store.Delete([]byte(key))
 }
