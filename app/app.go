@@ -94,6 +94,10 @@ import (
 
 	"github.com/konstellation/konstellation/x/wasm"
 	wasmclient "github.com/konstellation/konstellation/x/wasm/client"
+
+	"github.com/konstellation/konstellation/x/oracle"
+	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
+	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
 )
 
 const (
@@ -164,6 +168,7 @@ var (
 		evidence.AppModuleBasic{},
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
+		oracle.AppModuleBasic{},
 	)
 
 	// Account permissions
@@ -237,6 +242,7 @@ type KonstellationApp struct {
 	evidenceKeeper   evidencekeeper.Keeper
 	transferKeeper   ibctransferkeeper.Keeper
 	wasmKeeper       wasm.Keeper
+	oracleKeeper     oraclekeeper.Keeper
 
 	scopedIBCKeeper      capabilitykeeper.ScopedKeeper
 	scopedTransferKeeper capabilitykeeper.ScopedKeeper
@@ -269,7 +275,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		minttypes.StoreKey, distrtypes.StoreKey, slashingtypes.StoreKey,
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
-		wasm.StoreKey,
+		wasm.StoreKey, oracletypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -441,6 +447,12 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		&stakingKeeper,
 		govRouter,
 	)
+	app.oracleKeeper = oraclekeeper.NewKeeper(
+		legacyAmino,
+		keys[minttypes.StoreKey],
+		keys[minttypes.StoreKey],
+	)
+
 	/****  Module Options ****/
 
 	// NOTE: we may consider parsing `appOpts` inside module constructors. For the moment
@@ -469,6 +481,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		evidence.NewAppModule(app.evidenceKeeper),
 		ibc.NewAppModule(app.ibcKeeper),
 		params.NewAppModule(app.paramsKeeper),
+		oracle.NewAppModule(&app.oracleKeeper),
 		transferModule,
 	)
 
@@ -513,6 +526,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		evidencetypes.ModuleName,
 		ibctransfertypes.ModuleName,
 		wasm.ModuleName,
+		oracletypes.ModuleName,
 	)
 
 	app.mm.RegisterInvariants(&app.crisisKeeper)

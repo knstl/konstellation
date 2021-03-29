@@ -6,5 +6,8 @@ const (
 
 	RouterKey = ModuleName
 
+	// StoreKey is the default store key for mint
+	StoreKey = ModuleName
+
 	QueryExchangeRate = "exchange-rate"
 )

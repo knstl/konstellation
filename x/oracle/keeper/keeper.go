@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/tendermint/tendermint/libs/log"
@@ -69,4 +70,8 @@ func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
 func (k Keeper) DeleteExchangeRate(ctx sdk.Context, key string) {
 	store := ctx.KVStore(k.exchangeRateStoreKey)
 	store.Delete([]byte(key))
+}
+
+func (k Keeper) VerifyInvariant(goCtx context.Context, msg *types.MsgVerifyInvariant) (resp *types.MsgVerifyInvariantResponse, err error) {
+	return
 }

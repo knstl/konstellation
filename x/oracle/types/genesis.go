@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -37,6 +38,16 @@ func (s GenesisState) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, s.AllowedAddress.String())
 	}
 	return nil
+}
+
+func (s GenesisState) ProtoMessage() {
+}
+
+func (s GenesisState) Reset() {
+}
+
+func (s GenesisState) String() string {
+	return fmt.Sprintf("%v", s.AllowedAddress)
 }
 
 // ValidateGenesis performs basic validation of supply genesis data returning an

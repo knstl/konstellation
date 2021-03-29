@@ -10,6 +10,9 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
+// RouterKey
+const RouterKey = types.ModuleName
+
 // NewHandler returns a handler for "oracle" type messages.
 func NewHandler(k keeper.Keeper) sdk.Handler {
 	return func(ctx sdk.Context, msg sdk.Msg) (*sdk.Result, error) {
