@@ -13,6 +13,7 @@ dist
 docs
 testnet
 localnet
+config/keys.json
 
 # IDE
 .idea/

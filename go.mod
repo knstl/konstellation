@@ -14,6 +14,7 @@ require (
 	github.com/cespare/cp v1.1.1 // indirect
 	github.com/cosmos/cosmos-sdk v0.41.0
 	github.com/deckarep/golang-set v1.7.1 // indirect
+	github.com/dvsekhvalnov/jose2go v0.0.0-20200901110807-248326c1351b
 	github.com/elastic/gosigar v0.10.5 // indirect
 	github.com/ethereum/go-ethereum v1.9.11 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
