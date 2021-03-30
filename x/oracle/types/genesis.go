@@ -1,8 +1,6 @@
 package types
 
 import (
-	"fmt"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
@@ -13,45 +11,29 @@ var (
 	DefaultExchangeRate         = []byte("")
 )
 
-// GenesisState - all oracle state that must be provided at genesis
-type GenesisState struct {
-	AllowedAddress sdk.AccAddress `json:"allowed_address"`
-}
-
 // NewGenesisState creates a new GenesisState object
-func NewGenesisState(allowedAddress sdk.AccAddress) *GenesisState {
+func NewGenesisState(allowedAddress string) *GenesisState {
 	return &GenesisState{
 		AllowedAddress: allowedAddress,
 	}
 }
 
 // DefaultGenesisState - default GenesisState used by Cosmos Hub
-func DefaultGenesisState() GenesisState {
-	defaultAllowedAddress, _ := sdk.AccAddressFromHex(string(DefaultAllowedAddress))
-	return GenesisState{
-		AllowedAddress: defaultAllowedAddress,
+func DefaultGenesisState() *GenesisState {
+	return &GenesisState{
+		AllowedAddress: string(DefaultAllowedAddress),
 	}
 }
 
-func (s GenesisState) ValidateBasic() error {
-	if len(s.AllowedAddress.String()) == 0 {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, s.AllowedAddress.String())
+func (s *GenesisState) ValidateBasic() error {
+	if len(s.AllowedAddress) == 0 {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, s.AllowedAddress)
 	}
 	return nil
 }
 
-func (s GenesisState) ProtoMessage() {
-}
-
-func (s GenesisState) Reset() {
-}
-
-func (s GenesisState) String() string {
-	return fmt.Sprintf("%v", s.AllowedAddress)
-}
-
 // ValidateGenesis performs basic validation of supply genesis data returning an
 // error for any failed validation criteria.
-func ValidateGenesis(data GenesisState) error {
+func ValidateGenesis(data *GenesisState) error {
 	return data.ValidateBasic()
 }

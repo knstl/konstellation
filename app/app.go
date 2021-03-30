@@ -449,8 +449,8 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 	)
 	app.oracleKeeper = oraclekeeper.NewKeeper(
 		legacyAmino,
-		keys[minttypes.StoreKey],
-		keys[minttypes.StoreKey],
+		keys[oracletypes.StoreKey],
+		keys[oracletypes.StoreKey],
 	)
 
 	/****  Module Options ****/

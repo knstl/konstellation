@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/tendermint/tendermint/libs/log"
@@ -33,7 +32,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
 
-func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress sdk.AccAddress) {
+func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
 	store := ctx.KVStore(k.allowedAddressStoreKey)
 	b := store.Get(types.ParamStoreKeyAllowedAddress)
 	if b == nil {
@@ -44,7 +43,7 @@ func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress sdk.AccAddres
 	return
 }
 
-func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress sdk.AccAddress) {
+func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress string) {
 	store := ctx.KVStore(k.exchangeRateStoreKey)
 	b := k.cdc.MustMarshalBinaryBare(&allowedAddress)
 	store.Set(types.ParamStoreKeyAllowedAddress, b)
@@ -70,8 +69,4 @@ func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
 func (k Keeper) DeleteExchangeRate(ctx sdk.Context, key string) {
 	store := ctx.KVStore(k.exchangeRateStoreKey)
 	store.Delete([]byte(key))
-}
-
-func (k Keeper) VerifyInvariant(goCtx context.Context, msg *types.MsgVerifyInvariant) (resp *types.MsgVerifyInvariantResponse, err error) {
-	return
 }

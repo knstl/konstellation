@@ -1,0 +1,9 @@
+syntax = "proto3";
+package konstellation.oracle;
+
+option go_package = "../../../x/oracle/types";
+
+message MsgDeleteExchangeRate {
+  string denom = 1;
+  string creator = 2;
+}
