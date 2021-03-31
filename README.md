@@ -263,6 +263,7 @@ docker run --rm -it \
   -p 26657:26657 \
   -p 26656:26656 \
   -p 1317:1317 \
+  -p 9090:9090 \
   -v ~/.knstld:/root/.knstld  "$IMAGE" /opt/run.sh
 ```
 
