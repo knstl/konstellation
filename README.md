@@ -196,35 +196,74 @@ Prepend `VOLTYPE=vol|b` if you want to bind mount or volume into container as st
 ```shell script
 export IMAGE=kirdb/knstld:0.2.0
 ```
+#### Set other env variable
+```shell script
+export CHAIN_ID=darchub
+export MONIKER=<YOUR_MONIKER>
+```
+
+**You can git clone and run script or call docker commands directly****
+**In a case of using volume (not bind mount) as containe volume, change `-v ~/.knstld:/root/.knstld` to `--mount type=volume,source="$VOLUME",target=/root`**
 
 #### Init
 Initialize blockchain folder
 ```shell script
+# Using script
 ./docker/start.sh init
+
+# Using docker cmd
+docker run --rm -it \
+  -e MONIKER="$MONIKER" \
+  -e CHAIN_ID="$CHAIN_ID" \
+  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/init.sh
 ```
 
 #### Moniker
 Change moniker
 ```shell script
 export MONIKER=moniker 
+
+# Using script
 ./docker/start.sh config
+
+# Using docker cmd
+docker run --rm -it \
+  -e MONIKER="$MONIKER" \
+  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/config.sh
 ```
 
 #### Setup
-Omit KEY_NAME, KEY_PASSWORD, KEY_MNEMONIC if you want to create a new identity.
+**Omit `KEY_NAME`, `KEY_PASSWORD`, `KEY_MNEMONIC` if you want to create a new identity.**
 Setup genaccs, gentxs, collectGentxs
+
 ```shell script
-docker volume rm -f knstld_data
 export KEY_PASSWORD="..."
 export KEY_NAME="..."
 export KEY_MNEMONIC="..."
+
+# Using script
 ./docker/start.sh setup
+
+# Using docker cmd
+docker run --rm -it \
+  -e KEY_PASSWORD="$KEY_PASSWORD" \
+  -e KEY_NAME="$KEY_NAME" \
+  -e KEY_MNEMONIC="$KEY_MNEMONIC" \
+  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/setup.sh
 ```
 
 #### Run 
 Run blockchain node in container
 ```shell script
+# Using script
 ./docker/start.sh run
+
+# Using docker cmd
+docker run --rm -it \
+  -p 26657:26657 \
+  -p 26656:26656 \
+  -p 1317:1317 \
+  -v ~/.knstld:/root/.knstld  "$IMAGE" /opt/run.sh
 ```
 
 ### Localnet
@@ -247,6 +286,8 @@ docker-compose up
 ```
 
 #### Connect to network
+**You can run docker commands directly without cloning repository. Take a look at the chapter above**
+
 ```shell script
 ./docker/start.sh init
 ```
