@@ -1,7 +1,5 @@
 syntax = "proto3";
-package konstellation.oracle;
-
-option go_package = "../../../x/oracle/types";
+package types;
 
 // GenesisState defines the oracle module's genesis state.
 message GenesisState {

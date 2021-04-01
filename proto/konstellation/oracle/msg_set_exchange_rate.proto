@@ -1,9 +1,7 @@
 syntax = "proto3";
-package konstellation.oracle;
+package types;
 
-option go_package = "../../../x/oracle/types";
-
-import "github.com/cosmos/cosmos-sdk/proto/cosmos/base/v1beta1/coin.proto";
+import "v1beta1/coin.proto";
 
 message MsgSetExchangeRate {
   cosmos.base.v1beta1.Coin exchange_rate = 1;
