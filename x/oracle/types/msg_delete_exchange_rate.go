@@ -19,7 +19,7 @@ func (msg *MsgDeleteExchangeRate) Route() string {
 }
 
 func (msg *MsgDeleteExchangeRate) Type() string {
-	return "DeleteName"
+	return "delete_exchange_rate"
 }
 
 func (msg *MsgDeleteExchangeRate) GetSigners() []sdk.AccAddress {

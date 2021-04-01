@@ -1,15 +1,16 @@
 package app
 
 import (
-	"github.com/cosmos/cosmos-sdk/x/capability"
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
-	dbm "github.com/tendermint/tm-db"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/cosmos/cosmos-sdk/x/capability"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/log"
+	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -448,7 +449,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		govRouter,
 	)
 	app.oracleKeeper = oraclekeeper.NewKeeper(
-		legacyAmino,
+		appCodec,
 		keys[oracletypes.StoreKey],
 		keys[oracletypes.StoreKey],
 	)
@@ -481,7 +482,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		evidence.NewAppModule(app.evidenceKeeper),
 		ibc.NewAppModule(app.ibcKeeper),
 		params.NewAppModule(app.paramsKeeper),
-		oracle.NewAppModule(&app.oracleKeeper),
+		oracle.NewAppModule(appCodec, app.oracleKeeper),
 		transferModule,
 	)
 
@@ -553,6 +554,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		wasm.NewAppModule(&app.wasmKeeper, app.stakingKeeper),
 		evidence.NewAppModule(app.evidenceKeeper),
 		ibc.NewAppModule(app.ibcKeeper),
+		oracle.NewAppModule(appCodec, app.oracleKeeper),
 		transferModule,
 	)
 

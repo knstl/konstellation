@@ -1,5 +1,10 @@
 package types
 
+var (
+	SetExchangeRateKey    = []byte{0x00}
+	DeleteExchangeRateKey = []byte{0x01}
+)
+
 const (
 	// ModuleName is the name of the module
 	ModuleName = "oracle"

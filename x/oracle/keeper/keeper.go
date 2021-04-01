@@ -14,11 +14,11 @@ import (
 type Keeper struct {
 	allowedAddressStoreKey sdk.StoreKey
 	exchangeRateStoreKey   sdk.StoreKey
-	cdc                    *codec.LegacyAmino
+	cdc                    codec.BinaryMarshaler
 }
 
 // NewKeeper creates an oracle keeper
-func NewKeeper(cdc *codec.LegacyAmino, allowedAddresskey sdk.StoreKey, exchangeRatekey sdk.StoreKey) Keeper {
+func NewKeeper(cdc codec.BinaryMarshaler, allowedAddresskey sdk.StoreKey, exchangeRatekey sdk.StoreKey) Keeper {
 	keeper := Keeper{
 		allowedAddressStoreKey: allowedAddresskey,
 		exchangeRateStoreKey:   exchangeRatekey,
@@ -39,14 +39,12 @@ func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
 		panic("stored allowed address should not have been nil")
 	}
 
-	k.cdc.MustUnmarshalBinaryBare(b, &allowedAddress)
-	return
+	return string(b)
 }
 
 func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress string) {
 	store := ctx.KVStore(k.exchangeRateStoreKey)
-	b := k.cdc.MustMarshalBinaryBare(&allowedAddress)
-	store.Set(types.ParamStoreKeyAllowedAddress, b)
+	store.Set(types.ParamStoreKeyAllowedAddress, []byte(allowedAddress))
 }
 
 func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {

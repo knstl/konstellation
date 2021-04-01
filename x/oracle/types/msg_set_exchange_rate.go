@@ -5,14 +5,6 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-/*
-// MsgSetExchangeRate defines the SetExchangeRate message
-type MsgSetExchangeRate struct {
-	ExchangeRate sdk.Coin `json:"exchange_rate"`
-	Setter       string   `json:"setter"`
-}
-*/
-
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
 func NewMsgSetExchangeRate(denom string, exchangeRate *sdk.Coin, setter string) MsgSetExchangeRate {
 	return MsgSetExchangeRate{
