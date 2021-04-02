@@ -49,6 +49,7 @@ func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress string) {
 
 func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
 	store := ctx.KVStore(k.exchangeRateStoreKey)
+	fmt.Printf("@@@@ %+v\n", store)
 	b := store.Get([]byte(exchangeRate.Denom))
 	if b == nil {
 		panic("stored exchange rate should not have been nil")
@@ -60,6 +61,7 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
 
 func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
 	store := ctx.KVStore(k.exchangeRateStoreKey)
+	fmt.Printf("@@@@ 2 %+v\n", store)
 	b := k.cdc.MustMarshalBinaryBare(&exchangeRate)
 	store.Set([]byte(exchangeRate.Denom), b)
 }

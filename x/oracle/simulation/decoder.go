@@ -24,7 +24,7 @@ func NewDecodeStore(cdc codec.BinaryMarshaler) func(kvA, kvB kv.Pair) string {
 			cdc.MustUnmarshalBinaryBare(kvB.Value, &exchangeRateB)
 			return fmt.Sprintf("%v\n%v", exchangeRateA.String(), exchangeRateB.String())
 		default:
-			panic(fmt.Sprintf("invalid mint key %X", kvA.Key))
+			panic(fmt.Sprintf("invalid exchange rate key %X", kvA.Key))
 		}
 	}
 }

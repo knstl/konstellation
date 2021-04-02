@@ -13,5 +13,5 @@ func TestLogger(t *testing.T) {
 	app := app.Setup(false)
 
 	ctx := app.NewContext(true, tmproto.Header{})
-	require.Equal(t, ctx.Logger(), app.SimulationManager())
+	require.Equal(t, ctx.Logger(), app.GetOracleKeeper().Logger(ctx))
 }

@@ -701,6 +701,10 @@ func (app *KonstellationApp) RegisterTendermintService(clientCtx client.Context)
 	tmservice.RegisterTendermintService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.interfaceRegistry)
 }
 
+func (app *KonstellationApp) GetOracleKeeper() oraclekeeper.Keeper {
+	return app.oracleKeeper
+}
+
 // RegisterSwaggerAPI registers swagger route with API Server
 func RegisterSwaggerAPI(_ client.Context, rtr *mux.Router) {
 	statikFS, err := fs.New()
