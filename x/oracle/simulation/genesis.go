@@ -19,7 +19,6 @@ func GetAddress(r *rand.Rand) string {
 	return privKey.PubKey().Address().String()
 }
 
-// RandomizedGenState generates a random GenesisState for mint
 func RandomizedGenState(simState *module.SimulationState) {
 	addressGenesis := types.NewGenesisState(RandomAddress(simState.Rand))
 

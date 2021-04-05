@@ -1,8 +1,7 @@
 package types
 
 var (
-	SetExchangeRateKey    = []byte{0x00}
-	DeleteExchangeRateKey = []byte{0x01}
+	ExchangeRateKey = []byte{0x00}
 )
 
 const (

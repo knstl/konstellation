@@ -22,7 +22,7 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgDeleteExchangeRate:
 			return handleMsgDeleteExchangeRate(ctx, k, msg)
 		default:
-			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, fmt.Sprintf("Unrecognized nameservice Msg type: %v", msg.Type()))
+			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, fmt.Sprintf("Unrecognized oracle Msg type: %v", msg.Type()))
 		}
 	}
 }
@@ -43,6 +43,6 @@ func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.Ms
 	if k.GetAllowedAddress(ctx) != msg.Creator {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect allowed address") // If not, throw an error
 	}
-	k.DeleteExchangeRate(ctx, msg.Denom)
+	k.DeleteExchangeRate(ctx)
 	return &sdk.Result{}, nil
 }

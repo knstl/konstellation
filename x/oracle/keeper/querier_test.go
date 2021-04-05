@@ -1,13 +1,12 @@
 package keeper_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
+	abcitypes "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
 	"github.com/konstellation/konstellation/app"
@@ -15,21 +14,26 @@ import (
 )
 
 func TestNewQuerier(t *testing.T) {
-	app := app.Setup(false)
-	ctx := app.NewContext(true, tmproto.Header{})
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
-	oracleKeeper := app.GetOracleKeeper()
-	oracleKeeper.SetExchangeRate(ctx, coin)
-	fmt.Printf("***** %+v\n", oracleKeeper)
+	simapp := app.Setup(false)
+	ctx := simapp.NewContext(true, tmproto.Header{})
 
-	query := abci.RequestQuery{
+	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	oracleKeeper := simapp.GetOracleKeeper()
+	oracleKeeper.SetExchangeRate(ctx, coin)
+
+	query := abcitypes.RequestQuery{
 		Path: "",
 		Data: []byte{},
 	}
 
-	legacyQuerierCdc := codec.NewAminoCodec(app.LegacyAmino())
+	legacyQuerierCdc := codec.NewAminoCodec(simapp.LegacyAmino())
 	querier := keeper.NewQuerier(oracleKeeper, legacyQuerierCdc.LegacyAmino)
 	bz, err := querier(ctx, []string{"exchange-rate"}, query)
-	require.Error(t, err)
-	require.Nil(t, bz)
+	require.Nil(t, err)
+	expected :=
+		`{
+  "denom": "Darc",
+  "amount": "10"
+}`
+	require.Equal(t, []byte(expected), bz)
 }

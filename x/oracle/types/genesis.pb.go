@@ -24,7 +24,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // GenesisState defines the oracle module's genesis state.
 type GenesisState struct {
-	AllowedAddress string `protobuf:"bytes,1,opt,name=allowed_address,json=allowedAddress,proto3" json:"allowed_address,omitempty"`
+	AllowedAddress string `protobuf:"bytes,1,opt,name=allowed_address" json:"allowed_address,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }

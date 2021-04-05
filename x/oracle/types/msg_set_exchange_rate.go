@@ -5,22 +5,24 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
+var _ sdk.Msg = &MsgSetExchangeRate{}
+
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
-func NewMsgSetExchangeRate(denom string, exchangeRate *sdk.Coin, setter string) MsgSetExchangeRate {
-	return MsgSetExchangeRate{
+func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, setter string) *MsgSetExchangeRate {
+	return &MsgSetExchangeRate{
 		ExchangeRate: exchangeRate,
 		Setter:       setter,
 	}
 }
 
 // Route should return the name of the module
-func (msg *MsgSetExchangeRate) Route() string { return RouterKey }
+func (msg MsgSetExchangeRate) Route() string { return RouterKey }
 
 // Type should return the action
-func (msg *MsgSetExchangeRate) Type() string { return "set_exchange_rate" }
+func (msg MsgSetExchangeRate) Type() string { return "set_exchange_rate" }
 
 // ValidateBasic runs stateless checks on the message
-func (msg *MsgSetExchangeRate) ValidateBasic() error {
+func (msg MsgSetExchangeRate) ValidateBasic() error {
 	if msg.Setter == "" {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Setter)
 	}
@@ -31,13 +33,13 @@ func (msg *MsgSetExchangeRate) ValidateBasic() error {
 }
 
 // GetSignBytes encodes the message for signing
-func (msg *MsgSetExchangeRate) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (msg MsgSetExchangeRate) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(&msg)
 	return sdk.MustSortJSON(bz)
 
 }
 
 // GetSigners defines whose signature is required
-func (msg *MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
+func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{sdk.AccAddress(msg.Setter)}
 }

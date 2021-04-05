@@ -7,8 +7,9 @@ import (
 var (
 	ParamStoreKeyAllowedAddress = []byte("AllowedAddress")
 	ParamStoreKeyExchangeRate   = []byte("ExchangeRate")
-	DefaultAllowedAddress       = []byte("")
-	DefaultExchangeRate         = []byte("")
+	// TODO: change default actual address
+	DefaultAllowedAddress = []byte("default_allowed_address")
+	DefaultExchangeRate   = []byte("")
 )
 
 // NewGenesisState creates a new GenesisState object
