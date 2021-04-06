@@ -45,8 +45,8 @@ func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{sdk.AccAddress(msg.Setter)}
 }
 
-func NewMsgDeleteExchangeRate(denom string, creator string) *MsgDeleteExchangeRate {
-	return &MsgDeleteExchangeRate{
+func NewMsgDeleteExchangeRate(denom string, creator string) MsgDeleteExchangeRate {
+	return MsgDeleteExchangeRate{
 		Denom:   denom,
 		Creator: creator,
 	}

@@ -94,7 +94,7 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 			msg := types.NewMsgDeleteExchangeRate(denom, allowedAddress)
 			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.DeleteExchangeRate(cmd.Context(), msg)
+			_, err = msgClient.DeleteExchangeRate(cmd.Context(), &msg)
 			if err != nil {
 				return err
 			}

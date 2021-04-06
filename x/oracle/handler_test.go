@@ -47,14 +47,16 @@ func TestHandleMsgSetExchangeRate(t *testing.T) {
 	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
+	incorrectMsg := oracletypes.NewMsgSetExchangeRate(&coin, address)
+	correctMsg := oracletypes.NewMsgSetExchangeRate(&coin, simapp.GetOracleKeeper().GetAllowedAddress(ctx))
 
 	cases := []struct {
 		name           string
 		msg            sdk.Msg
 		expectedResult string
 	}{
-		{"not allowed address", oracletypes.NewMsgSetExchangeRate(&coin, address), "fail"},
-		{"set_exchange_rate", oracletypes.NewMsgSetExchangeRate(&coin, simapp.GetOracleKeeper().GetAllowedAddress(ctx)), "pass"},
+		{"not allowed address", &incorrectMsg, "fail"},
+		{"set_exchange_rate", &correctMsg, "pass"},
 		{"invalid msg", testdata.NewTestMsg(), "fail"},
 	}
 
@@ -87,14 +89,16 @@ func TestHandleMsgDeleteExchangRate(t *testing.T) {
 	simapp, ctx := createTestApp()
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
+	incorrectMsg := oracletypes.NewMsgDeleteExchangeRate("Darc", address)
+	correctMsg := oracletypes.NewMsgDeleteExchangeRate("Darc", simapp.GetOracleKeeper().GetAllowedAddress(ctx))
 
 	cases := []struct {
 		name           string
 		msg            sdk.Msg
 		expectedResult string
 	}{
-		{"not allowed address", oracletypes.NewMsgDeleteExchangeRate("Darc", address), "fail"},
-		{"delete_exchange_rate", oracletypes.NewMsgDeleteExchangeRate("Darc", simapp.GetOracleKeeper().GetAllowedAddress(ctx)), "pass"},
+		{"not allowed address", &incorrectMsg, "fail"},
+		{"delete_exchange_rate", &correctMsg, "pass"},
 		{"invalid msg", testdata.NewTestMsg(), "fail"},
 	}
 
