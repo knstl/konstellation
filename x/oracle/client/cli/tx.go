@@ -60,7 +60,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 			msg := types.NewMsgSetExchangeRate(&rate, allowedAddress)
 			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.SetExchangeRate(cmd.Context(), msg)
+			_, err = msgClient.SetExchangeRate(cmd.Context(), &msg)
 			if err != nil {
 				return err
 			}
