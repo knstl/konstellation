@@ -9,7 +9,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/msgservice"
+	//	"github.com/cosmos/cosmos-sdk/types/msgservice"
 
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
@@ -58,7 +58,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 
 			rate := sdk.NewCoin("Darc", sdk.NewInt(int64(amountInt)))
 			msg := types.NewMsgSetExchangeRate(&rate, allowedAddress)
-			svcMsgClientConn := &msgservice.ServiceMsgClientConn{}
+			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
 			_, err = msgClient.SetExchangeRate(cmd.Context(), msg)
 			if err != nil {
@@ -92,7 +92,7 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgDeleteExchangeRate(denom, allowedAddress)
-			svcMsgClientConn := &msgservice.ServiceMsgClientConn{}
+			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
 			_, err = msgClient.DeleteExchangeRate(cmd.Context(), msg)
 			if err != nil {

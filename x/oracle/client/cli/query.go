@@ -5,12 +5,11 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
-	"github.com/cosmos/cosmos-sdk/codec"
 
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-func GetQueryExchangeRateCmd(cdc *codec.AminoCodec) *cobra.Command {
+func GetQueryExchangeRateCmd() *cobra.Command {
 	txCmd := &cobra.Command{
 		Use:                        types.ModuleName,
 		Short:                      "Querying exchange rate subcommands",
@@ -20,13 +19,13 @@ func GetQueryExchangeRateCmd(cdc *codec.AminoCodec) *cobra.Command {
 	}
 
 	txCmd.AddCommand(
-		GetCmdQueryExchangeRate(cdc),
+		GetCmdQueryExchangeRate(),
 	)
 
 	return txCmd
 }
 
-func GetCmdQueryExchangeRate(cdc *codec.AminoCodec) *cobra.Command {
+func GetCmdQueryExchangeRate() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "exchange-rate",
 		Short: "Query exchange rate",
