@@ -6,6 +6,7 @@ import (
 )
 
 var _ sdk.Msg = &MsgSetExchangeRate{}
+var _ sdk.Msg = &MsgDeleteExchangeRate{}
 
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
 func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, setter string) *MsgSetExchangeRate {
@@ -42,4 +43,35 @@ func (msg MsgSetExchangeRate) GetSignBytes() []byte {
 // GetSigners defines whose signature is required
 func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{sdk.AccAddress(msg.Setter)}
+}
+
+func NewMsgDeleteExchangeRate(denom string, creator string) *MsgDeleteExchangeRate {
+	return &MsgDeleteExchangeRate{
+		Denom:   denom,
+		Creator: creator,
+	}
+}
+
+func (msg MsgDeleteExchangeRate) Route() string {
+	return RouterKey
+}
+
+func (msg MsgDeleteExchangeRate) Type() string {
+	return "delete_exchange_rate"
+}
+
+func (msg MsgDeleteExchangeRate) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(msg.Creator)}
+}
+
+func (msg MsgDeleteExchangeRate) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(&msg)
+	return sdk.MustSortJSON(bz)
+}
+
+func (msg MsgDeleteExchangeRate) ValidateBasic() error {
+	if msg.Creator == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
+	}
+	return nil
 }

@@ -1,7 +1,0 @@
-syntax = "proto3";
-package types;
-
-message MsgDeleteExchangeRate {
-  string denom = 1;
-  string creator = 2;
-}

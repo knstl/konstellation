@@ -4,8 +4,9 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/codec"
-	sdk "github.com/cosmos/cosmos-sdk/types"
+
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
@@ -25,8 +26,6 @@ func GetQueryExchangeRateCmd(cdc *codec.AminoCodec) *cobra.Command {
 	return txCmd
 }
 
-/*
-TODO: need to update protobuf way
 func GetCmdQueryExchangeRate(cdc *codec.AminoCodec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "exchange-rate",
@@ -40,40 +39,17 @@ func GetCmdQueryExchangeRate(cdc *codec.AminoCodec) *cobra.Command {
 			// protobuf function and structs
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryParamsRequest{}
-			res, err := queryClient.Params(cmd.Context(), params)
+			exchangeRate := &types.QueryExchangeRateRequest{}
+			res, err := queryClient.GetExchangeRate(cmd.Context(), exchangeRate)
 
 			if err != nil {
 				return err
 			}
 
-			return clientCtx.PrintProto(&res.Params)
+			return clientCtx.PrintProto(res.ExchangeRate)
 		},
 	}
 	flags.AddQueryFlagsToCmd(cmd)
 
-	return cmd
-}
-*/
-
-func GetCmdQueryExchangeRate(cdc *codec.AminoCodec) *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "exchange-rate",
-		Short: "Query exchange rate",
-		Args:  cobra.NoArgs,
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientQueryContext(cmd)
-			if err != nil {
-				return err
-			}
-			res, _, err := clientCtx.QueryWithData(types.QueryExchangeRate, nil)
-			if err != nil {
-				return err
-			}
-			var out sdk.Coin
-			cdc.MustUnmarshalJSON(res, &out)
-			return clientCtx.PrintObjectLegacy(out)
-		},
-	}
 	return cmd
 }
