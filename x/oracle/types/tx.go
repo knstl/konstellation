@@ -9,8 +9,8 @@ var _ sdk.Msg = &MsgSetExchangeRate{}
 var _ sdk.Msg = &MsgDeleteExchangeRate{}
 
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
-func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, setter string) *MsgSetExchangeRate {
-	return &MsgSetExchangeRate{
+func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, setter string) MsgSetExchangeRate {
+	return MsgSetExchangeRate{
 		ExchangeRate: exchangeRate,
 		Setter:       setter,
 	}

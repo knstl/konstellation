@@ -9,12 +9,12 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-// Need to update message protobuf with protoc-gen-gogo
-func NewDecodeStore(cdc codec.BinaryMarshaler) func(kvA, kvB kv.Pair) string {
+func NewDecodeStore(cdc codec.Marshaler) func(kvA, kvB kv.Pair) string {
 	return func(kvA, kvB kv.Pair) string {
 		switch {
 		case bytes.Equal(kvA.Key, types.ExchangeRateKey):
-			var exchangeRateA, exchangeRateB types.MsgSetExchangeRate
+			exchangeRateA := types.MsgSetExchangeRate{}
+			exchangeRateB := types.MsgSetExchangeRate{}
 			cdc.MustUnmarshalBinaryBare(kvA.Value, &exchangeRateA)
 			cdc.MustUnmarshalBinaryBare(kvB.Value, &exchangeRateB)
 			return fmt.Sprintf("%v\n%v", exchangeRateA, exchangeRateB)
