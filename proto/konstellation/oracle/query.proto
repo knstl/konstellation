@@ -1,0 +1,17 @@
+syntax = "proto3";
+package types;
+
+option go_package = "x/oracle/types";
+
+import "v1beta1/coin.proto";
+
+service Query {
+  rpc GetExchangeRate(QueryExchangeRateRequest) returns (QueryExchangeRateResponse);
+}
+
+message QueryExchangeRateRequest {}
+
+message QueryExchangeRateResponse {
+  cosmos.base.v1beta1.Coin exchange_rate = 1;
+}
+

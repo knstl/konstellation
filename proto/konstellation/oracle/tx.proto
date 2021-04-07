@@ -1,0 +1,25 @@
+syntax = "proto3";
+package types;
+
+option go_package = "x/oracle/types";
+
+import "v1beta1/coin.proto";
+
+service Msg {
+  rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse);
+  rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse);
+}
+
+message MsgSetExchangeRate {
+  cosmos.base.v1beta1.Coin exchange_rate = 1;
+  string setter = 2;
+}
+
+message MsgSetExchangeRateResponse {}
+
+message MsgDeleteExchangeRate {
+  string denom = 1;
+  string creator = 2;
+}
+
+message MsgDeleteExchangeRateResponse {}
