@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -31,6 +32,7 @@ func GetCmdQueryExchangeRate() *cobra.Command {
 		Short: "Query exchange rate",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			fmt.Printf("**** %+v\n", cmd)
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
 				return err
