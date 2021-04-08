@@ -30,7 +30,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type MsgSetExchangeRate struct {
-	//cosmos.base.v1beta1.Coin exchange_rate = 1;
+	//cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
 	ExchangeRate github_com_cosmos_cosmos_sdk_types.Coin `protobuf:"bytes,1,opt,name=exchange_rate,json=exchangeRate,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coin" json:"exchange_rate"`
 	Setter       string                                  `protobuf:"bytes,2,opt,name=setter,proto3" json:"setter,omitempty"`
 }
