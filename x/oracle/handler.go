@@ -33,7 +33,7 @@ func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSe
 	if k.GetAllowedAddress(ctx) != msg.Setter {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect allowed address") // If not, throw an error
 	}
-	k.SetExchangeRate(ctx, *msg.ExchangeRate)
+	k.SetExchangeRate(ctx, msg.ExchangeRate)
 	return &sdk.Result{}, nil
 }
 

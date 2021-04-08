@@ -5,7 +5,6 @@
 package cli_test
 
 import (
-	//	"fmt"
 	"strings"
 	"testing"
 
@@ -20,6 +19,11 @@ import (
 
 	"github.com/konstellation/konstellation/x/oracle/client/cli"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
+
+	"encoding/json"
+	servertypes "github.com/cosmos/cosmos-sdk/server/types"
+	"github.com/konstellation/konstellation/app"
+	abcitypes "github.com/tendermint/tendermint/abci/types"
 )
 
 type IntegrationTestSuite struct {
@@ -27,6 +31,22 @@ type IntegrationTestSuite struct {
 
 	cfg     testnet.Config
 	network *testnet.Network
+}
+
+func NewAppConstructor(genesisState map[string]json.RawMessage) testnet.AppConstructor {
+	return func(val testnet.Validator) servertypes.Application {
+		simapp := app.Setup(false)
+		stateBytes, _ := json.MarshalIndent(genesisState, "", "  ")
+		simapp.InitChain(
+			abcitypes.RequestInitChain{
+				ChainId:       "test-chain-id",
+				AppStateBytes: stateBytes,
+			},
+		)
+		simapp.Commit()
+
+		return simapp
+	}
 }
 
 func (s *IntegrationTestSuite) SetupSuite() {
@@ -39,12 +59,17 @@ func (s *IntegrationTestSuite) SetupSuite() {
 
 	var oracleData oracletypes.GenesisState
 	s.Require().NoError(cfg.Codec.UnmarshalJSON(genesisState[oracletypes.ModuleName], &oracleData))
-
 	oracleData.AllowedAddress = "abc"
 	oracleDataBz, err := cfg.Codec.MarshalJSON(&oracleData)
 	s.Require().NoError(err)
 	genesisState[oracletypes.ModuleName] = oracleDataBz
 	cfg.GenesisState = genesisState
+	cfg.AppConstructor = NewAppConstructor(genesisState)
+	encCfg := app.MakeEncodingConfig()
+	cfg.Codec = encCfg.Marshaler
+	cfg.TxConfig = encCfg.TxConfig
+	cfg.LegacyAmino = encCfg.Amino
+	cfg.InterfaceRegistry = encCfg.InterfaceRegistry
 
 	s.cfg = cfg
 	s.network = testnet.New(s.T(), cfg)
