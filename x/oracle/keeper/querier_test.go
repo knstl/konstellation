@@ -28,7 +28,7 @@ func TestNewQuerier(t *testing.T) {
 
 	legacyQuerierCdc := codec.NewAminoCodec(simapp.LegacyAmino())
 	querier := keeper.NewQuerier(oracleKeeper, legacyQuerierCdc.LegacyAmino)
-	bz, err := querier(ctx, []string{"exchange-rate"}, query)
+	bz, err := querier(ctx, []string{"exchange_rate"}, query)
 	require.Nil(t, err)
 	expected :=
 		`{
