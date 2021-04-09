@@ -1,7 +1,6 @@
 package oracle_test
 
 import (
-	"encoding/json"
 	"math/rand"
 	"testing"
 
@@ -14,7 +13,6 @@ import (
 	"github.com/konstellation/konstellation/x/oracle"
 	"github.com/konstellation/konstellation/x/oracle/simulation"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
-	abcitypes "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
@@ -24,26 +22,10 @@ var (
 	dummyRouteWhichFails  = types.NewInvarRoute(testModuleName, "which-fails", func(_ sdk.Context) (string, bool) { return "whoops", true })
 )
 
-func createTestApp() (*app.KonstellationApp, sdk.Context) {
-	simapp := app.Setup(false)
-	ctx := simapp.NewContext(true, tmproto.Header{})
-
-	genesisState := app.NewDefaultGenesisState()
-	stateBytes, _ := json.MarshalIndent(genesisState, "", "  ")
-
-	simapp.InitChain(
-		abcitypes.RequestInitChain{
-			ChainId:       "test-chain-id",
-			AppStateBytes: stateBytes,
-		},
-	)
-	simapp.Commit()
-
-	return simapp, ctx
-}
-
 func TestHandleMsgSetExchangeRate(t *testing.T) {
-	simapp, ctx := createTestApp()
+	simapp := app.Setup(false)
+	simapp.Commit()
+	ctx := simapp.NewContext(true, tmproto.Header{})
 	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
@@ -86,7 +68,9 @@ func TestHandleMsgSetExchangeRate(t *testing.T) {
 }
 
 func TestHandleMsgDeleteExchangRate(t *testing.T) {
-	simapp, ctx := createTestApp()
+	simapp := app.Setup(false)
+	simapp.Commit()
+	ctx := simapp.NewContext(true, tmproto.Header{})
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
 	incorrectMsg := oracletypes.NewMsgDeleteExchangeRate("Darc", address)

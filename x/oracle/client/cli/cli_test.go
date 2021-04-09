@@ -8,22 +8,15 @@ import (
 	"strings"
 	"testing"
 
-	//	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 
-	//	"github.com/cosmos/cosmos-sdk/client/flags"
+	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	testnet "github.com/cosmos/cosmos-sdk/testutil/network"
-	//	sdk "github.com/cosmos/cosmos-sdk/types"
-	//	tmcli "github.com/tendermint/tendermint/libs/cli"
 
+	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/x/oracle/client/cli"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
-
-	"encoding/json"
-	servertypes "github.com/cosmos/cosmos-sdk/server/types"
-	"github.com/konstellation/konstellation/app"
-	abcitypes "github.com/tendermint/tendermint/abci/types"
 )
 
 type IntegrationTestSuite struct {
@@ -33,18 +26,8 @@ type IntegrationTestSuite struct {
 	network *testnet.Network
 }
 
-func NewAppConstructor(genesisState map[string]json.RawMessage) testnet.AppConstructor {
+func NewAppConstructor(simapp servertypes.Application) testnet.AppConstructor {
 	return func(val testnet.Validator) servertypes.Application {
-		simapp := app.Setup(false)
-		stateBytes, _ := json.MarshalIndent(genesisState, "", "  ")
-		simapp.InitChain(
-			abcitypes.RequestInitChain{
-				ChainId:       "test-chain-id",
-				AppStateBytes: stateBytes,
-			},
-		)
-		simapp.Commit()
-
 		return simapp
 	}
 }
@@ -53,10 +36,19 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
 
 	cfg := testnet.DefaultConfig()
+
+	encCfg := app.MakeEncodingConfig()
+	cfg.Codec = encCfg.Marshaler
+	cfg.TxConfig = encCfg.TxConfig
+	cfg.LegacyAmino = encCfg.Amino
+	cfg.InterfaceRegistry = encCfg.InterfaceRegistry
+
+	simapp := app.Setup(false)
+	cfg.GenesisState = app.ModuleBasics.DefaultGenesis(encCfg.Marshaler)
 	genesisState := cfg.GenesisState
 	cfg.NumValidators = 1
-	cfg.GenesisState[oracletypes.ModuleName] = []byte(`{"allowed_address": "abc"}`)
 
+	//cfg.GenesisState[oracletypes.ModuleName] = []byte(`{"allowed_address": "abc"}`)
 	var oracleData oracletypes.GenesisState
 	s.Require().NoError(cfg.Codec.UnmarshalJSON(genesisState[oracletypes.ModuleName], &oracleData))
 	oracleData.AllowedAddress = "abc"
@@ -64,12 +56,8 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.Require().NoError(err)
 	genesisState[oracletypes.ModuleName] = oracleDataBz
 	cfg.GenesisState = genesisState
-	cfg.AppConstructor = NewAppConstructor(genesisState)
-	encCfg := app.MakeEncodingConfig()
-	cfg.Codec = encCfg.Marshaler
-	cfg.TxConfig = encCfg.TxConfig
-	cfg.LegacyAmino = encCfg.Amino
-	cfg.InterfaceRegistry = encCfg.InterfaceRegistry
+
+	cfg.AppConstructor = NewAppConstructor(simapp)
 
 	s.cfg = cfg
 	s.network = testnet.New(s.T(), cfg)
