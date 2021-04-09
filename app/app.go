@@ -407,6 +407,10 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		appCodec, keys[evidencetypes.StoreKey], &app.stakingKeeper, app.slashingKeeper,
 	)
 	app.evidenceKeeper = *evidenceKeeper
+	app.oracleKeeper = oraclekeeper.NewKeeper(
+		appCodec,
+		keys[oracletypes.StoreKey],
+	)
 
 	// just re-use the full router - do we want to limit this more?
 	var wasmRouter = bApp.Router()
@@ -425,6 +429,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		app.bankKeeper,
 		app.stakingKeeper,
 		app.distrKeeper,
+		app.oracleKeeper,
 		wasmRouter,
 		wasmDir,
 		wasmConfig,
@@ -447,11 +452,6 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		app.bankKeeper,
 		&stakingKeeper,
 		govRouter,
-	)
-	app.oracleKeeper = oraclekeeper.NewKeeper(
-		appCodec,
-		keys[oracletypes.StoreKey],
-		keys[oracletypes.StoreKey],
 	)
 
 	/****  Module Options ****/
