@@ -224,7 +224,6 @@ func CreateTestInput(t *testing.T, isCheckTx bool, supportedFeatures string, enc
 	oracleKeeper := oraclekeeper.NewKeeper(
 		appCodec,
 		keyOracle,
-		keyOracle,
 	)
 
 	// set some funds ot pay out validatores, based on code from:

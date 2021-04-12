@@ -8,7 +8,7 @@ var (
 	ParamStoreKeyAllowedAddress = []byte("AllowedAddress")
 	ParamStoreKeyExchangeRate   = []byte("ExchangeRate")
 	// TODO: change default actual address
-	DefaultAllowedAddress = []byte("default_allowed_address")
+	DefaultAllowedAddress = []byte("abc")
 	DefaultExchangeRate   = []byte("")
 )
 

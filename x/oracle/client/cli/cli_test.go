@@ -5,14 +5,16 @@
 package cli_test
 
 import (
-	"strings"
+	//	"strings"
 	"testing"
 
+	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	testnet "github.com/cosmos/cosmos-sdk/testutil/network"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/x/oracle/client/cli"
@@ -71,6 +73,7 @@ func (s *IntegrationTestSuite) TearDownSuite() {
 	s.network.Cleanup()
 }
 
+/*
 func (s *IntegrationTestSuite) TestGetCmdQueryExchangeRate() {
 	val := s.network.Validators[0]
 
@@ -84,14 +87,6 @@ func (s *IntegrationTestSuite) TestGetCmdQueryExchangeRate() {
 			[]string{"exchange-rate"},
 			`{"exchange_rate": {"denom": "Darc", "amount": "10"}, setter:"abc"}`,
 		},
-		/*
-					{
-						"text output",
-						[]string{fmt.Sprintf("--%s=1", flags.FlagHeight), fmt.Sprintf("--%s=text", tmcli.OutputFlag)},
-						`denom: "Darc"
-			amount: "10"`,
-					},
-		*/
 	}
 
 	for _, tc := range testCases {
@@ -107,9 +102,9 @@ func (s *IntegrationTestSuite) TestGetCmdQueryExchangeRate() {
 		})
 	}
 }
+*/
 
-/*
-func (s *IntegrationTestSuite) TestNewMsgDeleteExchangeRateCmd() {
+func (s *IntegrationTestSuite) TestNewMsgSetExchangeReteCmd() {
 	val := s.network.Validators[0]
 
 	testCases := []struct {
@@ -120,35 +115,11 @@ func (s *IntegrationTestSuite) TestNewMsgDeleteExchangeRateCmd() {
 		expectedCode uint32
 	}{
 		{
-			"missing module",
-			[]string{
-				"", "total-supply",
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
-				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
-				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(10))).String()),
-			},
-			true, nil, 0,
-		},
-		{
-			"missing invariant route",
-			[]string{
-				"bank", "",
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
-				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
-				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(10))).String()),
-			},
-			true, nil, 0,
-		},
-		{
 			"valid transaction",
 			[]string{
-				"bank", "total-supply",
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
-				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
-				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(10))).String()),
+				"abc",
+				"Darc",
+				"10",
 			},
 			false, &sdk.TxResponse{}, 0,
 		},
@@ -175,7 +146,8 @@ func (s *IntegrationTestSuite) TestNewMsgDeleteExchangeRateCmd() {
 	}
 }
 
-func (s *IntegrationTestSuite) TestNewMsgSetExchangeRateCmd() {
+/*
+func (s *IntegrationTestSuite) TestNewMsgDeleteExchangeReteCmd() {
 	val := s.network.Validators[0]
 
 	testCases := []struct {
@@ -186,35 +158,9 @@ func (s *IntegrationTestSuite) TestNewMsgSetExchangeRateCmd() {
 		expectedCode uint32
 	}{
 		{
-			"missing module",
-			[]string{
-				"", "total-supply",
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
-				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
-				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(10))).String()),
-			},
-			true, nil, 0,
-		},
-		{
-			"missing invariant route",
-			[]string{
-				"bank", "",
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
-				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
-				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(10))).String()),
-			},
-			true, nil, 0,
-		},
-		{
 			"valid transaction",
 			[]string{
-				"bank", "total-supply",
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
-				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
-				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(10))).String()),
+				"abc", "Darc",
 			},
 			false, &sdk.TxResponse{}, 0,
 		},

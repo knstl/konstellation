@@ -80,7 +80,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 	}{
 		{
 			"gRPC request exchange rate",
-			fmt.Sprintf("%s/oracle/exchange_rate", baseURL),
+			fmt.Sprintf("%s/konstellation/oracle/exchange_rate", baseURL),
 			map[string]string{},
 			&oracletypes.QueryExchangeRateResponse{},
 			&oracletypes.QueryExchangeRateResponse{
