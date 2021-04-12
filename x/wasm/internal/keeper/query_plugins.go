@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"encoding/json"
+	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
 
 	wasmvmtypes "github.com/CosmWasm/wasmvm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -56,15 +57,17 @@ type QueryPlugins struct {
 	Bank    func(ctx sdk.Context, request *wasmvmtypes.BankQuery) ([]byte, error)
 	Custom  CustomQuerier
 	Staking func(ctx sdk.Context, request *wasmvmtypes.StakingQuery) ([]byte, error)
+	Oracle  func(ctx sdk.Context, request *OracleQuery) ([]byte, error)
 	Wasm    func(ctx sdk.Context, request *wasmvmtypes.WasmQuery) ([]byte, error)
 }
 
-func DefaultQueryPlugins(bank bankkeeper.ViewKeeper, staking stakingkeeper.Keeper, distKeeper distributionkeeper.Keeper, wasm *Keeper) QueryPlugins {
+func DefaultQueryPlugins(bank bankkeeper.ViewKeeper, staking stakingkeeper.Keeper, distKeeper distributionkeeper.Keeper, oracle oraclekeeper.Keeper, wasm *Keeper) QueryPlugins {
 	return QueryPlugins{
 		Bank:    BankQuerier(bank),
 		Custom:  NoCustomQuerier,
 		Staking: StakingQuerier(staking, distKeeper),
 		Wasm:    WasmQuerier(wasm),
+		Oracle:  OracleQuerier(oracle),
 	}
 }
 
@@ -323,5 +326,22 @@ func convertSdkCoinToWasmCoin(coin sdk.Coin) wasmvmtypes.Coin {
 	return wasmvmtypes.Coin{
 		Denom:  coin.Denom,
 		Amount: coin.Amount.String(),
+	}
+}
+
+type OracleQuery struct {
+}
+
+func OracleQuerier(keeper oraclekeeper.Keeper) func(ctx sdk.Context, request *OracleQuery) ([]byte, error) {
+	return func(ctx sdk.Context, request *OracleQuery) ([]byte, error) {
+		//if request.BondedDenom != nil {
+		//}
+		//if request.Validators != nil {
+		//}
+		//if request.AllDelegations != nil {
+		//}
+		//if request.Delegation != nil {
+		//}
+		return nil, wasmvmtypes.UnsupportedRequest{Kind: "unknown oracle variant"}
 	}
 }

@@ -12,17 +12,15 @@ import (
 
 // Keeper of the oracle store
 type Keeper struct {
-	allowedAddressStoreKey sdk.StoreKey
-	exchangeRateStoreKey   sdk.StoreKey
-	cdc                    codec.BinaryMarshaler
+	storeKey sdk.StoreKey
+	cdc      codec.BinaryMarshaler
 }
 
 // NewKeeper creates an oracle keeper
-func NewKeeper(cdc codec.BinaryMarshaler, allowedAddresskey sdk.StoreKey, exchangeRatekey sdk.StoreKey) Keeper {
+func NewKeeper(cdc codec.BinaryMarshaler, key sdk.StoreKey) Keeper {
 	keeper := Keeper{
-		allowedAddressStoreKey: allowedAddresskey,
-		exchangeRateStoreKey:   exchangeRatekey,
-		cdc:                    cdc,
+		storeKey: key,
+		cdc:      cdc,
 	}
 	return keeper
 }
@@ -33,7 +31,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
-	store := ctx.KVStore(k.allowedAddressStoreKey)
+	store := ctx.KVStore(k.storeKey)
 	b := store.Get(types.ParamStoreKeyAllowedAddress)
 	if b == nil {
 		panic("stored allowed address should not have been nil")
@@ -43,12 +41,12 @@ func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
 }
 
 func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress string) {
-	store := ctx.KVStore(k.exchangeRateStoreKey)
+	store := ctx.KVStore(k.storeKey)
 	store.Set(types.ParamStoreKeyAllowedAddress, []byte(allowedAddress))
 }
 
 func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
-	store := ctx.KVStore(k.exchangeRateStoreKey)
+	store := ctx.KVStore(k.storeKey)
 	b := store.Get(types.ExchangeRateKey)
 	if b == nil {
 		panic("stored exchange rate should not have been nil")
@@ -59,12 +57,12 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
 }
 
 func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
-	store := ctx.KVStore(k.exchangeRateStoreKey)
+	store := ctx.KVStore(k.storeKey)
 	b := k.cdc.MustMarshalBinaryBare(&exchangeRate)
 	store.Set(types.ExchangeRateKey, b)
 }
 
 func (k Keeper) DeleteExchangeRate(ctx sdk.Context) {
-	store := ctx.KVStore(k.exchangeRateStoreKey)
+	store := ctx.KVStore(k.storeKey)
 	store.Delete(types.ExchangeRateKey)
 }
