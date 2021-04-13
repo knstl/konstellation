@@ -75,26 +75,54 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 
 func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "del-exchange-rate [allowed-address] [denom]",
+		Use:   "del-exchange-rate [sender]",
 		Short: "Delete exchange rate",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
-			allowedAddress, denom := args[0], args[1]
-			if allowedAddress == "" {
-				return errors.New("invalid address")
-			}
-			if denom == "" {
-				return errors.New("invalid denom name")
+			sender := args[0]
+			if sender == "" {
+				return errors.New("invalid sender")
 			}
 
-			msg := types.NewMsgDeleteExchangeRate(denom, allowedAddress)
+			msg := types.NewMsgDeleteExchangeRate(sender)
 			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
 			_, err = msgClient.DeleteExchangeRate(cmd.Context(), &msg)
+			if err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func NewMsgSetAdminAddrCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "set-admin-addr [sender]",
+		Short: "Set Admin Address",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+			sender := args[0]
+			if sender == "" {
+				return errors.New("invalid sender")
+			}
+
+			msg := types.NewMsgSetAdminAddr(sender)
+			svcMsgClientConn := &ServiceMsgClientConn{}
+			msgClient := types.NewMsgClient(svcMsgClientConn)
+			_, err = msgClient.SetAdminAddr(cmd.Context(), &msg)
 			if err != nil {
 				return err
 			}

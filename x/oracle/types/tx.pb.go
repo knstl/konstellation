@@ -112,8 +112,7 @@ func (m *MsgSetExchangeRateResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgSetExchangeRateResponse proto.InternalMessageInfo
 
 type MsgDeleteExchangeRate struct {
-	Denom   string `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom,omitempty"`
-	Creator string `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
+	Sender string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
 }
 
 func (m *MsgDeleteExchangeRate) Reset()         { *m = MsgDeleteExchangeRate{} }
@@ -149,16 +148,9 @@ func (m *MsgDeleteExchangeRate) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteExchangeRate proto.InternalMessageInfo
 
-func (m *MsgDeleteExchangeRate) GetDenom() string {
+func (m *MsgDeleteExchangeRate) GetSender() string {
 	if m != nil {
-		return m.Denom
-	}
-	return ""
-}
-
-func (m *MsgDeleteExchangeRate) GetCreator() string {
-	if m != nil {
-		return m.Creator
+		return m.Sender
 	}
 	return ""
 }
@@ -199,38 +191,121 @@ func (m *MsgDeleteExchangeRateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteExchangeRateResponse proto.InternalMessageInfo
 
+type MsgSetAdminAddr struct {
+	Sender string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
+}
+
+func (m *MsgSetAdminAddr) Reset()         { *m = MsgSetAdminAddr{} }
+func (m *MsgSetAdminAddr) String() string { return proto.CompactTextString(m) }
+func (*MsgSetAdminAddr) ProtoMessage()    {}
+func (*MsgSetAdminAddr) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0fd2153dc07d3b5c, []int{4}
+}
+func (m *MsgSetAdminAddr) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetAdminAddr) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetAdminAddr.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetAdminAddr) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetAdminAddr.Merge(m, src)
+}
+func (m *MsgSetAdminAddr) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetAdminAddr) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetAdminAddr.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetAdminAddr proto.InternalMessageInfo
+
+func (m *MsgSetAdminAddr) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+type MsgSetAdminAddrResponse struct {
+}
+
+func (m *MsgSetAdminAddrResponse) Reset()         { *m = MsgSetAdminAddrResponse{} }
+func (m *MsgSetAdminAddrResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSetAdminAddrResponse) ProtoMessage()    {}
+func (*MsgSetAdminAddrResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0fd2153dc07d3b5c, []int{5}
+}
+func (m *MsgSetAdminAddrResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetAdminAddrResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetAdminAddrResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetAdminAddrResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetAdminAddrResponse.Merge(m, src)
+}
+func (m *MsgSetAdminAddrResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetAdminAddrResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetAdminAddrResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetAdminAddrResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgSetExchangeRate)(nil), "konstellation.oracle.MsgSetExchangeRate")
 	proto.RegisterType((*MsgSetExchangeRateResponse)(nil), "konstellation.oracle.MsgSetExchangeRateResponse")
 	proto.RegisterType((*MsgDeleteExchangeRate)(nil), "konstellation.oracle.MsgDeleteExchangeRate")
 	proto.RegisterType((*MsgDeleteExchangeRateResponse)(nil), "konstellation.oracle.MsgDeleteExchangeRateResponse")
+	proto.RegisterType((*MsgSetAdminAddr)(nil), "konstellation.oracle.MsgSetAdminAddr")
+	proto.RegisterType((*MsgSetAdminAddrResponse)(nil), "konstellation.oracle.MsgSetAdminAddrResponse")
 }
 
 func init() { proto.RegisterFile("tx.proto", fileDescriptor_0fd2153dc07d3b5c) }
 
 var fileDescriptor_0fd2153dc07d3b5c = []byte{
-	// 326 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0xc1, 0x4a, 0xc3, 0x40,
-	0x10, 0x86, 0xb3, 0x8a, 0xd5, 0x0e, 0x55, 0x61, 0xa9, 0x52, 0x82, 0xa6, 0x25, 0x17, 0x03, 0x62,
-	0x22, 0xf6, 0x0d, 0xaa, 0xe2, 0xa9, 0x97, 0xe8, 0xc9, 0x8b, 0xa4, 0xe9, 0xb0, 0x2d, 0x4d, 0x32,
-	0x25, 0x3b, 0x4a, 0xbd, 0xfa, 0x04, 0x3e, 0x56, 0x8f, 0x3d, 0x8a, 0x87, 0x22, 0xed, 0xd5, 0x87,
-	0x10, 0x9b, 0x06, 0xd4, 0x46, 0xd0, 0xd3, 0xee, 0x0f, 0x1f, 0xff, 0xff, 0xef, 0xec, 0xc0, 0x16,
-	0x8f, 0xdc, 0x61, 0x4a, 0x4c, 0xb2, 0x3a, 0xa0, 0x44, 0x33, 0x46, 0x51, 0xc0, 0x7d, 0x4a, 0x5c,
-	0x4a, 0x83, 0x30, 0x42, 0xb3, 0xaa, 0x48, 0xd1, 0x02, 0xf0, 0x3e, 0x6f, 0x19, 0x6b, 0x3f, 0x09,
-	0x90, 0x6d, 0xad, 0xae, 0x91, 0x2f, 0x47, 0x61, 0x2f, 0x48, 0x14, 0xfa, 0x01, 0xa3, 0xbc, 0x81,
-	0x6d, 0x5c, 0xea, 0xbb, 0x34, 0x60, 0xac, 0x89, 0x86, 0x70, 0x2a, 0x2d, 0x6f, 0x3c, 0xad, 0x1b,
-	0xaf, 0xd3, 0xfa, 0x91, 0xea, 0x73, 0xef, 0xbe, 0xe3, 0x86, 0x14, 0x7b, 0x21, 0xe9, 0x98, 0xf4,
-	0xf2, 0x38, 0xd1, 0xdd, 0x81, 0xc7, 0x8f, 0x43, 0xd4, 0xee, 0x39, 0xf5, 0x13, 0xbf, 0x82, 0x5f,
-	0x5d, 0xf7, 0xa1, 0xa4, 0x91, 0x19, 0xd3, 0xda, 0x5a, 0x43, 0x38, 0x65, 0x7f, 0xa9, 0xec, 0x03,
-	0x30, 0x57, 0x3b, 0xf8, 0xa8, 0x87, 0x94, 0x68, 0xb4, 0xaf, 0x60, 0xaf, 0xad, 0xd5, 0x05, 0x46,
-	0xc8, 0xf8, 0xad, 0x64, 0x15, 0x36, 0xba, 0x98, 0x50, 0xbc, 0x28, 0x57, 0xf6, 0x33, 0x21, 0x6b,
-	0xb0, 0x19, 0xa6, 0x18, 0x30, 0xe5, 0x29, 0xb9, 0xb4, 0xeb, 0x70, 0x58, 0x68, 0x94, 0x27, 0x9d,
-	0xbd, 0x0b, 0x58, 0x6f, 0x6b, 0x25, 0x63, 0xd8, 0xfd, 0x39, 0x10, 0xc7, 0x2d, 0x1a, 0xaa, 0xbb,
-	0x5a, 0xdb, 0x3c, 0xfd, 0x2b, 0x99, 0xc7, 0xca, 0x07, 0x90, 0x05, 0xaf, 0x3b, 0xfe, 0xd5, 0x67,
-	0x15, 0x36, 0x9b, 0xff, 0x80, 0xf3, 0xdc, 0x96, 0x33, 0x9e, 0x59, 0x62, 0x32, 0xb3, 0xc4, 0xdb,
-	0xcc, 0x12, 0xcf, 0x73, 0xcb, 0x98, 0xcc, 0x2d, 0xe3, 0x65, 0x6e, 0x19, 0xb7, 0x3b, 0x23, 0x2f,
-	0x73, 0xc8, 0xfe, 0xb2, 0x53, 0x5a, 0x2c, 0x4b, 0xf3, 0x23, 0x00, 0x00, 0xff, 0xff, 0x4a, 0x89,
-	0x49, 0x5f, 0x64, 0x02, 0x00, 0x00,
+	// 350 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0xc1, 0x4a, 0xf3, 0x40,
+	0x10, 0x80, 0xb3, 0xfd, 0xa1, 0xfc, 0x0e, 0xd5, 0x42, 0xa8, 0x5a, 0x83, 0xa6, 0x25, 0x20, 0x46,
+	0xc4, 0x44, 0xec, 0x13, 0xb4, 0xda, 0x63, 0x2f, 0xd1, 0x93, 0x08, 0x92, 0x26, 0xc3, 0x36, 0x34,
+	0xd9, 0x2d, 0xd9, 0x55, 0xea, 0xd5, 0x27, 0xf0, 0xb1, 0x8a, 0xa7, 0x1e, 0xc5, 0x43, 0x91, 0xf6,
+	0x45, 0xa4, 0x49, 0x5b, 0xb4, 0x69, 0xa5, 0x9e, 0x76, 0x07, 0xbe, 0xf9, 0x66, 0x76, 0x76, 0xe0,
+	0xbf, 0xec, 0x5b, 0xbd, 0x98, 0x4b, 0xae, 0x96, 0xba, 0x9c, 0x09, 0x89, 0x61, 0xe8, 0xca, 0x80,
+	0x33, 0x8b, 0xc7, 0xae, 0x17, 0xa2, 0x56, 0xa2, 0x9c, 0xf2, 0x04, 0xb0, 0xa7, 0xb7, 0x94, 0x35,
+	0x5e, 0x08, 0xa8, 0x2d, 0x41, 0x6f, 0x50, 0x36, 0xfb, 0x5e, 0xc7, 0x65, 0x14, 0x1d, 0x57, 0xa2,
+	0x7a, 0x0b, 0xdb, 0x38, 0x8b, 0x1f, 0x62, 0x57, 0x62, 0x99, 0x54, 0x89, 0x59, 0x68, 0xd8, 0x83,
+	0x51, 0x45, 0xf9, 0x18, 0x55, 0x4e, 0x68, 0x20, 0x3b, 0x8f, 0x6d, 0xcb, 0xe3, 0x91, 0xed, 0x71,
+	0x11, 0x71, 0x31, 0x3b, 0xce, 0x85, 0xdf, 0xb5, 0xe5, 0x73, 0x0f, 0x85, 0x75, 0xc5, 0x03, 0xe6,
+	0x14, 0xf0, 0xbb, 0x75, 0x0f, 0xf2, 0x02, 0xa5, 0xc4, 0xb8, 0x9c, 0xab, 0x12, 0x73, 0xcb, 0x99,
+	0x45, 0xc6, 0x21, 0x68, 0xd9, 0x1e, 0x1c, 0x14, 0x3d, 0xce, 0x04, 0x1a, 0x36, 0xec, 0xb6, 0x04,
+	0xbd, 0xc6, 0x10, 0x25, 0x36, 0x33, 0x3a, 0xe6, 0x63, 0x9c, 0x74, 0x97, 0xe8, 0xa6, 0x91, 0x51,
+	0x81, 0xa3, 0x95, 0x09, 0x0b, 0xe3, 0x29, 0x14, 0xd3, 0x7a, 0x75, 0x3f, 0x0a, 0x58, 0xdd, 0xf7,
+	0xe3, 0xb5, 0xae, 0x03, 0xd8, 0x5f, 0x42, 0xe7, 0x96, 0xcb, 0xb7, 0x1c, 0xfc, 0x6b, 0x09, 0xaa,
+	0x46, 0x50, 0x5c, 0x1e, 0x9f, 0x69, 0xad, 0xfa, 0x02, 0x2b, 0xfb, 0x48, 0xed, 0x62, 0x53, 0x72,
+	0x5e, 0x56, 0x7d, 0x02, 0x75, 0xc5, 0x2c, 0xce, 0xd6, 0x7a, 0xb2, 0xb0, 0x56, 0xfb, 0x03, 0xbc,
+	0xa8, 0x7b, 0x0f, 0x85, 0x1f, 0x13, 0x3b, 0xfe, 0xad, 0xf3, 0x05, 0xa6, 0x6d, 0x86, 0x35, 0xcc,
+	0xc1, 0x58, 0x27, 0xc3, 0xb1, 0x4e, 0x3e, 0xc7, 0x3a, 0x79, 0x9d, 0xe8, 0xca, 0x70, 0xa2, 0x2b,
+	0xef, 0x13, 0x5d, 0xb9, 0xdb, 0xe9, 0xdb, 0x69, 0x4e, 0xba, 0x57, 0xed, 0x7c, 0xb2, 0xb8, 0xb5,
+	0xaf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd2, 0x07, 0x64, 0x9f, 0xf0, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -247,6 +322,7 @@ const _ = grpc.SupportPackageIsVersion4
 type MsgClient interface {
 	SetExchangeRate(ctx context.Context, in *MsgSetExchangeRate, opts ...grpc.CallOption) (*MsgSetExchangeRateResponse, error)
 	DeleteExchangeRate(ctx context.Context, in *MsgDeleteExchangeRate, opts ...grpc.CallOption) (*MsgDeleteExchangeRateResponse, error)
+	SetAdminAddr(ctx context.Context, in *MsgSetAdminAddr, opts ...grpc.CallOption) (*MsgSetAdminAddr, error)
 }
 
 type msgClient struct {
@@ -275,10 +351,20 @@ func (c *msgClient) DeleteExchangeRate(ctx context.Context, in *MsgDeleteExchang
 	return out, nil
 }
 
+func (c *msgClient) SetAdminAddr(ctx context.Context, in *MsgSetAdminAddr, opts ...grpc.CallOption) (*MsgSetAdminAddr, error) {
+	out := new(MsgSetAdminAddr)
+	err := c.cc.Invoke(ctx, "/konstellation.oracle.Msg/SetAdminAddr", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	SetExchangeRate(context.Context, *MsgSetExchangeRate) (*MsgSetExchangeRateResponse, error)
 	DeleteExchangeRate(context.Context, *MsgDeleteExchangeRate) (*MsgDeleteExchangeRateResponse, error)
+	SetAdminAddr(context.Context, *MsgSetAdminAddr) (*MsgSetAdminAddr, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -290,6 +376,9 @@ func (*UnimplementedMsgServer) SetExchangeRate(ctx context.Context, req *MsgSetE
 }
 func (*UnimplementedMsgServer) DeleteExchangeRate(ctx context.Context, req *MsgDeleteExchangeRate) (*MsgDeleteExchangeRateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExchangeRate not implemented")
+}
+func (*UnimplementedMsgServer) SetAdminAddr(ctx context.Context, req *MsgSetAdminAddr) (*MsgSetAdminAddr, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAdminAddr not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -332,6 +421,24 @@ func _Msg_DeleteExchangeRate_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SetAdminAddr_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetAdminAddr)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SetAdminAddr(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.oracle.Msg/SetAdminAddr",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SetAdminAddr(ctx, req.(*MsgSetAdminAddr))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "konstellation.oracle.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -343,6 +450,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteExchangeRate",
 			Handler:    _Msg_DeleteExchangeRate_Handler,
+		},
+		{
+			MethodName: "SetAdminAddr",
+			Handler:    _Msg_SetAdminAddr_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -432,17 +543,10 @@ func (m *MsgDeleteExchangeRate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Creator) > 0 {
-		i -= len(m.Creator)
-		copy(dAtA[i:], m.Creator)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Denom) > 0 {
-		i -= len(m.Denom)
-		copy(dAtA[i:], m.Denom)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Denom)))
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -465,6 +569,59 @@ func (m *MsgDeleteExchangeRateResponse) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *MsgDeleteExchangeRateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetAdminAddr) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetAdminAddr) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetAdminAddr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetAdminAddrResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetAdminAddrResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetAdminAddrResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -513,11 +670,7 @@ func (m *MsgDeleteExchangeRate) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Denom)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.Creator)
+	l = len(m.Sender)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -525,6 +678,28 @@ func (m *MsgDeleteExchangeRate) Size() (n int) {
 }
 
 func (m *MsgDeleteExchangeRateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgSetAdminAddr) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgSetAdminAddrResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -735,7 +910,7 @@ func (m *MsgDeleteExchangeRate) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -763,39 +938,7 @@ func (m *MsgDeleteExchangeRate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Denom = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Creator = string(dAtA[iNdEx:postIndex])
+			m.Sender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -845,6 +988,138 @@ func (m *MsgDeleteExchangeRateResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgDeleteExchangeRateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetAdminAddr) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetAdminAddr: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetAdminAddr: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetAdminAddrResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetAdminAddrResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetAdminAddrResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

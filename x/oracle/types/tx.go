@@ -22,17 +22,6 @@ func (msg MsgSetExchangeRate) Route() string { return RouterKey }
 // Type should return the action
 func (msg MsgSetExchangeRate) Type() string { return "set_exchange_rate" }
 
-// ValidateBasic runs stateless checks on the message
-func (msg MsgSetExchangeRate) ValidateBasic() error {
-	if msg.Setter == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Setter)
-	}
-	if !msg.ExchangeRate.IsPositive() {
-		return sdkerrors.ErrInsufficientFunds
-	}
-	return nil
-}
-
 // GetSignBytes encodes the message for signing
 func (msg MsgSetExchangeRate) GetSignBytes() []byte {
 	bz := ModuleCdc.MustMarshalJSON(&msg)
@@ -45,10 +34,20 @@ func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{sdk.AccAddress(msg.Setter)}
 }
 
-func NewMsgDeleteExchangeRate(denom string, creator string) MsgDeleteExchangeRate {
+// ValidateBasic runs stateless checks on the message
+func (msg MsgSetExchangeRate) ValidateBasic() error {
+	if msg.Setter == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Setter)
+	}
+	if !msg.ExchangeRate.IsPositive() {
+		return sdkerrors.ErrInsufficientFunds
+	}
+	return nil
+}
+
+func NewMsgDeleteExchangeRate(sender string) MsgDeleteExchangeRate {
 	return MsgDeleteExchangeRate{
-		Denom:   denom,
-		Creator: creator,
+		Sender: sender,
 	}
 }
 
@@ -61,7 +60,7 @@ func (msg MsgDeleteExchangeRate) Type() string {
 }
 
 func (msg MsgDeleteExchangeRate) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Creator)}
+	return []sdk.AccAddress{sdk.AccAddress(msg.Sender)}
 }
 
 func (msg MsgDeleteExchangeRate) GetSignBytes() []byte {
@@ -70,8 +69,38 @@ func (msg MsgDeleteExchangeRate) GetSignBytes() []byte {
 }
 
 func (msg MsgDeleteExchangeRate) ValidateBasic() error {
-	if msg.Creator == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
+	if msg.Sender == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "sender can't be empty")
+	}
+	return nil
+}
+
+func NewMsgSetAdminAddr(sender string) MsgSetAdminAddr {
+	return MsgSetAdminAddr{
+		Sender: sender,
+	}
+}
+
+func (msg MsgSetAdminAddr) Route() string {
+	return RouterKey
+}
+
+func (msg MsgSetAdminAddr) Type() string {
+	return "delete_exchange_rate"
+}
+
+func (msg MsgSetAdminAddr) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(msg.Sender)}
+}
+
+func (msg MsgSetAdminAddr) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(&msg)
+	return sdk.MustSortJSON(bz)
+}
+
+func (msg MsgSetAdminAddr) ValidateBasic() error {
+	if msg.Sender == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "sender can't be empty")
 	}
 	return nil
 }

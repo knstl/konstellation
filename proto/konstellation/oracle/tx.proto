@@ -9,6 +9,7 @@ import "gogoproto/gogo.proto";
 service Msg {
   rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse);
   rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse);
+  rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddr);
 }
 
 message MsgSetExchangeRate {
@@ -20,8 +21,13 @@ message MsgSetExchangeRate {
 message MsgSetExchangeRateResponse {}
 
 message MsgDeleteExchangeRate {
-  string denom = 1;
-  string creator = 2;
+  string sender = 1;
 }
 
 message MsgDeleteExchangeRateResponse {}
+
+message MsgSetAdminAddr {
+  string sender = 1;
+}
+
+message MsgSetAdminAddrResponse {}

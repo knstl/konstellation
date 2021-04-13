@@ -90,6 +90,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 	}
 	for _, tc := range testCases {
 		resp, err := testutil.GetRequestWithHeaders(tc.url, tc.headers)
+		fmt.Println(string(resp))
 		s.Run(tc.name, func() {
 			s.Require().NoError(err)
 			s.Require().NoError(val.ClientCtx.JSONMarshaler.UnmarshalJSON(resp, tc.respType))

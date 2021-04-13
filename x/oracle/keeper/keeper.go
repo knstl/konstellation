@@ -32,7 +32,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 
 func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
 	store := ctx.KVStore(k.storeKey)
-	b := store.Get(types.ParamStoreKeyAllowedAddress)
+	b := store.Get(types.AllowedAddressKey)
 	if b == nil {
 		panic("stored allowed address should not have been nil")
 	}
@@ -42,7 +42,7 @@ func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
 
 func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress string) {
 	store := ctx.KVStore(k.storeKey)
-	store.Set(types.ParamStoreKeyAllowedAddress, []byte(allowedAddress))
+	store.Set(types.AllowedAddressKey, []byte(allowedAddress))
 }
 
 func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
@@ -65,4 +65,20 @@ func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
 func (k Keeper) DeleteExchangeRate(ctx sdk.Context) {
 	store := ctx.KVStore(k.storeKey)
 	store.Delete(types.ExchangeRateKey)
+}
+
+func (k Keeper) GetAdminAddr(ctx sdk.Context) (exchangeRate sdk.Coin) {
+	store := ctx.KVStore(k.storeKey)
+	b := store.Get(types.AdminAddrKey)
+	if b == nil {
+		panic("stored exchange rate should not have been nil")
+	}
+
+	k.cdc.MustUnmarshalBinaryBare(b, &exchangeRate)
+	return
+}
+
+func (k Keeper) SetAdminAddr(ctx sdk.Context, sender string) {
+	store := ctx.KVStore(k.storeKey)
+	store.Set(types.AdminAddrKey, []byte(sender))
 }
