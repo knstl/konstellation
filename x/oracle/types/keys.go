@@ -3,7 +3,6 @@ package types
 var (
 	AllowedAddressKey = []byte{0x00}
 	ExchangeRateKey   = []byte{0x01}
-	AdminAddrKey      = []byte{0x02}
 )
 
 const (

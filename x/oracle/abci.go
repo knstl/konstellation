@@ -12,8 +12,6 @@ import (
 // BeginBlocker mints new tokens for the previous block.
 func BeginBlocker(ctx sdk.Context, k keeper.Keeper) {
 	defer telemetry.ModuleMeasureSince(types.ModuleName, time.Now(), telemetry.MetricKeyBeginBlocker)
-
-	k.GetAllowedAddress(ctx)
 	exchangeRate := k.GetExchangeRate(ctx)
 
 	ctx.EventManager().EmitEvent(

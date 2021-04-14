@@ -75,9 +75,11 @@ func (msg MsgDeleteExchangeRate) ValidateBasic() error {
 	return nil
 }
 
-func NewMsgSetAdminAddr(sender string) MsgSetAdminAddr {
+func NewMsgSetAdminAddr(sender string, add []string, del []string) MsgSetAdminAddr {
 	return MsgSetAdminAddr{
 		Sender: sender,
+		Add:    add,
+		Delete: del,
 	}
 }
 

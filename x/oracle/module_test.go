@@ -14,6 +14,6 @@ func TestItCreatesModuleAccountOnInitBlock(t *testing.T) {
 	simapp := app.Setup(false)
 	simapp.Commit()
 	ctx := simapp.NewContext(true, tmproto.Header{})
-	acc := simapp.GetOracleKeeper().GetAllowedAddress(ctx)
+	acc := simapp.GetOracleKeeper().GetAllowedAddresses(ctx)
 	require.NotNil(t, acc)
 }

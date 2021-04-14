@@ -8,11 +8,11 @@ import (
 
 // InitGenesis new mint genesis
 func InitGenesis(ctx sdk.Context, keeper keeper.Keeper, data *types.GenesisState) {
-	keeper.SetAllowedAddress(ctx, data.AllowedAddress)
+	keeper.SetAllowedAddresses(ctx, data.AllowedAddresses)
 }
 
 // ExportGenesis returns a GenesisState for a given context and keeper.
 func ExportGenesis(ctx sdk.Context, keeper keeper.Keeper) *types.GenesisState {
-	allowedAddress := keeper.GetAllowedAddress(ctx)
-	return types.NewGenesisState(allowedAddress)
+	allowedAddresses := keeper.GetAllowedAddresses(ctx)
+	return types.NewGenesisState(allowedAddresses)
 }

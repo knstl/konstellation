@@ -31,8 +31,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 
 // Handle a message to set exchange rate
 func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetExchangeRate) (*sdk.Result, error) {
-	// Checks if the the bid price is greater than the price paid by the current owner
-	if k.GetAllowedAddress(ctx) != msg.Setter {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, msg.Setter) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect allowed address") // If not, throw an error
 	}
 	k.SetExchangeRate(ctx, msg.ExchangeRate)
@@ -41,8 +41,8 @@ func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSe
 
 // Handle a message to delete exchange rate
 func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDeleteExchangeRate) (*sdk.Result, error) {
-	// Checks if the the bid price is greater than the price paid by the current owner
-	if k.GetAllowedAddress(ctx) != msg.Sender {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, msg.Sender) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
 	}
 	k.DeleteExchangeRate(ctx)
@@ -51,10 +51,19 @@ func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.Ms
 
 // Handle a message to set admin address
 func handleMsgSetAdminAddr(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetAdminAddr) (*sdk.Result, error) {
-	// Checks if the the bid price is greater than the price paid by the current owner
-	if k.GetAllowedAddress(ctx) != msg.Sender {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, msg.Sender) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
 	}
-	k.SetAdminAddr(ctx, msg.Sender)
+	k.SetAdminAddr(ctx, msg.Sender, msg.Add, msg.Delete)
 	return &sdk.Result{}, nil
+}
+
+func isValidSender(allowedAddresses []string, sender string) bool {
+	for _, address := range allowedAddresses {
+		if address == sender {
+			return true
+		}
+	}
+	return false
 }

@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"bytes"
+	"encoding/gob"
 	"fmt"
 
 	"github.com/tendermint/tendermint/libs/log"
@@ -30,19 +32,48 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
 
-func (k Keeper) GetAllowedAddress(ctx sdk.Context) (allowedAddress string) {
+func (k Keeper) GetAllowedAddresses(ctx sdk.Context) (allowedAddresses []string) {
 	store := ctx.KVStore(k.storeKey)
 	b := store.Get(types.AllowedAddressKey)
 	if b == nil {
 		panic("stored allowed address should not have been nil")
 	}
 
-	return string(b)
+	allowedAddressesBytes := bytes.NewBuffer(b)
+	dec := gob.NewDecoder(allowedAddressesBytes)
+	dec.Decode(&allowedAddresses)
+	return
 }
 
-func (k Keeper) SetAllowedAddress(ctx sdk.Context, allowedAddress string) {
+func (k Keeper) SetAllowedAddresses(ctx sdk.Context, allowedAddresses []string) {
+	var allowedAddressesBytes bytes.Buffer
+	enc := gob.NewEncoder(&allowedAddressesBytes)
+	enc.Encode(allowedAddresses)
+
 	store := ctx.KVStore(k.storeKey)
-	store.Set(types.AllowedAddressKey, []byte(allowedAddress))
+	store.Set(types.AllowedAddressKey, allowedAddressesBytes.Bytes())
+}
+
+func (k Keeper) DeleteAllowedAddresses(ctx sdk.Context, addressesToDelete []string) {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	for _, address := range addressesToDelete {
+		allowedAddresses = removeAddress(allowedAddresses, address)
+	}
+	var allowedAddressesBytes bytes.Buffer
+	enc := gob.NewEncoder(&allowedAddressesBytes)
+	enc.Encode(allowedAddresses)
+
+	store := ctx.KVStore(k.storeKey)
+	store.Set(types.AllowedAddressKey, allowedAddressesBytes.Bytes())
+}
+
+func removeAddress(s []string, r string) []string {
+	for i, v := range s {
+		if v == r {
+			return append(s[:i], s[i+1:]...)
+		}
+	}
+	return s
 }
 
 func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
@@ -67,18 +98,11 @@ func (k Keeper) DeleteExchangeRate(ctx sdk.Context) {
 	store.Delete(types.ExchangeRateKey)
 }
 
-func (k Keeper) GetAdminAddr(ctx sdk.Context) (exchangeRate sdk.Coin) {
-	store := ctx.KVStore(k.storeKey)
-	b := store.Get(types.AdminAddrKey)
-	if b == nil {
-		panic("stored exchange rate should not have been nil")
+func (k Keeper) SetAdminAddr(ctx sdk.Context, sender string, add []string, del []string) {
+	if len(add) > 0 {
+		k.SetAllowedAddresses(ctx, add)
 	}
-
-	k.cdc.MustUnmarshalBinaryBare(b, &exchangeRate)
-	return
-}
-
-func (k Keeper) SetAdminAddr(ctx sdk.Context, sender string) {
-	store := ctx.KVStore(k.storeKey)
-	store.Set(types.AdminAddrKey, []byte(sender))
+	if len(del) > 0 {
+		k.DeleteAllowedAddresses(ctx, add)
+	}
 }

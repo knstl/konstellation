@@ -53,7 +53,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	//cfg.GenesisState[oracletypes.ModuleName] = []byte(`{"allowed_address": "abc"}`)
 	var oracleData oracletypes.GenesisState
 	s.Require().NoError(cfg.Codec.UnmarshalJSON(genesisState[oracletypes.ModuleName], &oracleData))
-	oracleData.AllowedAddress = "abc"
+	oracleData.AllowedAddresses = []string{"abc"}
 	oracleDataBz, err := cfg.Codec.MarshalJSON(&oracleData)
 	s.Require().NoError(err)
 	genesisState[oracletypes.ModuleName] = oracleDataBz

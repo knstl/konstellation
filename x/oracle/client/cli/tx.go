@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/spf13/cobra"
 	"strconv"
+	"strings"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -106,7 +107,7 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 
 func NewMsgSetAdminAddrCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-admin-addr [sender]",
+		Use:   "set-admin-addr [sender] [address-to-add] [address-to-delete]",
 		Short: "Set Admin Address",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -114,12 +115,19 @@ func NewMsgSetAdminAddrCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			sender := args[0]
+			sender, add, del := args[0], args[1], args[2]
 			if sender == "" {
 				return errors.New("invalid sender")
 			}
-
-			msg := types.NewMsgSetAdminAddr(sender)
+			var addressesToAdd []string
+			if add != "" {
+				addressesToAdd = strings.Split(add, ",")
+			}
+			var addressesToDelete []string
+			if del != "" {
+				addressesToDelete = strings.Split(del, ",")
+			}
+			msg := types.NewMsgSetAdminAddr(sender, addressesToAdd, addressesToDelete)
 			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
 			_, err = msgClient.SetAdminAddr(cmd.Context(), &msg)

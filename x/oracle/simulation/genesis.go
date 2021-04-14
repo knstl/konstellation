@@ -20,7 +20,8 @@ func GetAddress(r *rand.Rand) string {
 }
 
 func RandomizedGenState(simState *module.SimulationState) {
-	addressGenesis := types.NewGenesisState(RandomAddress(simState.Rand))
+	addresses := []string{RandomAddress(simState.Rand)}
+	addressGenesis := types.NewGenesisState(addresses)
 
 	bz, err := json.MarshalIndent(&addressGenesis, "", " ")
 	if err != nil {

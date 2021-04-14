@@ -30,7 +30,7 @@ func TestHandleMsgSetExchangeRate(t *testing.T) {
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
 	incorrectMsg := oracletypes.NewMsgSetExchangeRate(&coin, address)
-	correctMsg := oracletypes.NewMsgSetExchangeRate(&coin, simapp.GetOracleKeeper().GetAllowedAddress(ctx))
+	correctMsg := oracletypes.NewMsgSetExchangeRate(&coin, simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0])
 
 	cases := []struct {
 		name           string
@@ -73,8 +73,8 @@ func TestHandleMsgDeleteExchangRate(t *testing.T) {
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
-	incorrectMsg := oracletypes.NewMsgDeleteExchangeRate("Darc", address)
-	correctMsg := oracletypes.NewMsgDeleteExchangeRate("Darc", simapp.GetOracleKeeper().GetAllowedAddress(ctx))
+	incorrectMsg := oracletypes.NewMsgDeleteExchangeRate(address)
+	correctMsg := oracletypes.NewMsgDeleteExchangeRate(simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0])
 
 	cases := []struct {
 		name           string
@@ -83,6 +83,50 @@ func TestHandleMsgDeleteExchangRate(t *testing.T) {
 	}{
 		{"not allowed address", &incorrectMsg, "fail"},
 		{"delete_exchange_rate", &correctMsg, "pass"},
+		{"invalid msg", testdata.NewTestMsg(), "fail"},
+	}
+
+	for _, tc := range cases {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			h := oracle.NewHandler(simapp.GetOracleKeeper())
+
+			switch tc.expectedResult {
+			case "fail":
+				res, err := h(ctx, tc.msg)
+				require.Error(t, err)
+				require.Nil(t, res)
+
+			case "pass":
+				res, err := h(ctx, tc.msg)
+				require.NoError(t, err)
+				require.NotNil(t, res)
+
+			case "panic":
+				require.Panics(t, func() {
+					h(ctx, tc.msg) // nolint:errcheck
+				})
+			}
+		})
+	}
+}
+
+func TestHandleMsgAdminAddr(t *testing.T) {
+	simapp := app.Setup(false)
+	simapp.Commit()
+	ctx := simapp.NewContext(true, tmproto.Header{})
+	rand := rand.New(rand.NewSource(int64(1)))
+	address := simulation.RandomAddress(rand)
+	incorrectMsg := oracletypes.NewMsgSetAdminAddr(address, []string{}, []string{})
+	correctMsg := oracletypes.NewMsgSetAdminAddr(simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0], []string{}, []string{})
+
+	cases := []struct {
+		name           string
+		msg            sdk.Msg
+		expectedResult string
+	}{
+		{"not allowed address", &incorrectMsg, "fail"},
+		{"set_admin_addr", &correctMsg, "pass"},
 		{"invalid msg", testdata.NewTestMsg(), "fail"},
 	}
 
