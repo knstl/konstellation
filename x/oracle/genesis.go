@@ -6,9 +6,7 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-// InitGenesis new mint genesis
 func InitGenesis(ctx sdk.Context, keeper keeper.Keeper, data *types.GenesisState) {
-	keeper.SetAllowedAddresses(ctx, data.AllowedAddresses)
 }
 
 // ExportGenesis returns a GenesisState for a given context and keeper.

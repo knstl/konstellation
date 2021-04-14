@@ -27,7 +27,8 @@ func (suite *OracleTestSuite) SetupTest() {
 	simapp.Commit()
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
-	simapp.GetOracleKeeper().SetExchangeRate(ctx, coin)
+	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
+	simapp.GetOracleKeeper().SetExchangeRate(ctx, "abc", coin)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, codectypes.NewInterfaceRegistry())
 	types.RegisterQueryServer(queryHelper, simapp.GetOracleKeeper())

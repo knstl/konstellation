@@ -9,10 +9,10 @@ var _ sdk.Msg = &MsgSetExchangeRate{}
 var _ sdk.Msg = &MsgDeleteExchangeRate{}
 
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
-func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, setter string) MsgSetExchangeRate {
+func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, sender string) MsgSetExchangeRate {
 	return MsgSetExchangeRate{
 		ExchangeRate: *exchangeRate,
-		Setter:       setter,
+		Sender:       sender,
 	}
 }
 
@@ -31,13 +31,13 @@ func (msg MsgSetExchangeRate) GetSignBytes() []byte {
 
 // GetSigners defines whose signature is required
 func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Setter)}
+	return []sdk.AccAddress{sdk.AccAddress(msg.Sender)}
 }
 
 // ValidateBasic runs stateless checks on the message
 func (msg MsgSetExchangeRate) ValidateBasic() error {
-	if msg.Setter == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Setter)
+	if msg.Sender == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Sender)
 	}
 	if !msg.ExchangeRate.IsPositive() {
 		return sdkerrors.ErrInsufficientFunds

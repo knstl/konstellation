@@ -31,39 +31,27 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 
 // Handle a message to set exchange rate
 func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetExchangeRate) (*sdk.Result, error) {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, msg.Setter) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect allowed address") // If not, throw an error
+	err := k.SetExchangeRate(ctx, msg.Sender, msg.ExchangeRate)
+	if err != nil {
+		return nil, err
 	}
-	k.SetExchangeRate(ctx, msg.ExchangeRate)
 	return &sdk.Result{}, nil
 }
 
 // Handle a message to delete exchange rate
 func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDeleteExchangeRate) (*sdk.Result, error) {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, msg.Sender) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+	err := k.DeleteExchangeRate(ctx, msg.Sender)
+	if err != nil {
+		return nil, err
 	}
-	k.DeleteExchangeRate(ctx)
 	return &sdk.Result{}, nil
 }
 
 // Handle a message to set admin address
 func handleMsgSetAdminAddr(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetAdminAddr) (*sdk.Result, error) {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, msg.Sender) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+	err := k.SetAdminAddr(ctx, msg.Sender, msg.Add, msg.Delete)
+	if err != nil {
+		return nil, err
 	}
-	k.SetAdminAddr(ctx, msg.Sender, msg.Add, msg.Delete)
 	return &sdk.Result{}, nil
-}
-
-func isValidSender(allowedAddresses []string, sender string) bool {
-	for _, address := range allowedAddresses {
-		if address == sender {
-			return true
-		}
-	}
-	return false
 }

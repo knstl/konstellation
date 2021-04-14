@@ -9,6 +9,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
@@ -41,30 +42,58 @@ func (k Keeper) GetAllowedAddresses(ctx sdk.Context) (allowedAddresses []string)
 
 	allowedAddressesBytes := bytes.NewBuffer(b)
 	dec := gob.NewDecoder(allowedAddressesBytes)
-	dec.Decode(&allowedAddresses)
+	err := dec.Decode(&allowedAddresses)
+	if err != nil {
+		panic(err)
+	}
 	return
 }
 
-func (k Keeper) SetAllowedAddresses(ctx sdk.Context, allowedAddresses []string) {
+func (k Keeper) SetAllowedAddresses(ctx sdk.Context, sender string, newAllowedAddresses []string) error {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+	}
+	preAddressListNum := len(allowedAddresses)
+	for _, address := range newAllowedAddresses { // skip duplicated address
+		if !isValidSender(allowedAddresses, address) {
+			allowedAddresses = append(allowedAddresses, address)
+		}
+	}
+	postAddressListNum := len(allowedAddresses)
+	if preAddressListNum == postAddressListNum {
+		return sdkerrors.Wrap(sdkerrors.ErrLogic, "no address to add") // If not, throw an error
+	}
 	var allowedAddressesBytes bytes.Buffer
 	enc := gob.NewEncoder(&allowedAddressesBytes)
-	enc.Encode(allowedAddresses)
+	err := enc.Encode(allowedAddresses)
+	if err != nil {
+		return err
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	store.Set(types.AllowedAddressKey, allowedAddressesBytes.Bytes())
+	return nil
 }
 
-func (k Keeper) DeleteAllowedAddresses(ctx sdk.Context, addressesToDelete []string) {
+func (k Keeper) DeleteAllowedAddresses(ctx sdk.Context, sender string, addressesToDelete []string) error {
 	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+	}
 	for _, address := range addressesToDelete {
 		allowedAddresses = removeAddress(allowedAddresses, address)
 	}
 	var allowedAddressesBytes bytes.Buffer
 	enc := gob.NewEncoder(&allowedAddressesBytes)
-	enc.Encode(allowedAddresses)
+	err := enc.Encode(allowedAddresses)
+	if err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrLogic, err.Error()) // If not, throw an error
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	store.Set(types.AllowedAddressKey, allowedAddressesBytes.Bytes())
+	return nil
 }
 
 func removeAddress(s []string, r string) []string {
@@ -87,22 +116,50 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
 	return
 }
 
-func (k Keeper) SetExchangeRate(ctx sdk.Context, exchangeRate sdk.Coin) {
+func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, exchangeRate sdk.Coin) error {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+	}
+
 	store := ctx.KVStore(k.storeKey)
 	b := k.cdc.MustMarshalBinaryBare(&exchangeRate)
 	store.Set(types.ExchangeRateKey, b)
+	return nil
 }
 
-func (k Keeper) DeleteExchangeRate(ctx sdk.Context) {
+func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender string) error {
+	allowedAddresses := k.GetAllowedAddresses(ctx)
+	if !isValidSender(allowedAddresses, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+	}
+
 	store := ctx.KVStore(k.storeKey)
 	store.Delete(types.ExchangeRateKey)
+	return nil
 }
 
-func (k Keeper) SetAdminAddr(ctx sdk.Context, sender string, add []string, del []string) {
+func (k Keeper) SetAdminAddr(ctx sdk.Context, sender string, add []string, del []string) error {
 	if len(add) > 0 {
-		k.SetAllowedAddresses(ctx, add)
+		err := k.SetAllowedAddresses(ctx, sender, add)
+		if err != nil {
+			return err
+		}
 	}
 	if len(del) > 0 {
-		k.DeleteAllowedAddresses(ctx, add)
+		err := k.DeleteAllowedAddresses(ctx, sender, del)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
+}
+
+func isValidSender(allowedAddresses []string, sender string) bool {
+	for _, address := range allowedAddresses {
+		if address == sender {
+			return true
+		}
+	}
+	return false
 }
