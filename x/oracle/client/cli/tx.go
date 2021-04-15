@@ -2,14 +2,16 @@ package cli
 
 import (
 	"errors"
-	"github.com/spf13/cobra"
 	"strconv"
 	"strings"
+
+	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+
 	//	"github.com/cosmos/cosmos-sdk/types/msgservice"
 
 	"github.com/konstellation/konstellation/x/oracle/types"
@@ -27,6 +29,7 @@ func NewExchangeRateCmd() *cobra.Command {
 	txCmd.AddCommand(
 		NewMsgSetExchangeRateCmd(),
 		NewMsgDeleteExchangeRateCmd(),
+		NewMsgSetAdminAddrCmd(),
 	)
 
 	return txCmd
