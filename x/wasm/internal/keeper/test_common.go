@@ -221,9 +221,11 @@ func CreateTestInput(t *testing.T, isCheckTx bool, supportedFeatures string, enc
 
 	// set genesis items required for distribution
 	distKeeper.SetFeePool(ctx, distributiontypes.InitialFeePool())
+	oracleSubsp, _ := paramsKeeper.GetSubspace(oracletypes.ModuleName)
 	oracleKeeper := oraclekeeper.NewKeeper(
 		appCodec,
 		keyOracle,
+		oracleSubsp,
 	)
 
 	// set some funds ot pay out validatores, based on code from:

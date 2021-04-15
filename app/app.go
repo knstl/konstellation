@@ -410,6 +410,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 	app.oracleKeeper = oraclekeeper.NewKeeper(
 		appCodec,
 		keys[oracletypes.StoreKey],
+		app.getSubspace(oracletypes.ModuleName),
 	)
 
 	// just re-use the full router - do we want to limit this more?
@@ -740,6 +741,7 @@ func initParamsKeeper(appCodec codec.BinaryMarshaler, legacyAmino *codec.LegacyA
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
+	paramsKeeper.Subspace(oracletypes.ModuleName)
 
 	return paramsKeeper
 }

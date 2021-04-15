@@ -10,20 +10,28 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
 // Keeper of the oracle store
 type Keeper struct {
-	storeKey sdk.StoreKey
-	cdc      codec.BinaryMarshaler
+	storeKey   sdk.StoreKey
+	paramSpace paramtypes.Subspace
+	cdc        codec.BinaryMarshaler
 }
 
 // NewKeeper creates an oracle keeper
-func NewKeeper(cdc codec.BinaryMarshaler, key sdk.StoreKey) Keeper {
+func NewKeeper(cdc codec.BinaryMarshaler, key sdk.StoreKey, paramSpace paramtypes.Subspace) Keeper {
+	// set KeyTable if it has not already been set
+	if !paramSpace.HasKeyTable() {
+		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
+	}
+
 	keeper := Keeper{
-		storeKey: key,
-		cdc:      cdc,
+		storeKey:   key,
+		paramSpace: paramSpace,
+		cdc:        cdc,
 	}
 	return keeper
 }
