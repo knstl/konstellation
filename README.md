@@ -179,7 +179,7 @@ konstellationcli q staking validators --chain-id <chain_id>
 
 * Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ... —from <key_name> --chain-id=<chain_id>` with the necessary options
 
-### How to init chain
+## How to init chain
 
 Add key to your keyring
 ```knstld keys add key1```
