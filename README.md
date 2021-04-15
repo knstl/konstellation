@@ -180,6 +180,26 @@ konstellationcli q staking validators --chain-id <chain_id>
 * Note: You can edit the params after, by running command `konstellationcli tx staking edit-validator ... —from <key_name> --chain-id=<chain_id>` with the necessary options
 
 
+Add key to your keyring
+```knstld keys add key1```
+
+Initialize genesis and config files 
+```knstld init node-knstld-13 --chain-id darcmatter```
+
+Add genesis account
+```knstld add-genesis-account key1 200000000000udarc``` - 200000darc
+
+Create genesis transaction
+```knstld gentx --name key1 100000000000udarc``` - create CreateValidator transaction
+
+Collect all of gentxs
+```knstld collect-gentxs```
+
+Run network
+```knstld start```
+
+
+
 ## Dockerized
 
 We provide a docker image to help with test setups. There are two modes to use it
