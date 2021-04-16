@@ -181,6 +181,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		oracletypes.ModuleName:         nil,
 	}
 
 	// module accounts that are allowed to receive tokens
@@ -499,6 +500,7 @@ func NewKonstellationApp(logger log.Logger, db dbm.DB, traceStore io.Writer, loa
 		evidencetypes.ModuleName,
 		stakingtypes.ModuleName,
 		ibchost.ModuleName,
+		oracletypes.ModuleName,
 	)
 	app.mm.SetOrderEndBlockers(
 		crisistypes.ModuleName,
