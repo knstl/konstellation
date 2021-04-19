@@ -49,8 +49,9 @@ services:
     environment:
       - CHAIN_ID=darchub
     ports:
-      - "26656-26657:26656-26657"
+      - "26656-26658:26656-26658"
       - "1317:1317"
+      - "9090:9090"
     volumes:
       - ~/.knstld:/root/.knstld
     entrypoint: /opt/run.sh
