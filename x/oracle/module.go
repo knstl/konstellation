@@ -88,8 +88,6 @@ type AppModule struct {
 	AppModuleBasic
 
 	keeper keeper.Keeper
-	// TODO: Add keepers that your application depends on
-
 }
 
 // NewAppModule creates a new AppModule object
@@ -97,7 +95,6 @@ func NewAppModule(cdc codec.Marshaler, keeper keeper.Keeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{cdc: cdc},
 		keeper:         keeper,
-		// TODO: Add keepers that your application depends on
 	}
 }
 

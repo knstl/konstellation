@@ -6,7 +6,7 @@ import (
 
 var (
 	// TODO: change default actual address
-	DefaultAllowedAddress = []byte("abc")
+	DefaultAllowedAddress = []byte("")
 	DefaultExchangeRate   = []byte("")
 )
 
@@ -20,14 +20,14 @@ func NewGenesisState(allowedAddresses []string) *GenesisState {
 // DefaultGenesisState - default GenesisState used by Cosmos Hub
 func DefaultGenesisState() *GenesisState {
 	return &GenesisState{
-		AllowedAddresses: []string{string(DefaultAllowedAddress)},
+		AllowedAddresses: []string{},
 	}
 }
 
 func (s *GenesisState) ValidateBasic() error {
-	if len(s.AllowedAddresses) == 0 {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "no addresses")
-	}
+	//if len(s.AllowedAddresses) == 0 {
+	//	return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "no addresses")
+	//}
 	for _, address := range s.AllowedAddresses {
 		if len(address) == 0 {
 			return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "address is empty string")
