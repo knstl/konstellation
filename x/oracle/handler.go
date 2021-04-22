@@ -21,6 +21,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return handleMsgSetExchangeRate(ctx, k, msg)
 		case *types.MsgDeleteExchangeRate:
 			return handleMsgDeleteExchangeRate(ctx, k, msg)
+		case *types.MsgSetAdminAddr:
+			return handleMsgSetAdminAddr(ctx, k, msg)
 		default:
 			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, fmt.Sprintf("Unrecognized oracle Msg type: %v", msg.Type()))
 		}
@@ -29,20 +31,27 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 
 // Handle a message to set exchange rate
 func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetExchangeRate) (*sdk.Result, error) {
-	// Checks if the the bid price is greater than the price paid by the current owner
-	if k.GetAllowedAddress(ctx) != msg.Setter {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect allowed address") // If not, throw an error
+	err := k.SetExchangeRate(ctx, msg.Sender, msg.ExchangeRate)
+	if err != nil {
+		return nil, err
 	}
-	k.SetExchangeRate(ctx, *msg.ExchangeRate)
 	return &sdk.Result{}, nil
 }
 
-// Handle a message to set exchange rate
+// Handle a message to delete exchange rate
 func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDeleteExchangeRate) (*sdk.Result, error) {
-	// Checks if the the bid price is greater than the price paid by the current owner
-	if k.GetAllowedAddress(ctx) != msg.Creator {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect allowed address") // If not, throw an error
+	err := k.DeleteExchangeRate(ctx, msg.Sender)
+	if err != nil {
+		return nil, err
 	}
-	k.DeleteExchangeRate(ctx)
+	return &sdk.Result{}, nil
+}
+
+// Handle a message to set admin address
+func handleMsgSetAdminAddr(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetAdminAddr) (*sdk.Result, error) {
+	err := k.SetAdminAddr(ctx, msg.Sender, msg.Add, msg.Delete)
+	if err != nil {
+		return nil, err
+	}
 	return &sdk.Result{}, nil
 }

@@ -2,5 +2,7 @@ package types
 
 // oracle module event types
 const (
-	AttributeValueOracle = ModuleName
+	EventTypeOracle = ModuleName
+
+	AttributeKeyExchangeRate = "exchage_rate"
 )

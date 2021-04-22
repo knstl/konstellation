@@ -6,7 +6,8 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	types "github.com/cosmos/cosmos-sdk/types"
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
 	grpc "google.golang.org/grpc"
@@ -29,8 +30,9 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type MsgSetExchangeRate struct {
-	ExchangeRate *types.Coin `protobuf:"bytes,1,opt,name=exchange_rate,json=exchangeRate,proto3" json:"exchange_rate,omitempty"`
-	Setter       string      `protobuf:"bytes,2,opt,name=setter,proto3" json:"setter,omitempty"`
+	//cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
+	ExchangeRate github_com_cosmos_cosmos_sdk_types.Coin `protobuf:"bytes,1,opt,name=exchange_rate,json=exchangeRate,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coin" json:"exchange_rate"`
+	Sender       string                                  `protobuf:"bytes,2,opt,name=sender,proto3" json:"sender,omitempty"`
 }
 
 func (m *MsgSetExchangeRate) Reset()         { *m = MsgSetExchangeRate{} }
@@ -66,16 +68,9 @@ func (m *MsgSetExchangeRate) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgSetExchangeRate proto.InternalMessageInfo
 
-func (m *MsgSetExchangeRate) GetExchangeRate() *types.Coin {
+func (m *MsgSetExchangeRate) GetSender() string {
 	if m != nil {
-		return m.ExchangeRate
-	}
-	return nil
-}
-
-func (m *MsgSetExchangeRate) GetSetter() string {
-	if m != nil {
-		return m.Setter
+		return m.Sender
 	}
 	return ""
 }
@@ -117,8 +112,7 @@ func (m *MsgSetExchangeRateResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgSetExchangeRateResponse proto.InternalMessageInfo
 
 type MsgDeleteExchangeRate struct {
-	Denom   string `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom,omitempty"`
-	Creator string `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
+	Sender string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
 }
 
 func (m *MsgDeleteExchangeRate) Reset()         { *m = MsgDeleteExchangeRate{} }
@@ -154,16 +148,9 @@ func (m *MsgDeleteExchangeRate) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteExchangeRate proto.InternalMessageInfo
 
-func (m *MsgDeleteExchangeRate) GetDenom() string {
+func (m *MsgDeleteExchangeRate) GetSender() string {
 	if m != nil {
-		return m.Denom
-	}
-	return ""
-}
-
-func (m *MsgDeleteExchangeRate) GetCreator() string {
-	if m != nil {
-		return m.Creator
+		return m.Sender
 	}
 	return ""
 }
@@ -204,36 +191,177 @@ func (m *MsgDeleteExchangeRateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteExchangeRateResponse proto.InternalMessageInfo
 
+type MsgSetAdminAddr struct {
+	Sender string   `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
+	Add    []string `protobuf:"bytes,2,rep,name=add,proto3" json:"add,omitempty"`
+	Delete []string `protobuf:"bytes,3,rep,name=delete,proto3" json:"delete,omitempty"`
+}
+
+func (m *MsgSetAdminAddr) Reset()         { *m = MsgSetAdminAddr{} }
+func (m *MsgSetAdminAddr) String() string { return proto.CompactTextString(m) }
+func (*MsgSetAdminAddr) ProtoMessage()    {}
+func (*MsgSetAdminAddr) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0fd2153dc07d3b5c, []int{4}
+}
+func (m *MsgSetAdminAddr) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetAdminAddr) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetAdminAddr.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetAdminAddr) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetAdminAddr.Merge(m, src)
+}
+func (m *MsgSetAdminAddr) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetAdminAddr) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetAdminAddr.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetAdminAddr proto.InternalMessageInfo
+
+func (m *MsgSetAdminAddr) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+func (m *MsgSetAdminAddr) GetAdd() []string {
+	if m != nil {
+		return m.Add
+	}
+	return nil
+}
+
+func (m *MsgSetAdminAddr) GetDelete() []string {
+	if m != nil {
+		return m.Delete
+	}
+	return nil
+}
+
+type MsgSetAdminAddrResponse struct {
+}
+
+func (m *MsgSetAdminAddrResponse) Reset()         { *m = MsgSetAdminAddrResponse{} }
+func (m *MsgSetAdminAddrResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSetAdminAddrResponse) ProtoMessage()    {}
+func (*MsgSetAdminAddrResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0fd2153dc07d3b5c, []int{5}
+}
+func (m *MsgSetAdminAddrResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetAdminAddrResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetAdminAddrResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetAdminAddrResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetAdminAddrResponse.Merge(m, src)
+}
+func (m *MsgSetAdminAddrResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetAdminAddrResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetAdminAddrResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetAdminAddrResponse proto.InternalMessageInfo
+
+// Params holds parameters for the mint module.
+type Params struct {
+}
+
+func (m *Params) Reset()      { *m = Params{} }
+func (*Params) ProtoMessage() {}
+func (*Params) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0fd2153dc07d3b5c, []int{6}
+}
+func (m *Params) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Params) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Params.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Params) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Params.Merge(m, src)
+}
+func (m *Params) XXX_Size() int {
+	return m.Size()
+}
+func (m *Params) XXX_DiscardUnknown() {
+	xxx_messageInfo_Params.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Params proto.InternalMessageInfo
+
 func init() {
-	proto.RegisterType((*MsgSetExchangeRate)(nil), "types.MsgSetExchangeRate")
-	proto.RegisterType((*MsgSetExchangeRateResponse)(nil), "types.MsgSetExchangeRateResponse")
-	proto.RegisterType((*MsgDeleteExchangeRate)(nil), "types.MsgDeleteExchangeRate")
-	proto.RegisterType((*MsgDeleteExchangeRateResponse)(nil), "types.MsgDeleteExchangeRateResponse")
+	proto.RegisterType((*MsgSetExchangeRate)(nil), "konstellation.oracle.MsgSetExchangeRate")
+	proto.RegisterType((*MsgSetExchangeRateResponse)(nil), "konstellation.oracle.MsgSetExchangeRateResponse")
+	proto.RegisterType((*MsgDeleteExchangeRate)(nil), "konstellation.oracle.MsgDeleteExchangeRate")
+	proto.RegisterType((*MsgDeleteExchangeRateResponse)(nil), "konstellation.oracle.MsgDeleteExchangeRateResponse")
+	proto.RegisterType((*MsgSetAdminAddr)(nil), "konstellation.oracle.MsgSetAdminAddr")
+	proto.RegisterType((*MsgSetAdminAddrResponse)(nil), "konstellation.oracle.MsgSetAdminAddrResponse")
+	proto.RegisterType((*Params)(nil), "konstellation.oracle.Params")
 }
 
 func init() { proto.RegisterFile("tx.proto", fileDescriptor_0fd2153dc07d3b5c) }
 
 var fileDescriptor_0fd2153dc07d3b5c = []byte{
-	// 297 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0xcd, 0x4a, 0xc3, 0x40,
-	0x14, 0x85, 0x3b, 0x4a, 0xab, 0xbd, 0xfe, 0xc1, 0xa0, 0xd2, 0x86, 0x3a, 0xd6, 0xe0, 0xa2, 0xab,
-	0x09, 0xad, 0x7b, 0x17, 0xfe, 0xe0, 0x2a, 0x08, 0x71, 0x23, 0x6e, 0x64, 0x12, 0x2f, 0xb1, 0x90,
-	0x66, 0x42, 0xe6, 0x22, 0xf1, 0x2d, 0x7c, 0x14, 0x1f, 0xc3, 0x65, 0x97, 0x2e, 0x25, 0x79, 0x11,
-	0x21, 0x4d, 0xf0, 0x27, 0xd5, 0xe5, 0xe1, 0x70, 0xbe, 0x73, 0x66, 0x2e, 0xac, 0x53, 0x26, 0x93,
-	0x54, 0x93, 0xe6, 0x6d, 0x7a, 0x4e, 0xd0, 0x58, 0xfc, 0x69, 0xec, 0x23, 0xa9, 0xb1, 0x13, 0xe8,
-	0x69, 0xbc, 0xb0, 0xec, 0x08, 0xb8, 0x6b, 0xc2, 0x1b, 0xa4, 0xcb, 0x2c, 0x78, 0x54, 0x71, 0x88,
-	0x9e, 0x22, 0xe4, 0xa7, 0xb0, 0x85, 0x95, 0xbe, 0x4f, 0x15, 0x61, 0x8f, 0x0d, 0xd9, 0x68, 0x63,
-	0xd2, 0x97, 0x81, 0x36, 0x33, 0x6d, 0xa4, 0xaf, 0x0c, 0xca, 0x8a, 0x26, 0xcf, 0xf5, 0x34, 0xf6,
-	0x36, 0xf1, 0x7b, 0x7e, 0x1f, 0x3a, 0x06, 0x89, 0x30, 0xed, 0xad, 0x0c, 0xd9, 0xa8, 0xeb, 0x55,
-	0xca, 0x1e, 0x80, 0xd5, 0x6c, 0xf3, 0xd0, 0x24, 0x3a, 0x36, 0x68, 0x5f, 0xc1, 0x9e, 0x6b, 0xc2,
-	0x0b, 0x8c, 0x90, 0xf0, 0xc7, 0x9c, 0x5d, 0x68, 0x3f, 0x60, 0xac, 0x67, 0xe5, 0x8c, 0xae, 0xb7,
-	0x10, 0xbc, 0x07, 0x6b, 0x41, 0x8a, 0x8a, 0x74, 0xdd, 0x52, 0x4b, 0xfb, 0x10, 0x0e, 0x96, 0x82,
-	0xea, 0xa6, 0xc9, 0x2b, 0x83, 0x55, 0xd7, 0x84, 0xfc, 0x1a, 0x76, 0x7e, 0x3f, 0xbd, 0x2f, 0xcb,
-	0xcf, 0x92, 0xcd, 0x9d, 0xd6, 0xd1, 0x9f, 0x56, 0x0d, 0xe6, 0xb7, 0xc0, 0x97, 0xec, 0x1f, 0x7c,
-	0x05, 0x9b, 0xae, 0x75, 0xfc, 0x9f, 0x5b, 0x93, 0xcf, 0x46, 0x6f, 0xb9, 0x60, 0xf3, 0x5c, 0xb0,
-	0x8f, 0x5c, 0xb0, 0x97, 0x42, 0xb4, 0xe6, 0x85, 0x68, 0xbd, 0x17, 0xa2, 0x75, 0xb7, 0x9d, 0x39,
-	0x3a, 0x55, 0x41, 0x84, 0x4e, 0xc9, 0xf1, 0x3b, 0xe5, 0x65, 0x4f, 0x3e, 0x03, 0x00, 0x00, 0xff,
-	0xff, 0x06, 0x1f, 0xcb, 0x55, 0x00, 0x02, 0x00, 0x00,
+	// 389 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0x41, 0x8b, 0xda, 0x40,
+	0x14, 0xc7, 0x33, 0xa6, 0x48, 0x1d, 0xac, 0x96, 0x60, 0xdb, 0x34, 0xb4, 0x89, 0x04, 0x4a, 0x03,
+	0xc5, 0xa4, 0xd4, 0x5b, 0x6f, 0xda, 0x7a, 0x14, 0x4a, 0xec, 0xa9, 0x97, 0x32, 0x66, 0x1e, 0x31,
+	0x98, 0x64, 0x24, 0x33, 0x2d, 0xf6, 0xda, 0x4f, 0xb0, 0xc7, 0x3d, 0xee, 0xc7, 0xf1, 0x28, 0x7b,
+	0x5a, 0xf6, 0x20, 0x8b, 0x7e, 0x91, 0xc5, 0x24, 0x86, 0x55, 0xe3, 0xe2, 0x9e, 0x32, 0x2f, 0xfc,
+	0xe6, 0xf7, 0x1e, 0xff, 0x79, 0xf8, 0xb9, 0x98, 0xdb, 0xb3, 0x84, 0x09, 0xa6, 0xb4, 0xa6, 0x2c,
+	0xe6, 0x02, 0xc2, 0x90, 0x88, 0x80, 0xc5, 0x36, 0x4b, 0x88, 0x17, 0x82, 0xd6, 0xf2, 0x99, 0xcf,
+	0x52, 0xc0, 0xd9, 0x9e, 0x32, 0xd6, 0xfc, 0x8f, 0xb0, 0x32, 0xe4, 0xfe, 0x08, 0xc4, 0x60, 0xee,
+	0x4d, 0x48, 0xec, 0x83, 0x4b, 0x04, 0x28, 0x3f, 0xf1, 0x0b, 0xc8, 0xeb, 0xdf, 0x09, 0x11, 0xa0,
+	0xa2, 0x36, 0xb2, 0xea, 0x7d, 0x67, 0xb1, 0x32, 0xa4, 0xdb, 0x95, 0xf1, 0xd1, 0x0f, 0xc4, 0xe4,
+	0xcf, 0xd8, 0xf6, 0x58, 0xe4, 0x78, 0x8c, 0x47, 0x8c, 0xe7, 0x9f, 0x0e, 0xa7, 0x53, 0x47, 0xfc,
+	0x9b, 0x01, 0xb7, 0xbf, 0xb1, 0x20, 0x76, 0xeb, 0xf0, 0xd0, 0xfa, 0x1a, 0x57, 0x39, 0xc4, 0x14,
+	0x12, 0xb5, 0xd2, 0x46, 0x56, 0xcd, 0xcd, 0x2b, 0xf3, 0x1d, 0xd6, 0x8e, 0x67, 0x70, 0x81, 0xcf,
+	0x58, 0xcc, 0xc1, 0x74, 0xf0, 0xab, 0x21, 0xf7, 0xbf, 0x43, 0x08, 0x02, 0x06, 0xe5, 0x3a, 0xb4,
+	0xa7, 0x33, 0xf0, 0xfb, 0xd2, 0x0b, 0x85, 0x71, 0x84, 0x9b, 0x59, 0xbf, 0x1e, 0x8d, 0x82, 0xb8,
+	0x47, 0x69, 0x72, 0xca, 0xa5, 0xbc, 0xc4, 0x32, 0xa1, 0x54, 0xad, 0xb4, 0x65, 0xab, 0xe6, 0x6e,
+	0x8f, 0x5b, 0x92, 0xa6, 0x6a, 0x55, 0x4e, 0x7f, 0xe6, 0x95, 0xf9, 0x16, 0xbf, 0x39, 0x90, 0x16,
+	0xfd, 0x1a, 0xb8, 0xfa, 0x83, 0x24, 0x24, 0xe2, 0x5f, 0x9f, 0x5d, 0x5e, 0x19, 0xd2, 0x97, 0xeb,
+	0x0a, 0x96, 0x87, 0xdc, 0x57, 0x22, 0xdc, 0x3c, 0x0c, 0xde, 0xb2, 0xcb, 0x1e, 0xcf, 0x3e, 0x8e,
+	0x47, 0xfb, 0x7c, 0x2e, 0xb9, 0x1b, 0x43, 0xf9, 0x8b, 0x95, 0x92, 0x14, 0x3f, 0x9d, 0xf4, 0x1c,
+	0xc3, 0x5a, 0xf7, 0x09, 0x70, 0xd1, 0x97, 0xe2, 0xfa, 0x5e, 0xd6, 0x1f, 0x1e, 0x9b, 0xbc, 0xc0,
+	0xb4, 0xce, 0x59, 0xd8, 0xae, 0x4b, 0xdf, 0x5a, 0xac, 0x75, 0xb4, 0x5c, 0xeb, 0xe8, 0x6e, 0xad,
+	0xa3, 0x8b, 0x8d, 0x2e, 0x2d, 0x37, 0xba, 0x74, 0xb3, 0xd1, 0xa5, 0x5f, 0x8d, 0xb9, 0x93, 0xdd,
+	0xcd, 0x36, 0x73, 0x5c, 0x4d, 0x57, 0xbf, 0x7b, 0x1f, 0x00, 0x00, 0xff, 0xff, 0x6c, 0xee, 0xc6,
+	0xdb, 0x32, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -250,6 +378,7 @@ const _ = grpc.SupportPackageIsVersion4
 type MsgClient interface {
 	SetExchangeRate(ctx context.Context, in *MsgSetExchangeRate, opts ...grpc.CallOption) (*MsgSetExchangeRateResponse, error)
 	DeleteExchangeRate(ctx context.Context, in *MsgDeleteExchangeRate, opts ...grpc.CallOption) (*MsgDeleteExchangeRateResponse, error)
+	SetAdminAddr(ctx context.Context, in *MsgSetAdminAddr, opts ...grpc.CallOption) (*MsgSetAdminAddrResponse, error)
 }
 
 type msgClient struct {
@@ -262,7 +391,7 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 
 func (c *msgClient) SetExchangeRate(ctx context.Context, in *MsgSetExchangeRate, opts ...grpc.CallOption) (*MsgSetExchangeRateResponse, error) {
 	out := new(MsgSetExchangeRateResponse)
-	err := c.cc.Invoke(ctx, "/types.Msg/SetExchangeRate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/konstellation.oracle.Msg/SetExchangeRate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +400,16 @@ func (c *msgClient) SetExchangeRate(ctx context.Context, in *MsgSetExchangeRate,
 
 func (c *msgClient) DeleteExchangeRate(ctx context.Context, in *MsgDeleteExchangeRate, opts ...grpc.CallOption) (*MsgDeleteExchangeRateResponse, error) {
 	out := new(MsgDeleteExchangeRateResponse)
-	err := c.cc.Invoke(ctx, "/types.Msg/DeleteExchangeRate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/konstellation.oracle.Msg/DeleteExchangeRate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) SetAdminAddr(ctx context.Context, in *MsgSetAdminAddr, opts ...grpc.CallOption) (*MsgSetAdminAddrResponse, error) {
+	out := new(MsgSetAdminAddrResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.oracle.Msg/SetAdminAddr", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -282,6 +420,7 @@ func (c *msgClient) DeleteExchangeRate(ctx context.Context, in *MsgDeleteExchang
 type MsgServer interface {
 	SetExchangeRate(context.Context, *MsgSetExchangeRate) (*MsgSetExchangeRateResponse, error)
 	DeleteExchangeRate(context.Context, *MsgDeleteExchangeRate) (*MsgDeleteExchangeRateResponse, error)
+	SetAdminAddr(context.Context, *MsgSetAdminAddr) (*MsgSetAdminAddrResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -293,6 +432,9 @@ func (*UnimplementedMsgServer) SetExchangeRate(ctx context.Context, req *MsgSetE
 }
 func (*UnimplementedMsgServer) DeleteExchangeRate(ctx context.Context, req *MsgDeleteExchangeRate) (*MsgDeleteExchangeRateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExchangeRate not implemented")
+}
+func (*UnimplementedMsgServer) SetAdminAddr(ctx context.Context, req *MsgSetAdminAddr) (*MsgSetAdminAddrResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAdminAddr not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -309,7 +451,7 @@ func _Msg_SetExchangeRate_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/types.Msg/SetExchangeRate",
+		FullMethod: "/konstellation.oracle.Msg/SetExchangeRate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).SetExchangeRate(ctx, req.(*MsgSetExchangeRate))
@@ -327,7 +469,7 @@ func _Msg_DeleteExchangeRate_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/types.Msg/DeleteExchangeRate",
+		FullMethod: "/konstellation.oracle.Msg/DeleteExchangeRate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).DeleteExchangeRate(ctx, req.(*MsgDeleteExchangeRate))
@@ -335,8 +477,26 @@ func _Msg_DeleteExchangeRate_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SetAdminAddr_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetAdminAddr)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SetAdminAddr(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.oracle.Msg/SetAdminAddr",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SetAdminAddr(ctx, req.(*MsgSetAdminAddr))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "types.Msg",
+	ServiceName: "konstellation.oracle.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -346,6 +506,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteExchangeRate",
 			Handler:    _Msg_DeleteExchangeRate_Handler,
+		},
+		{
+			MethodName: "SetAdminAddr",
+			Handler:    _Msg_SetAdminAddr_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -372,25 +536,23 @@ func (m *MsgSetExchangeRate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Setter) > 0 {
-		i -= len(m.Setter)
-		copy(dAtA[i:], m.Setter)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Setter)))
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if m.ExchangeRate != nil {
-		{
-			size, err := m.ExchangeRate.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTx(dAtA, i, uint64(size))
+	{
+		size := m.ExchangeRate.Size()
+		i -= size
+		if _, err := m.ExchangeRate.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0xa
+		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
+	i--
+	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -437,17 +599,10 @@ func (m *MsgDeleteExchangeRate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Creator) > 0 {
-		i -= len(m.Creator)
-		copy(dAtA[i:], m.Creator)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Denom) > 0 {
-		i -= len(m.Denom)
-		copy(dAtA[i:], m.Denom)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Denom)))
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -477,6 +632,100 @@ func (m *MsgDeleteExchangeRateResponse) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgSetAdminAddr) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetAdminAddr) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetAdminAddr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Delete) > 0 {
+		for iNdEx := len(m.Delete) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Delete[iNdEx])
+			copy(dAtA[i:], m.Delete[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.Delete[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Add) > 0 {
+		for iNdEx := len(m.Add) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Add[iNdEx])
+			copy(dAtA[i:], m.Add[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.Add[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetAdminAddrResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetAdminAddrResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetAdminAddrResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *Params) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Params) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Params) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -494,11 +743,9 @@ func (m *MsgSetExchangeRate) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.ExchangeRate != nil {
-		l = m.ExchangeRate.Size()
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.Setter)
+	l = m.ExchangeRate.Size()
+	n += 1 + l + sovTx(uint64(l))
+	l = len(m.Sender)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -520,11 +767,7 @@ func (m *MsgDeleteExchangeRate) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Denom)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.Creator)
+	l = len(m.Sender)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -532,6 +775,49 @@ func (m *MsgDeleteExchangeRate) Size() (n int) {
 }
 
 func (m *MsgDeleteExchangeRateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgSetAdminAddr) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if len(m.Add) > 0 {
+		for _, s := range m.Add {
+			l = len(s)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	if len(m.Delete) > 0 {
+		for _, s := range m.Delete {
+			l = len(s)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *MsgSetAdminAddrResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *Params) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -579,7 +865,7 @@ func (m *MsgSetExchangeRate) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExchangeRate", wireType)
 			}
-			var msglen int
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -589,23 +875,20 @@ func (m *MsgSetExchangeRate) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthTx
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTx
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
-			}
-			if m.ExchangeRate == nil {
-				m.ExchangeRate = &types.Coin{}
 			}
 			if err := m.ExchangeRate.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -613,7 +896,7 @@ func (m *MsgSetExchangeRate) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Setter", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -641,7 +924,7 @@ func (m *MsgSetExchangeRate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Setter = string(dAtA[iNdEx:postIndex])
+			m.Sender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -745,7 +1028,7 @@ func (m *MsgDeleteExchangeRate) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -773,39 +1056,7 @@ func (m *MsgDeleteExchangeRate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Denom = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Creator = string(dAtA[iNdEx:postIndex])
+			m.Sender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -855,6 +1106,252 @@ func (m *MsgDeleteExchangeRateResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgDeleteExchangeRateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetAdminAddr) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetAdminAddr: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetAdminAddr: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Add", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Add = append(m.Add, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Delete", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Delete = append(m.Delete, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetAdminAddrResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetAdminAddrResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetAdminAddrResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Params) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Params: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Params: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

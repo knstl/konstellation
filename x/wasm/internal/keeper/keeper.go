@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
 	"path/filepath"
 
 	wasmvm "github.com/CosmWasm/wasmvm"
@@ -52,6 +53,7 @@ type Keeper struct {
 	cdc           codec.Marshaler
 	accountKeeper authkeeper.AccountKeeper
 	bankKeeper    bankkeeper.Keeper
+	oracleKeeper  oraclekeeper.Keeper
 
 	wasmer       types.WasmerEngine
 	queryPlugins QueryPlugins
@@ -72,6 +74,7 @@ func NewKeeper(
 	bankKeeper bankkeeper.Keeper,
 	stakingKeeper stakingkeeper.Keeper,
 	distKeeper distributionkeeper.Keeper,
+	oracleKeeper oraclekeeper.Keeper,
 	router sdk.Router,
 	homeDir string,
 	wasmConfig types.WasmConfig,
@@ -95,12 +98,13 @@ func NewKeeper(
 		wasmer:        wasmer,
 		accountKeeper: accountKeeper,
 		bankKeeper:    bankKeeper,
+		oracleKeeper:  oracleKeeper,
 		messenger:     NewMessageHandler(router, customEncoders),
 		queryGasLimit: wasmConfig.SmartQueryGasLimit,
 		authZPolicy:   DefaultAuthorizationPolicy{},
 		paramSpace:    paramSpace,
 	}
-	keeper.queryPlugins = DefaultQueryPlugins(bankKeeper, stakingKeeper, distKeeper, &keeper).Merge(customPlugins)
+	keeper.queryPlugins = DefaultQueryPlugins(bankKeeper, stakingKeeper, distKeeper, oracleKeeper, &keeper).Merge(customPlugins)
 	return keeper
 }
 

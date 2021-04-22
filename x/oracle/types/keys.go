@@ -1,7 +1,8 @@
 package types
 
 var (
-	ExchangeRateKey = []byte{0x00}
+	AllowedAddressKey = []byte{0x00}
+	ExchangeRateKey   = []byte{0x01}
 )
 
 const (
@@ -11,7 +12,8 @@ const (
 	RouterKey = ModuleName
 
 	// StoreKey is the default store key for mint
-	StoreKey = ModuleName
+	StoreKey     = ModuleName
+	QuerierRoute = StoreKey
 
-	QueryExchangeRate = "exchange-rate"
+	QueryExchangeRate = "exchange_rate"
 )

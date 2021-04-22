@@ -38,7 +38,7 @@ func TestRandomizedGenState(t *testing.T) {
 
 	var oracleGenesis types.GenesisState
 	simState.Cdc.MustUnmarshalJSON(simState.GenState[types.ModuleName], &oracleGenesis)
-	require.NotZero(t, len(oracleGenesis.AllowedAddress))
+	require.NotZero(t, len(oracleGenesis.AllowedAddresses))
 }
 
 // TestRandomizedGenState tests abnormal scenarios of applying RandomizedGenState.

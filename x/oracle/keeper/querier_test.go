@@ -16,10 +16,11 @@ import (
 func TestNewQuerier(t *testing.T) {
 	simapp := app.Setup(false)
 	ctx := simapp.NewContext(true, tmproto.Header{})
+	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
 
 	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
 	oracleKeeper := simapp.GetOracleKeeper()
-	oracleKeeper.SetExchangeRate(ctx, coin)
+	oracleKeeper.SetExchangeRate(ctx, "abc", coin)
 
 	query := abcitypes.RequestQuery{
 		Path: "",
@@ -28,7 +29,7 @@ func TestNewQuerier(t *testing.T) {
 
 	legacyQuerierCdc := codec.NewAminoCodec(simapp.LegacyAmino())
 	querier := keeper.NewQuerier(oracleKeeper, legacyQuerierCdc.LegacyAmino)
-	bz, err := querier(ctx, []string{"exchange-rate"}, query)
+	bz, err := querier(ctx, []string{"exchange_rate"}, query)
 	require.Nil(t, err)
 	expected :=
 		`{

@@ -3,7 +3,7 @@ module github.com/konstellation/konstellation
 go 1.15
 
 require (
-	github.com/CosmWasm/wasmvm v0.13.0
+	github.com/CosmWasm/wasmvm v0.14.0-beta3
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/vcs v1.13.1 // indirect
 	github.com/allegro/bigcache v1.2.1 // indirect
@@ -12,7 +12,7 @@ require (
 	github.com/bartekn/go-bip39 v0.0.0-20171116152956-a05967ea095d // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/cespare/cp v1.1.1 // indirect
-	github.com/cosmos/cosmos-sdk v0.41.0
+	github.com/cosmos/cosmos-sdk v0.42.4
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/dvsekhvalnov/jose2go v0.0.0-20200901110807-248326c1351b
 	github.com/elastic/gosigar v0.10.5 // indirect
@@ -33,6 +33,7 @@ require (
 	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/rakyll/statik v0.1.7
+	github.com/regen-network/cosmos-proto v0.3.1
 	github.com/rjeczalik/notify v0.9.2 // indirect
 	github.com/rs/cors v1.7.0
 	github.com/rs/zerolog v1.20.0
@@ -47,8 +48,8 @@ require (
 	github.com/tendermint/crypto v0.0.0-20191022145703-50d29ede1e15
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/iavl v0.12.4
-	github.com/tendermint/tendermint v0.34.3
-	github.com/tendermint/tm-db v0.6.3
+	github.com/tendermint/tendermint v0.34.9
+	github.com/tendermint/tm-db v0.6.4
 	go.opencensus.io v0.22.6 // indirect
 	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
 	google.golang.org/genproto v0.0.0-20210114201628-6edceaf6022f
