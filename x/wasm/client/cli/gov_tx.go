@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	"github.com/konstellation/konstellation/x/wasm/internal/types"
+	"github.com/konstellation/konstellation/x/wasm/types"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -138,7 +138,7 @@ func ProposalInstantiateContractCmd() *cobra.Command {
 				CodeID:      src.CodeID,
 				Label:       src.Label,
 				InitMsg:     src.InitMsg,
-				InitFunds:   src.InitFunds,
+				Funds:       src.Funds,
 			}
 
 			msg, err := govtypes.NewMsgSubmitProposal(&content, deposit, clientCtx.GetFromAddress())

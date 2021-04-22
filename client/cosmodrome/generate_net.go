@@ -28,12 +28,12 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/cosmos/iavl/common"
 	"github.com/konstellation/konstellation/common/utils"
 	kntypes "github.com/konstellation/konstellation/types"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/tendermint/iavl/common"
 	tmconfig "github.com/tendermint/tendermint/config"
 	"path/filepath"
 )

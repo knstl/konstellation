@@ -10,7 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/gorilla/mux"
 	wasmUtils "github.com/konstellation/konstellation/x/wasm/client/utils"
-	"github.com/konstellation/konstellation/x/wasm/internal/types"
+	"github.com/konstellation/konstellation/x/wasm/types"
 )
 
 func registerTxRoutes(cliCtx client.Context, r *mux.Router) {
@@ -18,9 +18,6 @@ func registerTxRoutes(cliCtx client.Context, r *mux.Router) {
 	r.HandleFunc("/wasm/code/{codeId}", instantiateContractHandlerFn(cliCtx)).Methods("POST")
 	r.HandleFunc("/wasm/contract/{contractAddr}", executeContractHandlerFn(cliCtx)).Methods("POST")
 }
-
-// limit max bytes read to prevent gzip bombs
-const maxSize = 400 * 1024
 
 type storeCodeReq struct {
 	BaseReq   rest.BaseReq `json:"base_req" yaml:"base_req"`
@@ -55,10 +52,6 @@ func storeCodeHandlerFn(cliCtx client.Context) http.HandlerFunc {
 
 		var err error
 		wasm := req.WasmBytes
-		if len(wasm) > maxSize {
-			rest.WriteErrorResponse(w, http.StatusBadRequest, "Binary size exceeds maximum limit")
-			return
-		}
 
 		// gzip the wasm file
 		if wasmUtils.IsWasm(wasm) {
@@ -108,12 +101,12 @@ func instantiateContractHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		}
 
 		msg := types.MsgInstantiateContract{
-			Sender:    req.BaseReq.From,
-			CodeID:    codeID,
-			Label:     req.Label,
-			InitFunds: req.Deposit,
-			InitMsg:   req.InitMsg,
-			Admin:     req.Admin,
+			Sender:  req.BaseReq.From,
+			CodeID:  codeID,
+			Label:   req.Label,
+			Funds:   req.Deposit,
+			InitMsg: req.InitMsg,
+			Admin:   req.Admin,
 		}
 
 		if err := msg.ValidateBasic(); err != nil {
@@ -140,10 +133,10 @@ func executeContractHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		}
 
 		msg := types.MsgExecuteContract{
-			Sender:    req.BaseReq.From,
-			Contract:  contractAddr,
-			Msg:       req.ExecMsg,
-			SentFunds: req.Amount,
+			Sender:   req.BaseReq.From,
+			Contract: contractAddr,
+			Msg:      req.ExecMsg,
+			Funds:    req.Amount,
 		}
 
 		if err := msg.ValidateBasic(); err != nil {

@@ -12,8 +12,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/gorilla/mux"
-	"github.com/konstellation/konstellation/x/wasm/internal/keeper"
-	"github.com/konstellation/konstellation/x/wasm/internal/types"
+	"github.com/konstellation/konstellation/x/wasm/keeper"
+	"github.com/konstellation/konstellation/x/wasm/types"
 )
 
 func registerQueryRoutes(cliCtx client.Context, r *mux.Router) {

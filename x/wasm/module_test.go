@@ -6,15 +6,14 @@ import (
 	"io/ioutil"
 	"testing"
 
-	wasmvmtypes "github.com/CosmWasm/wasmvm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	"github.com/dvsekhvalnov/jose2go/base64url"
-	"github.com/konstellation/konstellation/x/wasm/internal/keeper"
-	"github.com/konstellation/konstellation/x/wasm/internal/types"
+	"github.com/konstellation/konstellation/x/wasm/keeper"
+	"github.com/konstellation/konstellation/x/wasm/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -33,9 +32,10 @@ type testData struct {
 
 // returns a cleanup function, which must be defered on
 func setupTest(t *testing.T) testData {
-	ctx, keepers := CreateTestInput(t, false, "staking", nil, nil)
+	ctx, keepers := CreateTestInput(t, false, "staking,stargate")
+	cdc := keeper.MakeTestCodec(t)
 	data := testData{
-		module:        NewAppModule(keepers.WasmKeeper, keepers.StakingKeeper),
+		module:        NewAppModule(cdc, keepers.WasmKeeper, keepers.StakingKeeper),
 		ctx:           ctx,
 		acctKeeper:    keepers.AccountKeeper,
 		keeper:        *keepers.WasmKeeper,
@@ -63,8 +63,8 @@ func mustLoad(path string) []byte {
 var (
 	_, _, addrAcc1 = keyPubAddr()
 	addr1          = addrAcc1.String()
-	testContract   = mustLoad("./internal/keeper/testdata/hackatom.wasm")
-	maskContract   = mustLoad("./internal/keeper/testdata/reflect.wasm")
+	testContract   = mustLoad("./keeper/testdata/hackatom.wasm")
+	maskContract   = mustLoad("./keeper/testdata/reflect.wasm")
 	oldContract    = mustLoad("./testdata/escrow_0.7.wasm")
 )
 
@@ -134,9 +134,9 @@ type initMsg struct {
 }
 
 type state struct {
-	Verifier    wasmvmtypes.CanonicalAddress `json:"verifier"`
-	Beneficiary wasmvmtypes.CanonicalAddress `json:"beneficiary"`
-	Funder      wasmvmtypes.CanonicalAddress `json:"funder"`
+	Verifier    string `json:"verifier"`
+	Beneficiary string `json:"beneficiary"`
+	Funder      string `json:"funder"`
 }
 
 func TestHandleInstantiate(t *testing.T) {
@@ -168,10 +168,10 @@ func TestHandleInstantiate(t *testing.T) {
 
 	// create with no balance is also legal
 	initCmd := MsgInstantiateContract{
-		Sender:    creator.String(),
-		CodeID:    firstCodeID,
-		InitMsg:   initMsgBz,
-		InitFunds: nil,
+		Sender:  creator.String(),
+		CodeID:  firstCodeID,
+		InitMsg: initMsgBz,
+		Funds:   nil,
 	}
 	res, err = h(data.ctx, &initCmd)
 	require.NoError(t, err)
@@ -191,9 +191,9 @@ func TestHandleInstantiate(t *testing.T) {
 	assertContractList(t, q, data.ctx, 1, []string{contractBech32Addr})
 	assertContractInfo(t, q, data.ctx, contractBech32Addr, 1, creator)
 	assertContractState(t, q, data.ctx, contractBech32Addr, state{
-		Verifier:    []byte(fred),
-		Beneficiary: []byte(bob),
-		Funder:      []byte(creator),
+		Verifier:    fred.String(),
+		Beneficiary: bob.String(),
+		Funder:      creator.String(),
 	})
 }
 
@@ -225,10 +225,10 @@ func TestHandleExecute(t *testing.T) {
 	require.NoError(t, err)
 
 	initCmd := MsgInstantiateContract{
-		Sender:    creator.String(),
-		CodeID:    firstCodeID,
-		InitMsg:   initMsgBz,
-		InitFunds: deposit,
+		Sender:  creator.String(),
+		CodeID:  firstCodeID,
+		InitMsg: initMsgBz,
+		Funds:   deposit,
 	}
 	res, err = h(data.ctx, &initCmd)
 	require.NoError(t, err)
@@ -260,10 +260,10 @@ func TestHandleExecute(t *testing.T) {
 	assert.Equal(t, deposit, data.bankKeeper.GetAllBalances(data.ctx, contractAcct.GetAddress()))
 
 	execCmd := MsgExecuteContract{
-		Sender:    fred.String(),
-		Contract:  contractBech32Addr,
-		Msg:       []byte(`{"release":{}}`),
-		SentFunds: topUp,
+		Sender:   fred.String(),
+		Contract: contractBech32Addr,
+		Msg:      []byte(`{"release":{}}`),
+		Funds:    topUp,
 	}
 	res, err = h(data.ctx, &execCmd)
 	require.NoError(t, err)
@@ -310,9 +310,9 @@ func TestHandleExecute(t *testing.T) {
 	assertContractList(t, q, data.ctx, 1, []string{contractBech32Addr})
 	assertContractInfo(t, q, data.ctx, contractBech32Addr, 1, creator)
 	assertContractState(t, q, data.ctx, contractBech32Addr, state{
-		Verifier:    []byte(fred),
-		Beneficiary: []byte(bob),
-		Funder:      []byte(creator),
+		Verifier:    fred.String(),
+		Beneficiary: bob.String(),
+		Funder:      creator.String(),
 	})
 }
 
@@ -342,10 +342,10 @@ func TestHandleExecuteEscrow(t *testing.T) {
 	require.NoError(t, err)
 
 	initCmd := MsgInstantiateContract{
-		Sender:    creator.String(),
-		CodeID:    firstCodeID,
-		InitMsg:   initMsgBz,
-		InitFunds: deposit,
+		Sender:  creator.String(),
+		CodeID:  firstCodeID,
+		InitMsg: initMsgBz,
+		Funds:   deposit,
 	}
 	res, err = h(data.ctx, &initCmd)
 	require.NoError(t, err)
@@ -359,10 +359,10 @@ func TestHandleExecuteEscrow(t *testing.T) {
 	require.NoError(t, err)
 
 	execCmd := MsgExecuteContract{
-		Sender:    fred.String(),
-		Contract:  contractBech32Addr,
-		Msg:       handleMsgBz,
-		SentFunds: topUp,
+		Sender:   fred.String(),
+		Contract: contractBech32Addr,
+		Msg:      handleMsgBz,
+		Funds:    topUp,
 	}
 	res, err = h(data.ctx, &execCmd)
 	require.NoError(t, err)

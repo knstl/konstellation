@@ -10,7 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	govrest "github.com/cosmos/cosmos-sdk/x/gov/client/rest"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	"github.com/konstellation/konstellation/x/wasm/internal/types"
+	"github.com/konstellation/konstellation/x/wasm/types"
 )
 
 type StoreCodeProposalJsonReq struct {
@@ -77,11 +77,11 @@ type InstantiateProposalJsonReq struct {
 
 	RunAs string `json:"run_as" yaml:"run_as"`
 	// Admin is an optional address that can execute migrations
-	Admin     string          `json:"admin,omitempty" yaml:"admin"`
-	Code      uint64          `json:"code_id" yaml:"code_id"`
-	Label     string          `json:"label" yaml:"label"`
-	InitMsg   json.RawMessage `json:"init_msg" yaml:"init_msg"`
-	InitFunds sdk.Coins       `json:"init_funds" yaml:"init_funds"`
+	Admin   string          `json:"admin,omitempty" yaml:"admin"`
+	Code    uint64          `json:"code_id" yaml:"code_id"`
+	Label   string          `json:"label" yaml:"label"`
+	InitMsg json.RawMessage `json:"init_msg" yaml:"init_msg"`
+	Funds   sdk.Coins       `json:"funds" yaml:"funds"`
 }
 
 func (s InstantiateProposalJsonReq) Content() govtypes.Content {
@@ -93,7 +93,7 @@ func (s InstantiateProposalJsonReq) Content() govtypes.Content {
 		CodeID:      s.Code,
 		Label:       s.Label,
 		InitMsg:     s.InitMsg,
-		InitFunds:   s.InitFunds,
+		Funds:       s.Funds,
 	}
 }
 func (s InstantiateProposalJsonReq) GetProposer() string {
