@@ -4,7 +4,7 @@ package konstellation.oracle;
 option go_package = "x/oracle/types";
 
 import "gogoproto/gogo.proto";
-//import "v1beta1/coin.proto";
+import "v1beta1/coin.proto";
 
 service Msg {
   rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse);
@@ -13,8 +13,8 @@ service Msg {
 }
 
 message MsgSetExchangeRate {
-  //cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
-  bytes exchange_rate = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
+  //bytes exchange_rate = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
   string sender = 2;
 }
 
