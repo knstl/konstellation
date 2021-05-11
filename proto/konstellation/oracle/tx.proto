@@ -5,11 +5,18 @@ option go_package = "x/oracle/types";
 
 import "gogoproto/gogo.proto";
 import "v1beta1/coin.proto";
+import "google/api/annotations.proto";
 
 service Msg {
-  rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse);
-  rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse);
-  rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse);
+  rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse){
+    option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+  }
+  rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse){
+    option (google.api.http).delete = "/konstellation/oracle/exchange_rate";
+  }
+  rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse){
+    option (google.api.http).put = "/konstellation/oracle/admin_addr";
+  }
 }
 
 message MsgSetExchangeRate {
