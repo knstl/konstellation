@@ -10,7 +10,6 @@ import (
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	testnet "github.com/cosmos/cosmos-sdk/testutil/network"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/konstellation/konstellation/app"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
@@ -70,7 +69,10 @@ func (s *IntegrationTestSuite) TearDownSuite() {
 func (s *IntegrationTestSuite) TestQueryGRPC() {
 	val := s.network.Validators[0]
 	baseURL := val.APIAddress
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := oracletypes.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	testCases := []struct {
 		name     string
 		url      string
@@ -84,7 +86,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 			map[string]string{},
 			&oracletypes.QueryExchangeRateResponse{},
 			&oracletypes.QueryExchangeRateResponse{
-				ExchangeRate: coin,
+				ExchangeRate: &rate,
 			},
 		},
 	}

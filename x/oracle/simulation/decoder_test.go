@@ -8,7 +8,6 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/kv"
 	"github.com/konstellation/konstellation/x/oracle/simulation"
 	"github.com/konstellation/konstellation/x/oracle/types"
@@ -18,11 +17,14 @@ func TestDecodeStore(t *testing.T) {
 	cdc := simapp.MakeTestEncodingConfig().Marshaler
 	dec := simulation.NewDecodeStore(cdc)
 
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
 
-	exchangeRate := types.NewMsgSetExchangeRate(&coin, address)
+	exchangeRate := types.NewMsgSetExchangeRate(&rate, address)
 
 	kvPairs := kv.Pairs{
 		Pairs: []kv.Pair{

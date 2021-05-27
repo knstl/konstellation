@@ -26,9 +26,12 @@ func (suite *OracleTestSuite) SetupTest() {
 	simapp := app.Setup(false)
 	simapp.Commit()
 	ctx := simapp.NewContext(true, tmproto.Header{})
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
-	simapp.GetOracleKeeper().SetExchangeRate(ctx, "abc", coin)
+	simapp.GetOracleKeeper().SetExchangeRate(ctx, "abc", &rate)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, codectypes.NewInterfaceRegistry())
 	types.RegisterQueryServer(queryHelper, simapp.GetOracleKeeper())
@@ -45,7 +48,7 @@ func (suite *OracleTestSuite) TestGRPCExchangeRate() {
 
 	exchangeRate, err := queryClient.ExchangeRate(gocontext.Background(), &types.QueryExchangeRateRequest{})
 	suite.Require().NoError(err)
-	suite.Require().Equal(exchangeRate.ExchangeRate, app.GetOracleKeeper().GetExchangeRate(ctx))
+	suite.Require().Equal(*exchangeRate.ExchangeRate, app.GetOracleKeeper().GetExchangeRate(ctx))
 }
 
 func TestOracleTestSuite(t *testing.T) {

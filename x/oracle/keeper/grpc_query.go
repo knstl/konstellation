@@ -14,5 +14,5 @@ func (k Keeper) ExchangeRate(c context.Context, _ *types.QueryExchangeRateReques
 	ctx := sdk.UnwrapSDKContext(c)
 	exchangeRate := k.GetExchangeRate(ctx)
 
-	return &types.QueryExchangeRateResponse{ExchangeRate: exchangeRate}, nil
+	return &types.QueryExchangeRateResponse{ExchangeRate: &exchangeRate}, nil
 }

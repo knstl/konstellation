@@ -9,9 +9,9 @@ var _ sdk.Msg = &MsgSetExchangeRate{}
 var _ sdk.Msg = &MsgDeleteExchangeRate{}
 
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
-func NewMsgSetExchangeRate(exchangeRate *sdk.Coin, sender string) MsgSetExchangeRate {
+func NewMsgSetExchangeRate(exchangeRate *ExchangeRate, sender string) MsgSetExchangeRate {
 	return MsgSetExchangeRate{
-		ExchangeRate: *exchangeRate,
+		ExchangeRate: exchangeRate,
 		Sender:       sender,
 	}
 }
@@ -39,7 +39,7 @@ func (msg MsgSetExchangeRate) ValidateBasic() error {
 	if msg.Sender == "" {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Sender)
 	}
-	if !msg.ExchangeRate.IsPositive() {
+	if msg.ExchangeRate.Rate <= 0 {
 		return sdkerrors.ErrInsufficientFunds
 	}
 	return nil

@@ -113,7 +113,7 @@ func removeAddress(s []string, r string) []string {
 	return s
 }
 
-func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
+func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate types.ExchangeRate) {
 	store := ctx.KVStore(k.storeKey)
 	b := store.Get(types.ExchangeRateKey)
 	if b == nil {
@@ -124,14 +124,14 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate sdk.Coin) {
 	return
 }
 
-func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, exchangeRate sdk.Coin) error {
+func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, exchangeRate *types.ExchangeRate) error {
 	allowedAddresses := k.GetAllowedAddresses(ctx)
 	if !isValidSender(allowedAddresses, sender) {
 		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	b := k.cdc.MustMarshalBinaryBare(&exchangeRate)
+	b := k.cdc.MustMarshalBinaryBare(exchangeRate)
 	store.Set(types.ExchangeRateKey, b)
 	return nil
 }

@@ -3,9 +3,8 @@ package konstellation.oracle;
 
 option go_package = "x/oracle/types";
 
-import "gogoproto/gogo.proto";
-//import "v1beta1/coin.proto";
 import "google/api/annotations.proto";
+import "tx.proto";
 
 service Query {
   rpc ExchangeRate(QueryExchangeRateRequest) returns (QueryExchangeRateResponse) {
@@ -16,7 +15,6 @@ service Query {
 message QueryExchangeRateRequest {}
 
 message QueryExchangeRateResponse {
-  //cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
-  bytes exchange_rate = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+  ExchangeRate exchange_rate = 1;
 }
 

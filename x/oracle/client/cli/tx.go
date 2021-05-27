@@ -10,7 +10,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	//	"github.com/cosmos/cosmos-sdk/types/msgservice"
 
@@ -37,7 +36,7 @@ func NewExchangeRateCmd() *cobra.Command {
 
 func NewMsgSetExchangeRateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-exchange-rate [allowed-address] [denom] [amount]",
+		Use:   "set-exchange-rate [allowed-address] [denom] [rate]",
 		Short: "Set exchange rate",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -45,23 +44,26 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			allowedAddress, denom, amount := args[0], args[1], args[2]
+			allowedAddress, denom, rateStr := args[0], args[1], args[2]
 			if allowedAddress == "" {
 				return errors.New("invalid address")
 			}
 			if denom == "" {
 				return errors.New("invalid denom name")
 			}
-			if amount == "" {
-				return errors.New("invalid amount")
+			if rateStr == "" {
+				return errors.New("invalid rate")
 			}
-			amountInt, err := strconv.Atoi(amount)
+			rate, err := strconv.ParseFloat(rateStr, 32)
 			if err != nil {
-				return errors.New("invalid amount")
+				return errors.New("invalid rate")
 			}
 
-			rate := sdk.NewCoin("Darc", sdk.NewInt(int64(amountInt)))
-			msg := types.NewMsgSetExchangeRate(&rate, allowedAddress)
+			exchangeRate := types.ExchangeRate{
+				Denom: "udarc",
+				Rate:  rate,
+			}
+			msg := types.NewMsgSetExchangeRate(&exchangeRate, allowedAddress)
 			svcMsgClientConn := &ServiceMsgClientConn{}
 			msgClient := types.NewMsgClient(svcMsgClientConn)
 			_, err = msgClient.SetExchangeRate(cmd.Context(), &msg)

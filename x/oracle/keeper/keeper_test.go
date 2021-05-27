@@ -3,11 +3,11 @@ package keeper_test
 import (
 	"testing"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
 	"github.com/konstellation/konstellation/app"
+	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
 func TestLogger(t *testing.T) {
@@ -92,11 +92,14 @@ func TestSetExchangeRate(t *testing.T) {
 	allowedAddresses := []string{"abc"}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
 
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	oracleKeeper := simapp.GetOracleKeeper()
-	oracleKeeper.SetExchangeRate(ctx, "abc", coin)
+	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
 
-	require.Equal(t, coin, simapp.GetOracleKeeper().GetExchangeRate(ctx))
+	require.Equal(t, rate, simapp.GetOracleKeeper().GetExchangeRate(ctx))
 }
 
 func TestSetExchangeRateFailure(t *testing.T) {
@@ -106,9 +109,12 @@ func TestSetExchangeRateFailure(t *testing.T) {
 	allowedAddresses := []string{"abc"}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
 
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	oracleKeeper := simapp.GetOracleKeeper()
-	require.Error(t, oracleKeeper.SetExchangeRate(ctx, "def", coin))
+	require.Error(t, oracleKeeper.SetExchangeRate(ctx, "def", &rate))
 }
 
 func TestDeleteExchangeRate(t *testing.T) {
@@ -118,9 +124,12 @@ func TestDeleteExchangeRate(t *testing.T) {
 	allowedAddresses := []string{"abc"}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
 
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	oracleKeeper := simapp.GetOracleKeeper()
-	oracleKeeper.SetExchangeRate(ctx, "abc", coin)
+	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
 
 	require.Nil(t, oracleKeeper.DeleteExchangeRate(ctx, "abc"))
 }
@@ -132,9 +141,12 @@ func TestDeleteExchangeRateFailure(t *testing.T) {
 	allowedAddresses := []string{"abc"}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
 
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	oracleKeeper := simapp.GetOracleKeeper()
-	oracleKeeper.SetExchangeRate(ctx, "abc", coin)
+	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
 
 	require.Error(t, oracleKeeper.DeleteExchangeRate(ctx, "def"))
 }

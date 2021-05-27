@@ -45,7 +45,7 @@ func GetCmdQueryExchangeRate() *cobra.Command {
 				return err
 			}
 
-			return clientCtx.PrintProto(&res.ExchangeRate)
+			return clientCtx.PrintProto(res.ExchangeRate)
 		},
 	}
 	flags.AddQueryFlagsToCmd(cmd)

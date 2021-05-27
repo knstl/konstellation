@@ -4,7 +4,6 @@ package konstellation.oracle;
 option go_package = "x/oracle/types";
 
 import "gogoproto/gogo.proto";
-import "v1beta1/coin.proto";
 import "google/api/annotations.proto";
 
 service Msg {
@@ -20,9 +19,13 @@ service Msg {
 }
 
 message MsgSetExchangeRate {
-  cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
-  //bytes exchange_rate = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+  ExchangeRate exchange_rate = 1;
   string sender = 2;
+}
+
+message ExchangeRate {
+  string denom = 1;
+  double rate = 2;
 }
 
 message MsgSetExchangeRateResponse {}

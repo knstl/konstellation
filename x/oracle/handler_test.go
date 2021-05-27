@@ -26,12 +26,15 @@ func TestHandleMsgSetExchangeRate(t *testing.T) {
 	simapp := app.Setup(false)
 	simapp.Commit()
 	ctx := simapp.NewContext(true, tmproto.Header{})
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := oracletypes.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
-	incorrectMsg := oracletypes.NewMsgSetExchangeRate(&coin, address)
-	correctMsg := oracletypes.NewMsgSetExchangeRate(&coin, simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0])
+	incorrectMsg := oracletypes.NewMsgSetExchangeRate(&rate, address)
+	correctMsg := oracletypes.NewMsgSetExchangeRate(&rate, simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0])
 
 	cases := []struct {
 		name           string

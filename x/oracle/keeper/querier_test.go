@@ -4,13 +4,13 @@ import (
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/codec"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	abcitypes "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
 	"github.com/konstellation/konstellation/app"
 	"github.com/konstellation/konstellation/x/oracle/keeper"
+	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
 func TestNewQuerier(t *testing.T) {
@@ -18,9 +18,12 @@ func TestNewQuerier(t *testing.T) {
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
 
-	coin := sdk.NewCoin("Darc", sdk.NewInt(10))
+	rate := types.ExchangeRate{
+		Denom: "udarc",
+		Rate:  1.2,
+	}
 	oracleKeeper := simapp.GetOracleKeeper()
-	oracleKeeper.SetExchangeRate(ctx, "abc", coin)
+	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
 
 	query := abcitypes.RequestQuery{
 		Path: "",
