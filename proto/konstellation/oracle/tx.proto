@@ -25,7 +25,7 @@ message MsgSetExchangeRate {
 
 message ExchangeRate {
   string denom = 1;
-  double rate = 2;
+  uint64 rate = 2;
 }
 
 message MsgSetExchangeRateResponse {}

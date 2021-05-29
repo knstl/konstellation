@@ -20,7 +20,7 @@ func TestNewQuerier(t *testing.T) {
 
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	oracleKeeper := simapp.GetOracleKeeper()
 	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
@@ -36,8 +36,8 @@ func TestNewQuerier(t *testing.T) {
 	require.Nil(t, err)
 	expected :=
 		`{
-  "denom": "Darc",
-  "amount": "10"
+  "denom": "udarc",
+  "rate": "1200000000000000000"
 }`
 	require.Equal(t, []byte(expected), bz)
 }

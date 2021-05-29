@@ -19,7 +19,7 @@ func TestDecodeStore(t *testing.T) {
 
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)

@@ -94,7 +94,7 @@ func TestSetExchangeRate(t *testing.T) {
 
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	oracleKeeper := simapp.GetOracleKeeper()
 	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
@@ -111,7 +111,7 @@ func TestSetExchangeRateFailure(t *testing.T) {
 
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	oracleKeeper := simapp.GetOracleKeeper()
 	require.Error(t, oracleKeeper.SetExchangeRate(ctx, "def", &rate))
@@ -126,7 +126,7 @@ func TestDeleteExchangeRate(t *testing.T) {
 
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	oracleKeeper := simapp.GetOracleKeeper()
 	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)
@@ -143,7 +143,7 @@ func TestDeleteExchangeRateFailure(t *testing.T) {
 
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	oracleKeeper := simapp.GetOracleKeeper()
 	oracleKeeper.SetExchangeRate(ctx, "abc", &rate)

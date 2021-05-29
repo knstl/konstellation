@@ -28,7 +28,7 @@ func (suite *OracleTestSuite) SetupTest() {
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	rate := types.ExchangeRate{
 		Denom: "udarc",
-		Rate:  1.2,
+		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
 	simapp.GetOracleKeeper().SetExchangeRate(ctx, "abc", &rate)

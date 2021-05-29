@@ -16,6 +16,8 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
+const RateUnit = 1000000000000000000
+
 func NewExchangeRateCmd() *cobra.Command {
 	txCmd := &cobra.Command{
 		Use:                        types.ModuleName,
@@ -61,7 +63,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 
 			exchangeRate := types.ExchangeRate{
 				Denom: "udarc",
-				Rate:  rate,
+				Rate:  uint64(rate * float64(RateUnit)),
 			}
 			msg := types.NewMsgSetExchangeRate(&exchangeRate, allowedAddress)
 			svcMsgClientConn := &ServiceMsgClientConn{}
