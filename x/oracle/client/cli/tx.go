@@ -62,7 +62,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 			}
 
 			exchangeRate := types.ExchangeRate{
-				Denom: "udarc",
+				Pair: "udarc",
 				Rate:  uint64(rate * float64(RateUnit)),
 			}
 			msg := types.NewMsgSetExchangeRate(&exchangeRate, allowedAddress)

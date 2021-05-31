@@ -28,7 +28,7 @@ func (m msgServer) SetExchangeRate(goCtx context.Context, msgSetExchangeRate *ty
 
 func (m msgServer) DeleteExchangeRate(goCtx context.Context, msgDeleteExchangeRate *types.MsgDeleteExchangeRate) (*types.MsgDeleteExchangeRateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	err := m.keeper.DeleteExchangeRate(ctx, msgDeleteExchangeRate.Sender)
+	err := m.keeper.DeleteExchangeRate(ctx, msgDeleteExchangeRate.Sender, msgDeleteExchangeRate.Pair)
 	if err != nil {
 		return nil, err
 	}

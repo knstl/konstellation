@@ -113,37 +113,53 @@ func removeAddress(s []string, r string) []string {
 	return s
 }
 
-func (k Keeper) GetExchangeRate(ctx sdk.Context) (exchangeRate types.ExchangeRate) {
+func (k Keeper) GetExchangeRate(ctx sdk.Context, pair string) (exchangeRate types.ExchangeRate, found bool) {
 	store := ctx.KVStore(k.storeKey)
-	b := store.Get(types.ExchangeRateKey)
+	b := store.Get(types.GetExchangeRateKey(pair))
 	if b == nil {
-		panic("stored exchange rate should not have been nil")
+		return exchangeRate, false
 	}
 
 	k.cdc.MustUnmarshalBinaryBare(b, &exchangeRate)
-	return
+	return exchangeRate, true
 }
 
-func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, exchangeRate *types.ExchangeRate) error {
+func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []types.ExchangeRate) {
+	store := ctx.KVStore(k.storeKey)
+
+	iterator := sdk.KVStorePrefixIterator(store, types.ExchangeRateKey)
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		rate := MustUnmarshalExchangeRate(k.cdc, iterator.Value())
+		rates = append(rates, rate)
+	}
+
+	return rates
+}
+
+func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, rate *types.ExchangeRate) error {
 	allowedAddresses := k.GetAllowedAddresses(ctx)
 	if !isValidSender(allowedAddresses, sender) {
 		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
 	}
 
+	// todo check rate validity
+
 	store := ctx.KVStore(k.storeKey)
-	b := k.cdc.MustMarshalBinaryBare(exchangeRate)
-	store.Set(types.ExchangeRateKey, b)
+	b := k.cdc.MustMarshalBinaryBare(rate)
+	store.Set(types.GetExchangeRateKey(rate.Pair), b)
 	return nil
 }
 
-func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender string) error {
+func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender string, pair string) error {
 	allowedAddresses := k.GetAllowedAddresses(ctx)
 	if !isValidSender(allowedAddresses, sender) {
 		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	store.Delete(types.ExchangeRateKey)
+	store.Delete(types.GetExchangeRateKey(pair))
 	return nil
 }
 
@@ -170,4 +186,22 @@ func isValidSender(allowedAddresses []string, sender string) bool {
 		}
 	}
 	return false
+}
+
+func MustMarshalExchangeRate(cdc codec.BinaryMarshaler, e *types.ExchangeRate) []byte {
+	return cdc.MustMarshalBinaryBare(e)
+}
+
+func MustUnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) types.ExchangeRate {
+	validator, err := UnmarshalExchangeRate(cdc, value)
+	if err != nil {
+		panic(err)
+	}
+
+	return validator
+}
+
+func UnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) (e types.ExchangeRate, err error) {
+	err = cdc.UnmarshalBinaryBare(value, &e)
+	return e, err
 }

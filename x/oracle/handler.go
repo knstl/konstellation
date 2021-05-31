@@ -40,7 +40,7 @@ func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSe
 
 // Handle a message to delete exchange rate
 func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDeleteExchangeRate) (*sdk.Result, error) {
-	err := k.DeleteExchangeRate(ctx, msg.Sender)
+	err := k.DeleteExchangeRate(ctx, msg.Sender, msg.Pair)
 	if err != nil {
 		return nil, err
 	}

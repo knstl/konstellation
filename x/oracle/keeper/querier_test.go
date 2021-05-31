@@ -19,7 +19,7 @@ func TestNewQuerier(t *testing.T) {
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
 
 	rate := types.ExchangeRate{
-		Denom: "udarc",
+		Pair: "udarc",
 		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	oracleKeeper := simapp.GetOracleKeeper()
@@ -32,7 +32,7 @@ func TestNewQuerier(t *testing.T) {
 
 	legacyQuerierCdc := codec.NewAminoCodec(simapp.LegacyAmino())
 	querier := keeper.NewQuerier(oracleKeeper, legacyQuerierCdc.LegacyAmino)
-	bz, err := querier(ctx, []string{"exchange_rate"}, query)
+	bz, err := querier(ctx, []string{"exchange_rate", "kbtckusd"}, query)
 	require.Nil(t, err)
 	expected :=
 		`{

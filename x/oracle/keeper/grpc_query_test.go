@@ -27,7 +27,7 @@ func (suite *OracleTestSuite) SetupTest() {
 	simapp.Commit()
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	rate := types.ExchangeRate{
-		Denom: "udarc",
+		Pair: "udarc",
 		Rate:  uint64(1.2 * float64(1000000000000000000)),
 	}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
@@ -46,9 +46,10 @@ func (suite *OracleTestSuite) SetupTest() {
 func (suite *OracleTestSuite) TestGRPCExchangeRate() {
 	app, ctx, queryClient := suite.app, suite.ctx, suite.queryClient
 
-	exchangeRate, err := queryClient.ExchangeRate(gocontext.Background(), &types.QueryExchangeRateRequest{})
+	rate, err := queryClient.ExchangeRate(gocontext.Background(), &types.QueryExchangeRateRequest{})
 	suite.Require().NoError(err)
-	suite.Require().Equal(*exchangeRate.ExchangeRate, app.GetOracleKeeper().GetExchangeRate(ctx))
+	r, _ := app.GetOracleKeeper().GetExchangeRate(ctx, rate.ExchangeRate.Pair)
+	suite.Require().Equal(*rate.ExchangeRate, r)
 }
 
 func TestOracleTestSuite(t *testing.T) {

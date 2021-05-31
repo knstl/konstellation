@@ -16,7 +16,7 @@ func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 		// this line is used by starport scaffolding # 2
 
 		case types.QueryExchangeRate:
-			return queryExchangeRate(ctx, k, legacyQuerierCdc)
+			return queryExchangeRate(ctx, k, path[1], legacyQuerierCdc)
 		default:
 			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, "unknown oracle query endpoint")
 		}
@@ -24,8 +24,12 @@ func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 }
 
 // queryExchangeRate - returns the exchange rate
-func queryExchangeRate(ctx sdk.Context, keeper Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
-	exchangeRate := keeper.GetExchangeRate(ctx)
+func queryExchangeRate(ctx sdk.Context, keeper Keeper, pair string, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+	exchangeRate, _ := keeper.GetExchangeRate(ctx, pair)
+
+	//if !found {
+	//	return nil, types.ErrNoValidatorFound
+	//}
 
 	res, err := codec.MarshalJSONIndent(legacyQuerierCdc, exchangeRate)
 	if err != nil {

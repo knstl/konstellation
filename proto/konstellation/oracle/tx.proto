@@ -24,14 +24,17 @@ message MsgSetExchangeRate {
 }
 
 message ExchangeRate {
-  string denom = 1;
+  string pair = 1;
   uint64 rate = 2;
+  repeated string Denoms = 3;
+  int64 timestamp = 4;
 }
 
 message MsgSetExchangeRateResponse {}
 
 message MsgDeleteExchangeRate {
   string sender = 1;
+  string pair = 2;
 }
 
 message MsgDeleteExchangeRateResponse {}
