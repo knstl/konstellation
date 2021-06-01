@@ -8,11 +8,15 @@ import (
 var _ sdk.Msg = &MsgSetExchangeRate{}
 var _ sdk.Msg = &MsgDeleteExchangeRate{}
 
+const (
+	TypeMsgSetExchangeRate = "set_exchange_rate"
+)
+
 // NewMsgSetExchangeRate is the constructor function for MsgSetExchangeRate
-func NewMsgSetExchangeRate(exchangeRate *ExchangeRate, sender string) MsgSetExchangeRate {
-	return MsgSetExchangeRate{
+func NewMsgSetExchangeRate(sender sdk.AccAddress, exchangeRate *ExchangeRate) *MsgSetExchangeRate {
+	return &MsgSetExchangeRate{
 		ExchangeRate: exchangeRate,
-		Sender:       sender,
+		Sender:       sender.String(),
 	}
 }
 
@@ -20,26 +24,28 @@ func NewMsgSetExchangeRate(exchangeRate *ExchangeRate, sender string) MsgSetExch
 func (m MsgSetExchangeRate) Route() string { return RouterKey }
 
 // Type should return the action
-func (msg MsgSetExchangeRate) Type() string { return "set_exchange_rate" }
+func (m MsgSetExchangeRate) Type() string { return TypeMsgSetExchangeRate }
 
 // GetSignBytes encodes the message for signing
-func (msg MsgSetExchangeRate) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(&msg)
-	return sdk.MustSortJSON(bz)
-
+func (m MsgSetExchangeRate) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&m))
 }
 
 // GetSigners defines whose signature is required
-func (msg MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Sender)}
+func (m MsgSetExchangeRate) GetSigners() []sdk.AccAddress {
+	sender, err := sdk.AccAddressFromBech32(m.Sender)
+	if err != nil {
+		panic(err)
+	}
+	return []sdk.AccAddress{sender}
 }
 
 // ValidateBasic runs stateless checks on the message
-func (msg MsgSetExchangeRate) ValidateBasic() error {
-	if msg.Sender == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Sender)
+func (m MsgSetExchangeRate) ValidateBasic() error {
+	if m.Sender == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, m.Sender)
 	}
-	if msg.ExchangeRate.Rate <= 0 {
+	if m.ExchangeRate.Rate <= 0 {
 		return sdkerrors.ErrInsufficientFunds
 	}
 	return nil
