@@ -38,42 +38,64 @@ func NewExchangeRateCmd() *cobra.Command {
 
 func NewMsgSetExchangeRateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-exchange-rate [allowed-address] [denom] [rate]",
+		Use:   "set-exchange-rate [pair] [rate] [denoms]",
 		Short: "Set exchange rate",
+		Long:  `Set exchange rate for pair: kbtckusd 5000000000000 kbtc,kusd`,
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
-			allowedAddress, denom, rateStr := args[0], args[1], args[2]
-			if allowedAddress == "" {
-				return errors.New("invalid address")
+			//cmd.Flags().Set(flags.FlagFrom, args[0])
+			//sender := clientCtx.GetFromAddress().String()
+			//senderAddr, err := sdk.AccAddressFromBech32(sender)
+			//if err != nil {
+			//	return err
+			//}
+
+			pair, rateStr, denomsStr := args[0], args[1], args[2]
+			if pair == "" {
+				return types.ErrInvalidPair
 			}
-			if denom == "" {
-				return errors.New("invalid denom name")
+
+			denoms := strings.Split(denomsStr, ",")
+			if len(denoms) != 2 {
+				return types.ErrInvalidDenoms
 			}
-			if rateStr == "" {
-				return errors.New("invalid rate")
-			}
-			rate, err := strconv.ParseFloat(rateStr, 32)
+
+			rate, err := strconv.ParseUint(rateStr, 10, 64)
 			if err != nil {
-				return errors.New("invalid rate")
+				return types.ErrInvalidRate
 			}
 
 			exchangeRate := types.ExchangeRate{
-				Pair: "udarc",
-				Rate:  uint64(rate * float64(RateUnit)),
+				Pair: pair,
+				Rate: rate,
 			}
-			msg := types.NewMsgSetExchangeRate(&exchangeRate, allowedAddress)
-			svcMsgClientConn := &ServiceMsgClientConn{}
-			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.SetExchangeRate(cmd.Context(), &msg)
-			if err != nil {
+
+			msg := types.NewMsgSetExchangeRate(clientCtx.GetFromAddress(), &exchangeRate)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			//if err != nil {
+			//	return txf, nil, err
+			//}
+			//if err := msg.ValidateBasic(); err != nil {
+			//	return txf, nil, err
+			//}
+			//svcMsgClientConn := &ServiceMsgClientConn{}
+			//msgClient := types.NewMsgClient(svcMsgClientConn)
+			//_, err = msgClient.SetExchangeRate(cmd.Context(), &msg)
+			//if err != nil {
+			//	return err
+			//}
+			//
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+			//return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			//return tx.GenerateOrBroadcastTxWithFactory(clientCtx, txf, msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
