@@ -31,26 +31,59 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 
 // Handle a message to set exchange rate
 func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetExchangeRate) (*sdk.Result, error) {
-	err := k.SetExchangeRate(ctx, msg.Sender, msg.ExchangeRate)
+	senderAddr, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
 		return nil, err
 	}
+
+	if err := k.SetExchangeRate(ctx, senderAddr, msg.ExchangeRate); err != nil {
+		return nil, err
+	}
+
 	return &sdk.Result{}, nil
 }
 
 // Handle a message to delete exchange rate
 func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDeleteExchangeRate) (*sdk.Result, error) {
-	err := k.DeleteExchangeRate(ctx, msg.Sender, msg.Pair)
+	senderAddr, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
 		return nil, err
 	}
+
+	if err := k.DeleteExchangeRate(ctx, senderAddr, msg.Pair); err != nil {
+		return nil, err
+	}
+
 	return &sdk.Result{}, nil
 }
 
 // Handle a message to set admin address
 func handleMsgSetAdminAddr(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetAdminAddr) (*sdk.Result, error) {
-	err := k.SetAdminAddr(ctx, msg.Sender, msg.Add, msg.Delete)
+	senderAddr, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
+		return nil, err
+	}
+
+	var add []types.AdminAddr
+	for _, a := range msg.Add {
+		_, err := sdk.AccAddressFromBech32(a.GetAddress())
+		if err != nil {
+			return nil, err
+		}
+
+		add = append(add, *a)
+	}
+	var del []types.AdminAddr
+	for _, a := range msg.Delete {
+		_, err := sdk.AccAddressFromBech32(a.GetAddress())
+		if err != nil {
+			return nil, err
+		}
+
+		del = append(del, *a)
+	}
+
+	if err := k.SetAdminAddr(ctx, senderAddr, add, del); err != nil {
 		return nil, err
 	}
 	return &sdk.Result{}, nil

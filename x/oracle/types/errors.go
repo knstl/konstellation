@@ -6,4 +6,5 @@ import (
 
 var (
 	ErrAddressIsNotAllowed = sdkerrors.Register(ModuleName, 1, "address is not allowed")
+	ErrAddressIsNotAdmin   = sdkerrors.Register(ModuleName, 2, "address is not admin")
 )

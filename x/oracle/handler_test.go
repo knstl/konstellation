@@ -32,7 +32,7 @@ func TestHandleMsgSetExchangeRate(t *testing.T) {
 	}
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
-	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
+	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx"})
 	incorrectMsg := oracletypes.NewMsgSetExchangeRate(&rate, address)
 	correctMsg := oracletypes.NewMsgSetExchangeRate(&rate, simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0])
 
@@ -77,7 +77,7 @@ func TestHandleMsgDeleteExchangRate(t *testing.T) {
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
-	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
+	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx"})
 	incorrectMsg := oracletypes.NewMsgDeleteExchangeRate(address)
 	correctMsg := oracletypes.NewMsgDeleteExchangeRate(simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0])
 
@@ -122,7 +122,7 @@ func TestHandleMsgAdminAddr(t *testing.T) {
 	ctx := simapp.NewContext(true, tmproto.Header{})
 	rand := rand.New(rand.NewSource(int64(1)))
 	address := simulation.RandomAddress(rand)
-	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
+	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx"})
 	incorrectMsg := oracletypes.NewMsgSetAdminAddr(address, []string{}, []string{"efg"})
 	correctMsg := oracletypes.NewMsgSetAdminAddr(simapp.GetOracleKeeper().GetAllowedAddresses(ctx)[0], []string{}, []string{})
 

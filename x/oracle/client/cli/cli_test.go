@@ -50,10 +50,10 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	genesisState := cfg.GenesisState
 	cfg.NumValidators = 1
 
-	//cfg.GenesisState[oracletypes.ModuleName] = []byte(`{"allowed_address": "abc"}`)
+	//cfg.GenesisState[oracletypes.ModuleName] = []byte(`{"allowed_address": "darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx"}`)
 	var oracleData oracletypes.GenesisState
 	s.Require().NoError(cfg.Codec.UnmarshalJSON(genesisState[oracletypes.ModuleName], &oracleData))
-	oracleData.AllowedAddresses = []string{"abc"}
+	oracleData.AllowedAddresses = []string{"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx"}
 	oracleDataBz, err := cfg.Codec.MarshalJSON(&oracleData)
 	s.Require().NoError(err)
 	genesisState[oracletypes.ModuleName] = oracleDataBz
@@ -84,7 +84,7 @@ func (s *IntegrationTestSuite) TestGetCmdQueryExchangeRate() {
 		{
 			"json output",
 			[]string{"exchange-rate"},
-			`{"exchange_rate": {"denom": "Darc", "amount": "10"}, setter:"abc"}`,
+			`{"exchange_rate": {"denom": "Darc", "amount": "10"}, setter:"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx"}`,
 		},
 	}
 
@@ -116,7 +116,7 @@ func (s *IntegrationTestSuite) TestNewMsgSetExchangeReteCmd() {
 		{
 			"valid transaction",
 			[]string{
-				"abc",
+				"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
 				"Darc",
 				"10",
 			},
@@ -159,7 +159,7 @@ func (s *IntegrationTestSuite) TestNewMsgDeleteExchangeReteCmd() {
 		{
 			"valid transaction",
 			[]string{
-				"abc",
+				"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
 			},
 			false, &sdk.TxResponse{}, 0,
 		},
@@ -199,7 +199,7 @@ func (s *IntegrationTestSuite) TestNewMsgSetAdminAddrCmd() {
 		{
 			"valid transaction",
 			[]string{
-				"abc",
+				"darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx",
 			},
 			false, &sdk.TxResponse{}, 0,
 		},

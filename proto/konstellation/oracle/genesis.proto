@@ -1,8 +1,10 @@
 syntax = "proto3";
 package konstellation.oracle;
 
+import "konstellation/oracle/tx.proto";
+
 option go_package = "x/oracle/types";
 
 message GenesisState {
-  repeated string allowed_addresses = 1;
+  repeated AdminAddr allowed_addresses = 1;
 }

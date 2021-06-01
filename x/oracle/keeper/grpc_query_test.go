@@ -26,12 +26,16 @@ func (suite *OracleTestSuite) SetupTest() {
 	simapp := app.Setup(false)
 	simapp.Commit()
 	ctx := simapp.NewContext(true, tmproto.Header{})
+
 	rate := types.ExchangeRate{
 		Pair: "udarc",
-		Rate:  uint64(1.2 * float64(1000000000000000000)),
+		Rate: uint64(1.2 * float64(1000000000000000000)),
 	}
-	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, []string{"abc"})
-	simapp.GetOracleKeeper().SetExchangeRate(ctx, "abc", &rate)
+
+	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
+	allowedAddresses := []types.AdminAddr{abc}
+	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
+	simapp.GetOracleKeeper().SetExchangeRate(ctx, abc.GetAdminAddress(), &rate)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, codectypes.NewInterfaceRegistry())
 	types.RegisterQueryServer(queryHelper, simapp.GetOracleKeeper())

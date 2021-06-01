@@ -17,7 +17,7 @@ func NewMsgSetExchangeRate(exchangeRate *ExchangeRate, sender string) MsgSetExch
 }
 
 // Route should return the name of the module
-func (msg MsgSetExchangeRate) Route() string { return RouterKey }
+func (m MsgSetExchangeRate) Route() string { return RouterKey }
 
 // Type should return the action
 func (msg MsgSetExchangeRate) Type() string { return "set_exchange_rate" }
@@ -78,8 +78,8 @@ func (msg MsgDeleteExchangeRate) ValidateBasic() error {
 func NewMsgSetAdminAddr(sender string, add []string, del []string) MsgSetAdminAddr {
 	return MsgSetAdminAddr{
 		Sender: sender,
-		Add:    add,
-		Delete: del,
+		//.Add:    add,
+		//Delete: del,
 	}
 }
 

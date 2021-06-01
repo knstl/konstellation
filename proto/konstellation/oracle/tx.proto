@@ -39,10 +39,15 @@ message MsgDeleteExchangeRate {
 
 message MsgDeleteExchangeRateResponse {}
 
+message AdminAddr {
+  string address = 1;
+  // perms maybe
+}
+
 message MsgSetAdminAddr {
   string sender = 1;
-  repeated string add = 2;
-  repeated string delete = 3;
+  repeated AdminAddr add = 2;
+  repeated AdminAddr delete = 3;
 }
 
 message MsgSetAdminAddrResponse {}

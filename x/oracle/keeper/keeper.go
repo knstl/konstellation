@@ -1,15 +1,13 @@
 package keeper
 
 import (
-	"bytes"
-	"encoding/gob"
 	"fmt"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/tendermint/tendermint/libs/log"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
@@ -41,76 +39,98 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
 
-func (k Keeper) GetAllowedAddresses(ctx sdk.Context) (allowedAddresses []string) {
+func (k Keeper) getAllowedAddress(ctx sdk.Context, addr sdk.AccAddress) (adm types.AdminAddr, found bool) {
 	store := ctx.KVStore(k.storeKey)
-	b := store.Get(types.AllowedAddressKey)
-	if b == nil {
-		panic("stored allowed address should not have been nil")
+
+	value := store.Get(types.GetAllowedAddressKey(addr))
+	if value == nil {
+		return adm, false
 	}
 
-	allowedAddressesBytes := bytes.NewBuffer(b)
-	dec := gob.NewDecoder(allowedAddressesBytes)
-	err := dec.Decode(&allowedAddresses)
-	if err != nil {
-		panic(err)
-	}
-	return
+	adm = MustUnmarshalAllowedAddress(k.cdc, value)
+	return adm, true
 }
 
-func (k Keeper) SetAllowedAddresses(ctx sdk.Context, sender string, newAllowedAddresses []string) error {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, sender) {
-		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
-	}
-	preAddressListNum := len(allowedAddresses)
-	for _, address := range newAllowedAddresses { // skip duplicated address
-		if !isValidSender(allowedAddresses, address) {
-			allowedAddresses = append(allowedAddresses, address)
-		}
-	}
-	postAddressListNum := len(allowedAddresses)
-	if preAddressListNum == postAddressListNum {
-		return sdkerrors.Wrap(sdkerrors.ErrLogic, "no address to add") // If not, throw an error
-	}
-	var allowedAddressesBytes bytes.Buffer
-	enc := gob.NewEncoder(&allowedAddressesBytes)
-	err := enc.Encode(allowedAddresses)
-	if err != nil {
-		return err
-	}
-
+func (k Keeper) setAllowedAddress(ctx sdk.Context, addr types.AdminAddr) error {
 	store := ctx.KVStore(k.storeKey)
-	store.Set(types.AllowedAddressKey, allowedAddressesBytes.Bytes())
+
+	b := k.cdc.MustMarshalBinaryBare(&addr)
+	store.Set(types.GetAllowedAddressKey(addr.GetAdminAddress()), b)
 	return nil
 }
 
-func (k Keeper) DeleteAllowedAddresses(ctx sdk.Context, sender string, addressesToDelete []string) error {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, sender) {
-		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
-	}
-	for _, address := range addressesToDelete {
-		allowedAddresses = removeAddress(allowedAddresses, address)
-	}
-	var allowedAddressesBytes bytes.Buffer
-	enc := gob.NewEncoder(&allowedAddressesBytes)
-	err := enc.Encode(allowedAddresses)
-	if err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrLogic, err.Error()) // If not, throw an error
-	}
-
+func (k Keeper) deleteAllowedAddress(ctx sdk.Context, addr types.AdminAddr) error {
 	store := ctx.KVStore(k.storeKey)
-	store.Set(types.AllowedAddressKey, allowedAddressesBytes.Bytes())
+
+	store.Delete(types.GetAllowedAddressKey(addr.GetAdminAddress()))
 	return nil
 }
 
-func removeAddress(s []string, r string) []string {
-	for i, v := range s {
-		if v == r {
-			return append(s[:i], s[i+1:]...)
+func (k Keeper) GetAllowedAddresses(ctx sdk.Context) (allowedAddresses []types.AdminAddr) {
+	store := ctx.KVStore(k.storeKey)
+
+	iterator := sdk.KVStorePrefixIterator(store, types.AllowedAddressKey)
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		addr := MustUnmarshalAllowedAddress(k.cdc, iterator.Value())
+		allowedAddresses = append(allowedAddresses, addr)
+	}
+
+	return allowedAddresses
+}
+
+func (k Keeper) IsAllowedAddress(ctx sdk.Context, addr sdk.AccAddress) bool {
+	_, found := k.getAllowedAddress(ctx, addr)
+	return found
+}
+
+func (k Keeper) GetAllowedAddress(ctx sdk.Context, addr sdk.AccAddress) (types.AdminAddr, bool) {
+	return k.getAllowedAddress(ctx, addr)
+}
+
+func (k Keeper) SetAllowedAddresses(ctx sdk.Context, sender sdk.AccAddress, addrs []types.AdminAddr) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(types.ErrAddressIsNotAdmin, "Sender address is not admin")
+	}
+
+	for _, addr := range addrs {
+		if err := k.setAllowedAddress(ctx, addr); err != nil {
+			return err
 		}
 	}
-	return s
+
+	return nil
+}
+
+func (k Keeper) DeleteAllowedAddresses(ctx sdk.Context, sender sdk.AccAddress, addrs []types.AdminAddr) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(types.ErrAddressIsNotAdmin, "Sender address is not admin")
+	}
+
+	for _, addr := range addrs {
+		if err := k.deleteAllowedAddress(ctx, addr); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (k Keeper) SetAdminAddr(ctx sdk.Context, sender sdk.AccAddress, add []types.AdminAddr, del []types.AdminAddr) error {
+	if len(add) > 0 {
+		err := k.SetAllowedAddresses(ctx, sender, add)
+		if err != nil {
+			return err
+		}
+	}
+	if len(del) > 0 {
+		err := k.DeleteAllowedAddresses(ctx, sender, del)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (k Keeper) GetExchangeRate(ctx sdk.Context, pair string) (exchangeRate types.ExchangeRate, found bool) {
@@ -138,12 +158,10 @@ func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []types.ExchangeRate
 	return rates
 }
 
-func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, rate *types.ExchangeRate) error {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, sender) {
-		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+func (k Keeper) SetExchangeRate(ctx sdk.Context, sender sdk.AccAddress, rate *types.ExchangeRate) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Sender address is not admin")
 	}
-
 	// todo check rate validity
 
 	store := ctx.KVStore(k.storeKey)
@@ -152,10 +170,9 @@ func (k Keeper) SetExchangeRate(ctx sdk.Context, sender string, rate *types.Exch
 	return nil
 }
 
-func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender string, pair string) error {
-	allowedAddresses := k.GetAllowedAddresses(ctx)
-	if !isValidSender(allowedAddresses, sender) {
-		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect sender") // If not, throw an error
+func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender sdk.AccAddress, pair string) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Sender address is not admin")
 	}
 
 	store := ctx.KVStore(k.storeKey)
@@ -163,45 +180,38 @@ func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender string, pair string) 
 	return nil
 }
 
-func (k Keeper) SetAdminAddr(ctx sdk.Context, sender string, add []string, del []string) error {
-	if len(add) > 0 {
-		err := k.SetAllowedAddresses(ctx, sender, add)
-		if err != nil {
-			return err
-		}
-	}
-	if len(del) > 0 {
-		err := k.DeleteAllowedAddresses(ctx, sender, del)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func isValidSender(allowedAddresses []string, sender string) bool {
-	for _, address := range allowedAddresses {
-		if address == sender {
-			return true
-		}
-	}
-	return false
-}
-
-func MustMarshalExchangeRate(cdc codec.BinaryMarshaler, e *types.ExchangeRate) []byte {
-	return cdc.MustMarshalBinaryBare(e)
+func MustMarshalExchangeRate(cdc codec.BinaryMarshaler, r *types.ExchangeRate) []byte {
+	return cdc.MustMarshalBinaryBare(r)
 }
 
 func MustUnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) types.ExchangeRate {
-	validator, err := UnmarshalExchangeRate(cdc, value)
+	r, err := UnmarshalExchangeRate(cdc, value)
 	if err != nil {
 		panic(err)
 	}
 
-	return validator
+	return r
 }
 
-func UnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) (e types.ExchangeRate, err error) {
-	err = cdc.UnmarshalBinaryBare(value, &e)
-	return e, err
+func UnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) (r types.ExchangeRate, err error) {
+	err = cdc.UnmarshalBinaryBare(value, &r)
+	return r, err
+}
+
+func MustMarshalAllowedAddress(cdc codec.BinaryMarshaler, addr *types.AdminAddr) []byte {
+	return cdc.MustMarshalBinaryBare(addr)
+}
+
+func MustUnmarshalAllowedAddress(cdc codec.BinaryMarshaler, value []byte) types.AdminAddr {
+	addr, err := UnmarshalAllowedAddress(cdc, value)
+	if err != nil {
+		panic(err)
+	}
+
+	return addr
+}
+
+func UnmarshalAllowedAddress(cdc codec.BinaryMarshaler, value []byte) (addr types.AdminAddr, err error) {
+	err = cdc.UnmarshalBinaryBare(value, &addr)
+	return addr, err
 }
