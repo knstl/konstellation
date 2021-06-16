@@ -4,6 +4,7 @@ package konstellation.oracle;
 option go_package = "x/oracle/types";
 
 import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 service Msg {
@@ -27,7 +28,8 @@ message ExchangeRate {
   string pair = 1;
   uint64 rate = 2;
   repeated string Denoms = 3;
-  int64 timestamp = 4;
+  int64 height = 4;
+  google.protobuf.Timestamp timestamp = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
 
 message MsgSetExchangeRateResponse {}

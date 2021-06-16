@@ -3,8 +3,6 @@ package keeper
 import (
 	"fmt"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"time"
-
 	"github.com/tendermint/tendermint/libs/log"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -167,7 +165,9 @@ func (k Keeper) SetExchangeRate(ctx sdk.Context, sender sdk.AccAddress, rate *ty
 
 	store := ctx.KVStore(k.storeKey)
 
-	rate.Timestamp = time.Now().Unix()
+	rate.Height = ctx.BlockHeight()
+	rate.Timestamp = ctx.BlockHeader().Time
+
 	b := k.cdc.MustMarshalBinaryBare(rate)
 	store.Set(types.GetExchangeRateKey(rate.Pair), b)
 	return nil

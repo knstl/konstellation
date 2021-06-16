@@ -9,11 +9,9 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-// NewQuerier creates a new querier for nameservice clients.
 func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	return func(ctx sdk.Context, path []string, req abci.RequestQuery) ([]byte, error) {
 		switch path[0] {
-		// this line is used by starport scaffolding # 2
 
 		case types.QueryExchangeRate:
 			return queryExchangeRate(ctx, k, path[1], legacyQuerierCdc)
@@ -26,13 +24,8 @@ func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	}
 }
 
-// queryExchangeRate - returns the exchange rate
 func queryExchangeRate(ctx sdk.Context, keeper Keeper, pair string, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
 	exchangeRate, _ := keeper.GetExchangeRate(ctx, pair)
-
-	//if !found {
-	//	return nil, types.ErrNoValidatorFound
-	//}
 
 	res, err := codec.MarshalJSONIndent(legacyQuerierCdc, exchangeRate)
 	if err != nil {
@@ -42,13 +35,8 @@ func queryExchangeRate(ctx sdk.Context, keeper Keeper, pair string, legacyQuerie
 	return res, nil
 }
 
-// queryExchangeRate - returns the exchange rate
 func queryAllExchangeRates(ctx sdk.Context, keeper Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
 	exchangeRates := keeper.GetAllExchangeRates(ctx)
-
-	//if !found {
-	//	return nil, types.ErrNoValidatorFound
-	//}
 
 	res, err := codec.MarshalJSONIndent(legacyQuerierCdc, exchangeRates)
 	if err != nil {
