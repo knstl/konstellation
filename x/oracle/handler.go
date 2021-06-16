@@ -1,8 +1,6 @@
 package oracle
 
 import (
-	"fmt"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
@@ -15,16 +13,23 @@ const RouterKey = types.ModuleName
 
 // NewHandler returns a handler for "oracle" type messages.
 func NewHandler(k keeper.Keeper) sdk.Handler {
+	msgServer := keeper.NewMsgServerImpl(k)
+
 	return func(ctx sdk.Context, msg sdk.Msg) (*sdk.Result, error) {
+		ctx = ctx.WithEventManager(sdk.NewEventManager())
+
 		switch msg := msg.(type) {
 		case *types.MsgSetExchangeRate:
-			return handleMsgSetExchangeRate(ctx, k, msg)
+			res, err := msgServer.SetExchangeRate(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgDeleteExchangeRate:
-			return handleMsgDeleteExchangeRate(ctx, k, msg)
+			res, err := msgServer.DeleteExchangeRate(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgSetAdminAddr:
-			return handleMsgSetAdminAddr(ctx, k, msg)
+			res, err := msgServer.SetAdminAddr(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		default:
-			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, fmt.Sprintf("Unrecognized oracle Msg type: %v", msg.Type()))
+			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized oracle message type: %T", msg)
 		}
 	}
 }

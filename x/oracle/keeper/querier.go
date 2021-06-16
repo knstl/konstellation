@@ -17,6 +17,9 @@ func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 
 		case types.QueryExchangeRate:
 			return queryExchangeRate(ctx, k, path[1], legacyQuerierCdc)
+
+		case types.QueryAllExchangeRates:
+			return queryAllExchangeRates(ctx, k, legacyQuerierCdc)
 		default:
 			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, "unknown oracle query endpoint")
 		}
@@ -32,6 +35,22 @@ func queryExchangeRate(ctx sdk.Context, keeper Keeper, pair string, legacyQuerie
 	//}
 
 	res, err := codec.MarshalJSONIndent(legacyQuerierCdc, exchangeRate)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error())
+	}
+
+	return res, nil
+}
+
+// queryExchangeRate - returns the exchange rate
+func queryAllExchangeRates(ctx sdk.Context, keeper Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+	exchangeRates := keeper.GetAllExchangeRates(ctx)
+
+	//if !found {
+	//	return nil, types.ErrNoValidatorFound
+	//}
+
+	res, err := codec.MarshalJSONIndent(legacyQuerierCdc, exchangeRates)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error())
 	}

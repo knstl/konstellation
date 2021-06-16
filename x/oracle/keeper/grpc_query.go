@@ -12,15 +12,14 @@ var _ types.QueryServer = Keeper{}
 func (k Keeper) ExchangeRate(c context.Context, r *types.QueryExchangeRateRequest) (*types.QueryExchangeRateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
 	exchangeRate, _ := k.GetExchangeRate(ctx, r.Pair)
-	//return nil, status.Errorf(codes.NotFound, "validator %s not found", req.ValidatorAddr)
 
 	return &types.QueryExchangeRateResponse{ExchangeRate: &exchangeRate}, nil
 }
 
 // Params returns params of the mint module.
 func (k Keeper) AllExchangeRates(c context.Context, _ *types.QueryAllExchangeRatesRequest) (*types.QueryAllExchangeRatesResponse, error) {
-	//ctx := sdk.UnwrapSDKContext(c)
-	//exchangeRate := k.GetAllExchangeRates(ctx)
+	ctx := sdk.UnwrapSDKContext(c)
+	r := k.GetAllExchangeRates(ctx)
 
-	return &types.QueryAllExchangeRatesResponse{}, nil
+	return &types.QueryAllExchangeRatesResponse{Pairs: r}, nil
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-func GetQueryExchangeRateCmd() *cobra.Command {
+func GetQueryCmd() *cobra.Command {
 	qCmd := &cobra.Command{
 		Use:                        types.ModuleName,
 		Short:                      "Querying exchange rate subcommands",
@@ -36,15 +36,15 @@ func GetCmdQueryExchangeRate() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			// protobuf function and structs
+
 			queryClient := types.NewQueryClient(clientCtx)
 
 			pair := args[0]
-			exchangeRate := &types.QueryExchangeRateRequest{
+			r := &types.QueryExchangeRateRequest{
 				Pair: pair,
 			}
 
-			res, err := queryClient.ExchangeRate(cmd.Context(), exchangeRate)
+			res, err := queryClient.ExchangeRate(cmd.Context(), r)
 
 			if err != nil {
 				return err
@@ -60,7 +60,7 @@ func GetCmdQueryExchangeRate() *cobra.Command {
 
 func GetCmdQueryExchangeRates() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "exchange-rates",
+		Use:   "all-exchange-rates",
 		Short: "Query all available exchange rates",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -68,17 +68,17 @@ func GetCmdQueryExchangeRates() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			// protobuf function and structs
+
 			queryClient := types.NewQueryClient(clientCtx)
 
-			exchangeRate := &types.QueryExchangeRateRequest{}
-			res, err := queryClient.ExchangeRate(cmd.Context(), exchangeRate)
+			r := &types.QueryAllExchangeRatesRequest{}
+			res, err := queryClient.AllExchangeRates(cmd.Context(), r)
 
 			if err != nil {
 				return err
 			}
 
-			return clientCtx.PrintProto(res.ExchangeRate)
+			return clientCtx.PrintProto(res)
 		},
 	}
 	flags.AddQueryFlagsToCmd(cmd)

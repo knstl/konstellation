@@ -33,9 +33,9 @@ func TestSetAllowedAddresses(t *testing.T) {
 	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
 	def := types.NewAdminAddr("darc18c7c95p5cqqxlsg4m56626djna6eyqq4xkvtu3")
 
-	allowedAddresses := []types.AdminAddr{abc}
-	newAllowedAddresses := []types.AdminAddr{def}
-	updatedAllowedAddresses := []types.AdminAddr{abc, def}
+	allowedAddresses := []types.AdminAddr{*abc}
+	newAllowedAddresses := []types.AdminAddr{*def}
+	updatedAllowedAddresses := []types.AdminAddr{*abc, *def}
 
 	k := simapp.GetOracleKeeper()
 	k.SetTestAllowedAddresses(ctx, allowedAddresses)
@@ -51,8 +51,8 @@ func TestDeleteAllowedAddresses(t *testing.T) {
 	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
 	def := types.NewAdminAddr("darc18c7c95p5cqqxlsg4m56626djna6eyqq4xkvtu3")
 
-	allowedAddresses := []types.AdminAddr{abc}
-	newAllowedAddresses := []types.AdminAddr{def}
+	allowedAddresses := []types.AdminAddr{*abc}
+	newAllowedAddresses := []types.AdminAddr{*def}
 
 	k := simapp.GetOracleKeeper()
 	err := k.SetTestAllowedAddresses(ctx, allowedAddresses)
@@ -73,7 +73,7 @@ func TestGetAllowedAddress(t *testing.T) {
 
 	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
 
-	allowedAddresses := []types.AdminAddr{abc}
+	allowedAddresses := []types.AdminAddr{*abc}
 
 	k := simapp.GetOracleKeeper()
 	k.SetTestAllowedAddresses(ctx, allowedAddresses)
@@ -89,7 +89,7 @@ func TestIsAllowedAddress(t *testing.T) {
 	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
 	def := types.NewAdminAddr("darc18c7c95p5cqqxlsg4m56626djna6eyqq4xkvtu3")
 
-	allowedAddresses := []types.AdminAddr{abc}
+	allowedAddresses := []types.AdminAddr{*abc}
 
 	k := simapp.GetOracleKeeper()
 	k.SetTestAllowedAddresses(ctx, allowedAddresses)
@@ -104,7 +104,7 @@ func TestSetExchangeRate(t *testing.T) {
 
 	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
 
-	allowedAddresses := []types.AdminAddr{abc}
+	allowedAddresses := []types.AdminAddr{*abc}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
 
 	rate := types.ExchangeRate{
@@ -140,7 +140,7 @@ func TestDeleteExchangeRate(t *testing.T) {
 
 	abc := types.NewAdminAddr("darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx")
 
-	allowedAddresses := []types.AdminAddr{abc}
+	allowedAddresses := []types.AdminAddr{*abc}
 	simapp.GetOracleKeeper().SetTestAllowedAddresses(ctx, allowedAddresses)
 
 	rate1 := types.ExchangeRate{

@@ -6,6 +6,7 @@ option go_package = "x/oracle/types";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "google/api/annotations.proto";
 import "konstellation/oracle/tx.proto";
+import "gogoproto/gogo.proto";
 
 service Query {
   rpc ExchangeRate(QueryExchangeRateRequest) returns (QueryExchangeRateResponse) {
@@ -32,5 +33,5 @@ message QueryAllExchangeRatesRequest {
 }
 
 message QueryAllExchangeRatesResponse {
-  repeated ExchangeRate pairs = 1;
+  repeated ExchangeRate Pairs = 1 [(gogoproto.castrepeated) = "[]*ExchangeRate"];
 }

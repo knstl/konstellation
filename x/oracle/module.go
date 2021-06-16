@@ -44,11 +44,6 @@ func (AppModuleBasic) RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	types.RegisterLegacyAminoCodec(cdc)
 }
 
-// RegisterInterfaces registers the module's interface types
-func (AppModuleBasic) RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
-	types.RegisterInterfaces(registry)
-}
-
 // DefaultGenesis returns default genesis state as raw bytes for the oracle
 // module.
 func (AppModuleBasic) DefaultGenesis(cdc codec.JSONMarshaler) json.RawMessage {
@@ -70,7 +65,7 @@ func (AppModuleBasic) RegisterRESTRoutes(clientCtx client.Context, rtr *mux.Rout
 	rest.RegisterRoutes(clientCtx, rtr)
 }
 
-// RegisterGRPCGatewayRoutes registers the gRPC Gateway routes for the mint module.
+// RegisterGRPCGatewayRoutes registers the gRPC Gateway routes for the oracle module.
 func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *runtime.ServeMux) {
 	types.RegisterMsgHandlerClient(context.Background(), mux, types.NewMsgClient(clientCtx))
 	types.RegisterQueryHandlerClient(context.Background(), mux, types.NewQueryClient(clientCtx))
@@ -78,19 +73,32 @@ func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *r
 
 // GetTxCmd returns the root tx command for the oracle module.
 func (AppModuleBasic) GetTxCmd() *cobra.Command {
-	return cli.NewExchangeRateCmd()
+	return cli.NewTxCmd()
 }
 
 // GetQueryCmd returns no root query command for the oracle module.
 func (AppModuleBasic) GetQueryCmd() *cobra.Command {
-	return cli.GetQueryExchangeRateCmd()
+	return cli.GetQueryCmd()
 }
+
+// RegisterInterfaces registers the module's interface types
+func (AppModuleBasic) RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
+	types.RegisterInterfaces(registry)
+}
+
+//____________________________________________________________________________
 
 // AppModule implements an application module for the oracle module.
 type AppModule struct {
 	AppModuleBasic
 
 	keeper keeper.Keeper
+}
+
+// RegisterServices registers module services.
+func (am AppModule) RegisterServices(cfg module.Configurator) {
+	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(am.keeper))
+	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
 }
 
 // NewAppModule creates a new AppModule object
@@ -111,7 +119,7 @@ func (am AppModule) RegisterInvariants(_ sdk.InvariantRegistry) {}
 
 // Route returns the message routing key for the oracle module.
 func (am AppModule) Route() sdk.Route {
-	return sdk.Route{}
+	return sdk.NewRoute(types.RouterKey, NewHandler(am.keeper))
 }
 
 // QuerierRoute returns no querier route.
@@ -120,12 +128,6 @@ func (AppModule) QuerierRoute() string { return types.QuerierRoute }
 // LegacyQuerierHandler returns the oracle module sdk.Querier.
 func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	return keeper.NewQuerier(am.keeper, legacyQuerierCdc)
-}
-
-// RegisterServices registers module services.
-func (am AppModule) RegisterServices(cfg module.Configurator) {
-	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(am.keeper))
-	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
 }
 
 // InitGenesis performs genesis initialization for the oracle module. It returns
@@ -145,9 +147,6 @@ func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONMarshaler) json
 	return cdc.MustMarshalJSON(gs)
 }
 
-// ConsensusVersion implements AppModule/ConsensusVersion.
-func (AppModule) ConsensusVersion() uint64 { return 1 }
-
 // BeginBlock returns the begin blocker for the oracle module.
 func (AppModule) BeginBlock(ctx sdk.Context, _ abci.RequestBeginBlock) {}
 
@@ -156,6 +155,10 @@ func (AppModule) BeginBlock(ctx sdk.Context, _ abci.RequestBeginBlock) {}
 func (AppModule) EndBlock(_ sdk.Context, _ abci.RequestEndBlock) []abci.ValidatorUpdate {
 	return []abci.ValidatorUpdate{}
 }
+
+//____________________________________________________________________________
+
+// AppModuleSimulation functions
 
 func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	simulation.RandomizedGenState(simState)

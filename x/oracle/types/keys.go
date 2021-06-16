@@ -12,7 +12,8 @@ const (
 	StoreKey     = ModuleName
 	QuerierRoute = StoreKey
 
-	QueryExchangeRate = "exchange_rate"
+	QueryExchangeRate     = "exchange_rate"
+	QueryAllExchangeRates = "all_exchange_rates"
 )
 
 var (

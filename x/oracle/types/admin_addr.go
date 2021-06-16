@@ -2,8 +2,8 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
-func NewAdminAddr(addr string) AdminAddr {
-	return AdminAddr{
+func NewAdminAddr(addr string) *AdminAddr {
+	return &AdminAddr{
 		Address: addr,
 	}
 }

@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"errors"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"strconv"
 	"strings"
 
@@ -18,7 +18,7 @@ import (
 
 const RateUnit = 1000000000000000000
 
-func NewExchangeRateCmd() *cobra.Command {
+func NewTxCmd() *cobra.Command {
 	txCmd := &cobra.Command{
 		Use:                        types.ModuleName,
 		Short:                      "Exchange Rate subcommands",
@@ -47,12 +47,6 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			//cmd.Flags().Set(flags.FlagFrom, args[0])
-			//sender := clientCtx.GetFromAddress().String()
-			//senderAddr, err := sdk.AccAddressFromBech32(sender)
-			//if err != nil {
-			//	return err
-			//}
 
 			pair, rateStr, denomsStr := args[0], args[1], args[2]
 			if pair == "" {
@@ -70,8 +64,9 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 			}
 
 			exchangeRate := types.ExchangeRate{
-				Pair: pair,
-				Rate: rate,
+				Pair:   pair,
+				Rate:   rate,
+				Denoms: denoms,
 			}
 
 			msg := types.NewMsgSetExchangeRate(clientCtx.GetFromAddress(), &exchangeRate)
@@ -79,23 +74,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 				return err
 			}
 
-			//if err != nil {
-			//	return txf, nil, err
-			//}
-			//if err := msg.ValidateBasic(); err != nil {
-			//	return txf, nil, err
-			//}
-			//svcMsgClientConn := &ServiceMsgClientConn{}
-			//msgClient := types.NewMsgClient(svcMsgClientConn)
-			//_, err = msgClient.SetExchangeRate(cmd.Context(), &msg)
-			//if err != nil {
-			//	return err
-			//}
-			//
-
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-			//return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
-			//return tx.GenerateOrBroadcastTxWithFactory(clientCtx, txf, msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
@@ -105,7 +84,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 
 func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "del-exchange-rate [sender]",
+		Use:   "delete-exchange-rate [pair]",
 		Short: "Delete exchange rate",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -113,20 +92,18 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			sender := args[0]
-			if sender == "" {
-				return errors.New("invalid sender")
+
+			pair := args[0]
+			if pair == "" {
+				return types.ErrInvalidPair
 			}
 
-			msg := types.NewMsgDeleteExchangeRate(sender)
-			svcMsgClientConn := &ServiceMsgClientConn{}
-			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.DeleteExchangeRate(cmd.Context(), &msg)
-			if err != nil {
+			msg := types.NewMsgDeleteExchangeRate(clientCtx.GetFromAddress(), pair)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
@@ -136,37 +113,48 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 
 func NewMsgSetAdminAddrCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-admin-addr [sender] [address-to-add] [address-to-delete]",
+		Use:   "set-admin-addr --add [address-to-add] --delete [address-to-delete]",
 		Short: "Set Admin Address",
-		Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
-			sender, add, del := args[0], args[1], args[2]
-			if sender == "" {
-				return errors.New("invalid sender")
+
+			add, _ := cmd.Flags().GetStringSlice(FlagAdd)
+			del, _ := cmd.Flags().GetStringSlice(FlagDelete)
+
+			var addressesToAdd []*types.AdminAddr
+			var addressesToDelete []*types.AdminAddr
+			for _, a := range add {
+				_, err := sdk.AccAddressFromBech32(a)
+				if err != nil {
+					return err
+				}
+				addressesToAdd = append(addressesToAdd, types.NewAdminAddr(a))
 			}
-			var addressesToAdd []string
-			if add != "" {
-				addressesToAdd = strings.Split(add, ",")
+
+			for _, a := range del {
+				_, err := sdk.AccAddressFromBech32(a)
+				if err != nil {
+					return err
+				}
+
+				addressesToDelete = append(addressesToDelete, types.NewAdminAddr(a))
 			}
-			var addressesToDelete []string
-			if del != "" {
-				addressesToDelete = strings.Split(del, ",")
-			}
-			msg := types.NewMsgSetAdminAddr(sender, addressesToAdd, addressesToDelete)
-			svcMsgClientConn := &ServiceMsgClientConn{}
-			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.SetAdminAddr(cmd.Context(), &msg)
-			if err != nil {
+
+			msg := types.NewMsgSetAdminAddr(clientCtx.GetFromAddress(), addressesToAdd, addressesToDelete)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+	cmd.Flags().StringSlice(FlagAdd, nil, "addr,addr2,addr3")
+	cmd.Flags().StringSlice(FlagDelete, nil, "addr,addr2,addr3")
+
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd

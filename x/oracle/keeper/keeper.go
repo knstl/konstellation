@@ -3,6 +3,7 @@ package keeper
 import (
 	"fmt"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"time"
 
 	"github.com/tendermint/tendermint/libs/log"
 
@@ -144,7 +145,7 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context, pair string) (exchangeRate type
 	return exchangeRate, true
 }
 
-func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []types.ExchangeRate) {
+func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []*types.ExchangeRate) {
 	store := ctx.KVStore(k.storeKey)
 
 	iterator := sdk.KVStorePrefixIterator(store, types.ExchangeRateKey)
@@ -152,7 +153,7 @@ func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []types.ExchangeRate
 
 	for ; iterator.Valid(); iterator.Next() {
 		rate := MustUnmarshalExchangeRate(k.cdc, iterator.Value())
-		rates = append(rates, rate)
+		rates = append(rates, &rate)
 	}
 
 	return rates
@@ -160,11 +161,13 @@ func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []types.ExchangeRate
 
 func (k Keeper) SetExchangeRate(ctx sdk.Context, sender sdk.AccAddress, rate *types.ExchangeRate) error {
 	if !k.IsAllowedAddress(ctx, sender) {
-		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Sender address is not admin")
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "sender address is not admin")
 	}
 	// todo check rate validity
 
 	store := ctx.KVStore(k.storeKey)
+
+	rate.Timestamp = time.Now().Unix()
 	b := k.cdc.MustMarshalBinaryBare(rate)
 	store.Set(types.GetExchangeRateKey(rate.Pair), b)
 	return nil

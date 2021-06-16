@@ -78,19 +78,5 @@ func (m msgServer) SetAdminAddr(goCtx context.Context, msgSetAdminAddr *types.Ms
 		return nil, err
 	}
 
-	//
-	//ctx.EventManager().EmitEvents(sdk.Events{
-	//	sdk.NewEvent(
-	//		types.EventTypeCreateValidator,
-	//		sdk.NewAttribute(types.AttributeKeyValidator, msg.ValidatorAddress),
-	//		sdk.NewAttribute(sdk.AttributeKeyAmount, msg.Value.Amount.String()),
-	//	),
-	//	sdk.NewEvent(
-	//		sdk.EventTypeMessage,
-	//		sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-	//		sdk.NewAttribute(sdk.AttributeKeySender, msg.DelegatorAddress),
-	//	),
-	//})
-
 	return &types.MsgSetAdminAddrResponse{}, nil
 }

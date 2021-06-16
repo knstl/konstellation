@@ -92,7 +92,7 @@ func (s *IntegrationTestSuite) TestGetCmdQueryExchangeRate() {
 		tc := tc
 
 		s.Run(tc.name, func() {
-			cmd := cli.GetQueryExchangeRateCmd()
+			cmd := cli.GetQueryCmd()
 			clientCtx := val.ClientCtx
 
 			out, err := clitestutil.ExecTestCLICmd(clientCtx, cmd, tc.args)
