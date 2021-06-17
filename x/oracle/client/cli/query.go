@@ -28,7 +28,7 @@ func GetQueryCmd() *cobra.Command {
 
 func GetCmdQueryExchangeRate() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "exchange-rate",
+		Use:   "exchange-rate [kbtckusd]",
 		Short: "Query exchange rate",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -73,7 +73,6 @@ func GetCmdQueryExchangeRates() *cobra.Command {
 
 			r := &types.QueryAllExchangeRatesRequest{}
 			res, err := queryClient.AllExchangeRates(cmd.Context(), r)
-
 			if err != nil {
 				return err
 			}

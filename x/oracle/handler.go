@@ -8,9 +8,6 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-// RouterKey
-const RouterKey = types.ModuleName
-
 // NewHandler returns a handler for "oracle" type messages.
 func NewHandler(k keeper.Keeper) sdk.Handler {
 	msgServer := keeper.NewMsgServerImpl(k)
@@ -22,8 +19,14 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgSetExchangeRate:
 			res, err := msgServer.SetExchangeRate(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetExchangeRates:
+			res, err := msgServer.SetExchangeRates(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgDeleteExchangeRate:
 			res, err := msgServer.DeleteExchangeRate(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDeleteExchangeRates:
+			res, err := msgServer.DeleteExchangeRates(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgSetAdminAddr:
 			res, err := msgServer.SetAdminAddr(sdk.WrapSDKContext(ctx), msg)

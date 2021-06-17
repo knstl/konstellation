@@ -10,7 +10,10 @@ import (
 
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(MsgSetExchangeRate{}, "oracle/SetExchangeRate", nil)
+	cdc.RegisterConcrete(MsgSetExchangeRates{}, "oracle/SetExchangeRates", nil)
 	cdc.RegisterConcrete(MsgDeleteExchangeRate{}, "oracle/DeleteExchangeRate", nil)
+	cdc.RegisterConcrete(MsgDeleteExchangeRates{}, "oracle/DeleteExchangeRates", nil)
+	cdc.RegisterConcrete(MsgSetAdminAddr{}, "oracle/MsgSetAdminAddr", nil)
 }
 
 var (
@@ -29,7 +32,9 @@ func RegisterInterfaces(registry types.InterfaceRegistry) {
 	registry.RegisterImplementations(
 		(*sdk.Msg)(nil),
 		&MsgSetExchangeRate{},
+		&MsgSetExchangeRates{},
 		&MsgDeleteExchangeRate{},
+		&MsgDeleteExchangeRates{},
 		&MsgSetAdminAddr{},
 	)
 

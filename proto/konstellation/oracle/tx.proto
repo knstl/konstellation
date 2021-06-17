@@ -11,12 +11,28 @@ service Msg {
   rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse){
     option (google.api.http).put = "/konstellation/oracle/exchange_rate";
   }
+  rpc SetExchangeRates(MsgSetExchangeRates) returns (MsgSetExchangeRatesResponse){
+    option (google.api.http).put = "/konstellation/oracle/exchange_rates";
+  }
   rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse){
     option (google.api.http).delete = "/konstellation/oracle/exchange_rate";
+  }
+  rpc DeleteExchangeRates(MsgDeleteExchangeRates) returns (MsgDeleteExchangeRatesResponse){
+    option (google.api.http).delete = "/konstellation/oracle/exchange_rates";
   }
   rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse){
     option (google.api.http).put = "/konstellation/oracle/admin_addr";
   }
+}
+
+message ExchangeRate {
+  string pair = 1;
+  string rate = 2
+  [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+  repeated string Denoms = 3;
+  int64 height = 4;
+  google.protobuf.Timestamp timestamp = 5
+  [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
 
 message MsgSetExchangeRate {
@@ -24,15 +40,14 @@ message MsgSetExchangeRate {
   string sender = 2;
 }
 
-message ExchangeRate {
-  string pair = 1;
-  uint64 rate = 2;
-  repeated string Denoms = 3;
-  int64 height = 4;
-  google.protobuf.Timestamp timestamp = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+message MsgSetExchangeRateResponse {}
+
+message MsgSetExchangeRates {
+  repeated ExchangeRate exchange_rates = 1;
+  string sender = 2;
 }
 
-message MsgSetExchangeRateResponse {}
+message MsgSetExchangeRatesResponse {}
 
 message MsgDeleteExchangeRate {
   string sender = 1;
@@ -40,6 +55,13 @@ message MsgDeleteExchangeRate {
 }
 
 message MsgDeleteExchangeRateResponse {}
+
+message MsgDeleteExchangeRates {
+  string sender = 1;
+  repeated string pairs = 2;
+}
+
+message MsgDeleteExchangeRatesResponse {}
 
 message AdminAddr {
   string address = 1;

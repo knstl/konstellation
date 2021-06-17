@@ -157,12 +157,7 @@ func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []*types.ExchangeRat
 	return rates
 }
 
-func (k Keeper) SetExchangeRate(ctx sdk.Context, sender sdk.AccAddress, rate *types.ExchangeRate) error {
-	if !k.IsAllowedAddress(ctx, sender) {
-		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "sender address is not admin")
-	}
-	// todo check rate validity
-
+func (k Keeper) setExchangeRate(ctx sdk.Context, rate *types.ExchangeRate) error {
 	store := ctx.KVStore(k.storeKey)
 
 	rate.Height = ctx.BlockHeight()
@@ -173,13 +168,53 @@ func (k Keeper) SetExchangeRate(ctx sdk.Context, sender sdk.AccAddress, rate *ty
 	return nil
 }
 
+func (k Keeper) SetExchangeRate(ctx sdk.Context, sender sdk.AccAddress, rate *types.ExchangeRate) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "sender address is not admin")
+	}
+
+	return k.setExchangeRate(ctx, rate)
+}
+
+func (k Keeper) SetExchangeRates(ctx sdk.Context, sender sdk.AccAddress, rates []*types.ExchangeRate) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "sender address is not admin")
+	}
+	// todo check rate validity
+
+	for _, r := range rates {
+		if err := k.setExchangeRate(ctx, r); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (k Keeper) deleteExchangeRate(ctx sdk.Context, pair string) error {
+	store := ctx.KVStore(k.storeKey)
+	store.Delete(types.GetExchangeRateKey(pair))
+	return nil
+}
+
 func (k Keeper) DeleteExchangeRate(ctx sdk.Context, sender sdk.AccAddress, pair string) error {
 	if !k.IsAllowedAddress(ctx, sender) {
 		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Sender address is not admin")
 	}
 
-	store := ctx.KVStore(k.storeKey)
-	store.Delete(types.GetExchangeRateKey(pair))
+	return k.deleteExchangeRate(ctx, pair)
+}
+
+func (k Keeper) DeleteExchangeRates(ctx sdk.Context, sender sdk.AccAddress, pairs []string) error {
+	if !k.IsAllowedAddress(ctx, sender) {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Sender address is not admin")
+	}
+
+	for _, pair := range pairs {
+		if err := k.deleteExchangeRate(ctx, pair); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

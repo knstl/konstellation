@@ -2,7 +2,6 @@ package cli
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -58,7 +57,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 				return types.ErrInvalidDenoms
 			}
 
-			rate, err := strconv.ParseUint(rateStr, 10, 64)
+			rate, err := sdk.NewDecFromStr(rateStr)
 			if err != nil {
 				return types.ErrInvalidRate
 			}

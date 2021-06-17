@@ -32,6 +32,21 @@ func (m msgServer) SetExchangeRate(goCtx context.Context, msgSetExchangeRate *ty
 	return &types.MsgSetExchangeRateResponse{}, nil
 }
 
+func (m msgServer) SetExchangeRates(goCtx context.Context, msgSetExchangeRates *types.MsgSetExchangeRates) (*types.MsgSetExchangeRatesResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	senderAddr, err := sdk.AccAddressFromBech32(msgSetExchangeRates.Sender)
+	if err != nil {
+		return nil, err
+	}
+
+	err = m.keeper.SetExchangeRates(ctx, senderAddr, msgSetExchangeRates.ExchangeRates)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgSetExchangeRatesResponse{}, nil
+}
+
 func (m msgServer) DeleteExchangeRate(goCtx context.Context, msgDeleteExchangeRate *types.MsgDeleteExchangeRate) (*types.MsgDeleteExchangeRateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -45,6 +60,21 @@ func (m msgServer) DeleteExchangeRate(goCtx context.Context, msgDeleteExchangeRa
 		return nil, err
 	}
 	return &types.MsgDeleteExchangeRateResponse{}, nil
+}
+
+func (m msgServer) DeleteExchangeRates(goCtx context.Context, msgDeleteExchangeRates *types.MsgDeleteExchangeRates) (*types.MsgDeleteExchangeRatesResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	senderAddr, err := sdk.AccAddressFromBech32(msgDeleteExchangeRates.Sender)
+	if err != nil {
+		return nil, err
+	}
+
+	err = m.keeper.DeleteExchangeRates(ctx, senderAddr, msgDeleteExchangeRates.Pairs)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgDeleteExchangeRatesResponse{}, nil
 }
 
 func (m msgServer) SetAdminAddr(goCtx context.Context, msgSetAdminAddr *types.MsgSetAdminAddr) (*types.MsgSetAdminAddrResponse, error) {
