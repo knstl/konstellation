@@ -179,7 +179,7 @@ func (m MsgDeleteExchangeRates) Route() string {
 }
 
 func (m MsgDeleteExchangeRates) Type() string {
-	return TypeMsgDeleteExchangeRate
+	return TypeMsgDeleteExchangeRates
 }
 
 func (m MsgDeleteExchangeRates) GetSigners() []sdk.AccAddress {
