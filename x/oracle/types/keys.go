@@ -6,7 +6,8 @@ const (
 	// ModuleName is the name of the module
 	ModuleName = "oracle"
 
-	RouterKey = ModuleName
+	RouterKey              = ModuleName
+	AttributeValueCategory = ModuleName
 
 	// StoreKey is the default store key for mint
 	StoreKey     = ModuleName
