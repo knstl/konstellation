@@ -19,7 +19,14 @@ func (k Keeper) ExchangeRate(c context.Context, r *types.QueryExchangeRateReques
 // Params returns params of the mint module.
 func (k Keeper) AllExchangeRates(c context.Context, _ *types.QueryAllExchangeRatesRequest) (*types.QueryAllExchangeRatesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
-	r := k.GetAllExchangeRates(ctx)
+	rates := k.GetAllExchangeRates(ctx)
 
-	return &types.QueryAllExchangeRatesResponse{Pairs: r}, nil
+	// cast to pointer, protobuf requires
+	exrates := make([]*types.ExchangeRate, len(rates))
+	for _, r := range rates {
+		rr := r
+		exrates = append(exrates, &rr)
+	}
+
+	return &types.QueryAllExchangeRatesResponse{Pairs: exrates}, nil
 }

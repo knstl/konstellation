@@ -78,7 +78,7 @@ func TestGetAllowedAddress(t *testing.T) {
 	k.SetTestAllowedAddresses(ctx, allowedAddresses)
 	adm, _ := k.GetAllowedAddress(ctx, allowedAddresses[0].GetAdminAddress())
 
-	require.Equal(t, abc, adm)
+	require.Equal(t, *abc, adm)
 }
 
 func TestIsAllowedAddress(t *testing.T) {
@@ -170,7 +170,7 @@ func TestSetExchangeRates(t *testing.T) {
 	require.Equal(t, true, found2)
 
 	aer := oracleKeeper.GetAllExchangeRates(ctx)
-	require.Equal(t, []*types.ExchangeRate{rate1, rate2}, aer)
+	require.Equal(t, []types.ExchangeRate{*rate1, *rate2}, aer)
 }
 
 func TestDeleteExchangeRate(t *testing.T) {
@@ -238,9 +238,9 @@ func TestDeleteExchangeRates(t *testing.T) {
 	require.Equal(t, nil, err)
 
 	aer := oracleKeeper.GetAllExchangeRates(ctx)
-	require.Equal(t, []*types.ExchangeRate{rate1, rate2}, aer)
+	require.Equal(t, []types.ExchangeRate{*rate1, *rate2}, aer)
 
 	require.Nil(t, oracleKeeper.DeleteExchangeRates(ctx, abc.GetAdminAddress(), []string{rate1.Pair}))
 	aer2 := oracleKeeper.GetAllExchangeRates(ctx)
-	require.Equal(t, []*types.ExchangeRate{rate2}, aer2)
+	require.Equal(t, []types.ExchangeRate{*rate2}, aer2)
 }

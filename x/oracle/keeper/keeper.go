@@ -143,7 +143,7 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context, pair string) (exchangeRate type
 	return exchangeRate, true
 }
 
-func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []*types.ExchangeRate) {
+func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []types.ExchangeRate) {
 	store := ctx.KVStore(k.storeKey)
 
 	iterator := sdk.KVStorePrefixIterator(store, types.ExchangeRateKey)
@@ -151,7 +151,7 @@ func (k Keeper) GetAllExchangeRates(ctx sdk.Context) (rates []*types.ExchangeRat
 
 	for ; iterator.Valid(); iterator.Next() {
 		rate := MustUnmarshalExchangeRate(k.cdc, iterator.Value())
-		rates = append(rates, &rate)
+		rates = append(rates, rate)
 	}
 
 	return rates
