@@ -89,7 +89,7 @@ var (
 type TestChain struct {
 	t *testing.T
 
-	App           *wasmd.WasmApp
+	App           *wasmd.KonstellationApp
 	ChainID       string
 	LastHeader    *ibctmtypes.Header // header for last block height committed
 	CurrentHeader tmproto.Header     // header for current block height
@@ -150,7 +150,7 @@ func NewTestChain(t *testing.T, chainID string, opt ...keeper.Option) *TestChain
 	}
 	t.Cleanup(func() { os.RemoveAll(tempDir) })
 
-	app := wasmd.SetupWithGenesisValSet(t, valSet, []authtypes.GenesisAccount{acc}, opt, balance)
+	app := wasmd.SetupWithGenesisValSet(t, valSet, []authtypes.GenesisAccount{acc}, balance)
 
 	// create current header and call begin block
 	header := tmproto.Header{
@@ -181,7 +181,7 @@ func NewTestChain(t *testing.T, chainID string, opt ...keeper.Option) *TestChain
 
 	portKeeper := &ibcKeeper.PortKeeper
 	cap := portKeeper.BindPort(chain.GetContext(), MockPort)
-	err = testScope.ScopedWasmIBCKeeper().ClaimCapability(chain.GetContext(), cap, host.PortPath(MockPort))
+	err = testScope.ScopeIBCKeeper().ClaimCapability(chain.GetContext(), cap, host.PortPath(MockPort))
 	require.NoError(t, err)
 
 	chain.NextBlock()
@@ -841,7 +841,7 @@ func (chain *TestChain) CreatePortCapability(portID string) {
 		switch portID {
 		case MockPort:
 			// claim capability using the mock capability keeper
-			err = wasmd.NewTestSupport(chain.t, chain.App).ScopedWasmIBCKeeper().ClaimCapability(chain.GetContext(), cap, host.PortPath(portID))
+			err = wasmd.NewTestSupport(chain.t, chain.App).ScopeIBCKeeper().ClaimCapability(chain.GetContext(), cap, host.PortPath(portID))
 			require.NoError(chain.t, err)
 		case TransferPort:
 			// claim capability using the transfer capability keeper
