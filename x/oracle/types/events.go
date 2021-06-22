@@ -2,10 +2,10 @@ package types
 
 // oracle module event types
 const (
-	EventTypeSetExchangeRate     = "set_exchage_rate"
-	EventTypeSetExchangeRates    = "set_exchage_rates"
-	EventTypeDeleteExchangeRate  = "delete_exchage_rate"
-	EventTypeDeleteExchangeRates = "delete_exchage_rates"
+	EventTypeSetExchangeRate     = "set_exchange_rate"
+	EventTypeSetExchangeRates    = "set_exchange_rates"
+	EventTypeDeleteExchangeRate  = "delete_exchange_rate"
+	EventTypeDeleteExchangeRates = "delete_exchange_rates"
 	EventTypeSetAdminAddr        = "set_admin_addr"
 
 	AttributeValueCategory = ModuleName
