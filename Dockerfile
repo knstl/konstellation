@@ -37,6 +37,8 @@ EXPOSE 26656
 EXPOSE 26657
 # metrics port
 EXPOSE 26660
+# grpc port
+EXPOSE 9090
 
 #RUN apt update && \
 #    apt install -y iputils-ping net-tools vim curl wget musl-dev netcat && \
