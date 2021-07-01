@@ -30,6 +30,14 @@ buf protoc \
   --gocosmos_out=plugins=interfacetype+grpc,\
 Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
   proto/konstellation/oracle
+  
+buf protoc \
+  -I "proto" \
+  -I "third_party/proto" \
+  --gocosmos_out=plugins=interfacetype+grpc,\
+Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
+  proto/konstellation/issue
+
 
 
 # command to generate docs using protoc-gen-doc

@@ -1,0 +1,28 @@
+syntax = "proto3";
+package konstellation.sdk.issue;
+
+option go_package = "x/issue/types";
+
+import "gogoproto/gogo.proto";
+
+message IssueFeatures {
+	bool burn_owner_disabled = 1;
+	bool burn_holder_disabled = 2;
+	bool burn_from_disabled = 3;
+	bool mint_disabled = 4;
+	bool freeze_disabled = 5;
+}
+
+message IssueParams {
+    string denom = 1;
+    string symbol = 2;
+    string total_supply = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+    uint32 decimals = 4;
+    string description = 5;
+    IssueFeatures issue_features = 6 [(gogoproto.embed) = true];
+}
+
+message IssuesParams {
+	string owner = 1;
+	int32 limit = 2;
+}
