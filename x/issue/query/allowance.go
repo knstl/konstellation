@@ -3,11 +3,12 @@ package query
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/konstellation/kn-sdk/x/issue/keeper"
+	"github.com/konstellation/konstellation/x/issue/keeper"
 )
 
-func Allowance(ctx sdk.Context, k keeper.Keeper, denom string, owner string, spender string) ([]byte, sdk.Error) {
+func Allowance(ctx sdk.Context, k keeper.Keeper, denom string, owner string, spender string) ([]byte, *sdkerrors.Error) {
 	ownerAddress, _ := sdk.AccAddressFromBech32(owner)
 	spenderAddress, _ := sdk.AccAddressFromBech32(spender)
 	amount := k.Allowance(ctx, ownerAddress, spenderAddress, denom)
@@ -19,7 +20,7 @@ func Allowance(ctx sdk.Context, k keeper.Keeper, denom string, owner string, spe
 
 	bz, err := codec.MarshalJSONIndent(k.GetCodec(), amount)
 	if err != nil {
-		return nil, sdk.ErrInternal(sdk.AppendMsgToErr("could not marshal result to JSON", err.Error()))
+		return nil, sdkerrors.ErrJSONMarshal
 	}
 	return bz, nil
 }
