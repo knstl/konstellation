@@ -2,6 +2,7 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 const (
@@ -40,12 +41,6 @@ var _ sdk.Msg = &MsgTransferOwnership{}
 var _ sdk.Msg = &MsgFreeze{}
 var _ sdk.Msg = &MsgUnfreeze{}
 
-type MsgIssueCreate struct {
-	Owner        sdk.AccAddress `json:"owner" yaml:"owner"`
-	Issuer       sdk.AccAddress `json:"issuer" yaml:"issuer"`
-	*IssueParams `json:"params"`
-}
-
 func NewMsgIssueCreate(owner, issuer sdk.AccAddress, params *IssueParams) MsgIssueCreate {
 	return MsgIssueCreate{
 		owner,
@@ -69,14 +64,14 @@ func (msg MsgIssueCreate) GetSignBytes() []byte {
 }
 
 // quick validity check
-func (msg MsgIssueCreate) ValidateBasic() sdk.Error {
+func (msg MsgIssueCreate) ValidateBasic() error {
 	if msg.Owner.Empty() {
 		//return ErrNilOwner(DefaultCodespace)
-		return sdk.ErrInvalidAddress("Owner address cannot be empty")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "Owner address cannot be empty")
 	}
 	// Cannot issue zero or negative coins
 	if msg.TotalSupply.IsZero() || !msg.TotalSupply.IsPositive() {
-		return sdk.ErrInvalidCoins("Cannot issue 0 or negative coin amounts")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "Cannot issue 0 or negative coin amounts")
 	}
 	//if utils.QuoDecimals(msg.TotalSupply, msg.Decimals).GT(CoinMaxTotalSupply) {
 	//	return ErrCoinTotalSupplyMaxValueNotValid()
@@ -84,22 +79,16 @@ func (msg MsgIssueCreate) ValidateBasic() sdk.Error {
 	if len(msg.Symbol) < CoinSymbolMinLength || len(msg.Symbol) > CoinSymbolMaxLength {
 		return ErrCoinSymbolNotValid()
 	}
-	if msg.Decimals > CoinDecimalsMaxValue {
+	if uint(msg.Decimals) > CoinDecimalsMaxValue {
 		return ErrCoinDecimalsMaxValueNotValid()
 	}
-	if msg.Decimals%CoinDecimalsMultiple != 0 {
+	if uint(msg.Decimals)%CoinDecimalsMultiple != 0 {
 		return ErrCoinDecimalsMultipleNotValid()
 	}
 	if len(msg.Description) > CoinDescriptionMaxLength {
 		return ErrCoinDescriptionMaxLengthNotValid()
 	}
 	return nil
-}
-
-type MsgDescription struct {
-	Owner       sdk.AccAddress `json:"owner" yaml:"owner"`
-	Denom       string         `json:"denom" yaml:"denom"`
-	Description string         `json:"description" yaml:"description"`
 }
 
 func NewMsgDescription(owner sdk.AccAddress, denom, description string) MsgDescription {
@@ -113,9 +102,9 @@ func (msg MsgDescription) Route() string { return RouterKey }
 func (msg MsgDescription) Type() string { return TypeMsgDescription }
 
 // ValidateBasic Implements Msg.
-func (msg MsgDescription) ValidateBasic() sdk.Error {
+func (msg MsgDescription) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 	if msg.Denom == "" {
 		return ErrInvalidDenom(msg.Denom)
@@ -137,12 +126,6 @@ func (msg MsgDescription) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
-type MsgDisableFeature struct {
-	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
-	Denom   string         `json:"denom" yaml:"denom"`
-	Feature string         `json:"feature" yaml:"feature"`
-}
-
 func NewMsgDisableFeature(owner sdk.AccAddress, denom, feature string) MsgDisableFeature {
 	return MsgDisableFeature{Owner: owner, Denom: denom, Feature: feature}
 }
@@ -154,9 +137,9 @@ func (msg MsgDisableFeature) Route() string { return RouterKey }
 func (msg MsgDisableFeature) Type() string { return TypeMsgDisableFeature }
 
 // ValidateBasic Implements Msg.
-func (msg MsgDisableFeature) ValidateBasic() sdk.Error {
+func (msg MsgDisableFeature) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 
 	if msg.Denom == "" {
@@ -178,12 +161,6 @@ func (msg MsgDisableFeature) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
-type MsgEnableFeature struct {
-	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
-	Denom   string         `json:"denom" yaml:"denom"`
-	Feature string         `json:"feature" yaml:"feature"`
-}
-
 func NewMsgEnableFeature(owner sdk.AccAddress, denom, feature string) MsgEnableFeature {
 	return MsgEnableFeature{Owner: owner, Denom: denom, Feature: feature}
 }
@@ -195,9 +172,9 @@ func (msg MsgEnableFeature) Route() string { return RouterKey }
 func (msg MsgEnableFeature) Type() string { return TypeMsgEnableFeature }
 
 // ValidateBasic Implements Msg.
-func (msg MsgEnableFeature) ValidateBasic() sdk.Error {
+func (msg MsgEnableFeature) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 	if msg.Denom == "" {
 		return ErrInvalidDenom(msg.Denom)
@@ -216,12 +193,6 @@ func (msg MsgEnableFeature) GetSignBytes() []byte {
 // GetSigners Implements Msg.
 func (msg MsgEnableFeature) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
-}
-
-type MsgFeatures struct {
-	Owner          sdk.AccAddress `json:"owner" yaml:"owner"`
-	Denom          string         `json:"denom"`
-	*IssueFeatures `json:"features"`
 }
 
 func NewMsgFeatures(owner sdk.AccAddress, denom string, features *IssueFeatures) MsgFeatures {
@@ -247,21 +218,14 @@ func (msg MsgFeatures) GetSignBytes() []byte {
 }
 
 // quick validity check
-func (msg MsgFeatures) ValidateBasic() sdk.Error {
+func (msg MsgFeatures) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("Owner address cannot be empty")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "Owner address cannot be empty")
 	}
 	if msg.Denom == "" {
 		return ErrInvalidDenom(msg.Denom)
 	}
 	return nil
-}
-
-// MsgTransfer - high level transaction of the coin module
-type MsgTransfer struct {
-	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
-	ToAddress   sdk.AccAddress `json:"to_address" yaml:"to_address"`
-	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
 }
 
 // NewMsgTransfer - construct arbitrary multi-in, multi-out send msg.
@@ -276,18 +240,18 @@ func (msg MsgTransfer) Route() string { return RouterKey }
 func (msg MsgTransfer) Type() string { return TypeMsgTransfer }
 
 // ValidateBasic Implements Msg.
-func (msg MsgTransfer) ValidateBasic() sdk.Error {
+func (msg MsgTransfer) ValidateBasic() error {
 	if msg.FromAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing sender address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing sender address")
 	}
 	if msg.ToAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing recipient address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -302,13 +266,6 @@ func (msg MsgTransfer) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.FromAddress}
 }
 
-type MsgTransferFrom struct {
-	Sender      sdk.AccAddress `json:"sender" yaml:"sender"`
-	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
-	ToAddress   sdk.AccAddress `json:"to_address" yaml:"to_address"`
-	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 func NewMsgTransferFrom(sender, fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) MsgTransferFrom {
 	return MsgTransferFrom{Sender: sender, FromAddress: fromAddr, ToAddress: toAddr, Amount: amount}
 }
@@ -320,21 +277,21 @@ func (msg MsgTransferFrom) Route() string { return RouterKey }
 func (msg MsgTransferFrom) Type() string { return TypeMsgTransferFrom }
 
 // ValidateBasic Implements Msg.
-func (msg MsgTransferFrom) ValidateBasic() sdk.Error {
+func (msg MsgTransferFrom) ValidateBasic() error {
 	if msg.Sender.Empty() {
-		return sdk.ErrInvalidAddress("missing sender address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing sender address")
 	}
 	if msg.FromAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing from address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing from address")
 	}
 	if msg.ToAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing recipient address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -349,12 +306,6 @@ func (msg MsgTransferFrom) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Sender}
 }
 
-type MsgTransferOwnership struct {
-	Owner     sdk.AccAddress `json:"owner" yaml:"owner"`
-	ToAddress sdk.AccAddress `json:"to_address" yaml:"to_address"`
-	Denom     string         `json:"denom" yaml:"denom"`
-}
-
 func NewMsgTransferOwnership(owner, toAddr sdk.AccAddress, denom string) MsgTransferOwnership {
 	return MsgTransferOwnership{Owner: owner, ToAddress: toAddr, Denom: denom}
 }
@@ -366,12 +317,12 @@ func (msg MsgTransferOwnership) Route() string { return RouterKey }
 func (msg MsgTransferOwnership) Type() string { return TypeMsgTransferOwnership }
 
 // ValidateBasic Implements Msg.
-func (msg MsgTransferOwnership) ValidateBasic() sdk.Error {
+func (msg MsgTransferOwnership) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 	if msg.ToAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing recipient address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
 	if msg.Denom == "" {
 		return ErrInvalidDenom(msg.Denom)
@@ -389,13 +340,6 @@ func (msg MsgTransferOwnership) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
-// MsgApprove - high level transaction of the coin module
-type MsgApprove struct {
-	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
-	Spender sdk.AccAddress `json:"spender" yaml:"spender"`
-	Amount  sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 // NewMsgApprove - construct arbitrary multi-in, multi-out send msg.
 func NewMsgApprove(owner, spender sdk.AccAddress, amount sdk.Coins) MsgApprove {
 	return MsgApprove{owner, spender, amount}
@@ -408,18 +352,18 @@ func (msg MsgApprove) Route() string { return RouterKey }
 func (msg MsgApprove) Type() string { return TypeMsgApprove }
 
 // ValidateBasic Implements Msg.
-func (msg MsgApprove) ValidateBasic() sdk.Error {
+func (msg MsgApprove) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 	if msg.Spender.Empty() {
-		return sdk.ErrInvalidAddress("missing spender address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -434,12 +378,6 @@ func (msg MsgApprove) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
-type MsgIncreaseAllowance struct {
-	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
-	Spender sdk.AccAddress `json:"spender" yaml:"spender"`
-	Amount  sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) MsgIncreaseAllowance {
 	return MsgIncreaseAllowance{owner, spender, amount}
 }
@@ -451,18 +389,18 @@ func (msg MsgIncreaseAllowance) Route() string { return RouterKey }
 func (msg MsgIncreaseAllowance) Type() string { return TypeMsgIncreaseAllowance }
 
 // ValidateBasic Implements Msg.
-func (msg MsgIncreaseAllowance) ValidateBasic() sdk.Error {
+func (msg MsgIncreaseAllowance) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 	if msg.Spender.Empty() {
-		return sdk.ErrInvalidAddress("missing spender address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -477,13 +415,6 @@ func (msg MsgIncreaseAllowance) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
-// MsgApprove - high level transaction of the coin module
-type MsgDecreaseAllowance struct {
-	Owner   sdk.AccAddress `json:"owner" yaml:"owner"`
-	Spender sdk.AccAddress `json:"spender" yaml:"spender"`
-	Amount  sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 // NewMsgApprove - construct arbitrary multi-in, multi-out send msg.
 func NewMsgDecreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) MsgDecreaseAllowance {
 	return MsgDecreaseAllowance{owner, spender, amount}
@@ -496,18 +427,18 @@ func (msg MsgDecreaseAllowance) Route() string { return RouterKey }
 func (msg MsgDecreaseAllowance) Type() string { return TypeMsgDecreaseAllowance }
 
 // ValidateBasic Implements Msg.
-func (msg MsgDecreaseAllowance) ValidateBasic() sdk.Error {
+func (msg MsgDecreaseAllowance) ValidateBasic() error {
 	if msg.Owner.Empty() {
-		return sdk.ErrInvalidAddress("missing owner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 	if msg.Spender.Empty() {
-		return sdk.ErrInvalidAddress("missing spender address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -522,12 +453,6 @@ func (msg MsgDecreaseAllowance) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
 
-type MsgMint struct {
-	Minter    sdk.AccAddress `json:"minter" yaml:"minter"`
-	ToAddress sdk.AccAddress `json:"to_address" yaml:"to_address"`
-	Amount    sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 func NewMsgMint(minter, toAddr sdk.AccAddress, amount sdk.Coins) MsgMint {
 	return MsgMint{Minter: minter, ToAddress: toAddr, Amount: amount}
 }
@@ -539,18 +464,18 @@ func (msg MsgMint) Route() string { return RouterKey }
 func (msg MsgMint) Type() string { return TypeMsgMint }
 
 // ValidateBasic Implements Msg.
-func (msg MsgMint) ValidateBasic() sdk.Error {
+func (msg MsgMint) ValidateBasic() error {
 	if msg.Minter.Empty() {
-		return sdk.ErrInvalidAddress("missing minter address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing minter address")
 	}
 	if msg.ToAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing recipient address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -565,11 +490,6 @@ func (msg MsgMint) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Minter}
 }
 
-type MsgBurn struct {
-	Burner sdk.AccAddress `json:"burner" yaml:"burner"`
-	Amount sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 func NewMsgBurn(burner sdk.AccAddress, amount sdk.Coins) MsgBurn {
 	return MsgBurn{Burner: burner, Amount: amount}
 }
@@ -581,15 +501,15 @@ func (msg MsgBurn) Route() string { return RouterKey }
 func (msg MsgBurn) Type() string { return TypeMsgBurn }
 
 // ValidateBasic Implements Msg.
-func (msg MsgBurn) ValidateBasic() sdk.Error {
+func (msg MsgBurn) ValidateBasic() error {
 	if msg.Burner.Empty() {
-		return sdk.ErrInvalidAddress("missing burner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing burner address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -604,12 +524,6 @@ func (msg MsgBurn) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Burner}
 }
 
-type MsgBurnFrom struct {
-	Burner      sdk.AccAddress `json:"burner" yaml:"burner"`
-	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
-	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
-}
-
 func NewMsgBurnFrom(burner, fromAddr sdk.AccAddress, amount sdk.Coins) MsgBurnFrom {
 	return MsgBurnFrom{Burner: burner, FromAddress: fromAddr, Amount: amount}
 }
@@ -621,18 +535,18 @@ func (msg MsgBurnFrom) Route() string { return RouterKey }
 func (msg MsgBurnFrom) Type() string { return TypeMsgBurnFrom }
 
 // ValidateBasic Implements Msg.
-func (msg MsgBurnFrom) ValidateBasic() sdk.Error {
+func (msg MsgBurnFrom) ValidateBasic() error {
 	if msg.Burner.Empty() {
-		return sdk.ErrInvalidAddress("missing burner address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing burner address")
 	}
 	if msg.FromAddress.Empty() {
-		return sdk.ErrInvalidAddress("missing recipient address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
 	if !msg.Amount.IsValid() {
-		return sdk.ErrInvalidCoins("send amount is invalid: " + msg.Amount.String())
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
 	if !msg.Amount.IsAllPositive() {
-		return sdk.ErrInsufficientCoins("send amount must be positive")
+		return sdkerrors.Wrap(sdkerrors.ErrInsufficientCoins, "send amount must be positive")
 	}
 	return nil
 }
@@ -647,13 +561,6 @@ func (msg MsgBurnFrom) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Burner}
 }
 
-type MsgFreeze struct {
-	Freezer sdk.AccAddress `json:"freezer" yaml:"freezer"`
-	Holder  sdk.AccAddress `json:"holder" yaml:"holder"`
-	Denom   string         `json:"denom" yaml:"denom"`
-	Op      string         `json:"op" yaml:"op"`
-}
-
 func NewMsgFreeze(freezer, holder sdk.AccAddress, denom, op string) MsgFreeze {
 	return MsgFreeze{Freezer: freezer, Holder: holder, Denom: denom, Op: op}
 }
@@ -665,12 +572,12 @@ func (msg MsgFreeze) Route() string { return RouterKey }
 func (msg MsgFreeze) Type() string { return TypeMsgFreeze }
 
 // ValidateBasic Implements Msg.
-func (msg MsgFreeze) ValidateBasic() sdk.Error {
+func (msg MsgFreeze) ValidateBasic() error {
 	if msg.Freezer.Empty() {
-		return sdk.ErrInvalidAddress("missing freezer address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing freezer address")
 	}
 	if msg.Holder.Empty() {
-		return sdk.ErrInvalidAddress("missing holder address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing holder address")
 	}
 	if msg.Denom == "" {
 		return ErrInvalidDenom(msg.Denom)
@@ -691,13 +598,6 @@ func (msg MsgFreeze) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Freezer}
 }
 
-type MsgUnfreeze struct {
-	Freezer sdk.AccAddress `json:"freezer" yaml:"freezer"`
-	Holder  sdk.AccAddress `json:"holder" yaml:"holder"`
-	Denom   string         `json:"denom" yaml:"denom"`
-	Op      string         `json:"op" yaml:"op"`
-}
-
 func NewMsgUnfreeze(freezer, holder sdk.AccAddress, denom, op string) MsgUnfreeze {
 	return MsgUnfreeze{Freezer: freezer, Holder: holder, Denom: denom, Op: op}
 }
@@ -709,12 +609,12 @@ func (msg MsgUnfreeze) Route() string { return RouterKey }
 func (msg MsgUnfreeze) Type() string { return TypeMsgUnfreeze }
 
 // ValidateBasic Implements Msg.
-func (msg MsgUnfreeze) ValidateBasic() sdk.Error {
+func (msg MsgUnfreeze) ValidateBasic() error {
 	if msg.Freezer.Empty() {
-		return sdk.ErrInvalidAddress("missing freezer address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing freezer address")
 	}
 	if msg.Holder.Empty() {
-		return sdk.ErrInvalidAddress("missing holder address")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing holder address")
 	}
 	if msg.Denom == "" {
 		return ErrInvalidDenom(msg.Denom)

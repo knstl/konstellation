@@ -21,14 +21,6 @@ const (
 	QueryAllowances = "allowances"
 )
 
-type IssueFeatures struct {
-	BurnOwnerDisabled  bool `json:"burn_owner_disabled"`
-	BurnHolderDisabled bool `json:"burn_holder_disabled"`
-	BurnFromDisabled   bool `json:"burn_from_disabled"`
-	MintDisabled       bool `json:"mint_disabled"`
-	FreezeDisabled     bool `json:"freeze_disabled"`
-}
-
 func NewIssueFeatures(data interface{}) (*IssueFeatures, error) {
 	var features IssueFeatures
 	err := mapstructure.Decode(data, &features)
@@ -40,15 +32,6 @@ func (fs *IssueFeatures) String() string {
 	return string(f)
 }
 
-type IssueParams struct {
-	Denom         string  `json:"denom"`
-	Symbol        string  `json:"symbol"`
-	TotalSupply   sdk.Int `json:"total_supply"`
-	Decimals      uint    `json:"decimals"`
-	Description   string  `json:"description"`
-	IssueFeatures `json:"features"`
-}
-
 func NewIssueParams(data interface{}) (*IssueParams, error) {
 	var issue IssueParams
 	err := mapstructure.Decode(data, &issue)
@@ -57,11 +40,6 @@ func NewIssueParams(data interface{}) (*IssueParams, error) {
 
 func (ip *IssueParams) AddTotalSupply(totalSupply *sdk.Int) {
 	ip.TotalSupply = sdk.NewIntWithDecimal(totalSupply.Int64(), cast.ToInt(ip.Decimals))
-}
-
-type IssuesParams struct {
-	Owner string `json:"owner"`
-	Limit int    `json:"limit"`
 }
 
 func NewIssuesParams(owner string, limit int) IssuesParams {
