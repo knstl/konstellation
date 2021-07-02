@@ -4,54 +4,54 @@ package konstellation.sdk.issue;
 option go_package = "x/issue/types";
 
 import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos_proto/abci.proto";
 import "querier.proto";
 
-/*
 service Msg {
-	rpc HandleMsgIssueCreate(MsgIssueCreate) returns (MsgIssueCreateResponse){
-    	option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgIssueCreate(MsgIssueCreate) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/issue";
   	}
-  	rpc HandleMsgFeatures(MsgFeatures) returns (MsgFeaturesResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+  	rpc HandleMsgFeatures(MsgFeatures) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/features";
   	}
-	rpc HandleMsgDescription(MsgDescription) returns (MsgDescriptionResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgDescription(MsgDescription) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/description";
   	}
-	rpc HandleMsgTransfer(MsgTransfer) returns (MsgTransferResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgTransfer(MsgTransfer) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/transfer";
   	}
-	rpc HandleMsgTransferFrom(MsgTransferFrom) returns (MsgTransferFromResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgTransferFrom(MsgTransferFrom) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/transfer_from";
   	}
-	rpc HandleMsgApprove(MsgApprove) returns (MsgApproveResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgApprove(MsgApprove) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/approve";
   	}
-	rpc HandleMsgIncreaseAllowance(MsgIncreaseAllowance) returns (MsgIncreaseAllowanceResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgIncreaseAllowance(MsgIncreaseAllowance) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/increase_allowance";
   	}
-	rpc HandleMsgDecreaseAllowance(MsgDecreaseAllowance) returns (MsgDecreaseAllowanceResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgDecreaseAllowance(MsgDecreaseAllowance) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/decrease_allowance";
   	}
-	rpc HandleMsgMint(MsgMint) returns (MsgMintResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgMint(MsgMint) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/mint";
   	}
-	rpc HandleMsgBurn(MsgBurn) returns (MsgBurnResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgBurn(MsgBurn) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/burn";
   	}
-	rpc HandleMsgBurnFrom(MsgBurnFrom) returns (MsgBurnFromResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgBurnFrom(MsgBurnFrom) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/burn_from";
   	}
-	rpc HandleMsgTransferOwnership(MsgTransferOwnership) returns (MsgTransferOwnershipResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgTransferOwnership(MsgTransferOwnership) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/transfer_ownership";
   	}
-	rpc HandleMsgFreeze(MsgFreeze) returns (MsgFrezeeResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgFreeze(MsgFreeze) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/freeze";
   	}
-	rpc HandleMsgUnfreeze(MsgUnfreeze) returns (MsgUnfrezeeResponse){
-   		option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+	rpc HandleMsgUnfreeze(MsgUnfreeze) returns (cosmos.base.abci.v1beta1.Result){
+   		option (google.api.http).put = "/konstellation/issue/unfreeze";
   	}
 }
-*/
 
 message MsgIssueCreate {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];

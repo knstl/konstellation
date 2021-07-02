@@ -21,7 +21,7 @@ service Msg {
     option (google.api.http).delete = "/konstellation/oracle/exchange_rates";
   }
   rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse){
-    option (google.api.http).put = "/konstellation/oracle/admin_addr";
+    option (google.api.http).put = "/konstellation/oracle/admin_addr"; 
   }
 }
 
