@@ -1,7 +1,6 @@
 package types
 
 import (
-	"encoding/json"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/cast"
 
@@ -27,11 +26,6 @@ func NewIssueFeatures(data interface{}) (*IssueFeatures, error) {
 	return &features, err
 }
 
-func (fs *IssueFeatures) String() string {
-	f, _ := json.Marshal(fs)
-	return string(f)
-}
-
 func NewIssueParams(data interface{}) (*IssueParams, error) {
 	var issue IssueParams
 	err := mapstructure.Decode(data, &issue)
@@ -42,7 +36,7 @@ func (ip *IssueParams) AddTotalSupply(totalSupply *sdk.Int) {
 	ip.TotalSupply = sdk.NewIntWithDecimal(totalSupply.Int64(), cast.ToInt(ip.Decimals))
 }
 
-func NewIssuesParams(owner string, limit int) IssuesParams {
+func NewIssuesParams(owner string, limit int32) IssuesParams {
 	return IssuesParams{owner, limit}
 }
 
@@ -50,6 +44,6 @@ func (ip *IssuesParams) AddOwner(owner string) {
 	ip.Owner = owner
 }
 
-func (ip *IssuesParams) AddLimit(limit int) {
+func (ip *IssuesParams) AddLimit(limit int32) {
 	ip.Limit = limit
 }

@@ -36,8 +36,15 @@ buf protoc \
   -I "third_party/proto" \
   --gocosmos_out=plugins=interfacetype+grpc,\
 Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
-  --grpc-gateway_out=Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
   proto/konstellation/issue
+  
+buf protoc \
+  -I "proto" \
+  -I "third_party/proto" \
+  --grpc-gateway_out=Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
+  proto/konstellation/issue/msg.proto
+
+
 
 
 

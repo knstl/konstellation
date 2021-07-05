@@ -32,7 +32,7 @@ func getQueryCmdIssues(cdc *codec.Codec) *cobra.Command {
 			}
 			qp := types.NewIssuesParams(
 				address.String(),
-				viper.GetInt(flagLimit),
+				int32(viper.GetInt(flagLimit)),
 			)
 
 			bz, err := cliCtx.Codec.MarshalJSON(qp)

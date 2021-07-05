@@ -1,9 +1,10 @@
 package query
 
 import (
-	"github.com/konstellation/kn-sdk/x/issue/query"
 	"net/http"
 	"strconv"
+
+	"github.com/konstellation/kn-sdk/x/issue/query"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -43,7 +44,7 @@ func issuesHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
-		params.AddLimit(limit)
+		params.AddLimit(int32(limit))
 
 		bz, err := cliCtx.Codec.MarshalJSON(params)
 		if err != nil {

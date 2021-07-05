@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/params"
-	"github.com/cosmos/cosmos-sdk/x/params/subspace"
+	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/konstellation/kn-sdk/types"
 )
 
@@ -27,18 +26,7 @@ var (
 	KeyTransferOwnerFee = []byte("TransferOwnerFee")
 )
 
-var _ subspace.ParamSet = &Params{}
-
-// Params defines the parameters for the auth module.
-type Params struct {
-	IssueFee         sdk.Coin `json:"issue_fee"`
-	MintFee          sdk.Coin `json:"mint_fee"`
-	FreezeFee        sdk.Coin `json:"freeze_fee"`
-	UnfreezeFee      sdk.Coin `json:"unfreeze_fee"`
-	BurnFee          sdk.Coin `json:"burn_fee"`
-	BurnFromFee      sdk.Coin `json:"burn_from_fee"`
-	TransferOwnerFee sdk.Coin `json:"transfer_owner_fee"`
-}
+var _ paramtypes.ParamSet = (*Params)(nil)
 
 // NewParams creates a new Params instance
 func NewParams(issueFee, mintFee, freezeFee, unfreezeFee, burnFee, burnFromFee, transferOwnerFee sdk.Coin) Params {
@@ -54,22 +42,22 @@ func NewParams(issueFee, mintFee, freezeFee, unfreezeFee, burnFee, burnFromFee, 
 }
 
 // ParamKeyTable for auth module
-func ParamKeyTable() subspace.KeyTable {
-	return subspace.NewKeyTable().RegisterParamSet(&Params{})
+func ParamKeyTable() paramtypes.KeyTable {
+	return paramtypes.NewKeyTable().RegisterParamSet(&Params{})
 }
 
 // ParamSetPairs implements the ParamSet interface and returns all the key/value pairs
 // pairs of auth module's parameters.
 // nolint
-func (p *Params) ParamSetPairs() subspace.ParamSetPairs {
-	return params.ParamSetPairs{
-		{Key: KeyIssueFee, Value: &p.IssueFee},
-		{Key: KeyMintFee, Value: &p.MintFee},
-		{Key: KeyFreezeFee, Value: &p.FreezeFee},
-		{Key: KeyUnFreezeFee, Value: &p.UnfreezeFee},
-		{Key: KeyBurnFee, Value: &p.BurnFee},
-		{Key: KeyBurnFromFee, Value: &p.BurnFromFee},
-		{Key: KeyTransferOwnerFee, Value: &p.TransferOwnerFee},
+func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
+	return paramtypes.ParamSetPairs{
+		paramtypes.NewParamSetPair(KeyIssueFee, &p.IssueFee, validateFee),
+		paramtypes.NewParamSetPair(KeyMintFee, &p.MintFee, validateFee),
+		paramtypes.NewParamSetPair(KeyFreezeFee, &p.FreezeFee, validateFee),
+		paramtypes.NewParamSetPair(KeyUnFreezeFee, &p.UnfreezeFee, validateFee),
+		paramtypes.NewParamSetPair(KeyBurnFee, &p.BurnFee, validateFee),
+		paramtypes.NewParamSetPair(KeyBurnFromFee, &p.BurnFromFee, validateFee),
+		paramtypes.NewParamSetPair(KeyTransferOwnerFee, &p.TransferOwnerFee, validateFee),
 	}
 }
 
@@ -93,27 +81,8 @@ func DefaultParams() Params {
 	}
 }
 
-// String implements the stringer interface.
-func (p Params) String() string {
-	return fmt.Sprintf(`Params:
-  IssueFee:			%s
-  MintFee:			%s
-  FreezeFee:			%s
-  UnfreezeFee:			%s
-  BurnFee:			%s
-  BurnFromFee:			%s
-  TransferOwnerFee:		%s`,
-		p.IssueFee.String(),
-		p.MintFee.String(),
-		p.FreezeFee.String(),
-		p.UnfreezeFee.String(),
-		p.BurnFee.String(),
-		p.BurnFromFee.String(),
-		p.TransferOwnerFee.String())
-}
-
 // unmarshal the current staking params value from store key or panic
-func MustUnmarshalParams(cdc *codec.Codec, value []byte) Params {
+func MustUnmarshalParams(cdc *codec.LegacyAmino, value []byte) Params {
 	ps, err := UnmarshalParams(cdc, value)
 	if err != nil {
 		panic(err)
@@ -122,7 +91,7 @@ func MustUnmarshalParams(cdc *codec.Codec, value []byte) Params {
 }
 
 // unmarshal the current staking params value from store key
-func UnmarshalParams(cdc *codec.Codec, value []byte) (params Params, err error) {
+func UnmarshalParams(cdc *codec.LegacyAmino, value []byte) (params Params, err error) {
 	err = cdc.UnmarshalBinaryLengthPrefixed(value, &params)
 	if err != nil {
 		return
@@ -132,26 +101,40 @@ func UnmarshalParams(cdc *codec.Codec, value []byte) (params Params, err error) 
 
 // Validate checks that the parameters have valid values.
 func (p Params) Validate() error {
-	if p.IssueFee.IsNegative() {
+	if err := validateFee(p.IssueFee); err != nil {
 		return ErrInvalidIssueFee(p.IssueFee.String())
 	}
-	if p.MintFee.IsNegative() {
+	if err := validateFee(p.MintFee); err != nil {
 		return ErrInvalidMintFee(p.MintFee.String())
 	}
-	if p.BurnFee.IsNegative() {
+	if err := validateFee(p.BurnFee); err != nil {
 		return ErrInvalidBurnFee(p.BurnFee.String())
 	}
-	if p.BurnFromFee.IsNegative() {
+	if err := validateFee(p.BurnFromFee); err != nil {
 		return ErrInvalidBurnFromFee(p.BurnFromFee.String())
 	}
-	if p.FreezeFee.IsNegative() {
+	if err := validateFee(p.FreezeFee); err != nil {
 		return ErrInvalidFreezeFee(p.FreezeFee.String())
 	}
-	if p.UnfreezeFee.IsNegative() {
+	if err := validateFee(p.UnfreezeFee); err != nil {
 		return ErrInvalidUnfreezeFee(p.UnfreezeFee.String())
 	}
-	if p.TransferOwnerFee.IsNegative() {
+	if err := validateFee(p.TransferOwnerFee); err != nil {
 		return ErrInvalidTransferOwnerFee(p.TransferOwnerFee.String())
 	}
+
+	return nil
+}
+
+func validateFee(i interface{}) error {
+	v, ok := i.(sdk.Coin)
+	if !ok {
+		return fmt.Errorf("invalid parameter type: %T", i)
+	}
+
+	if v.IsNegative() {
+		return fmt.Errorf("fee must be not negative: %d", v)
+	}
+
 	return nil
 }

@@ -183,6 +183,7 @@ github.com/cosmos/cosmos-sdk v0.41.0/go.mod h1:vlgqdPpUGSxgqSbZea6fjszoLkPKwCuiq
 github.com/cosmos/cosmos-sdk v0.41.3/go.mod h1:yKN705My5fGGT93DrdoeZ96GPFLCVZrzDBciGf8/Ldo=
 github.com/cosmos/cosmos-sdk v0.42.4 h1:yaD4PyOx0LnyfiWasC5egg1U76lT83GRxjJjupPo7Gk=
 github.com/cosmos/cosmos-sdk v0.42.4/go.mod h1:I1Zw1zmU4rA/NITaakTb71pXQnQrWyFBhqo3WSeg0vA=
+github.com/cosmos/cosmos-sdk v0.42.6 h1:ps1QWfvaX6VLNcykA7wzfii/5IwBfYgTIik6NOVDq/c=
 github.com/cosmos/go-bip39 v0.0.0-20180618194314-52158e4697b8 h1:Iwin12wRQtyZhH6FV3ykFcdGNlYEzoeR0jN8Vn+JWsI=
 github.com/cosmos/go-bip39 v0.0.0-20180618194314-52158e4697b8/go.mod h1:tSxLoYXyBmiFeKpvmq4dzayMdCjCnu8uqmCysIGBT2Y=
 github.com/cosmos/go-bip39 v0.0.0-20180819234021-555e2067c45d h1:49RLWk1j44Xu4fjHb6JFYmeUnDORVwHNkDxaQ0ctCVU=
@@ -530,6 +531,7 @@ github.com/konstellation/kn-sdk v0.1.15 h1:x3kAPdDI2WcySjA8tr6c8T39OWwBNGkyZkz+i
 github.com/konstellation/kn-sdk v0.1.15/go.mod h1:jmRKq8TtLKUFzmzyJKXJcPTWMOy75kWfrszvkd9x9Sc=
 github.com/konstellation/kn-sdk v0.2.0 h1:bxk3A0Ai9IiUu8VBF79RYzZ6KZ/1lPqcTWhqXXxEVt8=
 github.com/konstellation/kn-sdk v0.2.0/go.mod h1:jmRKq8TtLKUFzmzyJKXJcPTWMOy75kWfrszvkd9x9Sc=
+github.com/konstellation/kn-sdk v0.2.2 h1:C/1fSkkdCX8p1movtHuMb2wU7bN+qTZ1lT6tYAiJWxE=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj2vyii2bbUNDw3kt9VxK2EY=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
