@@ -16,7 +16,7 @@ func HandleMsgIssueCreate(ctx sdk.Context, k keeper.Keeper, msg types.MsgIssueCr
 
 	params, errr := types.NewIssueParams(msg.IssueParams)
 	if errr != nil {
-		return types.ErrInvalidIssueParams().Result()
+		return types.ErrInvalidIssueParams.Result()
 	}
 
 	ci := k.CreateIssue(ctx, msg.Owner, msg.Issuer, params)

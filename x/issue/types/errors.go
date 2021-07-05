@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 type CodeType = sdk.CodeType
@@ -42,25 +43,21 @@ const (
 	CodeInvalidTransferOwnerFee sdk.CodeType      = 406
 )
 
+var (
+	ErrInvalidIssueParams               = sdkerrors.Register(DefaultCodespace, CodeInvalidInput, "Invalid issue params")
+	ErrIssueAlreadyExists               = sdkerrors.Register(DefaultCodespace, CodeIssueExists, "Invalid already exists")
+	ErrNotEnoughFee                     = sdkerrors.Register(DefaultCodespace, CodeNotEnoughFee, "Not enough fee")
+	ErrCoinDecimalsMaxValueNotValid     = sdkerrors.Register(DefaultCodespace, CodeInvalidCoinDecimals, fmt.Sprintf("Decimals max value is %d", CoinDecimalsMaxValue))
+	ErrCoinDecimalsMultipleNotValid     = sdkerrors.Register(DefaultCodespace, CodeInvalidCoinDecimals, fmt.Sprintf("Decimals must be a multiple of %d", CoinDecimalsMultiple))
+	ErrCoinTotalSupplyMaxValueNotValid  = sdkerrors.Register(DefaultCodespace, CodeInvalidTotalSupply, fmt.Sprintf("Total supply max value is %s", CoinMaxTotalSupply.String()))
+	ErrCoinDescriptionNotValid          = sdkerrors.Register(DefaultCodespace, CodeInvalidDescription, "Description is not valid json")
+	ErrCoinDescriptionMaxLengthNotValid = sdkerrors.Register(DefaultCodespace, CodeInvalidDescription, fmt.Sprintf("Description max length is %d", CoinDescriptionMaxLength))
+	ErrCoinSymbolNotValid               = sdkerrors.Register(DefaultCodespace, CodeInvalidSymbol, "Invalid symbol")
+)
+
 //convert sdk.Error to error
 func Errorf(err sdk.Error) error {
 	return fmt.Errorf(err.Stacktrace().Error())
-}
-
-//func ErrNil(codespace sdk.CodespaceType) sdk.Error {
-//	return sdk.NewError(codespace, CodeInvalidInput, "is nil")
-//}
-//
-//func ErrNilOwner(codespace sdk.CodespaceType) sdk.Error {
-//	return sdk.NewError(codespace, CodeInvalidInput, "Owner is nil")
-//}
-
-func ErrInvalidIssueParams() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidInput, "Invalid issue params")
-}
-
-func ErrIssueAlreadyExists() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeIssueExists, "Issue already exists")
 }
 
 func ErrUnknownIssue(denom string) sdk.Error {
@@ -75,26 +72,6 @@ func ErrAmountGreaterThanAllowance(amt sdk.Coin, allowance sdk.Coin) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeAmountLowerAllowance, fmt.Sprintf("Amount greater than allowance %s > %s", amt.String(), allowance.String()))
 }
 
-func ErrNotEnoughFee() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeNotEnoughFee, fmt.Sprintf("Not enough fee"))
-}
-
-func ErrAmountNotValid(key string) sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeAmountNotValid, "%s is not a valid amount", key)
-}
-
-func ErrCoinDecimalsMaxValueNotValid() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidCoinDecimals, fmt.Sprintf("Decimals max value is %d", CoinDecimalsMaxValue))
-}
-
-func ErrCoinDecimalsMultipleNotValid() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidCoinDecimals, fmt.Sprintf("Decimals must be a multiple of %d", CoinDecimalsMultiple))
-}
-
-func ErrCoinTotalSupplyMaxValueNotValid() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidTotalSupply, fmt.Sprintf("Total supply max value is %s", CoinMaxTotalSupply.String()))
-}
-
 func ErrInvalidDenom(denom string) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeInvalidDenom, fmt.Sprintf("Denom invalid %s", denom))
 }
@@ -105,25 +82,6 @@ func ErrInvalidFreezeOp(op string) sdk.Error {
 
 func ErrInvalidFeature(feature string) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeInvalidFeature, fmt.Sprintf("Feature invalid %s", feature))
-}
-
-//func ErrUnknownFeatures() sdk.Error {
-//	return sdk.NewError(DefaultCodespace, CodeUnknownFeature, fmt.Sprintf("Unknown feature"))
-//}
-
-//func ErrFreezeEndTimestampNotValid() sdk.Error {
-//	return sdk.NewError(DefaultCodespace, CodeFreezeEndTimeNotValid, "end-time is not a valid timestamp")
-//}
-func ErrCoinDescriptionNotValid() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidDescription, "Description is not valid json")
-}
-
-func ErrCoinDescriptionMaxLengthNotValid() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidDescription, "Description max length is %d", CoinDescriptionMaxLength)
-}
-
-func ErrCoinSymbolNotValid() sdk.Error {
-	return sdk.NewError(DefaultCodespace, CodeInvalidSymbol, "Invalid symbol")
 }
 
 func ErrCanNotMint(denom string) sdk.Error {
@@ -145,10 +103,6 @@ func ErrCanNotBurnFrom(denom string) sdk.Error {
 func ErrCanNotFreeze(denom string) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeCanNotFreeze, fmt.Sprintf("Can not freeze the token %s", denom))
 }
-
-//func ErrNotEnoughAmountToTransfer() sdk.Error {
-//	return sdk.NewError(DefaultCodespace, CodeNotEnoughAmountToTransfer, fmt.Sprintf("Not enough amount allowed to transfer"))
-//}
 
 func ErrCanNotTransferIn(denom string, accAddress string) sdk.Error {
 	return sdk.NewError(DefaultCodespace, CodeNotTransferIn, fmt.Sprintf("Can not transfer in %s to %s", denom, accAddress))

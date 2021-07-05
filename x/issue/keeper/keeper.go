@@ -2,13 +2,14 @@ package keeper
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/bank"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	"github.com/cosmos/cosmos-sdk/x/params/subspace"
 	"github.com/konstellation/kn-sdk/x/issue/types"
-	"strings"
 )
 
 // IssueKeeper encodes/decodes accounts using the go-amino (binary)
@@ -709,7 +710,7 @@ func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
 
 	i := k.getIssue(ctx, issue.Denom)
 	if i != nil {
-		return types.ErrIssueAlreadyExists()
+		return types.ErrIssueAlreadyExists
 	}
 
 	k.addIssue(ctx, issue)
@@ -888,7 +889,7 @@ func (k *Keeper) ChargeFee(ctx sdk.Context, sender sdk.AccAddress, fee sdk.Coin)
 	}
 
 	if err := k.sk.SendCoinsFromAccountToModule(ctx, sender, k.feeCollectorName, sdk.NewCoins(fee)); err != nil {
-		return types.ErrNotEnoughFee()
+		return types.ErrNotEnoughFee
 	}
 
 	return nil

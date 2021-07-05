@@ -74,19 +74,19 @@ func (msg MsgIssueCreate) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "Cannot issue 0 or negative coin amounts")
 	}
 	//if utils.QuoDecimals(msg.TotalSupply, msg.Decimals).GT(CoinMaxTotalSupply) {
-	//	return ErrCoinTotalSupplyMaxValueNotValid()
+	//	return ErrCoinTotalSupplyMaxValueNotValid
 	//}
 	if len(msg.Symbol) < CoinSymbolMinLength || len(msg.Symbol) > CoinSymbolMaxLength {
-		return ErrCoinSymbolNotValid()
+		return ErrCoinSymbolNotValid
 	}
 	if uint(msg.Decimals) > CoinDecimalsMaxValue {
-		return ErrCoinDecimalsMaxValueNotValid()
+		return ErrCoinDecimalsMaxValueNotValid
 	}
 	if uint(msg.Decimals)%CoinDecimalsMultiple != 0 {
-		return ErrCoinDecimalsMultipleNotValid()
+		return ErrCoinDecimalsMultipleNotValid
 	}
 	if len(msg.Description) > CoinDescriptionMaxLength {
-		return ErrCoinDescriptionMaxLengthNotValid()
+		return ErrCoinDescriptionMaxLengthNotValid
 	}
 	return nil
 }
@@ -111,7 +111,7 @@ func (msg MsgDescription) ValidateBasic() error {
 	}
 
 	if len(msg.Description) > CoinDescriptionMaxLength {
-		return ErrCoinDescriptionMaxLengthNotValid()
+		return ErrCoinDescriptionMaxLengthNotValid
 	}
 	return nil
 }

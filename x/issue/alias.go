@@ -21,7 +21,6 @@ const (
 
 var (
 	// functions aliases
-	RegisterCodec               = types.RegisterCodec
 	NewGenesisState             = types.NewGenesisState
 	DefaultGenesisState         = types.DefaultGenesisState
 	NewParams                   = types.NewParams

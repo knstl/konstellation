@@ -6,13 +6,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 )
 
-// GenesisState - all auth state that must be provided at genesis
-type GenesisState struct {
-	StartingIssueId uint64     `json:"starting_issue_id" yaml:"starting_issue_id"`
-	Issues          CoinIssues `json:"issues" yaml:"issues"`
-	Params          Params     `json:"params" yaml:"params"`
-}
-
 // NewGenesisState - Create a new genesis state
 func NewGenesisState(startingIssueId uint64, params Params) GenesisState {
 	return GenesisState{

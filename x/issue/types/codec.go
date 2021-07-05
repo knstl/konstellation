@@ -5,10 +5,10 @@ import (
 )
 
 // ModuleCdc auth module wide codec
-var ModuleCdc = codec.New()
+var ModuleCdc = codec.NewLegacyAmino()
 
 // RegisterCodec registers concrete types on the codec
-func RegisterCodec(cdc *codec.Codec) {
+func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(MsgIssueCreate{}, "issue/MsgIssueCreate", nil)
 	cdc.RegisterConcrete(MsgDisableFeature{}, "issue/MsgDisableFeature", nil)
 	cdc.RegisterConcrete(MsgEnableFeature{}, "issue/MsgEnableFeature", nil)
@@ -32,5 +32,5 @@ func RegisterCodec(cdc *codec.Codec) {
 }
 
 func init() {
-	RegisterCodec(ModuleCdc)
+	RegisterLegacyAminoCodec(ModuleCdc)
 }

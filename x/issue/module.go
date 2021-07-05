@@ -33,9 +33,9 @@ func (AppModuleBasic) Name() string {
 	return types.ModuleName
 }
 
-// RegisterCodec registers the auth module's types for the given codec.
-func (AppModuleBasic) RegisterCodec(cdc *codec.Codec) {
-	types.RegisterCodec(cdc)
+// RegisterLegacyAminoCodec registers the issue module's types on the given LegacyAmino codec.
+func (AppModuleBasic) RegisterLegacyAminoCo(cdc *codec.LegacyAmino) {
+	types.RegisterLegacyAminoCo(cdc)
 }
 
 // DefaultGenesis returns default genesis state as raw bytes for the auth
