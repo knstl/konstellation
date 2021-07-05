@@ -1,8 +1,6 @@
 package oracle
 
 import (
-	"fmt"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
@@ -10,48 +8,31 @@ import (
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-// RouterKey
-const RouterKey = types.ModuleName
-
 // NewHandler returns a handler for "oracle" type messages.
 func NewHandler(k keeper.Keeper) sdk.Handler {
+	msgServer := keeper.NewMsgServerImpl(k)
+
 	return func(ctx sdk.Context, msg sdk.Msg) (*sdk.Result, error) {
+		ctx = ctx.WithEventManager(sdk.NewEventManager())
+
 		switch msg := msg.(type) {
 		case *types.MsgSetExchangeRate:
-			return handleMsgSetExchangeRate(ctx, k, msg)
+			res, err := msgServer.SetExchangeRate(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetExchangeRates:
+			res, err := msgServer.SetExchangeRates(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgDeleteExchangeRate:
-			return handleMsgDeleteExchangeRate(ctx, k, msg)
+			res, err := msgServer.DeleteExchangeRate(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDeleteExchangeRates:
+			res, err := msgServer.DeleteExchangeRates(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgSetAdminAddr:
-			return handleMsgSetAdminAddr(ctx, k, msg)
+			res, err := msgServer.SetAdminAddr(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		default:
-			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, fmt.Sprintf("Unrecognized oracle Msg type: %v", msg.Type()))
+			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized oracle message type: %T", msg)
 		}
 	}
-}
-
-// Handle a message to set exchange rate
-func handleMsgSetExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetExchangeRate) (*sdk.Result, error) {
-	err := k.SetExchangeRate(ctx, msg.Sender, msg.ExchangeRate)
-	if err != nil {
-		return nil, err
-	}
-	return &sdk.Result{}, nil
-}
-
-// Handle a message to delete exchange rate
-func handleMsgDeleteExchangeRate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDeleteExchangeRate) (*sdk.Result, error) {
-	err := k.DeleteExchangeRate(ctx, msg.Sender)
-	if err != nil {
-		return nil, err
-	}
-	return &sdk.Result{}, nil
-}
-
-// Handle a message to set admin address
-func handleMsgSetAdminAddr(ctx sdk.Context, k keeper.Keeper, msg *types.MsgSetAdminAddr) (*sdk.Result, error) {
-	err := k.SetAdminAddr(ctx, msg.Sender, msg.Add, msg.Delete)
-	if err != nil {
-		return nil, err
-	}
-	return &sdk.Result{}, nil
 }

@@ -3,20 +3,35 @@ package konstellation.oracle;
 
 option go_package = "x/oracle/types";
 
-import "gogoproto/gogo.proto";
-//import "v1beta1/coin.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
 import "google/api/annotations.proto";
+import "konstellation/oracle/tx.proto";
+import "gogoproto/gogo.proto";
 
 service Query {
   rpc ExchangeRate(QueryExchangeRateRequest) returns (QueryExchangeRateResponse) {
-  	option (google.api.http).get = "/konstellation/oracle/exchange_rate";
+    option (google.api.http).get = "/konstellation/oracle/exchange_rate/{pair}";
+  }
+
+  // AllBalances queries the balance of all coins for a single account.
+  rpc AllExchangeRates(QueryAllExchangeRatesRequest) returns (QueryAllExchangeRatesResponse) {
+    option (google.api.http).get = "/konstellation/oracle/exchange_rate";
   }
 }
 
-message QueryExchangeRateRequest {}
-
-message QueryExchangeRateResponse {
-  //cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
-  bytes exchange_rate = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+message QueryExchangeRateRequest {
+  string pair = 1;
 }
 
+message QueryExchangeRateResponse {
+  ExchangeRate exchange_rate = 1;
+}
+
+message QueryAllExchangeRatesRequest {
+  // pagination defines an optional pagination for the request.
+//  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllExchangeRatesResponse {
+  repeated ExchangeRate Pairs = 1 [(gogoproto.castrepeated) = "[]*ExchangeRate"];
+}

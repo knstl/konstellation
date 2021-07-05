@@ -1,8 +1,7 @@
 package cli
 
 import (
-	"errors"
-	"strconv"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -10,14 +9,15 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	//	"github.com/cosmos/cosmos-sdk/types/msgservice"
 
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-func NewExchangeRateCmd() *cobra.Command {
+const RateUnit = 1000000000000000000
+
+func NewTxCmd() *cobra.Command {
 	txCmd := &cobra.Command{
 		Use:                        types.ModuleName,
 		Short:                      "Exchange Rate subcommands",
@@ -37,39 +37,43 @@ func NewExchangeRateCmd() *cobra.Command {
 
 func NewMsgSetExchangeRateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-exchange-rate [allowed-address] [denom] [amount]",
+		Use:   "set-exchange-rate [pair] [rate] [denoms]",
 		Short: "Set exchange rate",
+		Long:  `Set exchange rate for pair: kbtckusd 5000000000000 kbtc,kusd`,
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
-			allowedAddress, denom, amount := args[0], args[1], args[2]
-			if allowedAddress == "" {
-				return errors.New("invalid address")
-			}
-			if denom == "" {
-				return errors.New("invalid denom name")
-			}
-			if amount == "" {
-				return errors.New("invalid amount")
-			}
-			amountInt, err := strconv.Atoi(amount)
-			if err != nil {
-				return errors.New("invalid amount")
+
+			pair, rateStr, denomsStr := args[0], args[1], args[2]
+			if pair == "" {
+				return types.ErrInvalidPair
 			}
 
-			rate := sdk.NewCoin("Darc", sdk.NewInt(int64(amountInt)))
-			msg := types.NewMsgSetExchangeRate(&rate, allowedAddress)
-			svcMsgClientConn := &ServiceMsgClientConn{}
-			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.SetExchangeRate(cmd.Context(), &msg)
+			denoms := strings.Split(denomsStr, ",")
+			if len(denoms) != 2 {
+				return types.ErrInvalidDenoms
+			}
+
+			rate, err := sdk.NewDecFromStr(rateStr)
 			if err != nil {
+				return types.ErrInvalidRate
+			}
+
+			exchangeRate := types.ExchangeRate{
+				Pair:   pair,
+				Rate:   rate,
+				Denoms: denoms,
+			}
+
+			msg := types.NewMsgSetExchangeRate(clientCtx.GetFromAddress(), &exchangeRate)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
@@ -79,7 +83,7 @@ func NewMsgSetExchangeRateCmd() *cobra.Command {
 
 func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "del-exchange-rate [sender]",
+		Use:   "delete-exchange-rate [pair]",
 		Short: "Delete exchange rate",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -87,20 +91,18 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			sender := args[0]
-			if sender == "" {
-				return errors.New("invalid sender")
+
+			pair := args[0]
+			if pair == "" {
+				return types.ErrInvalidPair
 			}
 
-			msg := types.NewMsgDeleteExchangeRate(sender)
-			svcMsgClientConn := &ServiceMsgClientConn{}
-			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.DeleteExchangeRate(cmd.Context(), &msg)
-			if err != nil {
+			msg := types.NewMsgDeleteExchangeRate(clientCtx.GetFromAddress(), pair)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
@@ -110,37 +112,48 @@ func NewMsgDeleteExchangeRateCmd() *cobra.Command {
 
 func NewMsgSetAdminAddrCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-admin-addr [sender] [address-to-add] [address-to-delete]",
+		Use:   "set-admin-addr --add [address-to-add] --delete [address-to-delete]",
 		Short: "Set Admin Address",
-		Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
-			sender, add, del := args[0], args[1], args[2]
-			if sender == "" {
-				return errors.New("invalid sender")
+
+			add, _ := cmd.Flags().GetStringSlice(FlagAdd)
+			del, _ := cmd.Flags().GetStringSlice(FlagDelete)
+
+			var addressesToAdd []*types.AdminAddr
+			var addressesToDelete []*types.AdminAddr
+			for _, a := range add {
+				_, err := sdk.AccAddressFromBech32(a)
+				if err != nil {
+					return err
+				}
+				addressesToAdd = append(addressesToAdd, types.NewAdminAddr(a))
 			}
-			var addressesToAdd []string
-			if add != "" {
-				addressesToAdd = strings.Split(add, ",")
+
+			for _, a := range del {
+				_, err := sdk.AccAddressFromBech32(a)
+				if err != nil {
+					return err
+				}
+
+				addressesToDelete = append(addressesToDelete, types.NewAdminAddr(a))
 			}
-			var addressesToDelete []string
-			if del != "" {
-				addressesToDelete = strings.Split(del, ",")
-			}
-			msg := types.NewMsgSetAdminAddr(sender, addressesToAdd, addressesToDelete)
-			svcMsgClientConn := &ServiceMsgClientConn{}
-			msgClient := types.NewMsgClient(svcMsgClientConn)
-			_, err = msgClient.SetAdminAddr(cmd.Context(), &msg)
-			if err != nil {
+
+			msg := types.NewMsgSetAdminAddr(clientCtx.GetFromAddress(), addressesToAdd, addressesToDelete)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), svcMsgClientConn.GetMsgs()...)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+	cmd.Flags().StringSlice(FlagAdd, nil, "addr,addr2,addr3")
+	cmd.Flags().StringSlice(FlagDelete, nil, "addr,addr2,addr3")
+
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd

@@ -130,7 +130,9 @@ func (c *TestChain) parseSDKResultData(r *sdk.Result) sdk.TxMsgData {
 
 // ContractInfo is a helper function to returns the ContractInfo for the given contract address
 func (c *TestChain) ContractInfo(contractAddr sdk.AccAddress) *types.ContractInfo {
-	return c.TestSupport().WasmKeeper().GetContractInfo(c.GetContext(), contractAddr)
+	// todo add wasm keeper
+	return nil
+	//return c.TestSupport().WasmKeeper().GetContractInfo(c.GetContext(), contractAddr)
 }
 
 // TestSupport provides access to package private keepers.

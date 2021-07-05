@@ -11,7 +11,7 @@ var (
 )
 
 // NewGenesisState creates a new GenesisState object
-func NewGenesisState(allowedAddresses []string) *GenesisState {
+func NewGenesisState(allowedAddresses []*AdminAddr) *GenesisState {
 	return &GenesisState{
 		AllowedAddresses: allowedAddresses,
 	}
@@ -20,7 +20,7 @@ func NewGenesisState(allowedAddresses []string) *GenesisState {
 // DefaultGenesisState - default GenesisState used by Cosmos Hub
 func DefaultGenesisState() *GenesisState {
 	return &GenesisState{
-		AllowedAddresses: []string{},
+		AllowedAddresses: nil,
 	}
 }
 
@@ -29,7 +29,8 @@ func (s *GenesisState) ValidateBasic() error {
 	//	return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "no addresses")
 	//}
 	for _, address := range s.AllowedAddresses {
-		if len(address) == 0 {
+		if address == nil {
+			// todo change
 			return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "address is empty string")
 		}
 	}

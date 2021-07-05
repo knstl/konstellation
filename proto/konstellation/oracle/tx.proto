@@ -4,32 +4,74 @@ package konstellation.oracle;
 option go_package = "x/oracle/types";
 
 import "gogoproto/gogo.proto";
-//import "v1beta1/coin.proto";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
 
 service Msg {
-  rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse);
-  rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse);
-  rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse);
+  rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse){
+    option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+  }
+  rpc SetExchangeRates(MsgSetExchangeRates) returns (MsgSetExchangeRatesResponse){
+    option (google.api.http).put = "/konstellation/oracle/exchange_rates";
+  }
+  rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse){
+    option (google.api.http).delete = "/konstellation/oracle/exchange_rate";
+  }
+  rpc DeleteExchangeRates(MsgDeleteExchangeRates) returns (MsgDeleteExchangeRatesResponse){
+    option (google.api.http).delete = "/konstellation/oracle/exchange_rates";
+  }
+  rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse){
+    option (google.api.http).put = "/konstellation/oracle/admin_addr";
+  }
+}
+
+message ExchangeRate {
+  string pair = 1;
+  string rate = 2
+  [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+  repeated string Denoms = 3;
+  int64 height = 4;
+  google.protobuf.Timestamp timestamp = 5
+  [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
 
 message MsgSetExchangeRate {
-  //cosmos.base.v1beta1.Coin exchange_rate = 1 [(gogoproto.nullable) = false];
-  bytes exchange_rate = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+  ExchangeRate exchange_rate = 1;
   string sender = 2;
 }
 
 message MsgSetExchangeRateResponse {}
 
+message MsgSetExchangeRates {
+  repeated ExchangeRate exchange_rates = 1;
+  string sender = 2;
+}
+
+message MsgSetExchangeRatesResponse {}
+
 message MsgDeleteExchangeRate {
   string sender = 1;
+  string pair = 2;
 }
 
 message MsgDeleteExchangeRateResponse {}
 
+message MsgDeleteExchangeRates {
+  string sender = 1;
+  repeated string pairs = 2;
+}
+
+message MsgDeleteExchangeRatesResponse {}
+
+message AdminAddr {
+  string address = 1;
+  // perms maybe
+}
+
 message MsgSetAdminAddr {
   string sender = 1;
-  repeated string add = 2;
-  repeated string delete = 3;
+  repeated AdminAddr add = 2;
+  repeated AdminAddr delete = 3;
 }
 
 message MsgSetAdminAddrResponse {}
