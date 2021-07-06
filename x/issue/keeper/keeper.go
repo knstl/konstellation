@@ -1,15 +1,15 @@
 package keeper
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/bank"
-	"github.com/cosmos/cosmos-sdk/x/params"
-	"github.com/cosmos/cosmos-sdk/x/params/subspace"
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
+	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // IssueKeeper encodes/decodes accounts using the go-amino (binary)
@@ -19,16 +19,13 @@ type Keeper struct {
 	key sdk.StoreKey
 
 	// The codec codec for binary encoding/decoding of accounts.
-	cdc *codec.Codec
+	cdc codec.BinaryMarshaler
 
 	// The reference to the Paramstore to get and set issue specific params
-	paramSubspace subspace.Subspace
-
-	// Reserved codespace
-	codespace sdk.CodespaceType
+	paramSubspace paramstypes.Subspace
 
 	// The reference to the Param Keeper to get and set Global Params
-	paramsKeeper params.Keeper
+	paramsKeeper paramskeeper.Keeper
 
 	ak types.AccountKeeper
 	// The reference to the CoinKeeper to modify balances
@@ -42,14 +39,14 @@ type Keeper struct {
 // (binary) encode and decode concrete sdk.Accounts.
 // nolint
 func NewKeeper(
-	cdc *codec.Codec,
+	cdc codec.BinaryMarshaler,
 	key sdk.StoreKey,
 	ak types.AccountKeeper,
 	ck types.CoinKeeper,
 	sk types.SupplyKeeper,
 	feeCollectorName string,
-	paramsKeeper params.Keeper,
-	paramSpace params.Subspace) Keeper {
+	paramsKeeper paramskeeper.Keeper,
+	paramSpace paramstypes.Subspace) Keeper {
 
 	return Keeper{
 		key:              key,
@@ -63,31 +60,34 @@ func NewKeeper(
 	}
 }
 
-func (k *Keeper) GetCodec() *codec.Codec {
+func (k *Keeper) GetCodec() codec.BinaryMarshaler {
 	return k.cdc
 }
 
 // ----------------------- last id ----------------
 
-func (k *Keeper) getLastId(ctx sdk.Context) (id uint64) {
+func (k *Keeper) getLastId(ctx sdk.Context) sdk.Int {
 	store := ctx.KVStore(k.key)
 	bz := store.Get(KeyLastIssueId)
 	if bz == nil {
-		return types.InitLastId
+		return sdk.NewIntFromUint64(types.InitLastId)
 	}
 
+	id := sdk.IntProto{}
 	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &id)
-	return
+	return id.Int
 }
 
 func (k *Keeper) setLastId(ctx sdk.Context, id uint64) {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(id)
+	idSdkInt := sdk.NewIntFromUint64(id)
+	idIntProto := sdk.IntProto{Int: idSdkInt}
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(&idIntProto)
 	store.Set(KeyLastIssueId, bz)
 }
 
 func (k *Keeper) incLastId(ctx sdk.Context) {
-	k.setLastId(ctx, k.getLastId(ctx)+1)
+	k.setLastId(ctx, k.getLastId(ctx).Uint64()+1)
 }
 
 func (k *Keeper) SetLastId(ctx sdk.Context, id uint64) {
@@ -95,7 +95,7 @@ func (k *Keeper) SetLastId(ctx sdk.Context, id uint64) {
 }
 
 func (k *Keeper) GetLastId(ctx sdk.Context) uint64 {
-	return k.getLastId(ctx)
+	return k.getLastId(ctx).Uint64()
 }
 
 // ----------------------- boundary denoms ----------------
@@ -104,7 +104,8 @@ func (k *Keeper) updateLeftBoundaryDenom(ctx sdk.Context, issue *types.CoinIssue
 	store := ctx.KVStore(k.key)
 	bz := store.Get(KeyFirstIssueDenom)
 	if bz == nil {
-		bz = k.cdc.MustMarshalBinaryLengthPrefixed(issue.Denom)
+		denom := types.CoinIssueDenom{Denom: issue.Denom}
+		bz = k.cdc.MustMarshalBinaryLengthPrefixed(&denom)
 		store.Set(KeyFirstIssueDenom, bz)
 	}
 }
@@ -116,13 +117,16 @@ func (k *Keeper) getLeftBoundaryDenom(ctx sdk.Context) (denom string) {
 		return
 	}
 
-	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &denom)
+	issueDenom := types.CoinIssueDenom{}
+	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issueDenom)
+	denom = issueDenom.Denom
 	return
 }
 
 func (k *Keeper) updateRightBoundaryDenom(ctx sdk.Context, issue *types.CoinIssue) {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(issue.Denom)
+	denom := types.CoinIssueDenom{Denom: issue.Denom}
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(&denom)
 	store.Set(KeyLastIssueDenom, bz)
 }
 
@@ -133,7 +137,9 @@ func (k *Keeper) getRightBoundaryDenom(ctx sdk.Context) (denom string) {
 		return
 	}
 
-	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &denom)
+	issueDenom := types.CoinIssueDenom{}
+	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issueDenom)
+	denom = issueDenom.Denom
 	return
 }
 
@@ -151,20 +157,30 @@ func (k *Keeper) getBoundaryDenoms(ctx sdk.Context) (string, string) {
 
 // ----------------------- address:denom pair ----------------
 
-func (k *Keeper) getAddressDenoms(ctx sdk.Context, accAddress string) (issues []string) {
+func (k *Keeper) getAddressDenoms(ctx sdk.Context, accAddress string) (denoms []string) {
 	store := ctx.KVStore(k.key)
 	bz := store.Get(KeyAddressDenoms(accAddress))
 	if bz == nil {
 		return []string{}
 	}
 
-	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issues)
+	issueDenoms := types.CoinIssueDenoms{}
+	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issueDenoms)
+	denoms = []string{}
+	for _, issueDenom := range issueDenoms.Denoms {
+		denoms = append(denoms, issueDenom.Denom)
+	}
 	return
 }
 
 func (k *Keeper) setAddressDenoms(ctx sdk.Context, accAddress string, denoms []string) {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(denoms)
+	issueDenoms := types.CoinIssueDenoms{Denoms: []*types.CoinIssueDenom{}}
+	for _, denom := range denoms {
+		issueDenoms.Denoms = append(issueDenoms.Denoms, &types.CoinIssueDenom{Denom: denom})
+	}
+
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(&issueDenoms)
 	store.Set(KeyAddressDenoms(accAddress), bz)
 }
 
@@ -199,14 +215,17 @@ func (k *Keeper) getSymbolDenom(ctx sdk.Context, symbol string) (denom string) {
 		return
 	}
 
-	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &denom)
+	issueDenom := types.CoinIssueDenom{}
+	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issueDenom)
+	denom = issueDenom.Denom
 	return
 }
 
 func (k *Keeper) setSymbolDenom(ctx sdk.Context, symbol, denom string) {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(denom)
-	store.Set(KeySymbolDenom(symbol), bz)
+	issueDenom := types.CoinIssueDenom{Denom: denom}
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(&issueDenom)
+	store.Set(KeyLastIssueDenom, bz)
 }
 
 func (k *Keeper) addSymbolDenom(ctx sdk.Context, issue *types.CoinIssue) {
@@ -222,14 +241,17 @@ func (k *Keeper) getIdDenom(ctx sdk.Context, id uint64) (denom string) {
 		return
 	}
 
-	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &denom)
+	issueDenom := types.CoinIssueDenom{}
+	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &issueDenom)
+	denom = issueDenom.Denom
 	return
 }
 
 func (k *Keeper) setIdDenom(ctx sdk.Context, id uint64, denom string) {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(denom)
-	store.Set(KeyIdDenom(id), bz)
+	issueDenom := types.CoinIssueDenom{Denom: denom}
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(&issueDenom)
+	store.Set(KeyLastIssueDenom, bz)
 }
 
 func (k *Keeper) addIdDenom(ctx sdk.Context, issue *types.CoinIssue) {
@@ -250,7 +272,7 @@ func (k *Keeper) getIssue(ctx sdk.Context, denom string) *types.CoinIssue {
 	return &coinIssue
 }
 
-func (k *Keeper) GetIssue(ctx sdk.Context, denom string) (*types.CoinIssue, sdk.Error) {
+func (k *Keeper) GetIssue(ctx sdk.Context, denom string) (*types.CoinIssue, sdkerrors.Error) {
 	issue := k.getIssue(ctx, denom)
 	if issue == nil {
 		return nil, types.ErrUnknownIssue(denom)
@@ -259,7 +281,7 @@ func (k *Keeper) GetIssue(ctx sdk.Context, denom string) (*types.CoinIssue, sdk.
 	return issue, nil
 }
 
-func (k *Keeper) checkOwner(_ sdk.Context, issue *types.CoinIssue, owner sdk.AccAddress) (*types.CoinIssue, sdk.Error) {
+func (k *Keeper) checkOwner(_ sdk.Context, issue *types.CoinIssue, owner sdk.AccAddress) (*types.CoinIssue, sdkerrors.Error) {
 	if !issue.Owner.Equals(owner) {
 		return nil, types.ErrOwnerMismatch(issue.Denom)
 	}
@@ -267,7 +289,7 @@ func (k *Keeper) checkOwner(_ sdk.Context, issue *types.CoinIssue, owner sdk.Acc
 	return issue, nil
 }
 
-func (k *Keeper) getIssueIfOwner(ctx sdk.Context, denom string, owner sdk.AccAddress) (*types.CoinIssue, sdk.Error) {
+func (k *Keeper) getIssueIfOwner(ctx sdk.Context, denom string, owner sdk.AccAddress) (*types.CoinIssue, sdkerrors.Error) {
 	issue := k.getIssue(ctx, denom)
 	if issue == nil {
 		return nil, types.ErrUnknownIssue(denom)
@@ -296,13 +318,13 @@ func (k *Keeper) AddIssue(ctx sdk.Context, issue *types.CoinIssue) {
 
 func (k *Keeper) CreateIssue(ctx sdk.Context, owner, issuer sdk.AccAddress, params *types.IssueParams) *types.CoinIssue {
 	issue := types.NewCoinIssue(owner, issuer, params)
-	issue.SetId(k.getLastId(ctx))
+	issue.SetId(k.getLastId(ctx).Uint64())
 	issue.SetIssueTime(ctx.BlockHeader().Time.Unix())
 
 	return issue
 }
 
-func (k *Keeper) ChangeFeatures(ctx sdk.Context, owner sdk.AccAddress, denom string, features *types.IssueFeatures) sdk.Error {
+func (k *Keeper) ChangeFeatures(ctx sdk.Context, owner sdk.AccAddress, denom string, features *types.IssueFeatures) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeChangeFeatures,
@@ -323,7 +345,7 @@ func (k *Keeper) ChangeFeatures(ctx sdk.Context, owner sdk.AccAddress, denom str
 	return nil
 }
 
-func (k *Keeper) ChangeDescription(ctx sdk.Context, owner sdk.AccAddress, denom string, description string) sdk.Error {
+func (k *Keeper) ChangeDescription(ctx sdk.Context, owner sdk.AccAddress, denom string, description string) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeChangeDescription,
@@ -370,7 +392,7 @@ func (k *Keeper) iterator(ctx sdk.Context) sdk.Iterator {
 	//
 	//return store.ReverseIterator(KeyIssuer(last), KeyIssuer(first))
 
-	lastId := k.getLastId(ctx)
+	lastId := k.getLastId(ctx).Uint64()
 	if lastId == types.InitLastId {
 		lastId++
 	}
@@ -389,9 +411,9 @@ func (k *Keeper) ListAll(ctx sdk.Context) types.CoinIssues {
 			continue
 		}
 
-		var denom string
-		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &denom)
-		denoms = append(denoms, denom)
+		var coinIssue types.CoinIssue
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &coinIssue)
+		denoms = append(denoms, coinIssue.Denom)
 	}
 
 	return k.getIssues(ctx, denoms)
@@ -412,10 +434,10 @@ func (k *Keeper) List(ctx sdk.Context, params types.IssuesParams) types.CoinIssu
 			continue
 		}
 
-		var denom string
-		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &denom)
-		denoms = append(denoms, denom)
-		if len(denoms) >= params.Limit {
+		var coinIssue types.CoinIssue
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &coinIssue)
+		denoms = append(denoms, coinIssue.Denom)
+		if len(denoms) >= int(params.Limit) {
 			break
 		}
 	}
@@ -427,7 +449,7 @@ func (k *Keeper) List(ctx sdk.Context, params types.IssuesParams) types.CoinIssu
 
 func (k *Keeper) setAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
 	store := ctx.KVStore(k.key)
-	bz := k.cdc.MustMarshalBinaryLengthPrefixed(amount.Amount)
+	bz := k.cdc.MustMarshalBinaryLengthPrefixed(&amount)
 	store.Set(KeyAllowance(amount.Denom, owner, spender), bz)
 }
 
@@ -455,9 +477,10 @@ func (k *Keeper) allowance(ctx sdk.Context, owner, spender sdk.AccAddress, denom
 		return sdk.NewCoin(denom, sdk.ZeroInt())
 	}
 
-	var amount sdk.Int
+	var amount sdk.Coin
 	k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &amount)
-	return sdk.NewCoin(denom, amount)
+	amount.Denom = denom
+	return amount
 }
 
 func (k *Keeper) allowances(ctx sdk.Context, owner sdk.AccAddress, denom string) types.Allowances {
@@ -558,7 +581,7 @@ func (k *Keeper) GetFreezes(ctx sdk.Context, denom string) []*types.AddressFreez
 	return list
 }
 
-func (k *Keeper) CheckFreeze(ctx sdk.Context, from sdk.AccAddress, to sdk.AccAddress, denom string) sdk.Error {
+func (k *Keeper) CheckFreeze(ctx sdk.Context, from sdk.AccAddress, to sdk.AccAddress, denom string) sdkerrors.Error {
 	freeze := k.GetFreeze(ctx, denom, from)
 	if freeze.Out {
 		return types.ErrCanNotTransferOut(denom, from.String())
@@ -574,13 +597,13 @@ func (k *Keeper) CheckFreeze(ctx sdk.Context, from sdk.AccAddress, to sdk.AccAdd
 
 // ----------------------- transfers -----------------------
 
-func (k *Keeper) transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	if !k.ck.GetSendEnabled(ctx) {
-		return bank.ErrSendDisabled(k.codespace)
+		return *banktypes.ErrSendDisabled
 	}
 
 	if k.ck.BlacklistedAddr(to) {
-		return sdk.ErrUnauthorized(fmt.Sprintf("%s is not allowed to receive transactions", to))
+		return *sdkerrors.ErrUnauthorized
 	}
 
 	for _, coin := range coins {
@@ -592,7 +615,7 @@ func (k *Keeper) transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Co
 	return k.ck.SendCoins(ctx, from, to, coins)
 }
 
-func (k *Keeper) mint(ctx sdk.Context, minter, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) mint(ctx sdk.Context, minter, to sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeMint,
@@ -627,7 +650,7 @@ func (k *Keeper) mint(ctx sdk.Context, minter, to sdk.AccAddress, coins sdk.Coin
 	return k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, to, coins)
 }
 
-func (k *Keeper) burn(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) burn(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeBurn,
@@ -678,7 +701,7 @@ func (k *Keeper) burn(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Co
 	return k.sk.BurnCoins(ctx, types.ModuleName, coins)
 }
 
-func (k *Keeper) freeze(ctx sdk.Context, holder sdk.AccAddress, denom, op string, freeze bool) sdk.Error {
+func (k *Keeper) freeze(ctx sdk.Context, holder sdk.AccAddress, denom, op string, freeze bool) sdkerrors.Error {
 	f := k.getFreeze(ctx, denom, holder)
 	switch op {
 	case types.FreezeIn:
@@ -699,7 +722,7 @@ func (k *Keeper) freeze(ctx sdk.Context, holder sdk.AccAddress, denom, op string
 
 // ----------------------- ERC20 -----------------------
 
-func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
+func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeIssue,
@@ -710,7 +733,7 @@ func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
 
 	i := k.getIssue(ctx, issue.Denom)
 	if i != nil {
-		return types.ErrIssueAlreadyExists
+		return *types.ErrIssueAlreadyExists
 	}
 
 	k.addIssue(ctx, issue)
@@ -722,7 +745,7 @@ func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) sdk.Error {
 	return k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, issue.GetOwner(), issue.ToCoins())
 }
 
-func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeTransfer,
@@ -733,7 +756,7 @@ func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Co
 	return k.transfer(ctx, from, to, coins)
 }
 
-func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeTransferFrom,
@@ -756,7 +779,7 @@ func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, 
 	return k.transfer(ctx, from, to, coins)
 }
 
-func (k *Keeper) TransferOwnership(ctx sdk.Context, owner, to sdk.AccAddress, denom string) sdk.Error {
+func (k *Keeper) TransferOwnership(ctx sdk.Context, owner, to sdk.AccAddress, denom string) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeTransferOwnership,
@@ -779,7 +802,7 @@ func (k *Keeper) TransferOwnership(ctx sdk.Context, owner, to sdk.AccAddress, de
 	return nil
 }
 
-func (k *Keeper) Approve(ctx sdk.Context, owner, spender sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) Approve(ctx sdk.Context, owner, spender sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	for _, coin := range coins {
 		k.approve(ctx, owner, spender, coin)
 	}
@@ -795,7 +818,7 @@ func (k *Keeper) Allowances(ctx sdk.Context, owner sdk.AccAddress, denom string)
 	return k.allowances(ctx, owner, denom)
 }
 
-func (k *Keeper) IncreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) IncreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	for _, coin := range coins {
 		k.increaseAllowance(ctx, owner, spender, coin)
 	}
@@ -803,7 +826,7 @@ func (k *Keeper) IncreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 	return nil
 }
 
-func (k *Keeper) DecreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) DecreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	for _, coin := range coins {
 		k.decreaseAllowance(ctx, owner, spender, coin)
 	}
@@ -811,15 +834,15 @@ func (k *Keeper) DecreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 	return nil
 }
 
-func (k *Keeper) Mint(ctx sdk.Context, minter, to sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) Mint(ctx sdk.Context, minter, to sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	return k.mint(ctx, minter, to, coins)
 }
 
-func (k *Keeper) Burn(ctx sdk.Context, burner sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) Burn(ctx sdk.Context, burner sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	return k.burn(ctx, burner, burner, coins)
 }
 
-func (k *Keeper) BurnFrom(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Coins) sdk.Error {
+func (k *Keeper) BurnFrom(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Coins) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeBurnFrom,
@@ -841,7 +864,7 @@ func (k *Keeper) BurnFrom(ctx sdk.Context, burner, from sdk.AccAddress, coins sd
 	return k.burn(ctx, burner, from, coins)
 }
 
-func (k *Keeper) Freeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, op string) sdk.Error {
+func (k *Keeper) Freeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, op string) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeFreeze,
@@ -863,7 +886,7 @@ func (k *Keeper) Freeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, 
 	return k.freeze(ctx, holder, denom, op, true)
 }
 
-func (k *Keeper) Unfreeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, op string) sdk.Error {
+func (k *Keeper) Unfreeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, op string) sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeUnfreeze,
@@ -883,13 +906,13 @@ func (k *Keeper) Unfreeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom
 
 // ----------------------- fee -----------------------
 
-func (k *Keeper) ChargeFee(ctx sdk.Context, sender sdk.AccAddress, fee sdk.Coin) sdk.Error {
+func (k *Keeper) ChargeFee(ctx sdk.Context, sender sdk.AccAddress, fee sdk.Coin) sdkerrors.Error {
 	if fee.IsZero() || fee.IsNegative() {
 		return nil
 	}
 
 	if err := k.sk.SendCoinsFromAccountToModule(ctx, sender, k.feeCollectorName, sdk.NewCoins(fee)); err != nil {
-		return types.ErrNotEnoughFee
+		return *types.ErrNotEnoughFee
 	}
 
 	return nil

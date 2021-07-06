@@ -5,7 +5,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/konstellation/kn-sdk/x/issue/keeper"
+	"github.com/konstellation/konstellation/x/issue/keeper"
 )
 
 func Params(ctx sdk.Context, k keeper.Keeper) ([]byte, *sdkerrors.Error) {

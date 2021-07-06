@@ -1,0 +1,15 @@
+syntax = "proto3";
+package konstellation.sdk.issue;
+
+option go_package = "x/issue/types";
+
+message Freeze {
+	bool in = 1;
+	bool out = 2;
+}
+
+message AddressFreeze {
+	string address = 1;
+	bool in = 2;
+	bool out =3;
+}

@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/params"
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // type declaration for parameters

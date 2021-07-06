@@ -61,23 +61,6 @@ func (coinIssues CoinIssues) String() string {
 	return strings.TrimSpace(out)
 }
 
-type CoinIssue struct {
-	Id                 uint64         `json:"id"`
-	Issuer             sdk.AccAddress `json:"issuer"`
-	Owner              sdk.AccAddress `json:"owner"`
-	Denom              string         `json:"denom"`
-	Symbol             string         `json:"symbol"`
-	TotalSupply        sdk.Int        `json:"total_supply"`
-	Decimals           uint           `json:"decimals"`
-	Description        string         `json:"description"`
-	IssueTime          int64          `json:"issue_time"`
-	BurnOwnerDisabled  bool           `json:"burn_owner_disabled"`
-	BurnHolderDisabled bool           `json:"burn_holder_disabled"`
-	BurnFromDisabled   bool           `json:"burn_from_disabled"`
-	FreezeDisabled     bool           `json:"freeze_disabled"`
-	MintDisabled       bool           `json:"mint_disabled"`
-}
-
 func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue {
 	var ci CoinIssue
 	_ = mapstructure.Decode(params, &ci)
@@ -190,9 +173,11 @@ func (ci *CoinIssue) QuoDecimals(amount sdk.Int) sdk.Int {
 	return amount.Quo(getDecimalsInt(ci.GetDecimals()))
 }
 
+/*
 func (ci *CoinIssue) String() string {
 	out := fmt.Sprintf("%-17s|%-44s|%-10s|%-6s|%-18s|%-8s|%s\n",
 		"IssueID", "Owner", "Name", "Symbol", "TotalSupply", "Decimals", "IssueTime")
 	out += fmt.Sprintf("%-44s|%-10s|%-6s|%-18s|%-8d|%d\n", ci.GetOwner().String(), ci.Denom, ci.Symbol, ci.TotalSupply.String(), ci.Decimals, ci.IssueTime)
 	return strings.TrimSpace(out)
 }
+*/

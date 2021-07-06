@@ -3,7 +3,7 @@ package query
 import (
 	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 func PathQueryIssueAllowance(owner sdk.AccAddress, spender sdk.AccAddress, denom string) string {

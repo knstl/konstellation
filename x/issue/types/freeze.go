@@ -11,32 +11,25 @@ const (
 	FreezeInOut = "in-out"
 )
 
-type Freeze struct {
-	In  bool `json:"in"`
-	Out bool `json:"out"`
-}
-
 func NewFreeze(in, out bool) *Freeze {
 	return &Freeze{In: in, Out: out}
 }
 
+/*
 func (f Freeze) String() string {
 	return fmt.Sprintf(`in=%t, out=%t`, f.In, f.Out)
 }
-
-type AddressFreeze struct {
-	Address string `json:"address"`
-	In      bool   `json:"in"`
-	Out     bool   `json:"out"`
-}
+*/
 
 func NewAddressFreeze(address string, in, out bool) *AddressFreeze {
 	return &AddressFreeze{Address: address, In: in, Out: out}
 }
 
+/*
 func (af AddressFreeze) String() string {
 	return fmt.Sprintf(`%s: in=%t, out=%t`, af.Address, af.In, af.Out)
 }
+*/
 
 type AddressFreezes []*AddressFreeze
 
