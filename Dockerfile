@@ -27,7 +27,7 @@ RUN LEDGER_ENABLED=false BUILD_TAGS=muslc make build
 # Running environment
 # ----------------------------------------------------------------------
 
-FROM alpine:3.12
+FROM ubuntu:18.04
 
 # rest server
 EXPOSE 1317
