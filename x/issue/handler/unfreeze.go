@@ -18,5 +18,9 @@ func HandleMsgUnfreeze(ctx sdk.Context, k keeper.Keeper, msg types.MsgUnfreeze) 
 		return err.Result()
 	}
 
-	return sdk.Result{Events: ctx.EventManager().Events()}
+	events := []types.Event{}
+	for _, event := range ctx.EventManager().Events() {
+		events = append(events, event)
+	}
+	return sdk.Result{Events: events}
 }
