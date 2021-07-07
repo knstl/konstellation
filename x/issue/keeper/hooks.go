@@ -1,6 +1,9 @@
 package keeper
 
-import sdk "github.com/cosmos/cosmos-sdk/types"
+import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+)
 
 type Hooks struct {
 	keeper Keeper
@@ -11,7 +14,7 @@ func (k Keeper) Hooks() Hooks {
 	return Hooks{k}
 }
 
-func (h Hooks) CanSend(ctx sdk.Context, fromAddr sdk.AccAddress, toAddr sdk.AccAddress, amt sdk.Coins) (bool, sdk.Error) {
+func (h Hooks) CanSend(ctx sdk.Context, fromAddr sdk.AccAddress, toAddr sdk.AccAddress, amt sdk.Coins) (bool, *sdkerrors.Error) {
 	for _, v := range amt {
 		i, err := h.keeper.GetIssue(ctx, v.Denom)
 		if err != nil {
@@ -38,7 +41,7 @@ func NewBankHooks(issueHooks Hooks) BankHooks {
 }
 
 // nolint
-func (bankHooks BankHooks) CanSend(ctx sdk.Context, fromAddr sdk.AccAddress, toAddr sdk.AccAddress, amt sdk.Coins) (bool, sdk.Error) {
+func (bankHooks BankHooks) CanSend(ctx sdk.Context, fromAddr sdk.AccAddress, toAddr sdk.AccAddress, amt sdk.Coins) (bool, *sdkerrors.Error) {
 	_, err := bankHooks.issueHooks.CanSend(ctx, fromAddr, toAddr, amt)
 	if err != nil {
 		return false, err

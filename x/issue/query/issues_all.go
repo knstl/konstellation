@@ -1,18 +1,22 @@
 package query
 
 import (
-	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/konstellation/konstellation/x/issue/keeper"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func IssuesAll(ctx sdk.Context, k keeper.Keeper) ([]byte, *sdkerrors.Error) {
+func IssuesAll(ctx sdk.Context, k keeper.Keeper) ([]byte, error) {
+	issueList := types.CoinIssueList{CoinIssues: []*types.CoinIssue{}}
 	issues := k.ListAll(ctx)
-	bz, err := codec.MarshalJSONIndent(k.GetCodec(), issues)
+	for _, issue := range issues {
+		issueList.CoinIssues = append(issueList.CoinIssues, issue)
+	}
+	bz, err := k.GetCodec().MarshalBinaryBare(&issueList)
 	if err != nil {
-		return nil, sdkerrors.ErrJSONMarshal
+		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, sdkerrors.ErrJSONMarshal.Error())
 	}
 	return bz, nil
 }

@@ -5,6 +5,10 @@ option go_package = "x/issue/types";
 
 import "gogoproto/gogo.proto";
 
+message CoinIssueList {
+	repeated CoinIssue coin_issues = 1;
+}
+
 message CoinIssue {
 	uint64 id = 1;
     string issuer = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];

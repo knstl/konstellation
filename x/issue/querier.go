@@ -13,7 +13,7 @@ import (
 
 // NewQuerier creates a querier for auth REST endpoints
 func NewQuerier(k keeper.Keeper) sdk.Querier {
-	return func(ctx sdk.Context, path []string, req abci.RequestQuery) ([]byte, *sdkerrors.Error) {
+	return func(ctx sdk.Context, path []string, req abci.RequestQuery) ([]byte, error) {
 		switch path[0] {
 		case types.QueryIssue:
 			return query.Issue(ctx, k, path[1])
@@ -32,7 +32,7 @@ func NewQuerier(k keeper.Keeper) sdk.Querier {
 		case types.QueryParams:
 			return query.Params(ctx, k)
 		default:
-			return nil, sdkerrors.ErrUnknownRequest("unknown issue query endpoint")
+			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, "unknown issue query endpoint")
 		}
 	}
 }
