@@ -1,8 +1,7 @@
 package keeper
 
 import (
-	//	"context"
-	//	"strings"
+	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/konstellation/konstellation/x/issue/types"
@@ -18,186 +17,140 @@ func NewMsgServerImpl(k Keeper) types.MsgServer {
 	return &msgServer{keeper: k}
 }
 
-/*
-func (m msgServer) SetExchangeRate(goCtx context.Context, msgSetExchangeRate *types.MsgSetExchangeRate) (*types.MsgSetExchangeRateResponse, error) {
+func (m msgServer) HandleMsgIssueCreate(goCtx context.Context, msgIssueCreate *types.MsgIssueCreate) (*types.MsgIssueCreateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	senderAddr, err := sdk.AccAddressFromBech32(msgSetExchangeRate.Sender)
-	if err != nil {
-		return nil, err
-	}
-
-	err = m.keeper.SetExchangeRate(ctx, senderAddr, msgSetExchangeRate.ExchangeRate)
-	if err != nil {
-		return nil, err
-	}
-
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			types.EventTypeSetExchangeRate,
-			sdk.NewAttribute(types.AttributeKeyPair, msgSetExchangeRate.ExchangeRate.Pair),
-			sdk.NewAttribute(types.AttributeKeyRate, msgSetExchangeRate.ExchangeRate.Rate.String()),
-			sdk.NewAttribute(types.AttributeKeyDenoms, strings.Join(msgSetExchangeRate.ExchangeRate.Denoms, ",")),
-			sdk.NewAttribute(types.AttributeKeyTimestamp, msgSetExchangeRate.ExchangeRate.Timestamp.String()),
-		),
-		sdk.NewEvent(
-			sdk.EventTypeMessage,
-			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeySender, msgSetExchangeRate.Sender),
-		),
-	})
-
-	return &types.MsgSetExchangeRateResponse{}, nil
+	issue := m.keeper.CreateIssue(ctx, msgIssueCreate.Owner, msgIssueCreate.Issuer, msgIssueCreate.IssueParams)
+	return &types.MsgIssueCreateResponse{Amount: issue}, nil
 }
 
-func (m msgServer) SetExchangeRates(goCtx context.Context, msgSetExchangeRates *types.MsgSetExchangeRates) (*types.MsgSetExchangeRatesResponse, error) {
+func (m msgServer) HandleMsgFeatures(goCtx context.Context, msgFeatures *types.MsgFeatures) (*types.MsgFeaturesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	senderAddr, err := sdk.AccAddressFromBech32(msgSetExchangeRates.Sender)
+	err := m.keeper.ChangeFeatures(ctx, msgFeatures.Owner, msgFeatures.Denom, msgFeatures.IssueFeatures)
 	if err != nil {
 		return nil, err
 	}
-
-	err = m.keeper.SetExchangeRates(ctx, senderAddr, msgSetExchangeRates.ExchangeRates)
-	if err != nil {
-		return nil, err
-	}
-
-	allEvents := sdk.Events{}
-	for _, exchangeRate := range msgSetExchangeRates.ExchangeRates {
-		events := sdk.Events{
-			sdk.NewEvent(
-				types.EventTypeSetExchangeRates,
-				sdk.NewAttribute(types.AttributeKeyPair, exchangeRate.Pair),
-				sdk.NewAttribute(types.AttributeKeyRate, exchangeRate.Rate.String()),
-				sdk.NewAttribute(types.AttributeKeyDenoms, strings.Join(exchangeRate.Denoms, ",")),
-				sdk.NewAttribute(types.AttributeKeyTimestamp, exchangeRate.Timestamp.String()),
-			),
-			sdk.NewEvent(
-				sdk.EventTypeMessage,
-				sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-				sdk.NewAttribute(sdk.AttributeKeySender, msgSetExchangeRates.Sender),
-			)}
-		allEvents.AppendEvents(events)
-	}
-	ctx.EventManager().EmitEvents(sdk.Events(allEvents))
-
-	return &types.MsgSetExchangeRatesResponse{}, nil
+	return &types.MsgFeaturesResponse{}, nil
 }
 
-func (m msgServer) DeleteExchangeRate(goCtx context.Context, msgDeleteExchangeRate *types.MsgDeleteExchangeRate) (*types.MsgDeleteExchangeRateResponse, error) {
+func (m msgServer) HandleMsgDescription(goCtx context.Context, msgDescription *types.MsgDescription) (*types.MsgDescriptionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	senderAddr, err := sdk.AccAddressFromBech32(msgDeleteExchangeRate.Sender)
+	err := m.keeper.ChangeDescription(ctx, msgDescription.Owner, msgDescription.Denom, msgDescription.Description)
 	if err != nil {
 		return nil, err
 	}
-
-	err = m.keeper.DeleteExchangeRate(ctx, senderAddr, msgDeleteExchangeRate.Pair)
-	if err != nil {
-		return nil, err
-	}
-
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			types.EventTypeDeleteExchangeRate,
-			sdk.NewAttribute(types.AttributeKeyPair, msgDeleteExchangeRate.Pair),
-		),
-		sdk.NewEvent(
-			sdk.EventTypeMessage,
-			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeySender, msgDeleteExchangeRate.Sender),
-		),
-	})
-
-	return &types.MsgDeleteExchangeRateResponse{}, nil
+	return &types.MsgDescriptionResponse{}, nil
 }
 
-func (m msgServer) DeleteExchangeRates(goCtx context.Context, msgDeleteExchangeRates *types.MsgDeleteExchangeRates) (*types.MsgDeleteExchangeRatesResponse, error) {
+func (m msgServer) HandleMsgTransfer(goCtx context.Context, msgTransfer *types.MsgTransfer) (*types.MsgTransferResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	senderAddr, err := sdk.AccAddressFromBech32(msgDeleteExchangeRates.Sender)
+	err := m.keeper.Transfer(ctx, msgTransfer.FromAddress, msgTransfer.ToAddress, msgTransfer.Amount)
 	if err != nil {
 		return nil, err
 	}
-
-	err = m.keeper.DeleteExchangeRates(ctx, senderAddr, msgDeleteExchangeRates.Pairs)
-	if err != nil {
-		return nil, err
-	}
-
-	allEvents := sdk.Events{}
-	for _, pair := range msgDeleteExchangeRates.Pairs {
-		events := sdk.Events{
-			sdk.NewEvent(
-				types.EventTypeDeleteExchangeRates,
-				sdk.NewAttribute(types.AttributeKeyPair, pair),
-			),
-			sdk.NewEvent(
-				sdk.EventTypeMessage,
-				sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-				sdk.NewAttribute(sdk.AttributeKeySender, msgDeleteExchangeRates.Sender),
-			)}
-		allEvents.AppendEvents(events)
-	}
-	ctx.EventManager().EmitEvents(sdk.Events(allEvents))
-
-	return &types.MsgDeleteExchangeRatesResponse{}, nil
+	return &types.MsgTransferResponse{}, nil
 }
 
-func (m msgServer) SetAdminAddr(goCtx context.Context, msgSetAdminAddr *types.MsgSetAdminAddr) (*types.MsgSetAdminAddrResponse, error) {
+func (m msgServer) HandleMsgTransferFrom(goCtx context.Context, msgTransferFrom *types.MsgTransferFrom) (*types.MsgTransferFromResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	senderAddr, err := sdk.AccAddressFromBech32(msgSetAdminAddr.Sender)
+	err := m.keeper.TransferFrom(ctx, msgTransferFrom.Sender, msgTransferFrom.FromAddress, msgTransferFrom.ToAddress, msgTransferFrom.Amount)
 	if err != nil {
 		return nil, err
 	}
+	return &types.MsgTransferFromResponse{}, nil
+}
 
-	var add []types.AdminAddr
-	for _, a := range msgSetAdminAddr.Add {
-		_, err := sdk.AccAddressFromBech32(a.GetAddress())
-		if err != nil {
-			return nil, err
-		}
+func (m msgServer) HandleMsgApprove(goCtx context.Context, msgApprove *types.MsgApprove) (*types.MsgApproveResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
 
-		add = append(add, *a)
-	}
-	var del []types.AdminAddr
-	for _, a := range msgSetAdminAddr.Delete {
-		_, err := sdk.AccAddressFromBech32(a.GetAddress())
-		if err != nil {
-			return nil, err
-		}
-
-		del = append(del, *a)
-	}
-
-	if err := m.keeper.SetAdminAddr(ctx, senderAddr, add, del); err != nil {
+	err := m.keeper.Approve(ctx, msgApprove.Owner, msgApprove.Spender, msgApprove.Amount)
+	if err != nil {
 		return nil, err
 	}
-
-	addAddresses := []string{}
-	for _, add := range msgSetAdminAddr.Add {
-		addAddresses = append(addAddresses, add.Address)
-	}
-	deleteAddresses := []string{}
-	for _, del := range msgSetAdminAddr.Delete {
-		addAddresses = append(addAddresses, del.Address)
-	}
-
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			types.EventTypeSetAdminAddr,
-			sdk.NewAttribute(types.AttributeKeyAdd, strings.Join(addAddresses, ",")),
-			sdk.NewAttribute(types.AttributeKeyDelete, strings.Join(deleteAddresses, ",")),
-		),
-		sdk.NewEvent(
-			sdk.EventTypeMessage,
-			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeySender, msgSetAdminAddr.Sender),
-		),
-	})
-
-	return &types.MsgSetAdminAddrResponse{}, nil
+	return &types.MsgApproveResponse{}, nil
 }
-*/
+
+func (m msgServer) HandleMsgIncreaseAllowance(goCtx context.Context, msgIncreaseAllowance *types.MsgIncreaseAllowance) (*types.MsgIncreaseAllowanceResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.IncreaseAllowance(ctx, msgIncreaseAllowance.Owner, msgIncreaseAllowance.Spender, msgIncreaseAllowance.Amount)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgIncreaseAllowanceResponse{}, nil
+}
+
+func (m msgServer) HandleMsgDecreaseAllowance(goCtx context.Context, msgDecreaseAllowance *types.MsgDecreaseAllowance) (*types.MsgDecreaseAllowanceResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.DecreaseAllowance(ctx, msgDecreaseAllowance.Owner, msgDecreaseAllowance.Spender, msgDecreaseAllowance.Amount)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgDecreaseAllowanceResponse{}, nil
+}
+
+func (m msgServer) HandleMsgMint(goCtx context.Context, msgMint *types.MsgMint) (*types.MsgMintResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.Mint(ctx, msgMint.Minter, msgMint.ToAddress, msgMint.Amount)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgMintResponse{}, nil
+}
+
+func (m msgServer) HandleMsgBurn(goCtx context.Context, msgBurn *types.MsgBurn) (*types.MsgBurnResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.Burn(ctx, msgBurn.Burner, msgBurn.Amount)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgBurnResponse{}, nil
+}
+
+func (m msgServer) HandleMsgBurnFrom(goCtx context.Context, msgBurnFrom *types.MsgBurnFrom) (*types.MsgBurnFromResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.BurnFrom(ctx, msgBurnFrom.Burner, msgBurnFrom.FromAddress, msgBurnFrom.Amount)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgBurnFromResponse{}, nil
+}
+
+func (m msgServer) HandleMsgTransferOwnership(goCtx context.Context, msgTransferOwnership *types.MsgTransferOwnership) (*types.MsgTransferOwnershipResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.TransferOwnership(ctx, msgTransferOwnership.Owner, msgTransferOwnership.ToAddress, msgTransferOwnership.Denom)
+
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgTransferOwnershipResponse{}, nil
+}
+
+func (m msgServer) HandleMsgFreeze(goCtx context.Context, msgFreeze *types.MsgFreeze) (*types.MsgFreezeResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.Freeze(ctx, msgFreeze.Freezer, msgFreeze.Holder, msgFreeze.Denom, msgFreeze.Op)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgFreezeResponse{}, nil
+}
+
+func (m msgServer) HandleMsgUnfreeze(goCtx context.Context, msgUnfreeze *types.MsgUnfreeze) (*types.MsgUnfreezeResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := m.keeper.Unfreeze(ctx, msgUnfreeze.Freezer, msgUnfreeze.Holder, msgUnfreeze.Denom, msgUnfreeze.Op)
+	if err != nil {
+		return nil, err
+	}
+	return &types.MsgUnfreezeResponse{}, nil
+}

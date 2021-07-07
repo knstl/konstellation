@@ -5,50 +5,50 @@ option go_package = "x/issue/types";
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
-import "cosmos_proto/abci.proto";
+import "issue.proto";
 import "querier.proto";
 
 service Msg {
-	rpc HandleMsgIssueCreate(MsgIssueCreate) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgIssueCreate(MsgIssueCreate) returns (MsgIssueCreateResponse){
    		option (google.api.http).put = "/konstellation/issue/issue";
   	}
-  	rpc HandleMsgFeatures(MsgFeatures) returns (cosmos.base.abci.v1beta1.Result){
+  	rpc HandleMsgFeatures(MsgFeatures) returns (MsgFeaturesResponse){
    		option (google.api.http).put = "/konstellation/issue/features";
   	}
-	rpc HandleMsgDescription(MsgDescription) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgDescription(MsgDescription) returns (MsgDescriptionResponse){
    		option (google.api.http).put = "/konstellation/issue/description";
   	}
-	rpc HandleMsgTransfer(MsgTransfer) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgTransfer(MsgTransfer) returns (MsgTransferResponse){
    		option (google.api.http).put = "/konstellation/issue/transfer";
   	}
-	rpc HandleMsgTransferFrom(MsgTransferFrom) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgTransferFrom(MsgTransferFrom) returns (MsgTransferFromResponse){
    		option (google.api.http).put = "/konstellation/issue/transfer_from";
   	}
-	rpc HandleMsgApprove(MsgApprove) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgApprove(MsgApprove) returns (MsgApproveResponse){
    		option (google.api.http).put = "/konstellation/issue/approve";
   	}
-	rpc HandleMsgIncreaseAllowance(MsgIncreaseAllowance) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgIncreaseAllowance(MsgIncreaseAllowance) returns (MsgIncreaseAllowanceResponse){
    		option (google.api.http).put = "/konstellation/issue/increase_allowance";
   	}
-	rpc HandleMsgDecreaseAllowance(MsgDecreaseAllowance) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgDecreaseAllowance(MsgDecreaseAllowance) returns (MsgDecreaseAllowanceResponse){
    		option (google.api.http).put = "/konstellation/issue/decrease_allowance";
   	}
-	rpc HandleMsgMint(MsgMint) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgMint(MsgMint) returns (MsgMintResponse){
    		option (google.api.http).put = "/konstellation/issue/mint";
   	}
-	rpc HandleMsgBurn(MsgBurn) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgBurn(MsgBurn) returns (MsgBurnResponse){
    		option (google.api.http).put = "/konstellation/issue/burn";
   	}
-	rpc HandleMsgBurnFrom(MsgBurnFrom) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgBurnFrom(MsgBurnFrom) returns (MsgBurnFromResponse){
    		option (google.api.http).put = "/konstellation/issue/burn_from";
   	}
-	rpc HandleMsgTransferOwnership(MsgTransferOwnership) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgTransferOwnership(MsgTransferOwnership) returns (MsgTransferOwnershipResponse){
    		option (google.api.http).put = "/konstellation/issue/transfer_ownership";
   	}
-	rpc HandleMsgFreeze(MsgFreeze) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgFreeze(MsgFreeze) returns (MsgFreezeResponse){
    		option (google.api.http).put = "/konstellation/issue/freeze";
   	}
-	rpc HandleMsgUnfreeze(MsgUnfreeze) returns (cosmos.base.abci.v1beta1.Result){
+	rpc HandleMsgUnfreeze(MsgUnfreeze) returns (MsgUnfreezeResponse){
    		option (google.api.http).put = "/konstellation/issue/unfreeze";
   	}
 }
@@ -59,11 +59,17 @@ message MsgIssueCreate {
     IssueParams issue_params = 3 [(gogoproto.embed) = true];
 }
 
+message MsgIssueCreateResponse {
+	CoinIssue amount = 1;
+}
+
 message MsgDescription {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
 	string denom = 2;
 	string description = 3;
 }
+
+message MsgDescriptionResponse {}
 
 message MsgDisableFeature {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
@@ -71,11 +77,15 @@ message MsgDisableFeature {
 	string feature = 3;
 }
 
+message MsgDisableFeatureResponse {}
+
 message MsgEnableFeature {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
 	string denom = 2;
 	string feature = 3;
 }
+
+message MsgEnableFeatureResponse {}
 
 message MsgFeatures {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
@@ -83,11 +93,15 @@ message MsgFeatures {
     IssueFeatures issue_features = 3 [(gogoproto.embed) = true];
 }
 
+message MsgFeaturesResponse {}
+
 message MsgTransfer {
     string from_address = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string to_address = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string amount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
+
+message MsgTransferResponse {}
 
 message MsgTransferFrom {
     string sender = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
@@ -96,11 +110,15 @@ message MsgTransferFrom {
     string amount = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
 
+message MsgTransferFromResponse {}
+
 message MsgTransferOwnership {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string to_address = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
 	string denom = 3;
 }
+
+message MsgTransferOwnershipResponse {}
 
 message MsgApprove {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
@@ -108,11 +126,15 @@ message MsgApprove {
     string amount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
 
+message MsgApproveResponse {}
+
 message MsgIncreaseAllowance {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string spender = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string amount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
+
+message MsgIncreaseAllowanceResponse {}
 
 message MsgDecreaseAllowance {
     string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
@@ -120,22 +142,30 @@ message MsgDecreaseAllowance {
     string amount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
 
+message MsgDecreaseAllowanceResponse {}
+
 message MsgMint {
     string minter = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string to_address = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string amount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
 
+message MsgMintResponse {}
+
 message MsgBurn {
     string burner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string amount = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
+
+message MsgBurnResponse {}
 
 message MsgBurnFrom {
     string burner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string from_address = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string amount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coins", (gogoproto.nullable) = false];
 }
+
+message MsgBurnFromResponse {}
 
 message MsgFreeze {
     string freezer = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
@@ -144,9 +174,13 @@ message MsgFreeze {
 	string op = 4;
 }
 
+message MsgFreezeResponse {}
+
 message MsgUnfreeze {
     string freezer = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
     string holder = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
 	string denom = 3;
 	string op = 4;
 }
+
+message MsgUnfreezeResponse {}

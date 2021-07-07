@@ -7,7 +7,6 @@ import (
 	context "context"
 	fmt "fmt"
 	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	types "github.com/cosmos/cosmos-sdk/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
@@ -70,6 +69,50 @@ func (m *MsgIssueCreate) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIssueCreate proto.InternalMessageInfo
 
+type MsgIssueCreateResponse struct {
+	Amount *CoinIssue `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+}
+
+func (m *MsgIssueCreateResponse) Reset()         { *m = MsgIssueCreateResponse{} }
+func (m *MsgIssueCreateResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIssueCreateResponse) ProtoMessage()    {}
+func (*MsgIssueCreateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{1}
+}
+func (m *MsgIssueCreateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIssueCreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIssueCreateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIssueCreateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIssueCreateResponse.Merge(m, src)
+}
+func (m *MsgIssueCreateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIssueCreateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIssueCreateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIssueCreateResponse proto.InternalMessageInfo
+
+func (m *MsgIssueCreateResponse) GetAmount() *CoinIssue {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
 type MsgDescription struct {
 	Owner       github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Denom       string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
@@ -80,7 +123,7 @@ func (m *MsgDescription) Reset()         { *m = MsgDescription{} }
 func (m *MsgDescription) String() string { return proto.CompactTextString(m) }
 func (*MsgDescription) ProtoMessage()    {}
 func (*MsgDescription) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{1}
+	return fileDescriptor_c06e4cca6c2cc899, []int{2}
 }
 func (m *MsgDescription) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -123,6 +166,42 @@ func (m *MsgDescription) GetDescription() string {
 	return ""
 }
 
+type MsgDescriptionResponse struct {
+}
+
+func (m *MsgDescriptionResponse) Reset()         { *m = MsgDescriptionResponse{} }
+func (m *MsgDescriptionResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDescriptionResponse) ProtoMessage()    {}
+func (*MsgDescriptionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{3}
+}
+func (m *MsgDescriptionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDescriptionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDescriptionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDescriptionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDescriptionResponse.Merge(m, src)
+}
+func (m *MsgDescriptionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDescriptionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDescriptionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDescriptionResponse proto.InternalMessageInfo
+
 type MsgDisableFeature struct {
 	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Denom   string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
@@ -133,7 +212,7 @@ func (m *MsgDisableFeature) Reset()         { *m = MsgDisableFeature{} }
 func (m *MsgDisableFeature) String() string { return proto.CompactTextString(m) }
 func (*MsgDisableFeature) ProtoMessage()    {}
 func (*MsgDisableFeature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{2}
+	return fileDescriptor_c06e4cca6c2cc899, []int{4}
 }
 func (m *MsgDisableFeature) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -176,6 +255,42 @@ func (m *MsgDisableFeature) GetFeature() string {
 	return ""
 }
 
+type MsgDisableFeatureResponse struct {
+}
+
+func (m *MsgDisableFeatureResponse) Reset()         { *m = MsgDisableFeatureResponse{} }
+func (m *MsgDisableFeatureResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDisableFeatureResponse) ProtoMessage()    {}
+func (*MsgDisableFeatureResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{5}
+}
+func (m *MsgDisableFeatureResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDisableFeatureResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDisableFeatureResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDisableFeatureResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDisableFeatureResponse.Merge(m, src)
+}
+func (m *MsgDisableFeatureResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDisableFeatureResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDisableFeatureResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDisableFeatureResponse proto.InternalMessageInfo
+
 type MsgEnableFeature struct {
 	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Denom   string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
@@ -186,7 +301,7 @@ func (m *MsgEnableFeature) Reset()         { *m = MsgEnableFeature{} }
 func (m *MsgEnableFeature) String() string { return proto.CompactTextString(m) }
 func (*MsgEnableFeature) ProtoMessage()    {}
 func (*MsgEnableFeature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{3}
+	return fileDescriptor_c06e4cca6c2cc899, []int{6}
 }
 func (m *MsgEnableFeature) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -229,6 +344,42 @@ func (m *MsgEnableFeature) GetFeature() string {
 	return ""
 }
 
+type MsgEnableFeatureResponse struct {
+}
+
+func (m *MsgEnableFeatureResponse) Reset()         { *m = MsgEnableFeatureResponse{} }
+func (m *MsgEnableFeatureResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgEnableFeatureResponse) ProtoMessage()    {}
+func (*MsgEnableFeatureResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{7}
+}
+func (m *MsgEnableFeatureResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgEnableFeatureResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgEnableFeatureResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgEnableFeatureResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgEnableFeatureResponse.Merge(m, src)
+}
+func (m *MsgEnableFeatureResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgEnableFeatureResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgEnableFeatureResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgEnableFeatureResponse proto.InternalMessageInfo
+
 type MsgFeatures struct {
 	Owner          github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Denom          string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
@@ -239,7 +390,7 @@ func (m *MsgFeatures) Reset()         { *m = MsgFeatures{} }
 func (m *MsgFeatures) String() string { return proto.CompactTextString(m) }
 func (*MsgFeatures) ProtoMessage()    {}
 func (*MsgFeatures) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{4}
+	return fileDescriptor_c06e4cca6c2cc899, []int{8}
 }
 func (m *MsgFeatures) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -275,6 +426,42 @@ func (m *MsgFeatures) GetDenom() string {
 	return ""
 }
 
+type MsgFeaturesResponse struct {
+}
+
+func (m *MsgFeaturesResponse) Reset()         { *m = MsgFeaturesResponse{} }
+func (m *MsgFeaturesResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgFeaturesResponse) ProtoMessage()    {}
+func (*MsgFeaturesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{9}
+}
+func (m *MsgFeaturesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgFeaturesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgFeaturesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgFeaturesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgFeaturesResponse.Merge(m, src)
+}
+func (m *MsgFeaturesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgFeaturesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgFeaturesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgFeaturesResponse proto.InternalMessageInfo
+
 type MsgTransfer struct {
 	FromAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=from_address,json=fromAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"from_address"`
 	ToAddress   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
@@ -285,7 +472,7 @@ func (m *MsgTransfer) Reset()         { *m = MsgTransfer{} }
 func (m *MsgTransfer) String() string { return proto.CompactTextString(m) }
 func (*MsgTransfer) ProtoMessage()    {}
 func (*MsgTransfer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{5}
+	return fileDescriptor_c06e4cca6c2cc899, []int{10}
 }
 func (m *MsgTransfer) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -314,6 +501,42 @@ func (m *MsgTransfer) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgTransfer proto.InternalMessageInfo
 
+type MsgTransferResponse struct {
+}
+
+func (m *MsgTransferResponse) Reset()         { *m = MsgTransferResponse{} }
+func (m *MsgTransferResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgTransferResponse) ProtoMessage()    {}
+func (*MsgTransferResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{11}
+}
+func (m *MsgTransferResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgTransferResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgTransferResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgTransferResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgTransferResponse.Merge(m, src)
+}
+func (m *MsgTransferResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgTransferResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgTransferResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgTransferResponse proto.InternalMessageInfo
+
 type MsgTransferFrom struct {
 	Sender      github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=sender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"sender"`
 	FromAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"from_address"`
@@ -325,7 +548,7 @@ func (m *MsgTransferFrom) Reset()         { *m = MsgTransferFrom{} }
 func (m *MsgTransferFrom) String() string { return proto.CompactTextString(m) }
 func (*MsgTransferFrom) ProtoMessage()    {}
 func (*MsgTransferFrom) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{6}
+	return fileDescriptor_c06e4cca6c2cc899, []int{12}
 }
 func (m *MsgTransferFrom) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -354,6 +577,42 @@ func (m *MsgTransferFrom) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgTransferFrom proto.InternalMessageInfo
 
+type MsgTransferFromResponse struct {
+}
+
+func (m *MsgTransferFromResponse) Reset()         { *m = MsgTransferFromResponse{} }
+func (m *MsgTransferFromResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgTransferFromResponse) ProtoMessage()    {}
+func (*MsgTransferFromResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{13}
+}
+func (m *MsgTransferFromResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgTransferFromResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgTransferFromResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgTransferFromResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgTransferFromResponse.Merge(m, src)
+}
+func (m *MsgTransferFromResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgTransferFromResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgTransferFromResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgTransferFromResponse proto.InternalMessageInfo
+
 type MsgTransferOwnership struct {
 	Owner     github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	ToAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
@@ -364,7 +623,7 @@ func (m *MsgTransferOwnership) Reset()         { *m = MsgTransferOwnership{} }
 func (m *MsgTransferOwnership) String() string { return proto.CompactTextString(m) }
 func (*MsgTransferOwnership) ProtoMessage()    {}
 func (*MsgTransferOwnership) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{7}
+	return fileDescriptor_c06e4cca6c2cc899, []int{14}
 }
 func (m *MsgTransferOwnership) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -400,6 +659,42 @@ func (m *MsgTransferOwnership) GetDenom() string {
 	return ""
 }
 
+type MsgTransferOwnershipResponse struct {
+}
+
+func (m *MsgTransferOwnershipResponse) Reset()         { *m = MsgTransferOwnershipResponse{} }
+func (m *MsgTransferOwnershipResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgTransferOwnershipResponse) ProtoMessage()    {}
+func (*MsgTransferOwnershipResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{15}
+}
+func (m *MsgTransferOwnershipResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgTransferOwnershipResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgTransferOwnershipResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgTransferOwnershipResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgTransferOwnershipResponse.Merge(m, src)
+}
+func (m *MsgTransferOwnershipResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgTransferOwnershipResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgTransferOwnershipResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgTransferOwnershipResponse proto.InternalMessageInfo
+
 type MsgApprove struct {
 	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Spender github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"spender"`
@@ -410,7 +705,7 @@ func (m *MsgApprove) Reset()         { *m = MsgApprove{} }
 func (m *MsgApprove) String() string { return proto.CompactTextString(m) }
 func (*MsgApprove) ProtoMessage()    {}
 func (*MsgApprove) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{8}
+	return fileDescriptor_c06e4cca6c2cc899, []int{16}
 }
 func (m *MsgApprove) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -439,6 +734,42 @@ func (m *MsgApprove) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgApprove proto.InternalMessageInfo
 
+type MsgApproveResponse struct {
+}
+
+func (m *MsgApproveResponse) Reset()         { *m = MsgApproveResponse{} }
+func (m *MsgApproveResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgApproveResponse) ProtoMessage()    {}
+func (*MsgApproveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{17}
+}
+func (m *MsgApproveResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgApproveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgApproveResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgApproveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgApproveResponse.Merge(m, src)
+}
+func (m *MsgApproveResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgApproveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgApproveResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgApproveResponse proto.InternalMessageInfo
+
 type MsgIncreaseAllowance struct {
 	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Spender github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"spender"`
@@ -449,7 +780,7 @@ func (m *MsgIncreaseAllowance) Reset()         { *m = MsgIncreaseAllowance{} }
 func (m *MsgIncreaseAllowance) String() string { return proto.CompactTextString(m) }
 func (*MsgIncreaseAllowance) ProtoMessage()    {}
 func (*MsgIncreaseAllowance) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{9}
+	return fileDescriptor_c06e4cca6c2cc899, []int{18}
 }
 func (m *MsgIncreaseAllowance) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -478,6 +809,42 @@ func (m *MsgIncreaseAllowance) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIncreaseAllowance proto.InternalMessageInfo
 
+type MsgIncreaseAllowanceResponse struct {
+}
+
+func (m *MsgIncreaseAllowanceResponse) Reset()         { *m = MsgIncreaseAllowanceResponse{} }
+func (m *MsgIncreaseAllowanceResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIncreaseAllowanceResponse) ProtoMessage()    {}
+func (*MsgIncreaseAllowanceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{19}
+}
+func (m *MsgIncreaseAllowanceResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIncreaseAllowanceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIncreaseAllowanceResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIncreaseAllowanceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIncreaseAllowanceResponse.Merge(m, src)
+}
+func (m *MsgIncreaseAllowanceResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIncreaseAllowanceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIncreaseAllowanceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIncreaseAllowanceResponse proto.InternalMessageInfo
+
 type MsgDecreaseAllowance struct {
 	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
 	Spender github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"spender"`
@@ -488,7 +855,7 @@ func (m *MsgDecreaseAllowance) Reset()         { *m = MsgDecreaseAllowance{} }
 func (m *MsgDecreaseAllowance) String() string { return proto.CompactTextString(m) }
 func (*MsgDecreaseAllowance) ProtoMessage()    {}
 func (*MsgDecreaseAllowance) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{10}
+	return fileDescriptor_c06e4cca6c2cc899, []int{20}
 }
 func (m *MsgDecreaseAllowance) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -517,6 +884,42 @@ func (m *MsgDecreaseAllowance) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDecreaseAllowance proto.InternalMessageInfo
 
+type MsgDecreaseAllowanceResponse struct {
+}
+
+func (m *MsgDecreaseAllowanceResponse) Reset()         { *m = MsgDecreaseAllowanceResponse{} }
+func (m *MsgDecreaseAllowanceResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDecreaseAllowanceResponse) ProtoMessage()    {}
+func (*MsgDecreaseAllowanceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{21}
+}
+func (m *MsgDecreaseAllowanceResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDecreaseAllowanceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDecreaseAllowanceResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDecreaseAllowanceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDecreaseAllowanceResponse.Merge(m, src)
+}
+func (m *MsgDecreaseAllowanceResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDecreaseAllowanceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDecreaseAllowanceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDecreaseAllowanceResponse proto.InternalMessageInfo
+
 type MsgMint struct {
 	Minter    github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=minter,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"minter"`
 	ToAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
@@ -527,7 +930,7 @@ func (m *MsgMint) Reset()         { *m = MsgMint{} }
 func (m *MsgMint) String() string { return proto.CompactTextString(m) }
 func (*MsgMint) ProtoMessage()    {}
 func (*MsgMint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{11}
+	return fileDescriptor_c06e4cca6c2cc899, []int{22}
 }
 func (m *MsgMint) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -556,6 +959,42 @@ func (m *MsgMint) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgMint proto.InternalMessageInfo
 
+type MsgMintResponse struct {
+}
+
+func (m *MsgMintResponse) Reset()         { *m = MsgMintResponse{} }
+func (m *MsgMintResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgMintResponse) ProtoMessage()    {}
+func (*MsgMintResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{23}
+}
+func (m *MsgMintResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgMintResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgMintResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgMintResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgMintResponse.Merge(m, src)
+}
+func (m *MsgMintResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgMintResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgMintResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgMintResponse proto.InternalMessageInfo
+
 type MsgBurn struct {
 	Burner github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"burner"`
 	Amount github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,2,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
@@ -565,7 +1004,7 @@ func (m *MsgBurn) Reset()         { *m = MsgBurn{} }
 func (m *MsgBurn) String() string { return proto.CompactTextString(m) }
 func (*MsgBurn) ProtoMessage()    {}
 func (*MsgBurn) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{12}
+	return fileDescriptor_c06e4cca6c2cc899, []int{24}
 }
 func (m *MsgBurn) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -594,6 +1033,42 @@ func (m *MsgBurn) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgBurn proto.InternalMessageInfo
 
+type MsgBurnResponse struct {
+}
+
+func (m *MsgBurnResponse) Reset()         { *m = MsgBurnResponse{} }
+func (m *MsgBurnResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgBurnResponse) ProtoMessage()    {}
+func (*MsgBurnResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{25}
+}
+func (m *MsgBurnResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgBurnResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgBurnResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgBurnResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgBurnResponse.Merge(m, src)
+}
+func (m *MsgBurnResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgBurnResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgBurnResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgBurnResponse proto.InternalMessageInfo
+
 type MsgBurnFrom struct {
 	Burner      github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"burner"`
 	FromAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"from_address"`
@@ -604,7 +1079,7 @@ func (m *MsgBurnFrom) Reset()         { *m = MsgBurnFrom{} }
 func (m *MsgBurnFrom) String() string { return proto.CompactTextString(m) }
 func (*MsgBurnFrom) ProtoMessage()    {}
 func (*MsgBurnFrom) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{13}
+	return fileDescriptor_c06e4cca6c2cc899, []int{26}
 }
 func (m *MsgBurnFrom) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -633,6 +1108,42 @@ func (m *MsgBurnFrom) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgBurnFrom proto.InternalMessageInfo
 
+type MsgBurnFromResponse struct {
+}
+
+func (m *MsgBurnFromResponse) Reset()         { *m = MsgBurnFromResponse{} }
+func (m *MsgBurnFromResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgBurnFromResponse) ProtoMessage()    {}
+func (*MsgBurnFromResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{27}
+}
+func (m *MsgBurnFromResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgBurnFromResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgBurnFromResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgBurnFromResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgBurnFromResponse.Merge(m, src)
+}
+func (m *MsgBurnFromResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgBurnFromResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgBurnFromResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgBurnFromResponse proto.InternalMessageInfo
+
 type MsgFreeze struct {
 	Freezer github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"freezer"`
 	Holder  github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"holder"`
@@ -644,7 +1155,7 @@ func (m *MsgFreeze) Reset()         { *m = MsgFreeze{} }
 func (m *MsgFreeze) String() string { return proto.CompactTextString(m) }
 func (*MsgFreeze) ProtoMessage()    {}
 func (*MsgFreeze) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{14}
+	return fileDescriptor_c06e4cca6c2cc899, []int{28}
 }
 func (m *MsgFreeze) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -687,6 +1198,42 @@ func (m *MsgFreeze) GetOp() string {
 	return ""
 }
 
+type MsgFreezeResponse struct {
+}
+
+func (m *MsgFreezeResponse) Reset()         { *m = MsgFreezeResponse{} }
+func (m *MsgFreezeResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgFreezeResponse) ProtoMessage()    {}
+func (*MsgFreezeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{29}
+}
+func (m *MsgFreezeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgFreezeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgFreezeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgFreezeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgFreezeResponse.Merge(m, src)
+}
+func (m *MsgFreezeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgFreezeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgFreezeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgFreezeResponse proto.InternalMessageInfo
+
 type MsgUnfreeze struct {
 	Freezer github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"freezer"`
 	Holder  github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"holder"`
@@ -698,7 +1245,7 @@ func (m *MsgUnfreeze) Reset()         { *m = MsgUnfreeze{} }
 func (m *MsgUnfreeze) String() string { return proto.CompactTextString(m) }
 func (*MsgUnfreeze) ProtoMessage()    {}
 func (*MsgUnfreeze) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{15}
+	return fileDescriptor_c06e4cca6c2cc899, []int{30}
 }
 func (m *MsgUnfreeze) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -741,97 +1288,158 @@ func (m *MsgUnfreeze) GetOp() string {
 	return ""
 }
 
+type MsgUnfreezeResponse struct {
+}
+
+func (m *MsgUnfreezeResponse) Reset()         { *m = MsgUnfreezeResponse{} }
+func (m *MsgUnfreezeResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUnfreezeResponse) ProtoMessage()    {}
+func (*MsgUnfreezeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{31}
+}
+func (m *MsgUnfreezeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUnfreezeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUnfreezeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUnfreezeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUnfreezeResponse.Merge(m, src)
+}
+func (m *MsgUnfreezeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUnfreezeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUnfreezeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUnfreezeResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgIssueCreate)(nil), "konstellation.sdk.issue.MsgIssueCreate")
+	proto.RegisterType((*MsgIssueCreateResponse)(nil), "konstellation.sdk.issue.MsgIssueCreateResponse")
 	proto.RegisterType((*MsgDescription)(nil), "konstellation.sdk.issue.MsgDescription")
+	proto.RegisterType((*MsgDescriptionResponse)(nil), "konstellation.sdk.issue.MsgDescriptionResponse")
 	proto.RegisterType((*MsgDisableFeature)(nil), "konstellation.sdk.issue.MsgDisableFeature")
+	proto.RegisterType((*MsgDisableFeatureResponse)(nil), "konstellation.sdk.issue.MsgDisableFeatureResponse")
 	proto.RegisterType((*MsgEnableFeature)(nil), "konstellation.sdk.issue.MsgEnableFeature")
+	proto.RegisterType((*MsgEnableFeatureResponse)(nil), "konstellation.sdk.issue.MsgEnableFeatureResponse")
 	proto.RegisterType((*MsgFeatures)(nil), "konstellation.sdk.issue.MsgFeatures")
+	proto.RegisterType((*MsgFeaturesResponse)(nil), "konstellation.sdk.issue.MsgFeaturesResponse")
 	proto.RegisterType((*MsgTransfer)(nil), "konstellation.sdk.issue.MsgTransfer")
+	proto.RegisterType((*MsgTransferResponse)(nil), "konstellation.sdk.issue.MsgTransferResponse")
 	proto.RegisterType((*MsgTransferFrom)(nil), "konstellation.sdk.issue.MsgTransferFrom")
+	proto.RegisterType((*MsgTransferFromResponse)(nil), "konstellation.sdk.issue.MsgTransferFromResponse")
 	proto.RegisterType((*MsgTransferOwnership)(nil), "konstellation.sdk.issue.MsgTransferOwnership")
+	proto.RegisterType((*MsgTransferOwnershipResponse)(nil), "konstellation.sdk.issue.MsgTransferOwnershipResponse")
 	proto.RegisterType((*MsgApprove)(nil), "konstellation.sdk.issue.MsgApprove")
+	proto.RegisterType((*MsgApproveResponse)(nil), "konstellation.sdk.issue.MsgApproveResponse")
 	proto.RegisterType((*MsgIncreaseAllowance)(nil), "konstellation.sdk.issue.MsgIncreaseAllowance")
+	proto.RegisterType((*MsgIncreaseAllowanceResponse)(nil), "konstellation.sdk.issue.MsgIncreaseAllowanceResponse")
 	proto.RegisterType((*MsgDecreaseAllowance)(nil), "konstellation.sdk.issue.MsgDecreaseAllowance")
+	proto.RegisterType((*MsgDecreaseAllowanceResponse)(nil), "konstellation.sdk.issue.MsgDecreaseAllowanceResponse")
 	proto.RegisterType((*MsgMint)(nil), "konstellation.sdk.issue.MsgMint")
+	proto.RegisterType((*MsgMintResponse)(nil), "konstellation.sdk.issue.MsgMintResponse")
 	proto.RegisterType((*MsgBurn)(nil), "konstellation.sdk.issue.MsgBurn")
+	proto.RegisterType((*MsgBurnResponse)(nil), "konstellation.sdk.issue.MsgBurnResponse")
 	proto.RegisterType((*MsgBurnFrom)(nil), "konstellation.sdk.issue.MsgBurnFrom")
+	proto.RegisterType((*MsgBurnFromResponse)(nil), "konstellation.sdk.issue.MsgBurnFromResponse")
 	proto.RegisterType((*MsgFreeze)(nil), "konstellation.sdk.issue.MsgFreeze")
+	proto.RegisterType((*MsgFreezeResponse)(nil), "konstellation.sdk.issue.MsgFreezeResponse")
 	proto.RegisterType((*MsgUnfreeze)(nil), "konstellation.sdk.issue.MsgUnfreeze")
+	proto.RegisterType((*MsgUnfreezeResponse)(nil), "konstellation.sdk.issue.MsgUnfreezeResponse")
 }
 
 func init() { proto.RegisterFile("msg.proto", fileDescriptor_c06e4cca6c2cc899) }
 
 var fileDescriptor_c06e4cca6c2cc899 = []byte{
-	// 1073 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x98, 0x4f, 0x6f, 0x1b, 0x45,
-	0x14, 0xc0, 0x33, 0x4e, 0x9b, 0xc8, 0xe3, 0x26, 0x69, 0x57, 0x41, 0x0d, 0xdb, 0xd4, 0x31, 0x5b,
-	0xd3, 0x18, 0x24, 0xaf, 0x69, 0x11, 0x1f, 0x20, 0x6e, 0xa9, 0x5a, 0x21, 0xab, 0xc8, 0x14, 0x09,
-	0x71, 0xb1, 0xc6, 0xf6, 0x78, 0xb3, 0xca, 0xee, 0xcc, 0x32, 0xb3, 0x9b, 0x02, 0x42, 0x02, 0x15,
-	0x21, 0x0e, 0x1c, 0x5a, 0x09, 0xb8, 0x72, 0xe0, 0xbb, 0x20, 0xf5, 0x46, 0x50, 0x2f, 0xa8, 0x87,
-	0x08, 0x25, 0x7c, 0x04, 0x0e, 0x48, 0x48, 0x08, 0xcd, 0x9f, 0xdd, 0xac, 0x6b, 0x67, 0x59, 0x69,
-	0x9d, 0xaa, 0x6a, 0x2e, 0xc9, 0xfe, 0x79, 0xfb, 0xde, 0xef, 0xbd, 0x79, 0x6f, 0xde, 0x1b, 0xc3,
-	0xb2, 0xcf, 0x1d, 0x3b, 0x60, 0x34, 0xa4, 0xc6, 0xc5, 0x1d, 0x4a, 0x78, 0x88, 0x3d, 0x0f, 0x85,
-	0x2e, 0x25, 0x36, 0x1f, 0xee, 0xd8, 0x2e, 0xe7, 0x11, 0x36, 0x57, 0x1d, 0xea, 0x50, 0x29, 0xd3,
-	0x12, 0x57, 0x4a, 0xdc, 0x5c, 0x77, 0x28, 0x75, 0x3c, 0xdc, 0x42, 0x81, 0xdb, 0x42, 0x84, 0xd0,
-	0x50, 0x7e, 0xc6, 0xf5, 0xdb, 0x8b, 0x03, 0xca, 0x7d, 0xca, 0x7b, 0xea, 0x33, 0xd4, 0x1f, 0xb8,
-	0xfa, 0xc5, 0xd2, 0x27, 0x11, 0x66, 0x2e, 0x66, 0xea, 0xd6, 0xfa, 0x07, 0xc0, 0xe5, 0x0e, 0x77,
-	0xee, 0x08, 0x43, 0x37, 0x18, 0x46, 0x21, 0x36, 0xde, 0x83, 0x67, 0xe9, 0x7d, 0x82, 0xd9, 0x1a,
-	0xa8, 0x81, 0x46, 0xb9, 0xfd, 0xce, 0xe3, 0xfd, 0x8d, 0xb9, 0xa7, 0xfb, 0x1b, 0x4d, 0xc7, 0x0d,
-	0xb7, 0xa3, 0xbe, 0x3d, 0xa0, 0x7e, 0x4b, 0x29, 0xd7, 0xff, 0x9a, 0x7c, 0xb8, 0xd3, 0x0a, 0x3f,
-	0x0b, 0x30, 0xb7, 0xb7, 0x06, 0x83, 0xad, 0xe1, 0x90, 0x61, 0xce, 0xbb, 0x4a, 0x87, 0xd1, 0x81,
-	0x0b, 0xd2, 0x09, 0xb6, 0x56, 0x2a, 0xa2, 0x4d, 0x2b, 0x31, 0x3a, 0xf0, 0x9c, 0xbc, 0xea, 0x05,
-	0x88, 0x21, 0x9f, 0xaf, 0xcd, 0xd7, 0x40, 0xa3, 0x72, 0xbd, 0x6e, 0x1f, 0x13, 0x3a, 0x5b, 0xfa,
-	0xf5, 0xbe, 0x94, 0x6d, 0x9f, 0xd9, 0xdb, 0xdf, 0x00, 0xdd, 0x8a, 0x7b, 0xf4, 0xc8, 0xfa, 0x51,
-	0x79, 0x7f, 0x13, 0xf3, 0x01, 0x73, 0x03, 0xf1, 0xed, 0x6c, 0xbd, 0x5f, 0x85, 0x67, 0x87, 0x98,
-	0x50, 0x5f, 0x39, 0xdf, 0x55, 0x37, 0x46, 0x0d, 0x56, 0x86, 0x47, 0x16, 0xa5, 0x0f, 0xe5, 0x6e,
-	0xfa, 0x91, 0xf5, 0x08, 0xc0, 0x0b, 0x82, 0xcb, 0xe5, 0xa8, 0xef, 0xe1, 0x5b, 0x18, 0x85, 0x11,
-	0xc3, 0xcf, 0x03, 0x6d, 0x0d, 0x2e, 0x8e, 0x94, 0x35, 0x8d, 0x15, 0xdf, 0x5a, 0x0f, 0x01, 0x3c,
-	0xdf, 0xe1, 0xce, 0xbb, 0xe4, 0x85, 0x21, 0xfa, 0x05, 0xc0, 0x4a, 0x87, 0x3b, 0x9a, 0x85, 0x3f,
-	0x0f, 0x98, 0x0f, 0xe0, 0xb2, 0x4a, 0x3f, 0xcd, 0x10, 0x27, 0xe0, 0xd5, 0xec, 0x04, 0x8c, 0x11,
-	0x75, 0x0a, 0x2e, 0xb9, 0xe9, 0x87, 0xd6, 0xb7, 0x25, 0xe9, 0xc7, 0x3d, 0x86, 0x08, 0x1f, 0x61,
-	0x66, 0x7c, 0x04, 0xcf, 0x8d, 0x18, 0xf5, 0x7b, 0x48, 0x11, 0x15, 0x73, 0xa7, 0x22, 0x54, 0xe9,
-	0x1b, 0xe3, 0x1e, 0x84, 0x21, 0x4d, 0xf4, 0x16, 0x2a, 0xc8, 0x72, 0x48, 0x63, 0xad, 0xb7, 0xe1,
-	0x02, 0xf2, 0x69, 0x44, 0x42, 0xb5, 0x40, 0xed, 0xb7, 0xb4, 0xc6, 0x46, 0x0e, 0x8d, 0x37, 0xa8,
-	0x4b, 0x78, 0x57, 0x7f, 0x6f, 0x3d, 0x2d, 0xc1, 0x95, 0x54, 0x24, 0x6e, 0x31, 0xea, 0x8b, 0x0d,
-	0x84, 0x63, 0x32, 0x2c, 0xba, 0xac, 0x5a, 0xc9, 0x44, 0x70, 0x4b, 0x27, 0x14, 0xdc, 0xf9, 0x99,
-	0x07, 0xf7, 0x4c, 0xc1, 0xe0, 0xfe, 0x0a, 0xe0, 0x6a, 0x2a, 0xb8, 0x77, 0x45, 0x9a, 0xf3, 0x6d,
-	0x37, 0x98, 0x6d, 0xdd, 0x9c, 0x4c, 0x8a, 0x25, 0xd5, 0x38, 0x9f, 0xaa, 0x46, 0xeb, 0x2f, 0x00,
-	0x61, 0x87, 0x3b, 0x5b, 0x41, 0xc0, 0xe8, 0xee, 0x8c, 0x37, 0xa3, 0xbb, 0x70, 0x91, 0x07, 0x2a,
-	0xef, 0x0a, 0x39, 0x11, 0x6b, 0x99, 0x61, 0x95, 0xfc, 0xab, 0x16, 0xf2, 0x0e, 0x19, 0x30, 0x8c,
-	0x38, 0xde, 0xf2, 0x3c, 0x7a, 0x1f, 0x91, 0xc1, 0xa9, 0x0b, 0xc0, 0x4d, 0x7c, 0x5a, 0x03, 0xf0,
-	0x37, 0x80, 0x8b, 0x1d, 0xee, 0x74, 0x5c, 0x12, 0x8a, 0xfd, 0xd1, 0x77, 0x49, 0x58, 0x78, 0x7f,
-	0x54, 0x4a, 0x5e, 0xf8, 0x16, 0xf1, 0xb3, 0x72, 0xbd, 0x1d, 0x31, 0x22, 0x5c, 0xef, 0x47, 0xac,
-	0xf0, 0x7a, 0x6b, 0x25, 0x29, 0xc8, 0x52, 0x41, 0xc8, 0xaf, 0x54, 0x47, 0x17, 0x90, 0x71, 0x0f,
-	0x9b, 0x25, 0xe8, 0xc9, 0xf5, 0xb0, 0xd9, 0xad, 0xd3, 0x6f, 0x00, 0x96, 0xc5, 0x70, 0xc6, 0x30,
-	0xfe, 0x1c, 0x8b, 0x5a, 0x1a, 0xc9, 0xab, 0x82, 0x11, 0x88, 0xb5, 0x88, 0x88, 0x6e, 0x53, 0xaf,
-	0x70, 0x6d, 0x6a, 0x25, 0xd3, 0xfb, 0x8b, 0xb1, 0x0c, 0x4b, 0x34, 0x50, 0x7d, 0xb7, 0x5b, 0xa2,
-	0x81, 0xf5, 0x44, 0x0d, 0x9c, 0x1f, 0x92, 0xd1, 0x4b, 0xe4, 0xd5, 0xf5, 0x1f, 0x56, 0xe0, 0x7c,
-	0x87, 0x3b, 0xc6, 0x37, 0x00, 0xae, 0xde, 0x46, 0x64, 0xe8, 0xe1, 0x67, 0xce, 0x83, 0x9b, 0xc7,
-	0x0e, 0xb7, 0xe3, 0x82, 0x66, 0xcd, 0x56, 0x54, 0x76, 0x1f, 0x71, 0x6c, 0xcb, 0x33, 0xe7, 0xee,
-	0xb5, 0x3e, 0x0e, 0xd1, 0x35, 0xbb, 0x8b, 0x79, 0xe4, 0x85, 0x96, 0xf5, 0xe0, 0xc9, 0x9f, 0xdf,
-	0x97, 0xd6, 0x4d, 0xb3, 0x35, 0xa6, 0xb2, 0x25, 0xd5, 0xa9, 0xbf, 0xc6, 0x03, 0x00, 0x2f, 0x24,
-	0x1c, 0xc9, 0x70, 0x5f, 0xcf, 0x82, 0x88, 0xa5, 0x72, 0x10, 0xbc, 0x2e, 0x09, 0x36, 0xcc, 0xcb,
-	0x53, 0x09, 0xe2, 0xb1, 0xde, 0xf8, 0x2e, 0x1d, 0x8c, 0xf4, 0xf1, 0x30, 0x33, 0x18, 0x29, 0xc1,
-	0x1c, 0x28, 0x0d, 0x89, 0x62, 0x99, 0xb5, 0xa9, 0x28, 0xa9, 0xe3, 0xe0, 0x78, 0x48, 0x92, 0x73,
-	0x42, 0x66, 0x48, 0x62, 0xa9, 0xc2, 0x21, 0x09, 0x63, 0x73, 0x0f, 0x01, 0x7c, 0x65, 0x02, 0x42,
-	0x6e, 0x6f, 0x8d, 0x3c, 0x20, 0x42, 0x32, 0x07, 0xcc, 0x9b, 0x12, 0xa6, 0x6e, 0x5a, 0x99, 0x30,
-	0x3d, 0xb1, 0x69, 0x19, 0x5f, 0xc2, 0xf3, 0x09, 0x50, 0x3c, 0x04, 0x5e, 0xc9, 0x62, 0xd1, 0x42,
-	0x39, 0x30, 0xea, 0x12, 0xa3, 0x6a, 0xae, 0x4f, 0xc5, 0x40, 0xda, 0xd8, 0x4f, 0x00, 0x9a, 0x47,
-	0x25, 0x33, 0x31, 0x8f, 0x35, 0x33, 0x0b, 0xe7, 0x59, 0xf1, 0x1c, 0x54, 0x2d, 0x49, 0xf5, 0x86,
-	0xb9, 0x39, 0xbd, 0x7c, 0xb4, 0xc6, 0x1e, 0x4a, 0x08, 0xc6, 0x00, 0x27, 0xe7, 0xa5, 0x66, 0x76,
-	0x32, 0xcf, 0x1a, 0x70, 0x88, 0x27, 0x00, 0x77, 0xe1, 0x52, 0xc2, 0x27, 0xc7, 0x99, 0x5a, 0x16,
-	0x92, 0x90, 0xc8, 0x41, 0xf1, 0x9a, 0xa4, 0xb8, 0x64, 0xbe, 0x3a, 0x95, 0x42, 0x0c, 0x3a, 0x63,
-	0x76, 0xe5, 0x2c, 0x91, 0x69, 0x57, 0x48, 0x14, 0xb6, 0x2b, 0x9a, 0xb7, 0xf1, 0x75, 0xba, 0x92,
-	0x93, 0xf9, 0xa0, 0xfe, 0x7f, 0xc6, 0x73, 0x16, 0xcf, 0x55, 0x09, 0x50, 0x33, 0xab, 0xc7, 0x02,
-	0xa8, 0xc2, 0x19, 0x4b, 0x8b, 0xc9, 0x03, 0x61, 0x33, 0x4f, 0x3d, 0x27, 0xe2, 0x85, 0xd3, 0x22,
-	0x29, 0x6a, 0x9a, 0x10, 0x7c, 0x01, 0x57, 0x8e, 0x5a, 0x80, 0x6a, 0xb6, 0x56, 0x66, 0x03, 0x90,
-	0x32, 0x39, 0x48, 0xae, 0x48, 0x92, 0xcb, 0xe6, 0xa5, 0xe9, 0xdb, 0xbf, 0x32, 0x35, 0xb6, 0xdd,
-	0x26, 0xdd, 0x3e, 0x73, 0x91, 0x62, 0xa9, 0xc2, 0xdb, 0x6d, 0xa4, 0x15, 0xb5, 0x37, 0x1f, 0x1f,
-	0x54, 0xc1, 0xde, 0x41, 0x15, 0xfc, 0x71, 0x50, 0x05, 0x8f, 0x0e, 0xab, 0x73, 0x7b, 0x87, 0xd5,
-	0xb9, 0xdf, 0x0f, 0xab, 0x73, 0x1f, 0x2f, 0x7d, 0x1a, 0x07, 0x4e, 0x34, 0xfe, 0xfe, 0x82, 0xfc,
-	0x21, 0xf7, 0xed, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0x32, 0xfa, 0xca, 0x0d, 0x4a, 0x16, 0x00,
-	0x00,
+	// 1230 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x59, 0x41, 0x6f, 0x1b, 0x45,
+	0x14, 0xce, 0x38, 0x6d, 0xa3, 0x3c, 0x37, 0x69, 0xb2, 0x4d, 0xa9, 0x33, 0x49, 0x1d, 0xb3, 0x0d,
+	0x8d, 0x29, 0xb5, 0x5d, 0x05, 0xf5, 0xc2, 0x2d, 0x6e, 0xa9, 0x5a, 0x21, 0xab, 0xc8, 0x04, 0x09,
+	0x71, 0x89, 0x36, 0xf6, 0x78, 0xb3, 0x8a, 0xbd, 0xb3, 0xec, 0xac, 0x29, 0x70, 0x40, 0x88, 0x03,
+	0x48, 0x1c, 0x68, 0x25, 0xe0, 0xc2, 0x05, 0x89, 0xbf, 0xc0, 0x6f, 0x40, 0xea, 0x8d, 0xa0, 0x5e,
+	0xaa, 0x1e, 0x22, 0x94, 0xf0, 0x13, 0x38, 0x20, 0x21, 0x21, 0x34, 0x33, 0xbb, 0x93, 0xb5, 0xd7,
+	0x9e, 0xb8, 0x5a, 0xa7, 0xaa, 0xe8, 0xa5, 0xf5, 0xce, 0x7e, 0xf3, 0xde, 0xf7, 0xbe, 0x9d, 0xf7,
+	0xe6, 0x3d, 0x05, 0xa6, 0x3b, 0xcc, 0x2e, 0x7b, 0x3e, 0x0d, 0xa8, 0x71, 0x71, 0x97, 0xba, 0x2c,
+	0x20, 0xed, 0xb6, 0x15, 0x38, 0xd4, 0x2d, 0xb3, 0xe6, 0x6e, 0xd9, 0x61, 0xac, 0x4b, 0xf0, 0x82,
+	0x4d, 0x6d, 0x2a, 0x30, 0x15, 0xfe, 0x4b, 0xc2, 0xf1, 0xb2, 0x4d, 0xa9, 0xdd, 0x26, 0x15, 0xcb,
+	0x73, 0x2a, 0x96, 0xeb, 0xd2, 0x40, 0x6c, 0x63, 0xe1, 0xdb, 0xac, 0xd8, 0x1a, 0x3e, 0xcc, 0x7c,
+	0xd4, 0x25, 0xbe, 0x43, 0x7c, 0xf9, 0x68, 0xfe, 0x83, 0x60, 0xb6, 0xc6, 0xec, 0xbb, 0x1c, 0x71,
+	0xd3, 0x27, 0x56, 0x40, 0x8c, 0x77, 0xe0, 0x34, 0xbd, 0xef, 0x12, 0x3f, 0x87, 0x0a, 0xa8, 0x38,
+	0x5d, 0xbd, 0xf1, 0x68, 0x7f, 0x65, 0xe2, 0xe9, 0xfe, 0x4a, 0xc9, 0x76, 0x82, 0x9d, 0xee, 0x76,
+	0xb9, 0x41, 0x3b, 0x95, 0x06, 0x65, 0x1d, 0xca, 0xc2, 0xff, 0x4a, 0xac, 0xb9, 0x5b, 0x09, 0x3e,
+	0xf5, 0x08, 0x2b, 0x6f, 0x34, 0x1a, 0x1b, 0xcd, 0xa6, 0x4f, 0x18, 0xab, 0x4b, 0x1b, 0x46, 0x0d,
+	0xce, 0x08, 0xef, 0x7e, 0x2e, 0x93, 0xc6, 0x5a, 0x68, 0xc4, 0xa8, 0xc1, 0x59, 0xf1, 0x6b, 0xcb,
+	0xb3, 0x7c, 0xab, 0xc3, 0x72, 0x93, 0x05, 0x54, 0xcc, 0xae, 0xaf, 0x96, 0x87, 0xc8, 0x55, 0x16,
+	0x71, 0xbd, 0x2b, 0xb0, 0xd5, 0x53, 0x7b, 0xfb, 0x2b, 0xa8, 0x2e, 0xc5, 0x90, 0x4b, 0xe6, 0x26,
+	0xbc, 0xd2, 0x1b, 0x7c, 0x9d, 0x30, 0x8f, 0xba, 0x8c, 0x18, 0x6f, 0xc1, 0x19, 0xab, 0x43, 0xbb,
+	0x6e, 0x20, 0x54, 0xc8, 0xae, 0x9b, 0x43, 0x5d, 0xdc, 0xa4, 0x8e, 0x2b, 0x2c, 0xd4, 0xc3, 0x1d,
+	0xe6, 0x0f, 0x52, 0xd3, 0x5b, 0x84, 0x35, 0x7c, 0xc7, 0xe3, 0xf0, 0xf1, 0x6a, 0xba, 0x00, 0xa7,
+	0x9b, 0xc4, 0xa5, 0x1d, 0x29, 0x69, 0x5d, 0x3e, 0x18, 0x05, 0xc8, 0x36, 0x8f, 0x3c, 0x0a, 0x65,
+	0xa6, 0xeb, 0xf1, 0x25, 0x33, 0x27, 0xa2, 0x8d, 0xd1, 0x8a, 0xa2, 0x35, 0x1f, 0x22, 0x98, 0xe7,
+	0xaf, 0x1c, 0x66, 0x6d, 0xb7, 0xc9, 0x6d, 0x62, 0x05, 0x5d, 0x9f, 0x3c, 0x0f, 0xd2, 0x39, 0x98,
+	0x6a, 0x49, 0x6f, 0x21, 0xe1, 0xe8, 0xd1, 0x5c, 0x82, 0xc5, 0x04, 0x23, 0xc5, 0xf7, 0x01, 0x82,
+	0xb9, 0x1a, 0xb3, 0xdf, 0x76, 0x5f, 0x18, 0xba, 0x18, 0x72, 0xfd, 0x84, 0x14, 0xdb, 0x5f, 0x11,
+	0x64, 0x6b, 0xcc, 0x0e, 0x97, 0xd9, 0xf3, 0x20, 0xfa, 0x1e, 0xcc, 0xca, 0x3c, 0x09, 0xf9, 0x45,
+	0x99, 0x72, 0x45, 0x9f, 0x29, 0x11, 0xc5, 0x30, 0x57, 0x66, 0x9c, 0xf8, 0xa2, 0x79, 0x01, 0xce,
+	0xc7, 0xc2, 0x50, 0xe1, 0x7d, 0x9d, 0x11, 0xe1, 0x6d, 0xfa, 0x96, 0xcb, 0x5a, 0xc4, 0x37, 0x3e,
+	0x80, 0xb3, 0x2d, 0x9f, 0x76, 0xb6, 0x2c, 0x49, 0x34, 0x5d, 0x94, 0x59, 0x6e, 0x2a, 0x7c, 0x30,
+	0x36, 0x01, 0x02, 0xaa, 0xec, 0xa6, 0x2a, 0x28, 0xd3, 0x01, 0x8d, 0xac, 0xde, 0x51, 0xa9, 0x2e,
+	0xbe, 0x69, 0xf5, 0x7a, 0x68, 0xb1, 0x38, 0x82, 0x45, 0x9e, 0xfc, 0x4c, 0x25, 0xbe, 0x14, 0x28,
+	0x12, 0x42, 0x09, 0xf4, 0x34, 0x03, 0xe7, 0x62, 0xeb, 0xb7, 0x7d, 0xda, 0xe1, 0x75, 0x91, 0x11,
+	0xb7, 0x99, 0xf6, 0x10, 0x84, 0x46, 0x12, 0x9a, 0x67, 0x4e, 0x48, 0xf3, 0xc9, 0xb1, 0x6b, 0x7e,
+	0x2a, 0xa5, 0xe6, 0x8b, 0x70, 0xb1, 0x4f, 0x5b, 0xa5, 0xfb, 0x6f, 0x08, 0x16, 0x62, 0xef, 0xee,
+	0xf1, 0x7c, 0x61, 0x3b, 0x8e, 0x37, 0xde, 0x04, 0x3c, 0x99, 0x43, 0xa9, 0xd2, 0x7a, 0x32, 0x96,
+	0xd6, 0x66, 0x1e, 0x96, 0x07, 0x05, 0xa4, 0x22, 0xfe, 0x0b, 0x01, 0xd4, 0x98, 0xbd, 0xe1, 0x79,
+	0x3e, 0xfd, 0x78, 0xcc, 0x15, 0xf1, 0x1e, 0x4c, 0x31, 0x4f, 0x1e, 0xd9, 0x54, 0x41, 0x46, 0x56,
+	0xc6, 0x98, 0x77, 0x0b, 0x60, 0x1c, 0x45, 0xad, 0xc4, 0xf8, 0x57, 0x7e, 0xfe, 0xbb, 0x6e, 0xc3,
+	0x27, 0x16, 0x23, 0x1b, 0xed, 0x36, 0xbd, 0x6f, 0xb9, 0x8d, 0x97, 0x47, 0x16, 0x79, 0x5a, 0x12,
+	0xf1, 0xf7, 0x0b, 0x74, 0x8b, 0xbc, 0xdc, 0x02, 0x25, 0xe2, 0x57, 0x02, 0xfd, 0x8d, 0x60, 0xaa,
+	0xc6, 0xec, 0x9a, 0xe3, 0x06, 0xbc, 0x60, 0x77, 0x1c, 0x37, 0x48, 0x5d, 0xb0, 0xa5, 0x91, 0x17,
+	0xfe, 0x2a, 0x9b, 0x17, 0x57, 0x16, 0x8f, 0x5c, 0xa9, 0xf1, 0xb3, 0x54, 0xa3, 0xda, 0xf5, 0x5d,
+	0xae, 0xc6, 0x76, 0xd7, 0x4f, 0x7d, 0x44, 0x42, 0x23, 0x31, 0xde, 0x99, 0xb1, 0xf0, 0xe6, 0x1c,
+	0x15, 0xef, 0x2f, 0x64, 0x7f, 0xc2, 0xd7, 0xa2, 0xab, 0x77, 0x9c, 0xdc, 0x4f, 0xee, 0xea, 0x1d,
+	0x77, 0x63, 0x12, 0x29, 0xa0, 0x94, 0xf9, 0x1d, 0xc1, 0x34, 0xef, 0xe8, 0x7c, 0x42, 0x3e, 0x23,
+	0x3c, 0x51, 0x5b, 0xe2, 0x57, 0x4a, 0x61, 0x22, 0x2b, 0x5c, 0xe8, 0x1d, 0xda, 0x4e, 0x9d, 0xf8,
+	0xa1, 0x91, 0xc1, 0x57, 0xa2, 0x31, 0x0b, 0x19, 0xea, 0xc9, 0x2e, 0xa2, 0x9e, 0xa1, 0x9e, 0x79,
+	0x5e, 0x4c, 0x32, 0x32, 0x24, 0x15, 0xe8, 0x63, 0xd9, 0x81, 0xbf, 0xef, 0xb6, 0xfe, 0x4f, 0xa1,
+	0xca, 0xaf, 0x1a, 0x05, 0x15, 0x05, 0xbb, 0xfe, 0x64, 0x0e, 0x26, 0x6b, 0xcc, 0x36, 0xbe, 0x47,
+	0xb0, 0x70, 0xc7, 0x72, 0x9b, 0x6d, 0xd2, 0x37, 0xe0, 0xaf, 0x0d, 0x1d, 0x02, 0x7a, 0x81, 0xb8,
+	0x32, 0x22, 0x50, 0xe9, 0x6c, 0x7e, 0xf9, 0xf8, 0xcf, 0xef, 0x32, 0xcb, 0x18, 0x57, 0x7a, 0x36,
+	0x56, 0xc4, 0x26, 0xf9, 0xaf, 0xf1, 0x2d, 0x82, 0x79, 0x45, 0x4b, 0xcd, 0x44, 0xab, 0x3a, 0x57,
+	0x11, 0x0a, 0x5f, 0x1b, 0x05, 0xa5, 0xd8, 0xbc, 0x26, 0xd8, 0xac, 0xe0, 0x4b, 0x03, 0xd9, 0x44,
+	0x93, 0x91, 0xf1, 0x63, 0x5c, 0xa7, 0xf8, 0xd0, 0xae, 0xd5, 0x29, 0x06, 0xd4, 0xeb, 0x34, 0x68,
+	0xde, 0x2e, 0x0a, 0x66, 0x26, 0x2e, 0x0c, 0x64, 0x16, 0x9b, 0xd9, 0x7b, 0xd5, 0x52, 0x23, 0x96,
+	0x56, 0xad, 0x08, 0xa5, 0x57, 0x2b, 0x31, 0xa5, 0xe8, 0xd5, 0x0a, 0x22, 0xd7, 0x3f, 0x21, 0xb8,
+	0x90, 0x20, 0x24, 0xea, 0x6a, 0x71, 0x14, 0x77, 0x1c, 0x89, 0xaf, 0x8f, 0x8a, 0x54, 0xe4, 0xae,
+	0x0a, 0x72, 0xab, 0xd8, 0xd4, 0x92, 0xdb, 0xe2, 0xd5, 0xd3, 0xf8, 0x06, 0xc1, 0x9c, 0x62, 0x18,
+	0xb5, 0xc2, 0x97, 0x75, 0x2e, 0x43, 0x10, 0x7e, 0x63, 0x04, 0x90, 0xa2, 0xb4, 0x2a, 0x28, 0xe5,
+	0xf1, 0xf2, 0x40, 0x4a, 0x56, 0xe8, 0xf7, 0x17, 0x04, 0xf8, 0x28, 0x09, 0x13, 0xad, 0x68, 0x49,
+	0x9b, 0x61, 0xfd, 0x70, 0x7c, 0xe3, 0x99, 0xe0, 0x8a, 0x6a, 0x45, 0x50, 0x7d, 0x1d, 0xaf, 0x0d,
+	0x4e, 0xcb, 0x70, 0xdf, 0x96, 0xa5, 0x68, 0xf5, 0xb0, 0x4e, 0xf6, 0x87, 0x25, 0xfd, 0x79, 0x7f,
+	0x26, 0xd6, 0xc3, 0xbb, 0x2f, 0x3d, 0xeb, 0x26, 0x49, 0xb0, 0xfe, 0x1c, 0x66, 0x14, 0x69, 0xd1,
+	0xb3, 0x15, 0x74, 0x8e, 0x39, 0x02, 0x17, 0x8f, 0x43, 0x28, 0x36, 0xaf, 0x0a, 0x36, 0x4b, 0x78,
+	0x71, 0x20, 0x1b, 0xde, 0xd5, 0xf5, 0xf8, 0x17, 0x5d, 0x92, 0xd6, 0x3f, 0x47, 0xe8, 0xfd, 0xf7,
+	0x74, 0x31, 0x7a, 0xff, 0xbc, 0x17, 0x31, 0x1e, 0xc4, 0x6b, 0x85, 0x6a, 0x77, 0x56, 0x8f, 0x73,
+	0x21, 0x52, 0xf2, 0xda, 0x28, 0x28, 0x45, 0xe6, 0x8a, 0x20, 0x53, 0xc0, 0xf9, 0xa1, 0x64, 0x64,
+	0x2a, 0xf6, 0x9c, 0xa3, 0xe4, 0x1c, 0x5e, 0x1a, 0xa5, 0x0e, 0x28, 0xb8, 0xfe, 0x1c, 0x0d, 0x1f,
+	0x8a, 0xf5, 0xe7, 0x48, 0xd5, 0x0e, 0xaa, 0x68, 0x7d, 0x85, 0xe0, 0xdc, 0xd1, 0x0d, 0x25, 0x3b,
+	0x06, 0x53, 0x7b, 0xf3, 0x08, 0x0c, 0xbe, 0x7a, 0x3c, 0x46, 0x91, 0xba, 0x2c, 0x48, 0x5d, 0xc2,
+	0x4b, 0x83, 0xef, 0x26, 0xe9, 0xb4, 0xa7, 0xf8, 0xab, 0xe6, 0x45, 0xfb, 0x41, 0x23, 0x94, 0xfe,
+	0x83, 0xf6, 0xf7, 0x0c, 0xc7, 0x14, 0xff, 0x6e, 0x08, 0xaf, 0xae, 0x3d, 0x3a, 0xc8, 0xa3, 0xbd,
+	0x83, 0x3c, 0xfa, 0xe3, 0x20, 0x8f, 0x1e, 0x1e, 0xe6, 0x27, 0xf6, 0x0e, 0xf3, 0x13, 0x4f, 0x0e,
+	0xf3, 0x13, 0x1f, 0xce, 0x7c, 0x12, 0xe9, 0xc9, 0x7b, 0x9a, 0xed, 0x33, 0xe2, 0xaf, 0x0b, 0x6f,
+	0xfe, 0x17, 0x00, 0x00, 0xff, 0xff, 0xd9, 0xd0, 0xce, 0xf3, 0xd3, 0x18, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -846,20 +1454,20 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
-	HandleMsgIssueCreate(ctx context.Context, in *MsgIssueCreate, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgFeatures(ctx context.Context, in *MsgFeatures, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgDescription(ctx context.Context, in *MsgDescription, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgTransfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgTransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgApprove(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgIncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgDecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgMint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgBurn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgBurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgTransferOwnership(ctx context.Context, in *MsgTransferOwnership, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgFreeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*types.Result, error)
-	HandleMsgUnfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*types.Result, error)
+	HandleMsgIssueCreate(ctx context.Context, in *MsgIssueCreate, opts ...grpc.CallOption) (*MsgIssueCreateResponse, error)
+	HandleMsgFeatures(ctx context.Context, in *MsgFeatures, opts ...grpc.CallOption) (*MsgFeaturesResponse, error)
+	HandleMsgDescription(ctx context.Context, in *MsgDescription, opts ...grpc.CallOption) (*MsgDescriptionResponse, error)
+	HandleMsgTransfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*MsgTransferResponse, error)
+	HandleMsgTransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*MsgTransferFromResponse, error)
+	HandleMsgApprove(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*MsgApproveResponse, error)
+	HandleMsgIncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*MsgIncreaseAllowanceResponse, error)
+	HandleMsgDecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*MsgDecreaseAllowanceResponse, error)
+	HandleMsgMint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error)
+	HandleMsgBurn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error)
+	HandleMsgBurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*MsgBurnFromResponse, error)
+	HandleMsgTransferOwnership(ctx context.Context, in *MsgTransferOwnership, opts ...grpc.CallOption) (*MsgTransferOwnershipResponse, error)
+	HandleMsgFreeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*MsgFreezeResponse, error)
+	HandleMsgUnfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*MsgUnfreezeResponse, error)
 }
 
 type msgClient struct {
@@ -870,8 +1478,8 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 	return &msgClient{cc}
 }
 
-func (c *msgClient) HandleMsgIssueCreate(ctx context.Context, in *MsgIssueCreate, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgIssueCreate(ctx context.Context, in *MsgIssueCreate, opts ...grpc.CallOption) (*MsgIssueCreateResponse, error) {
+	out := new(MsgIssueCreateResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgIssueCreate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -879,8 +1487,8 @@ func (c *msgClient) HandleMsgIssueCreate(ctx context.Context, in *MsgIssueCreate
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgFeatures(ctx context.Context, in *MsgFeatures, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgFeatures(ctx context.Context, in *MsgFeatures, opts ...grpc.CallOption) (*MsgFeaturesResponse, error) {
+	out := new(MsgFeaturesResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgFeatures", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -888,8 +1496,8 @@ func (c *msgClient) HandleMsgFeatures(ctx context.Context, in *MsgFeatures, opts
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgDescription(ctx context.Context, in *MsgDescription, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgDescription(ctx context.Context, in *MsgDescription, opts ...grpc.CallOption) (*MsgDescriptionResponse, error) {
+	out := new(MsgDescriptionResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgDescription", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -897,8 +1505,8 @@ func (c *msgClient) HandleMsgDescription(ctx context.Context, in *MsgDescription
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgTransfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgTransfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*MsgTransferResponse, error) {
+	out := new(MsgTransferResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgTransfer", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -906,8 +1514,8 @@ func (c *msgClient) HandleMsgTransfer(ctx context.Context, in *MsgTransfer, opts
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgTransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgTransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*MsgTransferFromResponse, error) {
+	out := new(MsgTransferFromResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgTransferFrom", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -915,8 +1523,8 @@ func (c *msgClient) HandleMsgTransferFrom(ctx context.Context, in *MsgTransferFr
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgApprove(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgApprove(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*MsgApproveResponse, error) {
+	out := new(MsgApproveResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgApprove", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -924,8 +1532,8 @@ func (c *msgClient) HandleMsgApprove(ctx context.Context, in *MsgApprove, opts .
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgIncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgIncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*MsgIncreaseAllowanceResponse, error) {
+	out := new(MsgIncreaseAllowanceResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgIncreaseAllowance", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -933,8 +1541,8 @@ func (c *msgClient) HandleMsgIncreaseAllowance(ctx context.Context, in *MsgIncre
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgDecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgDecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*MsgDecreaseAllowanceResponse, error) {
+	out := new(MsgDecreaseAllowanceResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgDecreaseAllowance", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -942,8 +1550,8 @@ func (c *msgClient) HandleMsgDecreaseAllowance(ctx context.Context, in *MsgDecre
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgMint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgMint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error) {
+	out := new(MsgMintResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgMint", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -951,8 +1559,8 @@ func (c *msgClient) HandleMsgMint(ctx context.Context, in *MsgMint, opts ...grpc
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgBurn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgBurn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error) {
+	out := new(MsgBurnResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgBurn", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -960,8 +1568,8 @@ func (c *msgClient) HandleMsgBurn(ctx context.Context, in *MsgBurn, opts ...grpc
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgBurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgBurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*MsgBurnFromResponse, error) {
+	out := new(MsgBurnFromResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgBurnFrom", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -969,8 +1577,8 @@ func (c *msgClient) HandleMsgBurnFrom(ctx context.Context, in *MsgBurnFrom, opts
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgTransferOwnership(ctx context.Context, in *MsgTransferOwnership, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgTransferOwnership(ctx context.Context, in *MsgTransferOwnership, opts ...grpc.CallOption) (*MsgTransferOwnershipResponse, error) {
+	out := new(MsgTransferOwnershipResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgTransferOwnership", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -978,8 +1586,8 @@ func (c *msgClient) HandleMsgTransferOwnership(ctx context.Context, in *MsgTrans
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgFreeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgFreeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*MsgFreezeResponse, error) {
+	out := new(MsgFreezeResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgFreeze", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -987,8 +1595,8 @@ func (c *msgClient) HandleMsgFreeze(ctx context.Context, in *MsgFreeze, opts ...
 	return out, nil
 }
 
-func (c *msgClient) HandleMsgUnfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*types.Result, error) {
-	out := new(types.Result)
+func (c *msgClient) HandleMsgUnfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*MsgUnfreezeResponse, error) {
+	out := new(MsgUnfreezeResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.sdk.issue.Msg/HandleMsgUnfreeze", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -998,66 +1606,66 @@ func (c *msgClient) HandleMsgUnfreeze(ctx context.Context, in *MsgUnfreeze, opts
 
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
-	HandleMsgIssueCreate(context.Context, *MsgIssueCreate) (*types.Result, error)
-	HandleMsgFeatures(context.Context, *MsgFeatures) (*types.Result, error)
-	HandleMsgDescription(context.Context, *MsgDescription) (*types.Result, error)
-	HandleMsgTransfer(context.Context, *MsgTransfer) (*types.Result, error)
-	HandleMsgTransferFrom(context.Context, *MsgTransferFrom) (*types.Result, error)
-	HandleMsgApprove(context.Context, *MsgApprove) (*types.Result, error)
-	HandleMsgIncreaseAllowance(context.Context, *MsgIncreaseAllowance) (*types.Result, error)
-	HandleMsgDecreaseAllowance(context.Context, *MsgDecreaseAllowance) (*types.Result, error)
-	HandleMsgMint(context.Context, *MsgMint) (*types.Result, error)
-	HandleMsgBurn(context.Context, *MsgBurn) (*types.Result, error)
-	HandleMsgBurnFrom(context.Context, *MsgBurnFrom) (*types.Result, error)
-	HandleMsgTransferOwnership(context.Context, *MsgTransferOwnership) (*types.Result, error)
-	HandleMsgFreeze(context.Context, *MsgFreeze) (*types.Result, error)
-	HandleMsgUnfreeze(context.Context, *MsgUnfreeze) (*types.Result, error)
+	HandleMsgIssueCreate(context.Context, *MsgIssueCreate) (*MsgIssueCreateResponse, error)
+	HandleMsgFeatures(context.Context, *MsgFeatures) (*MsgFeaturesResponse, error)
+	HandleMsgDescription(context.Context, *MsgDescription) (*MsgDescriptionResponse, error)
+	HandleMsgTransfer(context.Context, *MsgTransfer) (*MsgTransferResponse, error)
+	HandleMsgTransferFrom(context.Context, *MsgTransferFrom) (*MsgTransferFromResponse, error)
+	HandleMsgApprove(context.Context, *MsgApprove) (*MsgApproveResponse, error)
+	HandleMsgIncreaseAllowance(context.Context, *MsgIncreaseAllowance) (*MsgIncreaseAllowanceResponse, error)
+	HandleMsgDecreaseAllowance(context.Context, *MsgDecreaseAllowance) (*MsgDecreaseAllowanceResponse, error)
+	HandleMsgMint(context.Context, *MsgMint) (*MsgMintResponse, error)
+	HandleMsgBurn(context.Context, *MsgBurn) (*MsgBurnResponse, error)
+	HandleMsgBurnFrom(context.Context, *MsgBurnFrom) (*MsgBurnFromResponse, error)
+	HandleMsgTransferOwnership(context.Context, *MsgTransferOwnership) (*MsgTransferOwnershipResponse, error)
+	HandleMsgFreeze(context.Context, *MsgFreeze) (*MsgFreezeResponse, error)
+	HandleMsgUnfreeze(context.Context, *MsgUnfreeze) (*MsgUnfreezeResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
 type UnimplementedMsgServer struct {
 }
 
-func (*UnimplementedMsgServer) HandleMsgIssueCreate(ctx context.Context, req *MsgIssueCreate) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgIssueCreate(ctx context.Context, req *MsgIssueCreate) (*MsgIssueCreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgIssueCreate not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgFeatures(ctx context.Context, req *MsgFeatures) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgFeatures(ctx context.Context, req *MsgFeatures) (*MsgFeaturesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgFeatures not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgDescription(ctx context.Context, req *MsgDescription) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgDescription(ctx context.Context, req *MsgDescription) (*MsgDescriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgDescription not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgTransfer(ctx context.Context, req *MsgTransfer) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgTransfer(ctx context.Context, req *MsgTransfer) (*MsgTransferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgTransfer not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgTransferFrom(ctx context.Context, req *MsgTransferFrom) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgTransferFrom(ctx context.Context, req *MsgTransferFrom) (*MsgTransferFromResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgTransferFrom not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgApprove(ctx context.Context, req *MsgApprove) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgApprove(ctx context.Context, req *MsgApprove) (*MsgApproveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgApprove not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgIncreaseAllowance(ctx context.Context, req *MsgIncreaseAllowance) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgIncreaseAllowance(ctx context.Context, req *MsgIncreaseAllowance) (*MsgIncreaseAllowanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgIncreaseAllowance not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgDecreaseAllowance(ctx context.Context, req *MsgDecreaseAllowance) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgDecreaseAllowance(ctx context.Context, req *MsgDecreaseAllowance) (*MsgDecreaseAllowanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgDecreaseAllowance not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgMint(ctx context.Context, req *MsgMint) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgMint(ctx context.Context, req *MsgMint) (*MsgMintResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgMint not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgBurn(ctx context.Context, req *MsgBurn) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgBurn(ctx context.Context, req *MsgBurn) (*MsgBurnResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgBurn not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgBurnFrom(ctx context.Context, req *MsgBurnFrom) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgBurnFrom(ctx context.Context, req *MsgBurnFrom) (*MsgBurnFromResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgBurnFrom not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgTransferOwnership(ctx context.Context, req *MsgTransferOwnership) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgTransferOwnership(ctx context.Context, req *MsgTransferOwnership) (*MsgTransferOwnershipResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgTransferOwnership not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgFreeze(ctx context.Context, req *MsgFreeze) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgFreeze(ctx context.Context, req *MsgFreeze) (*MsgFreezeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgFreeze not implemented")
 }
-func (*UnimplementedMsgServer) HandleMsgUnfreeze(ctx context.Context, req *MsgUnfreeze) (*types.Result, error) {
+func (*UnimplementedMsgServer) HandleMsgUnfreeze(ctx context.Context, req *MsgUnfreeze) (*MsgUnfreezeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleMsgUnfreeze not implemented")
 }
 
@@ -1437,6 +2045,41 @@ func (m *MsgIssueCreate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgIssueCreateResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIssueCreateResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIssueCreateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgDescription) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1481,6 +2124,29 @@ func (m *MsgDescription) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDescriptionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDescriptionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDescriptionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -1531,6 +2197,29 @@ func (m *MsgDisableFeature) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgDisableFeatureResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDisableFeatureResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDisableFeatureResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgEnableFeature) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1575,6 +2264,29 @@ func (m *MsgEnableFeature) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgEnableFeatureResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgEnableFeatureResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgEnableFeatureResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -1630,6 +2342,29 @@ func (m *MsgFeatures) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgFeaturesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgFeaturesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgFeaturesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgTransfer) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1680,6 +2415,29 @@ func (m *MsgTransfer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgTransferResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgTransferResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgTransferResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -1746,6 +2504,29 @@ func (m *MsgTransferFrom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgTransferFromResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgTransferFromResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgTransferFromResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgTransferOwnership) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1793,6 +2574,29 @@ func (m *MsgTransferOwnership) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgTransferOwnershipResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgTransferOwnershipResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgTransferOwnershipResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -1849,6 +2653,29 @@ func (m *MsgApprove) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgApproveResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgApproveResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgApproveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgIncreaseAllowance) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1899,6 +2726,29 @@ func (m *MsgIncreaseAllowance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgIncreaseAllowanceResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIncreaseAllowanceResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIncreaseAllowanceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -1955,6 +2805,29 @@ func (m *MsgDecreaseAllowance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgDecreaseAllowanceResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDecreaseAllowanceResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDecreaseAllowanceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgMint) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2008,6 +2881,29 @@ func (m *MsgMint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgMintResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgMintResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgMintResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgBurn) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2048,6 +2944,29 @@ func (m *MsgBurn) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgBurnResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgBurnResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgBurnResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -2101,6 +3020,29 @@ func (m *MsgBurnFrom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgBurnFromResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgBurnFromResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgBurnFromResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	return len(dAtA) - i, nil
 }
 
@@ -2161,6 +3103,29 @@ func (m *MsgFreeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgFreezeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgFreezeResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgFreezeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *MsgUnfreeze) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2218,6 +3183,29 @@ func (m *MsgUnfreeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgUnfreezeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUnfreezeResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUnfreezeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintMsg(dAtA []byte, offset int, v uint64) int {
 	offset -= sovMsg(v)
 	base := offset
@@ -2246,6 +3234,19 @@ func (m *MsgIssueCreate) Size() (n int) {
 	return n
 }
 
+func (m *MsgIssueCreateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	return n
+}
+
 func (m *MsgDescription) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2262,6 +3263,15 @@ func (m *MsgDescription) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
 	}
+	return n
+}
+
+func (m *MsgDescriptionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2284,6 +3294,15 @@ func (m *MsgDisableFeature) Size() (n int) {
 	return n
 }
 
+func (m *MsgDisableFeatureResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgEnableFeature) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2300,6 +3319,15 @@ func (m *MsgEnableFeature) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
 	}
+	return n
+}
+
+func (m *MsgEnableFeatureResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2322,6 +3350,15 @@ func (m *MsgFeatures) Size() (n int) {
 	return n
 }
 
+func (m *MsgFeaturesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgTransfer) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2334,6 +3371,15 @@ func (m *MsgTransfer) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Amount.Size()
 	n += 1 + l + sovMsg(uint64(l))
+	return n
+}
+
+func (m *MsgTransferResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2354,6 +3400,15 @@ func (m *MsgTransferFrom) Size() (n int) {
 	return n
 }
 
+func (m *MsgTransferFromResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgTransferOwnership) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2368,6 +3423,15 @@ func (m *MsgTransferOwnership) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
 	}
+	return n
+}
+
+func (m *MsgTransferOwnershipResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2386,6 +3450,15 @@ func (m *MsgApprove) Size() (n int) {
 	return n
 }
 
+func (m *MsgApproveResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgIncreaseAllowance) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2398,6 +3471,15 @@ func (m *MsgIncreaseAllowance) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Amount.Size()
 	n += 1 + l + sovMsg(uint64(l))
+	return n
+}
+
+func (m *MsgIncreaseAllowanceResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2416,6 +3498,15 @@ func (m *MsgDecreaseAllowance) Size() (n int) {
 	return n
 }
 
+func (m *MsgDecreaseAllowanceResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgMint) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2428,6 +3519,15 @@ func (m *MsgMint) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Amount.Size()
 	n += 1 + l + sovMsg(uint64(l))
+	return n
+}
+
+func (m *MsgMintResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2444,6 +3544,15 @@ func (m *MsgBurn) Size() (n int) {
 	return n
 }
 
+func (m *MsgBurnResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgBurnFrom) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2456,6 +3565,15 @@ func (m *MsgBurnFrom) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Amount.Size()
 	n += 1 + l + sovMsg(uint64(l))
+	return n
+}
+
+func (m *MsgBurnFromResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2480,6 +3598,15 @@ func (m *MsgFreeze) Size() (n int) {
 	return n
 }
 
+func (m *MsgFreezeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func (m *MsgUnfreeze) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2498,6 +3625,15 @@ func (m *MsgUnfreeze) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
 	}
+	return n
+}
+
+func (m *MsgUnfreezeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -2637,6 +3773,92 @@ func (m *MsgIssueCreate) Unmarshal(dAtA []byte) error {
 				m.IssueParams = &IssueParams{}
 			}
 			if err := m.IssueParams.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIssueCreateResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIssueCreateResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIssueCreateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMsg
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMsg
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &CoinIssue{}
+			}
+			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2809,6 +4031,56 @@ func (m *MsgDescription) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgDescriptionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDescriptionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDescriptionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgDisableFeature) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2957,6 +4229,56 @@ func (m *MsgDisableFeature) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgDisableFeatureResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDisableFeatureResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDisableFeatureResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgEnableFeature) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3084,6 +4406,56 @@ func (m *MsgEnableFeature) Unmarshal(dAtA []byte) error {
 			}
 			m.Feature = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgEnableFeatureResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgEnableFeatureResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgEnableFeatureResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
@@ -3257,6 +4629,56 @@ func (m *MsgFeatures) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgFeaturesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgFeaturesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgFeaturesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgTransfer) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3388,6 +4810,56 @@ func (m *MsgTransfer) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgTransferResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgTransferResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgTransferResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
@@ -3595,6 +5067,56 @@ func (m *MsgTransferFrom) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgTransferFromResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgTransferFromResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgTransferFromResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgTransferOwnership) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3724,6 +5246,56 @@ func (m *MsgTransferOwnership) Unmarshal(dAtA []byte) error {
 			}
 			m.Denom = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgTransferOwnershipResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgTransferOwnershipResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgTransferOwnershipResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
@@ -3897,6 +5469,56 @@ func (m *MsgApprove) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgApproveResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgApproveResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgApproveResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgIncreaseAllowance) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4028,6 +5650,56 @@ func (m *MsgIncreaseAllowance) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIncreaseAllowanceResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIncreaseAllowanceResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIncreaseAllowanceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
@@ -4201,6 +5873,56 @@ func (m *MsgDecreaseAllowance) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgDecreaseAllowanceResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDecreaseAllowanceResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDecreaseAllowanceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgMint) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4353,6 +6075,56 @@ func (m *MsgMint) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgMintResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgMintResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgMintResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgBurn) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4450,6 +6222,56 @@ func (m *MsgBurn) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgBurnResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgBurnResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgBurnResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
@@ -4602,6 +6424,56 @@ func (m *MsgBurnFrom) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgBurnFromResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgBurnFromResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgBurnFromResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
@@ -4805,6 +6677,56 @@ func (m *MsgFreeze) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MsgFreezeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgFreezeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgFreezeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgUnfreeze) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4966,6 +6888,56 @@ func (m *MsgUnfreeze) Unmarshal(dAtA []byte) error {
 			}
 			m.Op = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsg(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsg
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUnfreezeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsg
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUnfreezeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUnfreezeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMsg(dAtA[iNdEx:])
