@@ -1,8 +1,9 @@
 package query
 
 import (
-	"github.com/konstellation/kn-sdk/x/issue/query"
 	"net/http"
+
+	"github.com/konstellation/konstellation/x/issue/query"
 
 	"github.com/gorilla/mux"
 

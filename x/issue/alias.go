@@ -7,8 +7,8 @@
 package issue
 
 import (
-	"github.com/konstellation/kn-sdk/x/issue/keeper"
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/keeper"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 const (

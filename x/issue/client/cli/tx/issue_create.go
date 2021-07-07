@@ -13,7 +13,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
 
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 const (

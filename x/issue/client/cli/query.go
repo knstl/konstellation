@@ -5,7 +5,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 
-	"github.com/konstellation/kn-sdk/x/issue/client/cli/query"
+	"github.com/konstellation/konstellation/x/issue/client/cli/query"
 )
 
 // GetQueryCmd returns the transaction commands for this module

@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // GetTxCmd returns the transaction commands for this module

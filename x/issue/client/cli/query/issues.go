@@ -1,7 +1,7 @@
 package query
 
 import (
-	"github.com/konstellation/kn-sdk/x/issue/query"
+	"github.com/konstellation/konstellation/x/issue/query"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -9,7 +9,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 const (

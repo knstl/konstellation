@@ -1,9 +1,10 @@
 package query
 
 import (
-	"github.com/cosmos/cosmos-sdk/types/rest"
-	"github.com/konstellation/kn-sdk/x/issue/query"
 	"net/http"
+
+	"github.com/cosmos/cosmos-sdk/types/rest"
+	"github.com/konstellation/konstellation/x/issue/query"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 )

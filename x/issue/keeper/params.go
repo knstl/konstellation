@@ -2,13 +2,13 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/params"
+	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // type declaration for parameters
-func ParamKeyTable() params.KeyTable {
-	return params.NewKeyTable().RegisterParamSet(&types.Params{})
+func ParamKeyTable() paramstypes.KeyTable {
+	return paramstypes.NewKeyTable().RegisterParamSet(&types.Params{})
 }
 
 func (k Keeper) IssueFee(ctx sdk.Context) (res sdk.Coin) {

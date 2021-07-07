@@ -2,6 +2,8 @@ package types
 
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/msgservice"
 )
 
 // ModuleCdc auth module wide codec
@@ -33,4 +35,26 @@ func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 
 func init() {
 	RegisterLegacyAminoCodec(ModuleCdc)
+}
+
+func RegisterInterfaces(registry types.InterfaceRegistry) {
+	registry.RegisterImplementations(
+		(*sdk.Msg)(nil),
+		&MsgIssueCreate{},
+		&MsgFeatures{},
+		&MsgDescription{},
+		&MsgTransfer{},
+		&MsgTransferFrom{},
+		&MsgApprove{},
+		&MsgIncreaseAllowance{},
+		&MsgDecreaseAllowance{},
+		&MsgMint{},
+		&MsgBurn{},
+		&MsgBurnFrom{},
+		&MsgTransferOwnership{},
+		&MsgFreeze{},
+		&MsgUnfreeze{},
+	)
+
+	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }

@@ -3,6 +3,7 @@ package types
 import (
 	"bytes"
 	"encoding/json"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 )
 
@@ -36,7 +37,7 @@ func (gs GenesisState) Equal(gs2 GenesisState) bool {
 
 // GetGenesisStateFromAppState returns x/auth GenesisState given raw application
 // genesis state.
-func GetGenesisStateFromAppState(cdc *codec.Codec, appState map[string]json.RawMessage) GenesisState {
+func GetGenesisStateFromAppState(cdc *codec.LegacyAmino, appState map[string]json.RawMessage) GenesisState {
 	var genesisState GenesisState
 	if appState[ModuleName] != nil {
 		cdc.MustUnmarshalJSON(appState[ModuleName], &genesisState)

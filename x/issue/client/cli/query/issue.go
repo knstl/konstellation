@@ -3,8 +3,8 @@ package query
 import (
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/konstellation/kn-sdk/x/issue/query"
-	"github.com/konstellation/kn-sdk/x/issue/types"
+	"github.com/konstellation/konstellation/x/issue/query"
+	"github.com/konstellation/konstellation/x/issue/types"
 	"github.com/spf13/cobra"
 )
 

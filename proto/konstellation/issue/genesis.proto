@@ -6,7 +6,7 @@ option go_package = "x/issue/types";
 import "gogoproto/gogo.proto";
 
 message GenesisState {
-	uint64 starting_issued_id = 1;
-    string coin_issues = 2 [(gogoproto.customtype) = "github.com/konstellation/konstellation/x/issue/types.CoinIssues", (gogoproto.nullable) = false];
+	uint64 starting_issue_id = 1;
+    string issues = 2 [(gogoproto.customtype) = "github.com/konstellation/konstellation/x/issue/types.CoinIssues", (gogoproto.nullable) = false];
     string params = 3 [(gogoproto.customtype) = "github.com/konstellation/konstellation/x/issue/types.Params", (gogoproto.nullable) = false];
 }
