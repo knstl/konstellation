@@ -7,10 +7,11 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/konstellation/konstellation/x/issue/handler"
+	"github.com/konstellation/konstellation/x/issue/keeper"
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func NewHandler(k Keeper) sdk.Handler {
+func NewHandler(k keeper.Keeper) sdk.Handler {
 	return func(ctx sdk.Context, msg sdk.Msg) (*sdk.Result, error) {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 

@@ -1,37 +1,33 @@
 package query
 
 import (
-	"github.com/konstellation/konstellation/x/issue/query"
-
-	"github.com/spf13/cobra"
-
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/codec"
-
 	"github.com/konstellation/konstellation/x/issue/types"
+	"github.com/spf13/cobra"
 )
 
 // getQueryCmdParams implements the query issue command.
-func getQueryCmdParams(cdc *codec.LegacyAmino) *cobra.Command {
+func getQueryCmdParams() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "params",
 		Short: "Query params",
 		Long:  "Query issue module params",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx := client.Context{}
-			cliCtx := ctx.WithLegacyAmino(cdc)
-
-			// Query the issues
-			res, _, err := cliCtx.QueryWithData(query.PathParams(), nil)
+			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			var params types.Params
-			cdc.MustUnmarshalJSON(res, &params)
-			return cliCtx.PrintObjectLegacy(params)
+			queryClient := types.NewQueryClient(clientCtx)
+
+			ctx := cmd.Context()
+			paramsRequest := types.QueryParamsRequest{}
+			res, err := queryClient.QueryParams(ctx, &paramsRequest)
+			if err != nil {
+				return err
+			}
+			return clientCtx.PrintProto(res)
 		},
 	}
-
 	return cmd
 }
