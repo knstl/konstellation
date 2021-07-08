@@ -8,15 +8,15 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgTransferOwnership(ctx sdk.Context, k keeper.Keeper, msg types.MsgTransferOwnership) sdk.Result {
+func HandleMsgTransferOwnership(ctx sdk.Context, k keeper.Keeper, msg *types.MsgTransferOwnership) *sdk.Result {
 	// Sub fee from sender
 	fee := k.GetParams(ctx).TransferOwnerFee
 	if err := k.ChargeFee(ctx, msg.Owner, fee); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	if err := k.TransferOwnership(ctx, msg.Owner, msg.ToAddress, msg.Denom); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -24,5 +24,5 @@ func HandleMsgTransferOwnership(ctx sdk.Context, k keeper.Keeper, msg types.MsgT
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

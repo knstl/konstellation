@@ -8,9 +8,9 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgTransfer(ctx sdk.Context, k keeper.Keeper, msg types.MsgTransfer) sdk.Result {
+func HandleMsgTransfer(ctx sdk.Context, k keeper.Keeper, msg *types.MsgTransfer) *sdk.Result {
 	if err := k.Transfer(ctx, msg.FromAddress, msg.ToAddress, msg.Amount); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -18,5 +18,5 @@ func HandleMsgTransfer(ctx sdk.Context, k keeper.Keeper, msg types.MsgTransfer) 
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

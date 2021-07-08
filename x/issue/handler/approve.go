@@ -8,9 +8,9 @@ import (
 	abcitypes "github.com/tendermint/tendermint/abci/types"
 )
 
-func HandleMsgApprove(ctx sdk.Context, k keeper.Keeper, msg types.MsgApprove) sdk.Result {
+func HandleMsgApprove(ctx sdk.Context, k keeper.Keeper, msg *types.MsgApprove) *sdk.Result {
 	if err := k.Approve(ctx, msg.Owner, msg.Spender, msg.Amount); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -18,5 +18,5 @@ func HandleMsgApprove(ctx sdk.Context, k keeper.Keeper, msg types.MsgApprove) sd
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

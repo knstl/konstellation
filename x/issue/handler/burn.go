@@ -8,15 +8,15 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgBurn(ctx sdk.Context, k keeper.Keeper, msg types.MsgBurn) sdk.Result {
+func HandleMsgBurn(ctx sdk.Context, k keeper.Keeper, msg *types.MsgBurn) *sdk.Result {
 	// Sub fee from sender
 	fee := k.GetParams(ctx).BurnFee
 	if err := k.ChargeFee(ctx, msg.Burner, fee); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	if err := k.Burn(ctx, msg.Burner, msg.Amount); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -24,5 +24,5 @@ func HandleMsgBurn(ctx sdk.Context, k keeper.Keeper, msg types.MsgBurn) sdk.Resu
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

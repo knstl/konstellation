@@ -8,15 +8,15 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgFreeze(ctx sdk.Context, k keeper.Keeper, msg types.MsgFreeze) sdk.Result {
+func HandleMsgFreeze(ctx sdk.Context, k keeper.Keeper, msg *types.MsgFreeze) *sdk.Result {
 	// Sub fee from sender
 	fee := k.GetParams(ctx).FreezeFee
 	if err := k.ChargeFee(ctx, msg.Freezer, fee); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	if err := k.Freeze(ctx, msg.Freezer, msg.Holder, msg.Denom, msg.Op); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -24,5 +24,5 @@ func HandleMsgFreeze(ctx sdk.Context, k keeper.Keeper, msg types.MsgFreeze) sdk.
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

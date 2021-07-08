@@ -8,9 +8,9 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgDescription(ctx sdk.Context, k keeper.Keeper, msg types.MsgDescription) sdk.Result {
+func HandleMsgDescription(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDescription) *sdk.Result {
 	if err := k.ChangeDescription(ctx, msg.Owner, msg.Denom, msg.Description); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -18,5 +18,5 @@ func HandleMsgDescription(ctx sdk.Context, k keeper.Keeper, msg types.MsgDescrip
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

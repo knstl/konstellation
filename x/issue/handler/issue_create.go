@@ -8,21 +8,21 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgIssueCreate(ctx sdk.Context, k keeper.Keeper, msg types.MsgIssueCreate) sdk.Result {
+func HandleMsgIssueCreate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgIssueCreate) *sdk.Result {
 	// Sub fee from issuer
 	fee := k.GetParams(ctx).IssueFee
 	if err := k.ChargeFee(ctx, msg.Issuer, fee); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	params, err := types.NewIssueParams(msg.IssueParams)
 	if err != nil {
-		return sdk.Result{Log: types.ErrInvalidIssueParams.Error()}
+		return &sdk.Result{Log: types.ErrInvalidIssueParams.Error()}
 	}
 
 	ci := k.CreateIssue(ctx, msg.Owner, msg.Issuer, params)
 	if err := k.Issue(ctx, ci); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -30,5 +30,5 @@ func HandleMsgIssueCreate(ctx sdk.Context, k keeper.Keeper, msg types.MsgIssueCr
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }

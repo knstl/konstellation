@@ -695,7 +695,7 @@ func (k *Keeper) burn(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Co
 		issue.SubTotalSupply(coin.Amount)
 		k.setIssue(ctx, issue)
 
-		currAmt := acc.GetCoins().AmountOf(coin.Denom)
+		currAmt := sdk.NewInt(int64(acc.GetAccountNumber()))
 		if coin.Amount.GT(currAmt) {
 			coin.Amount = currAmt
 			coins = append(coins[:i], coin)

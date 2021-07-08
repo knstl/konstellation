@@ -64,7 +64,7 @@ func (coinIssues CoinIssues) String() string {
 func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue {
 	var ci CoinIssue
 	_ = mapstructure.Decode(params, &ci)
-	ci.SetFeatures(&params.IssueFeatures)
+	ci.SetFeatures(params.IssueFeatures)
 	ci.Owner = owner
 	ci.Issuer = issuer
 	ci.Symbol = strings.ToUpper(ci.Symbol)
@@ -73,16 +73,8 @@ func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue 
 	return &ci
 }
 
-func (ci *CoinIssue) GetId() uint64 {
-	return ci.Id
-}
-
 func (ci *CoinIssue) SetId(id uint64) {
 	ci.Id = id
-}
-
-func (ci *CoinIssue) GetDenom() string {
-	return ci.Denom
 }
 
 func (ci *CoinIssue) SetDenom(denom string) {
@@ -105,20 +97,12 @@ func (ci *CoinIssue) SetOwner(owner sdk.AccAddress) {
 	ci.Owner = owner
 }
 
-func (ci *CoinIssue) GetSymbol() string {
-	return ci.Symbol
-}
-
 func (ci *CoinIssue) SetSymbol(symbol string) {
 	ci.Symbol = symbol
 }
 
-func (ci *CoinIssue) GetDecimals() uint {
-	return ci.Decimals
-}
-
 func (ci *CoinIssue) SetDecimals(decimals uint) {
-	ci.Decimals = decimals
+	ci.Decimals = uint32(decimals)
 }
 
 func (ci *CoinIssue) GetTotalSupply() sdk.Int {
@@ -138,10 +122,6 @@ func (ci *CoinIssue) SubTotalSupply(amount sdk.Int) {
 	if ci.TotalSupply.IsNegative() {
 		ci.TotalSupply = sdk.ZeroInt()
 	}
-}
-
-func (ci *CoinIssue) GetIssueTime() int64 {
-	return ci.IssueTime
 }
 
 func (ci *CoinIssue) SetIssueTime(time int64) {
@@ -170,7 +150,7 @@ func getDecimalsInt(decimals uint) sdk.Int {
 }
 
 func (ci *CoinIssue) QuoDecimals(amount sdk.Int) sdk.Int {
-	return amount.Quo(getDecimalsInt(ci.GetDecimals()))
+	return amount.Quo(getDecimalsInt(uint(ci.GetDecimals())))
 }
 
 /*

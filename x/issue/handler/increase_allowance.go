@@ -8,9 +8,9 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func HandleMsgIncreaseAllowance(ctx sdk.Context, k keeper.Keeper, msg types.MsgIncreaseAllowance) sdk.Result {
+func HandleMsgIncreaseAllowance(ctx sdk.Context, k keeper.Keeper, msg *types.MsgIncreaseAllowance) *sdk.Result {
 	if err := k.IncreaseAllowance(ctx, msg.Owner, msg.Spender, msg.Amount); err != nil {
-		return sdk.Result{Log: err.Error()}
+		return &sdk.Result{Log: err.Error()}
 	}
 
 	events := []abcitypes.Event{}
@@ -18,5 +18,5 @@ func HandleMsgIncreaseAllowance(ctx sdk.Context, k keeper.Keeper, msg types.MsgI
 		evt := abcitypes.Event(event)
 		events = append(events, evt)
 	}
-	return sdk.Result{Events: events}
+	return &sdk.Result{Events: events}
 }
