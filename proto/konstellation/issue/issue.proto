@@ -11,8 +11,8 @@ message CoinIssueList {
 
 message CoinIssue {
 	uint64 id = 1;
-    string issuer = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
-    string owner = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
+    string issuer = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+    string owner = 3 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
 	string denom = 4;
 	string symbol = 5;
     string total_supply = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];

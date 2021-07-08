@@ -4,9 +4,14 @@ package konstellation.issue;
 option go_package = "x/issue/types";
 
 import "gogoproto/gogo.proto";
+import "issue.proto";
 
 message GenesisState {
 	uint64 starting_issue_id = 1;
-    string issues = 2 [(gogoproto.customtype) = "CoinIssues", (gogoproto.nullable) = false];
+    Issues issues = 2;
     string params = 3 [(gogoproto.customtype) = "Params", (gogoproto.nullable) = false];
+}
+
+message Issues {
+    repeated CoinIssue issues = 1;
 }

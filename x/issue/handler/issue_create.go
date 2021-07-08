@@ -11,7 +11,7 @@ import (
 func HandleMsgIssueCreate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgIssueCreate) *sdk.Result {
 	// Sub fee from issuer
 	fee := k.GetParams(ctx).IssueFee
-	if err := k.ChargeFee(ctx, msg.Issuer, fee); err != nil {
+	if err := k.ChargeFee(ctx, sdk.AccAddress(msg.Issuer), fee); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 
@@ -20,7 +20,7 @@ func HandleMsgIssueCreate(ctx sdk.Context, k keeper.Keeper, msg *types.MsgIssueC
 		return &sdk.Result{Log: types.ErrInvalidIssueParams.Error()}
 	}
 
-	ci := k.CreateIssue(ctx, msg.Owner, msg.Issuer, params)
+	ci := k.CreateIssue(ctx, sdk.AccAddress(msg.Owner), sdk.AccAddress(msg.Issuer), params)
 	if err := k.Issue(ctx, ci); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}

@@ -10,7 +10,7 @@ import (
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, gs types.GenesisState) {
 	k.SetLastId(ctx, gs.StartingIssueId)
 	k.SetParams(ctx, gs.Params)
-	for _, issue := range gs.Issues {
+	for _, issue := range gs.Issues.Issues {
 		k.AddIssue(ctx, issue)
 	}
 }
@@ -20,7 +20,13 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) types.GenesisState {
 	genesisState := types.GenesisState{}
 	genesisState.StartingIssueId = k.GetLastId(ctx)
 	genesisState.Params = k.GetParams(ctx)
-	genesisState.Issues = k.ListAll(ctx)
+	issueList := types.Issues{
+		Issues: []*types.CoinIssue{},
+	}
+	for _, issue := range k.ListAll(ctx) {
+		issueList.Issues = append(issueList.Issues, issue)
+	}
+	genesisState.Issues = &issueList
 	return genesisState
 }
 

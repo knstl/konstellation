@@ -11,11 +11,11 @@ import (
 func HandleMsgBurn(ctx sdk.Context, k keeper.Keeper, msg *types.MsgBurn) *sdk.Result {
 	// Sub fee from sender
 	fee := k.GetParams(ctx).BurnFee
-	if err := k.ChargeFee(ctx, msg.Burner, fee); err != nil {
+	if err := k.ChargeFee(ctx, sdk.AccAddress(msg.Burner), fee); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 
-	if err := k.Burn(ctx, msg.Burner, msg.Amount); err != nil {
+	if err := k.Burn(ctx, sdk.AccAddress(msg.Burner), msg.Amount.Coins); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 

@@ -282,7 +282,7 @@ func (k *Keeper) GetIssue(ctx sdk.Context, denom string) (*types.CoinIssue, *sdk
 }
 
 func (k *Keeper) checkOwner(_ sdk.Context, issue *types.CoinIssue, owner sdk.AccAddress) (*types.CoinIssue, *sdkerrors.Error) {
-	if !issue.Owner.Equals(owner) {
+	if !sdk.AccAddress(issue.Owner).Equals(owner) {
 		return nil, types.ErrOwnerMismatch(issue.Denom)
 	}
 
@@ -678,7 +678,7 @@ func (k *Keeper) burn(ctx sdk.Context, burner, from sdk.AccAddress, coins sdk.Co
 			return types.ErrUnknownIssue(coin.Denom)
 		}
 
-		if issue.Owner.Equals(from) && issue.BurnOwnerDisabled {
+		if sdk.AccAddress(issue.Owner).Equals(from) && issue.BurnOwnerDisabled {
 			return types.ErrCanNotBurnOwner(issue.Denom)
 		}
 
@@ -803,7 +803,7 @@ func (k *Keeper) TransferOwnership(ctx sdk.Context, owner, to sdk.AccAddress, de
 		return err
 	}
 
-	i.Owner = to
+	i.Owner = types.AccAddress(to)
 	k.deleteAddressDenom(ctx, owner.String(), denom)
 	k.addAddressDenom(ctx, i)
 	k.setIssue(ctx, i)

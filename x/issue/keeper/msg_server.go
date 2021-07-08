@@ -20,14 +20,14 @@ func NewMsgServerImpl(k Keeper) types.MsgServer {
 func (m msgServer) HandleMsgIssueCreate(goCtx context.Context, msgIssueCreate *types.MsgIssueCreate) (*types.MsgIssueCreateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	issue := m.keeper.CreateIssue(ctx, msgIssueCreate.Owner, msgIssueCreate.Issuer, msgIssueCreate.IssueParams)
+	issue := m.keeper.CreateIssue(ctx, sdk.AccAddress(msgIssueCreate.Owner), sdk.AccAddress(msgIssueCreate.Issuer), msgIssueCreate.IssueParams)
 	return &types.MsgIssueCreateResponse{Amount: issue}, nil
 }
 
 func (m msgServer) HandleMsgFeatures(goCtx context.Context, msgFeatures *types.MsgFeatures) (*types.MsgFeaturesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.ChangeFeatures(ctx, msgFeatures.Owner, msgFeatures.Denom, msgFeatures.IssueFeatures)
+	err := m.keeper.ChangeFeatures(ctx, sdk.AccAddress(msgFeatures.Owner), msgFeatures.Denom, msgFeatures.IssueFeatures)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (m msgServer) HandleMsgFeatures(goCtx context.Context, msgFeatures *types.M
 func (m msgServer) HandleMsgDescription(goCtx context.Context, msgDescription *types.MsgDescription) (*types.MsgDescriptionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.ChangeDescription(ctx, msgDescription.Owner, msgDescription.Denom, msgDescription.Description)
+	err := m.keeper.ChangeDescription(ctx, sdk.AccAddress(msgDescription.Owner), msgDescription.Denom, msgDescription.Description)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (m msgServer) HandleMsgDescription(goCtx context.Context, msgDescription *t
 func (m msgServer) HandleMsgTransfer(goCtx context.Context, msgTransfer *types.MsgTransfer) (*types.MsgTransferResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Transfer(ctx, msgTransfer.FromAddress, msgTransfer.ToAddress, msgTransfer.Amount)
+	err := m.keeper.Transfer(ctx, sdk.AccAddress(msgTransfer.FromAddress), sdk.AccAddress(msgTransfer.ToAddress), msgTransfer.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (m msgServer) HandleMsgTransfer(goCtx context.Context, msgTransfer *types.M
 func (m msgServer) HandleMsgTransferFrom(goCtx context.Context, msgTransferFrom *types.MsgTransferFrom) (*types.MsgTransferFromResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.TransferFrom(ctx, msgTransferFrom.Sender, msgTransferFrom.FromAddress, msgTransferFrom.ToAddress, msgTransferFrom.Amount)
+	err := m.keeper.TransferFrom(ctx, sdk.AccAddress(msgTransferFrom.Sender), sdk.AccAddress(msgTransferFrom.FromAddress), sdk.AccAddress(msgTransferFrom.ToAddress), msgTransferFrom.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (m msgServer) HandleMsgTransferFrom(goCtx context.Context, msgTransferFrom 
 func (m msgServer) HandleMsgApprove(goCtx context.Context, msgApprove *types.MsgApprove) (*types.MsgApproveResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Approve(ctx, msgApprove.Owner, msgApprove.Spender, msgApprove.Amount)
+	err := m.keeper.Approve(ctx, sdk.AccAddress(msgApprove.Owner), sdk.AccAddress(msgApprove.Spender), msgApprove.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (m msgServer) HandleMsgApprove(goCtx context.Context, msgApprove *types.Msg
 func (m msgServer) HandleMsgIncreaseAllowance(goCtx context.Context, msgIncreaseAllowance *types.MsgIncreaseAllowance) (*types.MsgIncreaseAllowanceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.IncreaseAllowance(ctx, msgIncreaseAllowance.Owner, msgIncreaseAllowance.Spender, msgIncreaseAllowance.Amount)
+	err := m.keeper.IncreaseAllowance(ctx, sdk.AccAddress(msgIncreaseAllowance.Owner), sdk.AccAddress(msgIncreaseAllowance.Spender), msgIncreaseAllowance.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (m msgServer) HandleMsgIncreaseAllowance(goCtx context.Context, msgIncrease
 func (m msgServer) HandleMsgDecreaseAllowance(goCtx context.Context, msgDecreaseAllowance *types.MsgDecreaseAllowance) (*types.MsgDecreaseAllowanceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.DecreaseAllowance(ctx, msgDecreaseAllowance.Owner, msgDecreaseAllowance.Spender, msgDecreaseAllowance.Amount)
+	err := m.keeper.DecreaseAllowance(ctx, sdk.AccAddress(msgDecreaseAllowance.Owner), sdk.AccAddress(msgDecreaseAllowance.Spender), msgDecreaseAllowance.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func (m msgServer) HandleMsgDecreaseAllowance(goCtx context.Context, msgDecrease
 func (m msgServer) HandleMsgMint(goCtx context.Context, msgMint *types.MsgMint) (*types.MsgMintResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Mint(ctx, msgMint.Minter, msgMint.ToAddress, msgMint.Amount)
+	err := m.keeper.Mint(ctx, sdk.AccAddress(msgMint.Minter), sdk.AccAddress(msgMint.ToAddress), msgMint.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (m msgServer) HandleMsgMint(goCtx context.Context, msgMint *types.MsgMint) 
 func (m msgServer) HandleMsgBurn(goCtx context.Context, msgBurn *types.MsgBurn) (*types.MsgBurnResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Burn(ctx, msgBurn.Burner, msgBurn.Amount)
+	err := m.keeper.Burn(ctx, sdk.AccAddress(msgBurn.Burner), msgBurn.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (m msgServer) HandleMsgBurn(goCtx context.Context, msgBurn *types.MsgBurn) 
 func (m msgServer) HandleMsgBurnFrom(goCtx context.Context, msgBurnFrom *types.MsgBurnFrom) (*types.MsgBurnFromResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.BurnFrom(ctx, msgBurnFrom.Burner, msgBurnFrom.FromAddress, msgBurnFrom.Amount)
+	err := m.keeper.BurnFrom(ctx, sdk.AccAddress(msgBurnFrom.Burner), sdk.AccAddress(msgBurnFrom.FromAddress), msgBurnFrom.Amount.Coins)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (m msgServer) HandleMsgBurnFrom(goCtx context.Context, msgBurnFrom *types.M
 func (m msgServer) HandleMsgTransferOwnership(goCtx context.Context, msgTransferOwnership *types.MsgTransferOwnership) (*types.MsgTransferOwnershipResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.TransferOwnership(ctx, msgTransferOwnership.Owner, msgTransferOwnership.ToAddress, msgTransferOwnership.Denom)
+	err := m.keeper.TransferOwnership(ctx, sdk.AccAddress(msgTransferOwnership.Owner), sdk.AccAddress(msgTransferOwnership.ToAddress), msgTransferOwnership.Denom)
 
 	if err != nil {
 		return nil, err
@@ -138,7 +138,7 @@ func (m msgServer) HandleMsgTransferOwnership(goCtx context.Context, msgTransfer
 func (m msgServer) HandleMsgFreeze(goCtx context.Context, msgFreeze *types.MsgFreeze) (*types.MsgFreezeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Freeze(ctx, msgFreeze.Freezer, msgFreeze.Holder, msgFreeze.Denom, msgFreeze.Op)
+	err := m.keeper.Freeze(ctx, sdk.AccAddress(msgFreeze.Freezer), sdk.AccAddress(msgFreeze.Holder), msgFreeze.Denom, msgFreeze.Op)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (m msgServer) HandleMsgFreeze(goCtx context.Context, msgFreeze *types.MsgFr
 func (m msgServer) HandleMsgUnfreeze(goCtx context.Context, msgUnfreeze *types.MsgUnfreeze) (*types.MsgUnfreezeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Unfreeze(ctx, msgUnfreeze.Freezer, msgUnfreeze.Holder, msgUnfreeze.Denom, msgUnfreeze.Op)
+	err := m.keeper.Unfreeze(ctx, sdk.AccAddress(msgUnfreeze.Freezer), sdk.AccAddress(msgUnfreeze.Holder), msgUnfreeze.Denom, msgUnfreeze.Op)
 	if err != nil {
 		return nil, err
 	}

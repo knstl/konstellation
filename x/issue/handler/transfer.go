@@ -9,7 +9,7 @@ import (
 )
 
 func HandleMsgTransfer(ctx sdk.Context, k keeper.Keeper, msg *types.MsgTransfer) *sdk.Result {
-	if err := k.Transfer(ctx, msg.FromAddress, msg.ToAddress, msg.Amount); err != nil {
+	if err := k.Transfer(ctx, sdk.AccAddress(msg.FromAddress), sdk.AccAddress(msg.ToAddress), msg.Amount.Coins); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 

@@ -6,7 +6,6 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
@@ -31,8 +30,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type MsgIssueCreate struct {
-	Owner        github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Issuer       github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=issuer,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"issuer"`
+	Owner        AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Issuer       AccAddress `protobuf:"bytes,2,opt,name=issuer,proto3,customtype=AccAddress" json:"issuer"`
 	*IssueParams `protobuf:"bytes,3,opt,name=issue_params,json=issueParams,proto3,embedded=issue_params" json:"issue_params,omitempty"`
 }
 
@@ -114,9 +113,9 @@ func (m *MsgIssueCreateResponse) GetAmount() *CoinIssue {
 }
 
 type MsgDescription struct {
-	Owner       github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Denom       string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Description string                                        `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Owner       AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Denom       string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Description string     `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 }
 
 func (m *MsgDescription) Reset()         { *m = MsgDescription{} }
@@ -203,9 +202,9 @@ func (m *MsgDescriptionResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDescriptionResponse proto.InternalMessageInfo
 
 type MsgDisableFeature struct {
-	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Denom   string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Feature string                                        `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
+	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Denom   string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Feature string     `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
 }
 
 func (m *MsgDisableFeature) Reset()         { *m = MsgDisableFeature{} }
@@ -292,9 +291,9 @@ func (m *MsgDisableFeatureResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDisableFeatureResponse proto.InternalMessageInfo
 
 type MsgEnableFeature struct {
-	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Denom   string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Feature string                                        `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
+	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Denom   string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Feature string     `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
 }
 
 func (m *MsgEnableFeature) Reset()         { *m = MsgEnableFeature{} }
@@ -381,8 +380,8 @@ func (m *MsgEnableFeatureResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgEnableFeatureResponse proto.InternalMessageInfo
 
 type MsgFeatures struct {
-	Owner          github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Denom          string                                        `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Owner          AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Denom          string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
 	*IssueFeatures `protobuf:"bytes,3,opt,name=issue_features,json=issueFeatures,proto3,embedded=issue_features" json:"issue_features,omitempty"`
 }
 
@@ -463,9 +462,9 @@ func (m *MsgFeaturesResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgFeaturesResponse proto.InternalMessageInfo
 
 type MsgTransfer struct {
-	FromAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=from_address,json=fromAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"from_address"`
-	ToAddress   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
-	Amount      github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,3,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	FromAddress AccAddress `protobuf:"bytes,1,opt,name=from_address,json=fromAddress,proto3,customtype=AccAddress" json:"from_address"`
+	ToAddress   AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
+	Amount      *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgTransfer) Reset()         { *m = MsgTransfer{} }
@@ -500,6 +499,13 @@ func (m *MsgTransfer) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgTransfer proto.InternalMessageInfo
+
+func (m *MsgTransfer) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgTransferResponse struct {
 }
@@ -538,10 +544,10 @@ func (m *MsgTransferResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgTransferResponse proto.InternalMessageInfo
 
 type MsgTransferFrom struct {
-	Sender      github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=sender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"sender"`
-	FromAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"from_address"`
-	ToAddress   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,3,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
-	Amount      github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,4,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Sender      AccAddress `protobuf:"bytes,1,opt,name=sender,proto3,customtype=AccAddress" json:"sender"`
+	FromAddress AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=AccAddress" json:"from_address"`
+	ToAddress   AccAddress `protobuf:"bytes,3,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
+	Amount      *Coins     `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgTransferFrom) Reset()         { *m = MsgTransferFrom{} }
@@ -576,6 +582,13 @@ func (m *MsgTransferFrom) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgTransferFrom proto.InternalMessageInfo
+
+func (m *MsgTransferFrom) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgTransferFromResponse struct {
 }
@@ -614,9 +627,9 @@ func (m *MsgTransferFromResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgTransferFromResponse proto.InternalMessageInfo
 
 type MsgTransferOwnership struct {
-	Owner     github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	ToAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
-	Denom     string                                        `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Owner     AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	ToAddress AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
+	Denom     string     `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
 }
 
 func (m *MsgTransferOwnership) Reset()         { *m = MsgTransferOwnership{} }
@@ -696,9 +709,9 @@ func (m *MsgTransferOwnershipResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgTransferOwnershipResponse proto.InternalMessageInfo
 
 type MsgApprove struct {
-	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Spender github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"spender"`
-	Amount  github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,3,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Spender AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=AccAddress" json:"spender"`
+	Amount  *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgApprove) Reset()         { *m = MsgApprove{} }
@@ -733,6 +746,13 @@ func (m *MsgApprove) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgApprove proto.InternalMessageInfo
+
+func (m *MsgApprove) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgApproveResponse struct {
 }
@@ -771,9 +791,9 @@ func (m *MsgApproveResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgApproveResponse proto.InternalMessageInfo
 
 type MsgIncreaseAllowance struct {
-	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Spender github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"spender"`
-	Amount  github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,3,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Spender AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=AccAddress" json:"spender"`
+	Amount  *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgIncreaseAllowance) Reset()         { *m = MsgIncreaseAllowance{} }
@@ -808,6 +828,13 @@ func (m *MsgIncreaseAllowance) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgIncreaseAllowance proto.InternalMessageInfo
+
+func (m *MsgIncreaseAllowance) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgIncreaseAllowanceResponse struct {
 }
@@ -846,9 +873,9 @@ func (m *MsgIncreaseAllowanceResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgIncreaseAllowanceResponse proto.InternalMessageInfo
 
 type MsgDecreaseAllowance struct {
-	Owner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"owner"`
-	Spender github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"spender"`
-	Amount  github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,3,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
+	Spender AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=AccAddress" json:"spender"`
+	Amount  *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgDecreaseAllowance) Reset()         { *m = MsgDecreaseAllowance{} }
@@ -883,6 +910,13 @@ func (m *MsgDecreaseAllowance) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgDecreaseAllowance proto.InternalMessageInfo
+
+func (m *MsgDecreaseAllowance) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgDecreaseAllowanceResponse struct {
 }
@@ -921,9 +955,9 @@ func (m *MsgDecreaseAllowanceResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDecreaseAllowanceResponse proto.InternalMessageInfo
 
 type MsgMint struct {
-	Minter    github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=minter,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"minter"`
-	ToAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"to_address"`
-	Amount    github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,3,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Minter    AccAddress `protobuf:"bytes,1,opt,name=minter,proto3,customtype=AccAddress" json:"minter"`
+	ToAddress AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
+	Amount    *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgMint) Reset()         { *m = MsgMint{} }
@@ -958,6 +992,13 @@ func (m *MsgMint) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgMint proto.InternalMessageInfo
+
+func (m *MsgMint) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgMintResponse struct {
 }
@@ -996,8 +1037,8 @@ func (m *MsgMintResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgMintResponse proto.InternalMessageInfo
 
 type MsgBurn struct {
-	Burner github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"burner"`
-	Amount github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,2,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Burner AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=AccAddress" json:"burner"`
+	Amount *Coins     `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgBurn) Reset()         { *m = MsgBurn{} }
@@ -1032,6 +1073,13 @@ func (m *MsgBurn) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgBurn proto.InternalMessageInfo
+
+func (m *MsgBurn) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgBurnResponse struct {
 }
@@ -1070,9 +1118,9 @@ func (m *MsgBurnResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgBurnResponse proto.InternalMessageInfo
 
 type MsgBurnFrom struct {
-	Burner      github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"burner"`
-	FromAddress github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"from_address"`
-	Amount      github_com_cosmos_cosmos_sdk_types.Coins      `protobuf:"bytes,3,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
+	Burner      AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=AccAddress" json:"burner"`
+	FromAddress AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=AccAddress" json:"from_address"`
+	Amount      *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgBurnFrom) Reset()         { *m = MsgBurnFrom{} }
@@ -1107,6 +1155,13 @@ func (m *MsgBurnFrom) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgBurnFrom proto.InternalMessageInfo
+
+func (m *MsgBurnFrom) GetAmount() *Coins {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
 
 type MsgBurnFromResponse struct {
 }
@@ -1145,10 +1200,10 @@ func (m *MsgBurnFromResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgBurnFromResponse proto.InternalMessageInfo
 
 type MsgFreeze struct {
-	Freezer github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"freezer"`
-	Holder  github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"holder"`
-	Denom   string                                        `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
-	Op      string                                        `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
+	Freezer AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=AccAddress" json:"freezer"`
+	Holder  AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=AccAddress" json:"holder"`
+	Denom   string     `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Op      string     `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
 }
 
 func (m *MsgFreeze) Reset()         { *m = MsgFreeze{} }
@@ -1235,10 +1290,10 @@ func (m *MsgFreezeResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgFreezeResponse proto.InternalMessageInfo
 
 type MsgUnfreeze struct {
-	Freezer github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"freezer"`
-	Holder  github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"holder"`
-	Denom   string                                        `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
-	Op      string                                        `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
+	Freezer AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=AccAddress" json:"freezer"`
+	Holder  AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=AccAddress" json:"holder"`
+	Denom   string     `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Op      string     `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
 }
 
 func (m *MsgUnfreeze) Reset()         { *m = MsgUnfreeze{} }
@@ -1362,84 +1417,80 @@ func init() {
 func init() { proto.RegisterFile("msg.proto", fileDescriptor_c06e4cca6c2cc899) }
 
 var fileDescriptor_c06e4cca6c2cc899 = []byte{
-	// 1222 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x98, 0x41, 0x6f, 0x1b, 0x45,
-	0x14, 0xc7, 0x33, 0x4e, 0x9b, 0x28, 0xcf, 0x4d, 0xd2, 0x6c, 0x52, 0x70, 0x26, 0xe9, 0xc6, 0x6c,
-	0x43, 0xe3, 0x00, 0xb5, 0x21, 0x08, 0xee, 0x71, 0x4b, 0xd5, 0x08, 0x59, 0xa9, 0xac, 0x22, 0x21,
-	0x2e, 0xd1, 0xc6, 0x1e, 0x6f, 0x56, 0xb5, 0x77, 0x96, 0x9d, 0x75, 0x0b, 0x1c, 0x10, 0xea, 0x81,
-	0x5e, 0x90, 0xa8, 0x40, 0x88, 0x3b, 0x57, 0x3e, 0x05, 0xb7, 0xde, 0x08, 0xea, 0x05, 0xf5, 0x10,
-	0xa1, 0x04, 0x89, 0x2f, 0x80, 0x04, 0x27, 0x84, 0x66, 0x66, 0x77, 0xb2, 0xf6, 0xee, 0xda, 0x96,
-	0xd6, 0xa9, 0xaa, 0xf6, 0xd2, 0x7a, 0x77, 0xde, 0xbc, 0xf7, 0x7b, 0xff, 0x9d, 0x37, 0xf3, 0x26,
-	0x30, 0xd3, 0x61, 0x56, 0xd9, 0xf5, 0xa8, 0x4f, 0xb5, 0xc5, 0xbb, 0xd4, 0x61, 0x3e, 0x69, 0xb7,
-	0x4d, 0xdf, 0xa6, 0x4e, 0xd9, 0x66, 0xac, 0x4b, 0xf0, 0x92, 0x45, 0x2d, 0x2a, 0xc6, 0x2b, 0xfc,
-	0x97, 0x34, 0xc5, 0xab, 0x16, 0xa5, 0x56, 0x9b, 0x54, 0x4c, 0xd7, 0xae, 0x98, 0x8e, 0x43, 0x7d,
-	0x31, 0x85, 0x05, 0xa3, 0x79, 0x31, 0x35, 0x78, 0x98, 0xfd, 0xb4, 0x4b, 0x3c, 0x9b, 0x78, 0xf2,
-	0xd1, 0xf8, 0x07, 0xc1, 0x5c, 0x8d, 0x59, 0x3b, 0xdc, 0xe2, 0xba, 0x47, 0x4c, 0x9f, 0x68, 0x1f,
-	0xc2, 0x79, 0x7a, 0xdf, 0x21, 0x5e, 0x01, 0x15, 0x51, 0x69, 0xa6, 0xfa, 0xde, 0xe3, 0xa3, 0xb5,
-	0x89, 0xa7, 0x47, 0x6b, 0xd7, 0x2c, 0xdb, 0x3f, 0xe8, 0xee, 0x97, 0x1b, 0xb4, 0x53, 0x69, 0x50,
-	0xd6, 0xa1, 0x2c, 0xf8, 0xef, 0x1a, 0x6b, 0xde, 0xad, 0xf8, 0x9f, 0xbb, 0x84, 0x95, 0xb7, 0x1b,
-	0x8d, 0xed, 0x66, 0xd3, 0x23, 0x8c, 0xd5, 0xa5, 0x0f, 0xad, 0x06, 0x53, 0x22, 0xba, 0x57, 0xc8,
-	0x65, 0xf1, 0x16, 0x38, 0xd1, 0x76, 0xe0, 0x82, 0xf8, 0xb5, 0xe7, 0x9a, 0x9e, 0xd9, 0x61, 0x85,
-	0xc9, 0x22, 0x2a, 0xe5, 0xb7, 0x8a, 0xe5, 0x04, 0xa9, 0xca, 0x22, 0xa7, 0xdb, 0xc2, 0xae, 0x7a,
-	0xee, 0xf0, 0x68, 0x0d, 0xd5, 0xa5, 0x10, 0xf2, 0x95, 0x71, 0x1b, 0x5e, 0xe9, 0x4d, 0xbc, 0x4e,
-	0x98, 0x4b, 0x1d, 0x46, 0xb4, 0xf7, 0x61, 0xca, 0xec, 0xd0, 0xae, 0xe3, 0x0b, 0x05, 0xf2, 0x5b,
-	0x7a, 0xa2, 0xfb, 0xeb, 0xd4, 0x76, 0xc4, 0xec, 0x7a, 0x60, 0x6d, 0xfc, 0x20, 0xb5, 0xbc, 0x41,
-	0x58, 0xc3, 0xb3, 0x5d, 0x6e, 0x3a, 0x5e, 0x2d, 0x97, 0xe0, 0x7c, 0x93, 0x38, 0xb4, 0x23, 0xa5,
-	0xac, 0xcb, 0x07, 0xad, 0x08, 0xf9, 0xe6, 0x69, 0x44, 0xa1, 0xc8, 0x4c, 0x3d, 0xfa, 0xca, 0x28,
-	0x88, 0x4c, 0x23, 0x58, 0x61, 0xa6, 0xc6, 0x23, 0x04, 0x0b, 0x7c, 0xc8, 0x66, 0xe6, 0x7e, 0x9b,
-	0xdc, 0x24, 0xa6, 0xdf, 0xf5, 0xc8, 0xb3, 0x80, 0x2e, 0xc0, 0x74, 0x4b, 0x46, 0x0b, 0x80, 0xc3,
-	0x47, 0x63, 0x05, 0x96, 0x63, 0x44, 0x8a, 0xf7, 0x5b, 0x04, 0x17, 0x6b, 0xcc, 0xfa, 0xc0, 0x79,
-	0x6e, 0x70, 0x31, 0x14, 0xfa, 0x81, 0x14, 0xed, 0x2f, 0x08, 0xf2, 0x35, 0x66, 0x05, 0xaf, 0xd9,
-	0xb3, 0x00, 0xdd, 0x85, 0x39, 0x59, 0x1f, 0x01, 0x5f, 0x58, 0x21, 0x46, 0x7a, 0x85, 0x84, 0x78,
-	0x41, 0x8d, 0xcc, 0xda, 0xd1, 0x97, 0xc6, 0x25, 0x58, 0x8c, 0xa4, 0xa0, 0x52, 0x7b, 0x98, 0x13,
-	0xa9, 0xdd, 0xf1, 0x4c, 0x87, 0xb5, 0x88, 0xa7, 0x7d, 0x0c, 0x17, 0x5a, 0x1e, 0xed, 0xec, 0x99,
-	0x12, 0x32, 0x5b, 0x86, 0x79, 0xee, 0x2a, 0x78, 0xd0, 0xee, 0x00, 0xf8, 0x54, 0xf9, 0xcd, 0xb4,
-	0x89, 0xcc, 0xf8, 0x34, 0xf4, 0x7a, 0x4b, 0x95, 0xb8, 0xf8, 0x9e, 0xd5, 0xb7, 0x03, 0x8f, 0xa5,
-	0x11, 0x3c, 0xf2, 0xc2, 0x67, 0xaa, 0xe8, 0xa5, 0x40, 0xa1, 0x10, 0x4a, 0xa0, 0xa7, 0x39, 0x98,
-	0x8f, 0xbc, 0xbf, 0xe9, 0xd1, 0x0e, 0xdf, 0x0b, 0x19, 0x71, 0x9a, 0x59, 0x17, 0x40, 0xe0, 0x24,
-	0xa6, 0x79, 0xee, 0x8c, 0x34, 0x9f, 0x1c, 0xbb, 0xe6, 0xe7, 0x32, 0x6a, 0xbe, 0x0c, 0xaf, 0xf6,
-	0x69, 0xab, 0x74, 0xff, 0x15, 0xc1, 0x52, 0x64, 0x6c, 0x97, 0xd7, 0x0a, 0x3b, 0xb0, 0xdd, 0xf1,
-	0x16, 0xdf, 0xd9, 0x2c, 0x4a, 0x55, 0xd2, 0x93, 0x91, 0x92, 0x36, 0x74, 0x58, 0x4d, 0x4a, 0x48,
-	0x65, 0xfc, 0x37, 0x02, 0xa8, 0x31, 0x6b, 0xdb, 0x75, 0x3d, 0x7a, 0x6f, 0xcc, 0xbb, 0xe1, 0x2e,
-	0x4c, 0x33, 0x57, 0x2e, 0xd9, 0x4c, 0x49, 0x86, 0x5e, 0xc6, 0x58, 0x77, 0x4b, 0xa0, 0x9d, 0x66,
-	0xad, 0xc4, 0xf8, 0x4f, 0x7e, 0xfe, 0x1d, 0xa7, 0xe1, 0x11, 0x93, 0x91, 0xed, 0x76, 0x9b, 0xde,
-	0x37, 0x9d, 0xc6, 0xcb, 0x23, 0x8b, 0x5c, 0x2d, 0xb1, 0xfc, 0xfb, 0x05, 0xba, 0x41, 0x5e, 0x6e,
-	0x81, 0x62, 0xf9, 0x2b, 0x81, 0xfe, 0x45, 0x30, 0x5d, 0x63, 0x56, 0xcd, 0x76, 0x7c, 0xbe, 0x61,
-	0x77, 0x6c, 0xc7, 0xcf, 0xbc, 0x61, 0x4b, 0x27, 0xcf, 0xfd, 0x51, 0xb6, 0x20, 0x8e, 0x2c, 0x9e,
-	0xb9, 0x52, 0xe3, 0x27, 0xa9, 0x46, 0xb5, 0xeb, 0x39, 0x5c, 0x8d, 0xfd, 0xae, 0x97, 0x79, 0x89,
-	0x04, 0x4e, 0x22, 0xdc, 0xb9, 0xb1, 0x70, 0x73, 0x46, 0xc5, 0xfd, 0x95, 0xec, 0x4f, 0xf8, 0xbb,
-	0xf0, 0xe8, 0x1d, 0x27, 0xfb, 0xd9, 0x1d, 0xbd, 0xe3, 0x6e, 0x4c, 0x42, 0x05, 0x94, 0x32, 0xbf,
-	0x21, 0x98, 0xe1, 0x1d, 0x9d, 0x47, 0xc8, 0x17, 0x84, 0x17, 0x6a, 0x4b, 0xfc, 0xca, 0x28, 0x4c,
-	0xe8, 0x85, 0x0b, 0x7d, 0x40, 0xdb, 0x99, 0x0b, 0x3f, 0x70, 0x92, 0x7c, 0x24, 0x6a, 0x73, 0x90,
-	0xa3, 0xae, 0xec, 0x22, 0xea, 0x39, 0xea, 0x1a, 0x8b, 0xe2, 0x16, 0x23, 0x53, 0x52, 0x89, 0x3e,
-	0x91, 0xdd, 0xf7, 0x47, 0x4e, 0xeb, 0x45, 0x4a, 0x55, 0x7e, 0xd5, 0x30, 0xa9, 0x30, 0xd9, 0xad,
-	0xbf, 0xe6, 0x61, 0xb2, 0xc6, 0x2c, 0xed, 0x1b, 0x04, 0x4b, 0xb7, 0x4c, 0xa7, 0xd9, 0x26, 0x7d,
-	0x97, 0xfa, 0x2b, 0x89, 0x17, 0x80, 0x5e, 0x23, 0xfc, 0xe6, 0x08, 0x46, 0x4a, 0x5f, 0xe3, 0xc1,
-	0x93, 0x3f, 0xbf, 0xcf, 0xad, 0x62, 0x5c, 0xe9, 0x99, 0x54, 0x11, 0x93, 0xe4, 0xbf, 0xda, 0xd7,
-	0x08, 0x16, 0x14, 0x8e, 0xba, 0x07, 0x15, 0xd3, 0xc2, 0x84, 0x16, 0xb8, 0x34, 0xcc, 0x42, 0x51,
-	0xbc, 0x2e, 0x28, 0xd6, 0xf0, 0xe5, 0x44, 0x8a, 0xf0, 0x16, 0xa4, 0x7d, 0x17, 0xd5, 0x25, 0x7a,
-	0x41, 0x4f, 0xd5, 0x25, 0x62, 0x94, 0xae, 0x4b, 0xd2, 0x9d, 0xba, 0x24, 0x88, 0x0c, 0x5c, 0x4c,
-	0x24, 0x8a, 0xdc, 0xcb, 0x7b, 0xd5, 0x51, 0x57, 0xa9, 0x54, 0x75, 0x42, 0x8b, 0x74, 0x75, 0x62,
-	0xb7, 0x90, 0xc1, 0xea, 0xf8, 0x61, 0xc8, 0x1f, 0x11, 0x5c, 0x8a, 0x81, 0x88, 0x7d, 0x73, 0x7d,
-	0x58, 0x28, 0x6e, 0x85, 0xdf, 0x1a, 0xc5, 0x4a, 0x41, 0xbd, 0x21, 0xa0, 0xd6, 0xb1, 0x31, 0x10,
-	0x6a, 0x8f, 0xef, 0x8a, 0xda, 0x03, 0x04, 0x17, 0x15, 0x59, 0xd8, 0xe2, 0xae, 0xa5, 0x85, 0x0b,
-	0x0c, 0xf0, 0xc6, 0x10, 0x03, 0x85, 0xb2, 0x2e, 0x50, 0x74, 0xbc, 0x9a, 0x88, 0x62, 0x06, 0xf1,
-	0x7e, 0x46, 0x80, 0x4f, 0x8b, 0x2a, 0xd6, 0x5a, 0x6e, 0xa6, 0x56, 0x4d, 0xbf, 0x29, 0x7e, 0x67,
-	0x64, 0x53, 0x85, 0x58, 0x11, 0x88, 0x9b, 0x78, 0x23, 0xb9, 0xcc, 0x82, 0x79, 0x7b, 0xa6, 0xc2,
-	0xe9, 0xa1, 0x8d, 0xf7, 0x79, 0x9b, 0xe9, 0x6b, 0x79, 0x64, 0xda, 0xf4, 0xee, 0x69, 0x30, 0x6d,
-	0x93, 0xc4, 0x68, 0xef, 0xc1, 0xac, 0x82, 0x15, 0x3d, 0xd7, 0x6a, 0x5a, 0x50, 0x3e, 0x8a, 0xd7,
-	0x07, 0x8d, 0x2a, 0x8a, 0xd7, 0x04, 0xc5, 0x0a, 0x5e, 0x4e, 0xa4, 0xe0, 0xdd, 0x58, 0x4f, 0x5c,
-	0xd1, 0xdd, 0xa4, 0xc6, 0xe5, 0xa3, 0xe9, 0x71, 0x7b, 0xba, 0x8e, 0xc1, 0x71, 0x79, 0xef, 0xa0,
-	0x3d, 0x8c, 0xd6, 0xbc, 0x6a, 0x4f, 0x8a, 0x83, 0xdc, 0x8b, 0x12, 0x2b, 0x0d, 0xb3, 0x50, 0x10,
-	0x57, 0x05, 0x44, 0x11, 0xeb, 0xa9, 0x10, 0xb2, 0xb4, 0x7a, 0xd6, 0x49, 0xfc, 0xbe, 0xbc, 0x39,
-	0xac, 0xa6, 0x95, 0x69, 0xfa, 0x3a, 0x49, 0xbf, 0xb4, 0x0e, 0x5e, 0x27, 0x6a, 0x0f, 0xa0, 0x0a,
-	0xe7, 0x4b, 0x98, 0x3f, 0x3d, 0x48, 0xe4, 0x81, 0xae, 0xa7, 0x1e, 0x12, 0x62, 0x1c, 0x5f, 0x1d,
-	0x3c, 0xae, 0x58, 0xae, 0x08, 0x96, 0xcb, 0x78, 0x25, 0xf9, 0x08, 0x91, 0xc1, 0x7a, 0xf6, 0x6a,
-	0xd5, 0x53, 0xa4, 0x7e, 0xb7, 0xd0, 0x22, 0xfd, 0xbb, 0xf5, 0x1f, 0xe1, 0x43, 0xf6, 0xea, 0x6e,
-	0x60, 0x5e, 0xdd, 0x78, 0x7c, 0xac, 0xa3, 0xc3, 0x63, 0x1d, 0xfd, 0x71, 0xac, 0xa3, 0x47, 0x27,
-	0xfa, 0xc4, 0xe1, 0x89, 0x3e, 0xf1, 0xfb, 0x89, 0x3e, 0xf1, 0xc9, 0xec, 0x67, 0xa1, 0x7c, 0xbc,
-	0xc5, 0xd8, 0x9f, 0x12, 0x7f, 0xe0, 0x7f, 0xf7, 0xff, 0x00, 0x00, 0x00, 0xff, 0xff, 0xea, 0x63,
-	0xcd, 0x58, 0x52, 0x18, 0x00, 0x00,
+	// 1168 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x98, 0x41, 0x6f, 0xdc, 0x44,
+	0x14, 0xc7, 0xe3, 0x4d, 0x9b, 0x68, 0xdf, 0x36, 0x49, 0xe3, 0xa4, 0xb0, 0x99, 0xa4, 0xce, 0xe2,
+	0x86, 0x66, 0x53, 0xaa, 0xac, 0x1a, 0x04, 0xf7, 0xa4, 0xa5, 0x22, 0x87, 0x55, 0xab, 0x15, 0x5c,
+	0xb8, 0x44, 0xce, 0xee, 0xc4, 0xb5, 0xd8, 0x9d, 0x31, 0x33, 0xde, 0x16, 0x38, 0x70, 0xe8, 0x01,
+	0x84, 0x00, 0x09, 0xc1, 0x01, 0x0e, 0x88, 0x03, 0xe2, 0xd6, 0x13, 0xdf, 0xa2, 0xc7, 0x48, 0x5c,
+	0x10, 0x48, 0x11, 0x4a, 0x90, 0xf8, 0x1a, 0xd5, 0xcc, 0xd8, 0x13, 0xef, 0xda, 0xe3, 0xdd, 0xa4,
+	0x52, 0x95, 0x4b, 0x64, 0x7b, 0xfe, 0xe3, 0xf7, 0x7b, 0xcf, 0xef, 0xbd, 0x79, 0x1b, 0x28, 0xf7,
+	0xb8, 0xbf, 0x19, 0x32, 0x1a, 0x51, 0x7b, 0xe1, 0x63, 0x4a, 0x78, 0x84, 0xbb, 0x5d, 0x2f, 0x0a,
+	0x28, 0xd9, 0x0c, 0x38, 0xef, 0x63, 0xb4, 0xe8, 0x53, 0x9f, 0xca, 0xf5, 0x86, 0xb8, 0x52, 0x52,
+	0xb4, 0xe2, 0x53, 0xea, 0x77, 0x71, 0xc3, 0x0b, 0x83, 0x86, 0x47, 0x08, 0x8d, 0xe4, 0x16, 0x1e,
+	0xaf, 0x56, 0xe4, 0xd6, 0xf8, 0x66, 0xe6, 0x93, 0x3e, 0x66, 0x01, 0x66, 0xf1, 0x2d, 0xb4, 0x69,
+	0x40, 0xd4, 0xb5, 0xfb, 0x87, 0x05, 0xb3, 0x4d, 0xee, 0xef, 0x0a, 0xf5, 0x5d, 0x86, 0xbd, 0x08,
+	0xdb, 0x75, 0xb8, 0x4c, 0x9f, 0x10, 0xcc, 0xaa, 0x56, 0xcd, 0xaa, 0x97, 0x77, 0xec, 0xe7, 0x47,
+	0xab, 0x13, 0x7f, 0x1f, 0xad, 0xc2, 0x76, 0xbb, 0xbd, 0xdd, 0xe9, 0x30, 0xcc, 0x79, 0x4b, 0x09,
+	0xec, 0x5b, 0x30, 0x25, 0xcd, 0xb0, 0x6a, 0xc9, 0x28, 0x8d, 0x15, 0xf6, 0x2e, 0x5c, 0x91, 0x57,
+	0x7b, 0xa1, 0xc7, 0xbc, 0x1e, 0xaf, 0x4e, 0xd6, 0xac, 0x7a, 0x65, 0xab, 0xb6, 0x99, 0xe3, 0xf0,
+	0xa6, 0xa4, 0x79, 0x28, 0x75, 0x3b, 0x97, 0x0e, 0x8f, 0x56, 0xad, 0x96, 0x72, 0x47, 0x3d, 0x72,
+	0x1f, 0xc2, 0x6b, 0x83, 0xc8, 0x2d, 0xcc, 0x43, 0x4a, 0x38, 0xb6, 0xdf, 0x85, 0x29, 0xaf, 0x47,
+	0xfb, 0x24, 0x92, 0xec, 0x95, 0x2d, 0x27, 0xf7, 0xf5, 0x77, 0x69, 0x40, 0xe4, 0xee, 0x56, 0xac,
+	0x76, 0x99, 0x0c, 0xc2, 0x3d, 0xcc, 0xdb, 0x2c, 0x08, 0x85, 0xf2, 0x0c, 0x41, 0x58, 0x84, 0xcb,
+	0x1d, 0x4c, 0x68, 0x4f, 0xc5, 0xa0, 0xa5, 0x6e, 0xec, 0x1a, 0x54, 0x3a, 0xa7, 0xaf, 0x93, 0xde,
+	0x96, 0x5b, 0xe9, 0x47, 0x6e, 0x55, 0x7a, 0x91, 0xb2, 0x99, 0x78, 0xe1, 0xf6, 0x60, 0x5e, 0xac,
+	0x04, 0xdc, 0xdb, 0xef, 0xe2, 0xfb, 0xd8, 0x8b, 0xfa, 0x0c, 0xbf, 0x34, 0x50, 0x15, 0xa6, 0x0f,
+	0xd4, 0xab, 0x62, 0x98, 0xe4, 0xd6, 0x5d, 0x86, 0xa5, 0x8c, 0x39, 0xcd, 0xd2, 0x85, 0xab, 0x4d,
+	0xee, 0xbf, 0x47, 0x5e, 0x0d, 0x0a, 0x82, 0xea, 0xb0, 0x35, 0x4d, 0xf2, 0xab, 0x05, 0x95, 0x26,
+	0xf7, 0xe3, 0xc7, 0xfc, 0xa5, 0x29, 0x1e, 0xc0, 0xac, 0x4a, 0xc8, 0xd8, 0x78, 0x92, 0x92, 0xae,
+	0x39, 0x25, 0x13, 0xdb, 0x71, 0x52, 0xce, 0x04, 0xe9, 0x87, 0xee, 0x35, 0x58, 0x48, 0xf1, 0x69,
+	0xee, 0x67, 0x8a, 0xfb, 0x03, 0xe6, 0x11, 0x7e, 0x80, 0x99, 0xfd, 0x0e, 0x5c, 0x39, 0x60, 0xb4,
+	0xb7, 0xe7, 0x29, 0xc8, 0x02, 0xfc, 0x8a, 0xd0, 0xc5, 0x37, 0xf6, 0x1d, 0x80, 0x88, 0xea, 0x4d,
+	0xe6, 0x7a, 0x2b, 0x47, 0x34, 0xd9, 0xb2, 0xa5, 0xab, 0x41, 0x79, 0x86, 0x8c, 0xd5, 0xc0, 0x75,
+	0x25, 0x28, 0x27, 0x12, 0x58, 0xed, 0xc4, 0x3f, 0x16, 0xcc, 0xa5, 0x9e, 0xdf, 0x67, 0xb4, 0x27,
+	0xaa, 0x9f, 0x63, 0xd2, 0x29, 0xfc, 0x02, 0xb1, 0x22, 0xe3, 0x74, 0xe9, 0x3c, 0x4e, 0x4f, 0x9e,
+	0xcd, 0xe9, 0x4b, 0x63, 0x3b, 0xbd, 0x04, 0xaf, 0x0f, 0x39, 0xa7, 0x1d, 0xff, 0xda, 0x82, 0xc5,
+	0xd4, 0xda, 0x03, 0x91, 0x50, 0xfc, 0x51, 0x10, 0x9e, 0x21, 0xfd, 0xce, 0xf1, 0xe5, 0x74, 0xc6,
+	0x4e, 0xa6, 0x32, 0xd6, 0x75, 0x60, 0x25, 0x0f, 0x45, 0xb3, 0xfe, 0x6c, 0x01, 0x34, 0xb9, 0xbf,
+	0x1d, 0x86, 0x8c, 0x3e, 0x3e, 0x4b, 0x99, 0xde, 0x86, 0x69, 0x1e, 0xaa, 0x4f, 0x69, 0xc6, 0x4b,
+	0x24, 0xe7, 0x4a, 0xab, 0x45, 0xb0, 0x4f, 0xc9, 0x34, 0xf0, 0x6f, 0x2a, 0xb8, 0xbb, 0xa4, 0xcd,
+	0xb0, 0xc7, 0xf1, 0x76, 0xb7, 0x4b, 0x9f, 0x78, 0xa4, 0x7d, 0xb1, 0xd0, 0x55, 0xd4, 0x33, 0x8c,
+	0xc3, 0x4e, 0xdc, 0xc3, 0x17, 0xdf, 0x89, 0x0c, 0xa3, 0x76, 0xe2, 0x17, 0x0b, 0xa6, 0x9b, 0xdc,
+	0x6f, 0x06, 0x24, 0x12, 0x75, 0xdd, 0x0b, 0x48, 0x54, 0x5c, 0xd7, 0x4a, 0xf1, 0xaa, 0xba, 0xd2,
+	0xbc, 0xec, 0x3e, 0x82, 0x4e, 0x13, 0x07, 0x12, 0x78, 0xa7, 0xcf, 0x88, 0x00, 0xde, 0xef, 0xb3,
+	0xe2, 0x48, 0xc7, 0x8a, 0x94, 0xf5, 0xd2, 0x19, 0xad, 0x0b, 0x53, 0xda, 0xfa, 0xef, 0xaa, 0xa9,
+	0x8b, 0x67, 0x49, 0x2f, 0x1c, 0x1b, 0xe1, 0x9c, 0xbd, 0xf0, 0xfc, 0xdd, 0x3c, 0xa1, 0xd4, 0xf4,
+	0xdf, 0x58, 0x50, 0x16, 0x47, 0x15, 0xc3, 0xf8, 0x73, 0x2c, 0xb2, 0xef, 0x40, 0x5e, 0x15, 0xc1,
+	0x27, 0x12, 0xe1, 0xe9, 0x23, 0xda, 0x2d, 0x4e, 0xd5, 0x58, 0x91, 0xdf, 0xc6, 0xec, 0x59, 0x28,
+	0xd1, 0x50, 0x76, 0xe7, 0x72, 0xab, 0x44, 0x43, 0x77, 0x41, 0x8e, 0x3b, 0x0a, 0x46, 0x23, 0x7e,
+	0xa7, 0x02, 0xfc, 0x21, 0x39, 0xb8, 0x18, 0x90, 0x2a, 0x92, 0x09, 0x4e, 0x82, 0xb9, 0xf5, 0xff,
+	0x1c, 0x4c, 0x36, 0xb9, 0x6f, 0x7f, 0x6b, 0xc1, 0xe2, 0xfb, 0x1e, 0xe9, 0x74, 0xf1, 0xd0, 0x30,
+	0x7d, 0x23, 0xf7, 0x2b, 0x0d, 0x8a, 0xd0, 0x5b, 0x63, 0x88, 0x74, 0x64, 0xdc, 0xa7, 0x7f, 0xfe,
+	0xf7, 0x63, 0x69, 0x05, 0xa1, 0xc6, 0xc0, 0xa6, 0x86, 0xdc, 0xa4, 0xfe, 0xda, 0x5f, 0x5a, 0x30,
+	0xaf, 0x71, 0xf4, 0xc4, 0x54, 0x33, 0x99, 0x49, 0x14, 0xa8, 0x3e, 0x4a, 0xa1, 0x29, 0xde, 0x94,
+	0x14, 0xab, 0xe8, 0x7a, 0x2e, 0x45, 0x32, 0x52, 0xd9, 0x3f, 0xa4, 0xe3, 0x92, 0x9e, 0xaf, 0x8d,
+	0x71, 0x49, 0x89, 0xcc, 0x71, 0xc9, 0x9b, 0x9a, 0xeb, 0x92, 0xc8, 0x45, 0xb5, 0x5c, 0xa2, 0xd4,
+	0xe4, 0x3d, 0x18, 0x1d, 0x3d, 0x97, 0x19, 0xa3, 0x93, 0x28, 0xcc, 0xd1, 0xc9, 0x8c, 0x4b, 0xc5,
+	0xd1, 0x89, 0x12, 0x93, 0x3f, 0x59, 0x70, 0x2d, 0x03, 0x22, 0xfb, 0xc9, 0xda, 0x28, 0x53, 0x42,
+	0x85, 0x6e, 0x8f, 0xa3, 0xd2, 0x50, 0xb7, 0x24, 0xd4, 0x1a, 0x72, 0x0b, 0xa1, 0xf6, 0x44, 0xcf,
+	0xb1, 0x9f, 0x5a, 0x70, 0x55, 0x93, 0x25, 0x03, 0xc5, 0xaa, 0xc9, 0x5c, 0x2c, 0x40, 0xeb, 0x23,
+	0x04, 0x1a, 0x65, 0x4d, 0xa2, 0x38, 0x68, 0x25, 0x17, 0xc5, 0x8b, 0xed, 0x3d, 0xb3, 0x00, 0x9d,
+	0x16, 0x55, 0x66, 0x48, 0xd8, 0x30, 0x56, 0xcd, 0xb0, 0x14, 0xdd, 0x19, 0x5b, 0xaa, 0x11, 0x1b,
+	0x12, 0x71, 0x03, 0xad, 0xe7, 0x97, 0x59, 0xbc, 0x6f, 0xcf, 0xd3, 0x38, 0x03, 0xb4, 0xd9, 0x69,
+	0x60, 0xc3, 0x9c, 0xcb, 0x63, 0xd3, 0x9a, 0xcf, 0xef, 0x62, 0xda, 0x0e, 0xce, 0xd0, 0x3e, 0x86,
+	0x19, 0x0d, 0x2b, 0x4f, 0xfd, 0x15, 0x93, 0x51, 0xb1, 0x8a, 0xd6, 0x8a, 0x56, 0x35, 0xc5, 0x1b,
+	0x92, 0x62, 0x19, 0x2d, 0xe5, 0x52, 0x88, 0x91, 0x61, 0xc0, 0xae, 0x3c, 0xbc, 0x8d, 0x76, 0xc5,
+	0xaa, 0xd9, 0xee, 0xc0, 0x69, 0x5c, 0x6c, 0x57, 0x1c, 0xbb, 0xf6, 0x57, 0xe9, 0x9a, 0xd7, 0xc7,
+	0x76, 0xad, 0xe8, 0xf5, 0xb2, 0xc4, 0xea, 0xa3, 0x14, 0x1a, 0xe2, 0xa6, 0x84, 0xa8, 0x21, 0xc7,
+	0x08, 0xa1, 0x4a, 0x6b, 0x20, 0x4f, 0xb2, 0xbf, 0x2b, 0x36, 0x46, 0xd5, 0xb4, 0x96, 0x9a, 0xf3,
+	0xc4, 0xfc, 0x13, 0xa1, 0x38, 0x4f, 0x74, 0x0f, 0xa0, 0x1a, 0xe7, 0x0b, 0x98, 0x3b, 0x3d, 0x48,
+	0xd4, 0x51, 0xec, 0x18, 0x0f, 0x09, 0xb9, 0x8e, 0x6e, 0x16, 0xaf, 0x6b, 0x96, 0x1b, 0x92, 0xe5,
+	0x3a, 0x5a, 0xce, 0x3f, 0x42, 0x94, 0xb1, 0x81, 0x5e, 0xad, 0xa7, 0x01, 0xe3, 0x77, 0x4b, 0x14,
+	0xe6, 0xef, 0x36, 0x7c, 0x84, 0x8f, 0xe8, 0xd5, 0xfd, 0x58, 0xbe, 0xb3, 0xfe, 0xfc, 0xd8, 0xb1,
+	0x0e, 0x8f, 0x1d, 0xeb, 0xdf, 0x63, 0xc7, 0xfa, 0xfe, 0xc4, 0x99, 0x38, 0x3c, 0x71, 0x26, 0xfe,
+	0x3a, 0x71, 0x26, 0x3e, 0x9a, 0xf9, 0x34, 0x09, 0xdf, 0x67, 0x21, 0xe6, 0xfb, 0x53, 0xf2, 0x1f,
+	0x6b, 0x6f, 0xbf, 0x08, 0x00, 0x00, 0xff, 0xff, 0x3b, 0xfc, 0x79, 0x79, 0xd6, 0x13, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -2385,16 +2436,18 @@ func (m *MsgTransfer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
 	{
 		size := m.ToAddress.Size()
 		i -= size
@@ -2461,16 +2514,18 @@ func (m *MsgTransferFrom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x22
 	}
-	i--
-	dAtA[i] = 0x22
 	{
 		size := m.ToAddress.Size()
 		i -= size
@@ -2620,16 +2675,18 @@ func (m *MsgApprove) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
 	{
 		size := m.Spender.Size()
 		i -= size
@@ -2696,16 +2753,18 @@ func (m *MsgIncreaseAllowance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
 	{
 		size := m.Spender.Size()
 		i -= size
@@ -2772,16 +2831,18 @@ func (m *MsgDecreaseAllowance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
 	{
 		size := m.Spender.Size()
 		i -= size
@@ -2848,16 +2909,18 @@ func (m *MsgMint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
 	{
 		size := m.ToAddress.Size()
 		i -= size
@@ -2924,16 +2987,18 @@ func (m *MsgBurn) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
 	{
 		size := m.Burner.Size()
 		i -= size
@@ -2990,16 +3055,18 @@ func (m *MsgBurnFrom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMsg(dAtA, i, uint64(size))
 		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
 	{
 		size := m.FromAddress.Size()
 		i -= size
@@ -3369,8 +3436,10 @@ func (m *MsgTransfer) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.ToAddress.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3395,8 +3464,10 @@ func (m *MsgTransferFrom) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.ToAddress.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3445,8 +3516,10 @@ func (m *MsgApprove) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Spender.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3469,8 +3542,10 @@ func (m *MsgIncreaseAllowance) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Spender.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3493,8 +3568,10 @@ func (m *MsgDecreaseAllowance) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.Spender.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3517,8 +3594,10 @@ func (m *MsgMint) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.ToAddress.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3539,8 +3618,10 @@ func (m *MsgBurn) Size() (n int) {
 	_ = l
 	l = m.Burner.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -3563,8 +3644,10 @@ func (m *MsgBurnFrom) Size() (n int) {
 	n += 1 + l + sovMsg(uint64(l))
 	l = m.FromAddress.Size()
 	n += 1 + l + sovMsg(uint64(l))
-	l = m.Amount.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	return n
 }
 
@@ -4780,7 +4863,7 @@ func (m *MsgTransfer) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -4790,21 +4873,23 @@ func (m *MsgTransfer) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -5016,7 +5101,7 @@ func (m *MsgTransferFrom) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -5026,21 +5111,23 @@ func (m *MsgTransferFrom) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -5418,7 +5505,7 @@ func (m *MsgApprove) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -5428,21 +5515,23 @@ func (m *MsgApprove) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -5620,7 +5709,7 @@ func (m *MsgIncreaseAllowance) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -5630,21 +5719,23 @@ func (m *MsgIncreaseAllowance) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -5822,7 +5913,7 @@ func (m *MsgDecreaseAllowance) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -5832,21 +5923,23 @@ func (m *MsgDecreaseAllowance) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -6024,7 +6117,7 @@ func (m *MsgMint) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -6034,21 +6127,23 @@ func (m *MsgMint) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -6192,7 +6287,7 @@ func (m *MsgBurn) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -6202,21 +6297,23 @@ func (m *MsgBurn) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -6394,7 +6491,7 @@ func (m *MsgBurnFrom) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMsg
@@ -6404,21 +6501,23 @@ func (m *MsgBurnFrom) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &Coins{}
 			}
 			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

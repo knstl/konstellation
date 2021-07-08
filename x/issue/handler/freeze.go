@@ -11,11 +11,11 @@ import (
 func HandleMsgFreeze(ctx sdk.Context, k keeper.Keeper, msg *types.MsgFreeze) *sdk.Result {
 	// Sub fee from sender
 	fee := k.GetParams(ctx).FreezeFee
-	if err := k.ChargeFee(ctx, msg.Freezer, fee); err != nil {
+	if err := k.ChargeFee(ctx, sdk.AccAddress(msg.Freezer), fee); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 
-	if err := k.Freeze(ctx, msg.Freezer, msg.Holder, msg.Denom, msg.Op); err != nil {
+	if err := k.Freeze(ctx, sdk.AccAddress(msg.Freezer), sdk.AccAddress(msg.Holder), msg.Denom, msg.Op); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 

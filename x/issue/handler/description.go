@@ -9,7 +9,7 @@ import (
 )
 
 func HandleMsgDescription(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDescription) *sdk.Result {
-	if err := k.ChangeDescription(ctx, msg.Owner, msg.Denom, msg.Description); err != nil {
+	if err := k.ChangeDescription(ctx, sdk.AccAddress(msg.Owner), msg.Denom, msg.Description); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 

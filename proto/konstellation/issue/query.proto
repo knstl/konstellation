@@ -9,6 +9,7 @@ import "freeze.proto";
 import "issue.proto";
 import "querier.proto";
 import "params.proto";
+import "coin.proto";
 
 service Query {
     rpc QueryAllowance(QueryAllowanceRequest) returns (QueryAllowanceResponse) {}
@@ -22,17 +23,17 @@ service Query {
 }
 
 message QueryAllowanceRequest {
-    string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
-    string spender = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
+    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+    string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
     string denom = 3;
 }
 
 message QueryAllowanceResponse {
-    string allowance = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+    Coins allowance = 1;
 }
 
 message QueryAllowancesRequest {
-    string owner = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
+    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
     string denom = 2;
 }
 
@@ -42,7 +43,7 @@ message QueryAllowancesResponse {
 
 message QueryFreezeRequest {
     string denom = 1;
-    string holder = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.AccAddress", (gogoproto.nullable) = false];
+    string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
 }
 
 message QueryFreezeResponse {

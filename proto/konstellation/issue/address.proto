@@ -1,0 +1,10 @@
+syntax = "proto3";
+package konstellation.issue;
+
+option go_package = "x/issue/types";
+
+import "gogoproto/gogo.proto";
+
+message Address {
+	string address = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+}

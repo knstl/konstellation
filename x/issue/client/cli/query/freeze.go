@@ -33,7 +33,7 @@ func getQueryCmdFreeze() *cobra.Command {
 
 			ctx := cmd.Context()
 			freezeRequest := types.QueryFreezeRequest{
-				Holder: holder,
+				Holder: types.AccAddress(holder),
 				Denom:  denom,
 			}
 			res, err := queryClient.QueryFreeze(ctx, &freezeRequest)

@@ -37,8 +37,8 @@ func getQueryCmdAllowance() *cobra.Command {
 
 			ctx := cmd.Context()
 			allowanceRequest := types.QueryAllowanceRequest{
-				Owner:   owner,
-				Spender: spender,
+				Owner:   types.AccAddress(owner),
+				Spender: types.AccAddress(spender),
 				Denom:   denom,
 			}
 			res, err := queryClient.QueryAllowance(ctx, &allowanceRequest)

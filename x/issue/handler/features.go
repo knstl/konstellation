@@ -9,7 +9,7 @@ import (
 )
 
 func HandleMsgFeatures(ctx sdk.Context, k keeper.Keeper, msg *types.MsgFeatures) *sdk.Result {
-	if err := k.ChangeFeatures(ctx, msg.Owner, msg.Denom, msg.IssueFeatures); err != nil {
+	if err := k.ChangeFeatures(ctx, sdk.AccAddress(msg.Owner), msg.Denom, msg.IssueFeatures); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 

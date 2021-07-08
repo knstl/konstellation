@@ -11,11 +11,11 @@ import (
 func HandleMsgTransferOwnership(ctx sdk.Context, k keeper.Keeper, msg *types.MsgTransferOwnership) *sdk.Result {
 	// Sub fee from sender
 	fee := k.GetParams(ctx).TransferOwnerFee
-	if err := k.ChargeFee(ctx, msg.Owner, fee); err != nil {
+	if err := k.ChargeFee(ctx, sdk.AccAddress(msg.Owner), fee); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 
-	if err := k.TransferOwnership(ctx, msg.Owner, msg.ToAddress, msg.Denom); err != nil {
+	if err := k.TransferOwnership(ctx, sdk.AccAddress(msg.Owner), sdk.AccAddress(msg.ToAddress), msg.Denom); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 

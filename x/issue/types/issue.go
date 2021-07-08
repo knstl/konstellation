@@ -65,8 +65,8 @@ func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue 
 	var ci CoinIssue
 	_ = mapstructure.Decode(params, &ci)
 	ci.SetFeatures(params.IssueFeatures)
-	ci.Owner = owner
-	ci.Issuer = issuer
+	ci.Owner = AccAddress(owner)
+	ci.Issuer = AccAddress(issuer)
 	ci.Symbol = strings.ToUpper(ci.Symbol)
 	ci.TotalSupply = params.TotalSupply
 
@@ -82,19 +82,19 @@ func (ci *CoinIssue) SetDenom(denom string) {
 }
 
 func (ci *CoinIssue) GetIssuer() sdk.AccAddress {
-	return ci.Issuer
+	return sdk.AccAddress(ci.Issuer)
 }
 
 func (ci *CoinIssue) SetIssuer(issuer sdk.AccAddress) {
-	ci.Issuer = issuer
+	ci.Issuer = AccAddress(issuer)
 }
 
 func (ci *CoinIssue) GetOwner() sdk.AccAddress {
-	return ci.Owner
+	return sdk.AccAddress(ci.Owner)
 }
 
 func (ci *CoinIssue) SetOwner(owner sdk.AccAddress) {
-	ci.Owner = owner
+	ci.Owner = AccAddress(owner)
 }
 
 func (ci *CoinIssue) SetSymbol(symbol string) {

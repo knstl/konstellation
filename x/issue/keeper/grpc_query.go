@@ -11,14 +11,14 @@ var _ types.QueryServer = Keeper{}
 
 func (k Keeper) QueryAllowance(c context.Context, r *types.QueryAllowanceRequest) (*types.QueryAllowanceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
-	allowance := k.Allowance(ctx, r.Owner, r.Spender, r.Denom)
+	allowance := k.Allowance(ctx, sdk.AccAddress(r.Owner), sdk.AccAddress(r.Spender), r.Denom)
 
-	return &types.QueryAllowanceResponse{Allowance: allowance}, nil
+	return &types.QueryAllowanceResponse{Allowance: &types.Coins{Coins: []sdk.Coin{allowance}}}, nil
 }
 
 func (k Keeper) QueryAllowances(c context.Context, r *types.QueryAllowancesRequest) (*types.QueryAllowancesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
-	allowances := k.Allowances(ctx, r.Owner, r.Denom)
+	allowances := k.Allowances(ctx, sdk.AccAddress(r.Owner), r.Denom)
 
 	allowanceList := []*types.Allowance{}
 	for _, allowance := range allowances {
@@ -30,7 +30,7 @@ func (k Keeper) QueryAllowances(c context.Context, r *types.QueryAllowancesReque
 
 func (k Keeper) QueryFreeze(c context.Context, r *types.QueryFreezeRequest) (*types.QueryFreezeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
-	freeze := k.GetFreeze(ctx, r.Denom, r.Holder)
+	freeze := k.GetFreeze(ctx, r.Denom, sdk.AccAddress(r.Holder))
 
 	return &types.QueryFreezeResponse{Freeze: freeze}, nil
 }

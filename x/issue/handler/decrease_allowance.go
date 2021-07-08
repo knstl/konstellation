@@ -9,7 +9,7 @@ import (
 )
 
 func HandleMsgDecreaseAllowance(ctx sdk.Context, k keeper.Keeper, msg *types.MsgDecreaseAllowance) *sdk.Result {
-	if err := k.DecreaseAllowance(ctx, msg.Owner, msg.Spender, msg.Amount); err != nil {
+	if err := k.DecreaseAllowance(ctx, sdk.AccAddress(msg.Owner), sdk.AccAddress(msg.Spender), msg.Amount.Coins); err != nil {
 		return &sdk.Result{Log: err.Error()}
 	}
 
