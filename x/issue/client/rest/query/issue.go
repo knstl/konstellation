@@ -5,7 +5,6 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	"github.com/konstellation/konstellation/x/issue/query"
 
 	"github.com/gorilla/mux"
 )
@@ -16,7 +15,7 @@ func issueHandlerFn(clientCtx client.Context) http.HandlerFunc {
 		vars := mux.Vars(r)
 		denom := vars["denom"]
 
-		res, height, err := clientCtx.QueryWithData(query.PathQueryIssue(denom), nil)
+		res, height, err := clientCtx.QueryWithData(pathQueryIssue(denom), nil)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return

@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/konstellation/konstellation/x/issue/query"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
@@ -52,7 +50,7 @@ func issuesHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		res, height, err := clientCtx.QueryWithData(query.PathQueryIssues(), bz)
+		res, height, err := clientCtx.QueryWithData(pathQueryIssues(), bz)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return

@@ -3,8 +3,6 @@ package query
 import (
 	"net/http"
 
-	"github.com/konstellation/konstellation/x/issue/query"
-
 	"github.com/gorilla/mux"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -25,7 +23,7 @@ func allowancesHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		res, height, err := clientCtx.QueryWithData(query.PathQueryIssueAllowances(ownerAddr, denom), nil)
+		res, height, err := clientCtx.QueryWithData(pathQueryIssueAllowances(ownerAddr, denom), nil)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return

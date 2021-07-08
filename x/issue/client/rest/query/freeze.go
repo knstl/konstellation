@@ -3,8 +3,6 @@ package query
 import (
 	"net/http"
 
-	"github.com/konstellation/konstellation/x/issue/query"
-
 	"github.com/gorilla/mux"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -29,7 +27,7 @@ func freezeHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		res, height, err := clientCtx.QueryWithData(query.PathQueryIssueFreeze(denom, holderAddr), nil)
+		res, height, err := clientCtx.QueryWithData(pathQueryIssueFreeze(denom, holderAddr), nil)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
