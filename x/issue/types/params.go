@@ -3,6 +3,7 @@ package types
 import (
 	"bytes"
 	"fmt"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -133,7 +134,7 @@ func validateFee(i interface{}) error {
 	}
 
 	if v.IsNegative() {
-		return fmt.Errorf("fee must be not negative: %d", v)
+		return fmt.Errorf("fee must be not negative: %v", v)
 	}
 
 	return nil
