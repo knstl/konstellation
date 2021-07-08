@@ -1,75 +1,74 @@
 package tx
 
 import (
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/gorilla/mux"
-
-	"github.com/cosmos/cosmos-sdk/client/context"
 )
 
 // RegisterTxRoutes registers all transaction routes on the provided router.
-func RegisterTxRoutes(cliCtx context.CLIContext, r *mux.Router) {
+func RegisterTxRoutes(clientCtx client.Context, r *mux.Router) {
 	r.HandleFunc(
 		"/issue/issue",
-		issueCreateHandlerFn(cliCtx),
+		issueCreateHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/transfer",
-		transferHandlerFn(cliCtx),
+		transferHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/transfer_from",
-		transferFromHandlerFn(cliCtx),
+		transferFromHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/approve",
-		approveHandlerFn(cliCtx),
+		approveHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/increase_allowance",
-		increaseAllowanceHandlerFn(cliCtx),
+		increaseAllowanceHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/decrease_allowance",
-		decreaseAllowanceHandlerFn(cliCtx),
+		decreaseAllowanceHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/mint",
-		mintHandlerFn(cliCtx),
+		mintHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/burn",
-		burnHandlerFn(cliCtx),
+		burnHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/burn_from",
-		burnFromHandlerFn(cliCtx),
+		burnFromHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/transfer_ownership",
-		transferOwnershipHandlerFn(cliCtx),
+		transferOwnershipHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/disable_feature",
-		disableFeatureHandlerFn(cliCtx),
+		disableFeatureHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/enable_feature",
-		enableFeatureHandlerFn(cliCtx),
+		enableFeatureHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/features",
-		featuresHandlerFn(cliCtx),
+		featuresHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/description",
-		descriptionHandlerFn(cliCtx),
+		descriptionHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/freeze",
-		freezeHandlerFn(cliCtx),
+		freezeHandlerFn(clientCtx),
 	).Methods("POST")
 	r.HandleFunc(
 		"/issue/unfreeze",
-		unfreezeHandlerFn(cliCtx),
+		unfreezeHandlerFn(clientCtx),
 	).Methods("POST")
 }

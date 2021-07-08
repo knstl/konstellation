@@ -3,26 +3,25 @@ package query
 import (
 	"net/http"
 
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/konstellation/konstellation/x/issue/query"
 
 	"github.com/gorilla/mux"
-
-	"github.com/cosmos/cosmos-sdk/client/context"
 )
 
 // HTTP request handler to query specified issues
-func issueHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
+func issueHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		denom := vars["denom"]
 
-		res, height, err := cliCtx.QueryWithData(query.PathQueryIssue(denom), nil)
+		res, height, err := clientCtx.QueryWithData(query.PathQueryIssue(denom), nil)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
-		rest.PostProcessResponse(w, cliCtx.WithHeight(height), res)
+		rest.PostProcessResponse(w, clientCtx.WithHeight(height), res)
 	}
 }

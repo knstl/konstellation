@@ -3,25 +3,25 @@ package tx
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
-	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/auth"
-	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // getTxCmdTransferOwnership transfers token from one owner to another
-func getTxCmdTransferOwnership(cdc *codec.Codec) *cobra.Command {
+func getTxCmdTransferOwnership() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "transfer-ownership [to_address] [denom]",
 		Args:  cobra.ExactArgs(2),
 		Short: "Transfer ownership of token",
 		Long:  "Transfers token from one owner to another",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
 
 			toAddr, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
@@ -30,13 +30,13 @@ func getTxCmdTransferOwnership(cdc *codec.Codec) *cobra.Command {
 
 			denom := args[1]
 
-			msg := types.NewMsgTransferOwnership(cliCtx.GetFromAddress(), toAddr, denom)
+			msg := types.NewMsgTransferOwnership(clientCtx.GetFromAddress(), toAddr, denom)
 			validateErr := msg.ValidateBasic()
 			if validateErr != nil {
 				return validateErr
 			}
 
-			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &msg)
 		},
 	}
 

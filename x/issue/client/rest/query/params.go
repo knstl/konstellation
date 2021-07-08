@@ -3,21 +3,20 @@ package query
 import (
 	"net/http"
 
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/konstellation/konstellation/x/issue/query"
-
-	"github.com/cosmos/cosmos-sdk/client/context"
 )
 
 // HTTP request handler to query all issues
-func paramsHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
+func paramsHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		res, height, err := cliCtx.QueryWithData(query.PathParams(), nil)
+		res, height, err := clientCtx.QueryWithData(query.PathParams(), nil)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
-		rest.PostProcessResponse(w, cliCtx.WithHeight(height), res)
+		rest.PostProcessResponse(w, clientCtx.WithHeight(height), res)
 	}
 }

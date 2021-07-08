@@ -4,7 +4,7 @@ import (
 	"github.com/konstellation/konstellation/x/issue/query"
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
@@ -12,14 +12,17 @@ import (
 )
 
 // getQueryCmdAllowance implements the query issue command.
-func getQueryCmdAllowance(cdc *codec.Codec) *cobra.Command {
+func getQueryCmdAllowance(cdc *codec.LegacyAmino) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "allowance [owner] [spender] [denom]",
 		Args:  cobra.ExactArgs(3),
 		Short: "Query allowance",
 		Long:  "Query the amount of tokens that an owner allowed to a spender",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
 
 			owner, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
@@ -32,7 +35,7 @@ func getQueryCmdAllowance(cdc *codec.Codec) *cobra.Command {
 
 			denom := args[2]
 
-			res, _, err := cliCtx.QueryWithData(query.PathQueryIssueAllowance(owner, spender, denom), nil)
+			res, _, err := clientCtx.QueryWithData(query.PathQueryIssueAllowance(owner, spender, denom), nil)
 			if err != nil {
 				return err
 			}
@@ -40,7 +43,7 @@ func getQueryCmdAllowance(cdc *codec.Codec) *cobra.Command {
 			var approval types.Allowance
 			cdc.MustUnmarshalJSON(res, &approval)
 
-			return cliCtx.PrintOutput(approval)
+			return clientCtx.PrintObjectLegacy(approval)
 		},
 	}
 

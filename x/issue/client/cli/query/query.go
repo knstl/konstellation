@@ -10,7 +10,7 @@ import (
 )
 
 // GetQueryCmd returns the transaction commands for this module
-func GetQueryCmd(cdc *codec.Codec) *cobra.Command {
+func GetQueryCmd(cdc *codec.LegacyAmino) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
 		Short:                      "Querying commands for the issue module",

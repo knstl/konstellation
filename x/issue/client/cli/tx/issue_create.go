@@ -7,11 +7,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
-	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/auth"
-	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
@@ -27,7 +25,7 @@ const (
 )
 
 // getTxCmdCreate implements issue a coin transaction command.
-func getTxCmdCreate(cdc *codec.Codec) *cobra.Command {
+func getTxCmdCreate() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "create [denom] [symbol] [owner] [issuer] [total-supply]",
 		Args:    cobra.ExactArgs(3),
@@ -35,9 +33,11 @@ func getTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 		Long:    "Issue a new token",
 		Example: "$ konstellationcli issue create foocoin FOO 100000000 --from foo",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
-			account := cliCtx.GetFromAddress()
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+			account := clientCtx.GetFromAddress()
 
 			decimals := viper.GetUint(flagDecimals)
 			totalSupply, ok := sdk.NewIntFromString(args[2])
@@ -58,9 +58,9 @@ func getTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 				Denom:         args[0],
 				Symbol:        strings.ToUpper(args[1]),
 				TotalSupply:   totalSupply,
-				Decimals:      decimals,
+				Decimals:      uint32(decimals),
 				Description:   viper.GetString(flagDescription),
-				IssueFeatures: issueFeatures,
+				IssueFeatures: &issueFeatures,
 			}
 
 			msg := types.NewMsgIssueCreate(account, account, &issueParams)
@@ -68,7 +68,7 @@ func getTxCmdCreate(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
-			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &msg)
 		},
 	}
 

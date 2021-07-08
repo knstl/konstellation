@@ -1,44 +1,43 @@
 package query
 
 import (
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/gorilla/mux"
-
-	"github.com/cosmos/cosmos-sdk/client/context"
 )
 
 // RegisterRoutes registers the module REST routes.
-func RegisterQueryRoutes(cliCtx context.CLIContext, r *mux.Router) {
+func RegisterQueryRoutes(clientCtx client.Context, r *mux.Router) {
 	// Get all issues
 	r.HandleFunc(
 		"/issue/issues/all",
-		issuesAllHandlerFn(cliCtx),
+		issuesAllHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/issues",
-		issuesHandlerFn(cliCtx),
+		issuesHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/issue/{denom}",
-		issueHandlerFn(cliCtx),
+		issueHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/allowance/{owner}/{spender}/{denom}",
-		allowanceHandlerFn(cliCtx),
+		allowanceHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/allowances/{owner}/{denom}",
-		allowancesHandlerFn(cliCtx),
+		allowancesHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/freeze/{holder}/{denom}",
-		freezeHandlerFn(cliCtx),
+		freezeHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/freezes/{denom}",
-		freezesHandlerFn(cliCtx),
+		freezesHandlerFn(clientCtx),
 	).Methods("GET")
 	r.HandleFunc(
 		"/issue/params",
-		paramsHandlerFn(cliCtx),
+		paramsHandlerFn(clientCtx),
 	).Methods("GET")
 }

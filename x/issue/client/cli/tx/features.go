@@ -4,24 +4,23 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
-	"github.com/cosmos/cosmos-sdk/codec"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/auth"
-	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func getTxCmdFeatures(cdc *codec.Codec) *cobra.Command {
+func getTxCmdFeatures() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "features [denom]",
 		Args:  cobra.ExactArgs(1),
 		Short: "Enable feature",
 		Long:  "Enable feature for token",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
 
 			denom := args[0]
 
@@ -33,13 +32,13 @@ func getTxCmdFeatures(cdc *codec.Codec) *cobra.Command {
 				FreezeDisabled:     viper.GetBool(flagFreezeDisabled),
 			}
 
-			msg := types.NewMsgFeatures(cliCtx.GetFromAddress(), denom, &issueFeatures)
+			msg := types.NewMsgFeatures(clientCtx.GetFromAddress(), denom, &issueFeatures)
 			validateErr := msg.ValidateBasic()
 			if validateErr != nil {
 				return validateErr
 			}
 
-			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &msg)
 		},
 	}
 

@@ -1,7 +1,7 @@
 package query
 
 import (
-	"github.com/cosmos/cosmos-sdk/client/context"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/konstellation/konstellation/x/issue/query"
 	"github.com/konstellation/konstellation/x/issue/types"
@@ -9,14 +9,15 @@ import (
 )
 
 // getCmdQueryIssue implements the query issue command.
-func getQueryCmdIssue(cdc *codec.Codec) *cobra.Command {
+func getQueryCmdIssue(cdc *codec.LegacyAmino) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "find",
 		Short: "Query issue by denom",
 		Long:  "Query issue by denom",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			ctx := client.Context{}
+			cliCtx := ctx.WithLegacyAmino(cdc)
 
 			denom := args[0]
 
@@ -28,7 +29,7 @@ func getQueryCmdIssue(cdc *codec.Codec) *cobra.Command {
 
 			var issue types.CoinIssue
 			cdc.MustUnmarshalJSON(res, &issue)
-			return cliCtx.PrintOutput(&issue)
+			return cliCtx.PrintObjectLegacy(&issue)
 		},
 	}
 

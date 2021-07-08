@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
+	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 )
@@ -17,7 +17,7 @@ const (
 )
 
 // HTTP request handler to query specified issues
-func freezeHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
+func freezeHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		holder := vars[flagHolder]
@@ -29,12 +29,12 @@ func freezeHandlerFn(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		res, height, err := cliCtx.QueryWithData(query.PathQueryIssueFreeze(denom, holderAddr), nil)
+		res, height, err := clientCtx.QueryWithData(query.PathQueryIssueFreeze(denom, holderAddr), nil)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
-		rest.PostProcessResponse(w, cliCtx.WithHeight(height), res)
+		rest.PostProcessResponse(w, clientCtx.WithHeight(height), res)
 	}
 }

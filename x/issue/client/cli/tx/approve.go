@@ -3,43 +3,43 @@ package tx
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
-	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/auth"
-	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // getTxCmdApprove Sets `amount` as the allowance of `spender` over the caller's tokens.
-func getTxCmdApprove(cdc *codec.Codec) *cobra.Command {
+func getTxCmdApprove() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "approve [spender] [amount]",
 		Args:  cobra.ExactArgs(2),
 		Short: "Sets `amount` as the allowance of `spender` over the caller's tokens.",
 		Long:  "Sets `amount` as the allowance of `spender` over the caller's tokens.",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
 
 			spender, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
 				return err
 			}
 
-			coins, err := sdk.ParseCoins(args[1])
+			coins, err := sdk.ParseCoinsNormalized(args[1])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgApprove(cliCtx.GetFromAddress(), spender, coins)
+			msg := types.NewMsgApprove(clientCtx.GetFromAddress(), spender, coins)
 			validateErr := msg.ValidateBasic()
 			if validateErr != nil {
 				return validateErr
 			}
 
-			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &msg)
 		},
 	}
 

@@ -5,20 +5,21 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // getQueryCmdParams implements the query issue command.
-func getQueryCmdParams(cdc *codec.Codec) *cobra.Command {
+func getQueryCmdParams(cdc *codec.LegacyAmino) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "params",
 		Short: "Query params",
 		Long:  "Query issue module params",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			ctx := client.Context{}
+			cliCtx := ctx.WithLegacyAmino(cdc)
 
 			// Query the issues
 			res, _, err := cliCtx.QueryWithData(query.PathParams(), nil)
@@ -28,7 +29,7 @@ func getQueryCmdParams(cdc *codec.Codec) *cobra.Command {
 
 			var params types.Params
 			cdc.MustUnmarshalJSON(res, &params)
-			return cliCtx.PrintOutput(params)
+			return cliCtx.PrintObjectLegacy(params)
 		},
 	}
 

@@ -5,20 +5,21 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client/context"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // getQueryCmdIssuesAll implements the query issue command.
-func getQueryCmdIssuesAll(cdc *codec.Codec) *cobra.Command {
+func getQueryCmdIssuesAll(cdc *codec.LegacyAmino) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list-all",
 		Short: "Query all issues",
 		Long:  "Query all or one of the account issue list, the limit default is 30",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			ctx := client.Context{}
+			cliCtx := ctx.WithLegacyAmino(cdc)
 
 			// Query the issues
 			res, _, err := cliCtx.QueryWithData(query.PathQueryIssuesAll(), nil)
@@ -28,7 +29,7 @@ func getQueryCmdIssuesAll(cdc *codec.Codec) *cobra.Command {
 
 			var issues types.CoinIssues
 			cdc.MustUnmarshalJSON(res, &issues)
-			return cliCtx.PrintOutput(issues)
+			return cliCtx.PrintObjectLegacy(issues)
 		},
 	}
 
