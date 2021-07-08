@@ -7,6 +7,6 @@ import (
 )
 
 // GetTxCmd returns the transaction commands for this module
-func GetTxCmd() *cobra.Command {
+func NewTxCmd() *cobra.Command {
 	return tx.GetTxCmd()
 }

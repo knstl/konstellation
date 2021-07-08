@@ -4,13 +4,12 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/codec"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
 // GetQueryCmd returns the transaction commands for this module
-func GetQueryCmd(cdc *codec.LegacyAmino) *cobra.Command {
+func GetQueryCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
 		Short:                      "Querying commands for the issue module",
@@ -20,14 +19,14 @@ func GetQueryCmd(cdc *codec.LegacyAmino) *cobra.Command {
 	}
 
 	cmd.AddCommand(
-		getQueryCmdIssue(cdc),
-		getQueryCmdIssues(cdc),
-		getQueryCmdIssuesAll(cdc),
-		getQueryCmdAllowance(cdc),
-		getQueryCmdAllowances(cdc),
-		getQueryCmdParams(cdc),
-		getQueryCmdFreeze(cdc),
-		getQueryCmdFreezes(cdc),
+		getQueryCmdIssue(),
+		getQueryCmdIssues(),
+		getQueryCmdIssuesAll(),
+		getQueryCmdAllowance(),
+		getQueryCmdAllowances(),
+		getQueryCmdParams(),
+		getQueryCmdFreeze(),
+		getQueryCmdFreezes(),
 	)
 
 	return cmd
