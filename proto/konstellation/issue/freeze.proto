@@ -4,17 +4,16 @@ package konstellation.issue;
 option go_package = "x/issue/types";
 
 message Freeze {
-	bool in = 1;
-	bool out = 2;
+  bool in = 1;
+  bool out = 2;
 }
 
 message AddressFreezeList {
-	repeated AddressFreeze addressFreezes = 1;
+  repeated AddressFreeze addressFreezes = 1;
 }
 
-
 message AddressFreeze {
-	string address = 1;
-	bool in = 2;
-	bool out =3;
+  string address = 1;
+  bool in = 2;
+  bool out = 3;
 }

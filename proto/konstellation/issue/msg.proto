@@ -10,178 +10,178 @@ import "querier.proto";
 import "coin.proto";
 
 service Msg {
-	rpc HandleMsgIssueCreate(MsgIssueCreate) returns (MsgIssueCreateResponse){
-   		option (google.api.http).put = "/konstellation/issue/issue";
-  	}
-  	rpc HandleMsgFeatures(MsgFeatures) returns (MsgFeaturesResponse){
-   		option (google.api.http).put = "/konstellation/issue/features";
-  	}
-	rpc HandleMsgDescription(MsgDescription) returns (MsgDescriptionResponse){
-   		option (google.api.http).put = "/konstellation/issue/description";
-  	}
-	rpc HandleMsgTransfer(MsgTransfer) returns (MsgTransferResponse){
-   		option (google.api.http).put = "/konstellation/issue/transfer";
-  	}
-	rpc HandleMsgTransferFrom(MsgTransferFrom) returns (MsgTransferFromResponse){
-   		option (google.api.http).put = "/konstellation/issue/transfer_from";
-  	}
-	rpc HandleMsgApprove(MsgApprove) returns (MsgApproveResponse){
-   		option (google.api.http).put = "/konstellation/issue/approve";
-  	}
-	rpc HandleMsgIncreaseAllowance(MsgIncreaseAllowance) returns (MsgIncreaseAllowanceResponse){
-   		option (google.api.http).put = "/konstellation/issue/increase_allowance";
-  	}
-	rpc HandleMsgDecreaseAllowance(MsgDecreaseAllowance) returns (MsgDecreaseAllowanceResponse){
-   		option (google.api.http).put = "/konstellation/issue/decrease_allowance";
-  	}
-	rpc HandleMsgMint(MsgMint) returns (MsgMintResponse){
-   		option (google.api.http).put = "/konstellation/issue/mint";
-  	}
-	rpc HandleMsgBurn(MsgBurn) returns (MsgBurnResponse){
-   		option (google.api.http).put = "/konstellation/issue/burn";
-  	}
-	rpc HandleMsgBurnFrom(MsgBurnFrom) returns (MsgBurnFromResponse){
-   		option (google.api.http).put = "/konstellation/issue/burn_from";
-  	}
-	rpc HandleMsgTransferOwnership(MsgTransferOwnership) returns (MsgTransferOwnershipResponse){
-   		option (google.api.http).put = "/konstellation/issue/transfer_ownership";
-  	}
-	rpc HandleMsgFreeze(MsgFreeze) returns (MsgFreezeResponse){
-   		option (google.api.http).put = "/konstellation/issue/freeze";
-  	}
-	rpc HandleMsgUnfreeze(MsgUnfreeze) returns (MsgUnfreezeResponse){
-   		option (google.api.http).put = "/konstellation/issue/unfreeze";
-  	}
+  rpc HandleMsgIssueCreate(MsgIssueCreate) returns (MsgIssueCreateResponse){
+    option (google.api.http).put = "/konstellation/issue/issue";
+  }
+  rpc HandleMsgFeatures(MsgFeatures) returns (MsgFeaturesResponse){
+    option (google.api.http).put = "/konstellation/issue/features";
+  }
+  rpc HandleMsgDescription(MsgDescription) returns (MsgDescriptionResponse){
+    option (google.api.http).put = "/konstellation/issue/description";
+  }
+  rpc HandleMsgTransfer(MsgTransfer) returns (MsgTransferResponse){
+    option (google.api.http).put = "/konstellation/issue/transfer";
+  }
+  rpc HandleMsgTransferFrom(MsgTransferFrom) returns (MsgTransferFromResponse){
+    option (google.api.http).put = "/konstellation/issue/transfer_from";
+  }
+  rpc HandleMsgApprove(MsgApprove) returns (MsgApproveResponse){
+    option (google.api.http).put = "/konstellation/issue/approve";
+  }
+  rpc HandleMsgIncreaseAllowance(MsgIncreaseAllowance) returns (MsgIncreaseAllowanceResponse){
+    option (google.api.http).put = "/konstellation/issue/increase_allowance";
+  }
+  rpc HandleMsgDecreaseAllowance(MsgDecreaseAllowance) returns (MsgDecreaseAllowanceResponse){
+    option (google.api.http).put = "/konstellation/issue/decrease_allowance";
+  }
+  rpc HandleMsgMint(MsgMint) returns (MsgMintResponse){
+    option (google.api.http).put = "/konstellation/issue/mint";
+  }
+  rpc HandleMsgBurn(MsgBurn) returns (MsgBurnResponse){
+    option (google.api.http).put = "/konstellation/issue/burn";
+  }
+  rpc HandleMsgBurnFrom(MsgBurnFrom) returns (MsgBurnFromResponse){
+    option (google.api.http).put = "/konstellation/issue/burn_from";
+  }
+  rpc HandleMsgTransferOwnership(MsgTransferOwnership) returns (MsgTransferOwnershipResponse){
+    option (google.api.http).put = "/konstellation/issue/transfer_ownership";
+  }
+  rpc HandleMsgFreeze(MsgFreeze) returns (MsgFreezeResponse){
+    option (google.api.http).put = "/konstellation/issue/freeze";
+  }
+  rpc HandleMsgUnfreeze(MsgUnfreeze) returns (MsgUnfreezeResponse){
+    option (google.api.http).put = "/konstellation/issue/unfreeze";
+  }
 }
 
 message MsgIssueCreate {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string issuer = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    IssueParams issue_params = 3 [(gogoproto.embed) = true];
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string issuer = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  IssueParams issue_params = 3 [(gogoproto.embed) = true];
 }
 
 message MsgIssueCreateResponse {
-	CoinIssue amount = 1;
+  CoinIssue amount = 1;
 }
 
 message MsgDescription {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 2;
-	string description = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 2;
+  string description = 3;
 }
 
 message MsgDescriptionResponse {}
 
 message MsgDisableFeature {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 2;
-	string feature = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 2;
+  string feature = 3;
 }
 
 message MsgDisableFeatureResponse {}
 
 message MsgEnableFeature {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 2;
-	string feature = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 2;
+  string feature = 3;
 }
 
 message MsgEnableFeatureResponse {}
 
 message MsgFeatures {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 2;
-    IssueFeatures issue_features = 3 [(gogoproto.embed) = true];
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 2;
+  IssueFeatures issue_features = 3 [(gogoproto.embed) = true];
 }
 
 message MsgFeaturesResponse {}
 
 message MsgTransfer {
-    string from_address = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string to_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 3;
+  string from_address = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string to_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 3;
 }
 
 message MsgTransferResponse {}
 
 message MsgTransferFrom {
-    string sender = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string from_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string to_address = 3 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 4;
+  string sender = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string from_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string to_address = 3 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 4;
 }
 
 message MsgTransferFromResponse {}
 
 message MsgTransferOwnership {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string to_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string to_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 3;
 }
 
 message MsgTransferOwnershipResponse {}
 
 message MsgApprove {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 3;
 }
 
 message MsgApproveResponse {}
 
 message MsgIncreaseAllowance {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 3;
 }
 
 message MsgIncreaseAllowanceResponse {}
 
 message MsgDecreaseAllowance {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 3;
 }
 
 message MsgDecreaseAllowanceResponse {}
 
 message MsgMint {
-    string minter = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string to_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 3;
+  string minter = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string to_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 3;
 }
 
 message MsgMintResponse {}
 
 message MsgBurn {
-    string burner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 2;
+  string burner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 2;
 }
 
 message MsgBurnResponse {}
 
 message MsgBurnFrom {
-    string burner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string from_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    Coins amount = 3;
+  string burner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string from_address = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  Coins amount = 3;
 }
 
 message MsgBurnFromResponse {}
 
 message MsgFreeze {
-    string freezer = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 3;
-	string op = 4;
+  string freezer = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 3;
+  string op = 4;
 }
 
 message MsgFreezeResponse {}
 
 message MsgUnfreeze {
-    string freezer = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-	string denom = 3;
-	string op = 4;
+  string freezer = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 3;
+  string op = 4;
 }
 
 message MsgUnfreezeResponse {}

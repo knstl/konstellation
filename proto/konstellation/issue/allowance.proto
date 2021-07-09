@@ -6,10 +6,10 @@ option go_package = "x/issue/types";
 import "gogoproto/gogo.proto";
 
 message Allowance {
-    string amount = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
-	string spender = 2;
+  string amount = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string spender = 2;
 }
 
 message AllowanceList {
-	repeated Allowance allowances = 1;
+  repeated Allowance allowances = 1;
 }

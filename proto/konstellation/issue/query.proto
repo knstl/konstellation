@@ -12,76 +12,76 @@ import "params.proto";
 import "coin.proto";
 
 service Query {
-    rpc QueryAllowance(QueryAllowanceRequest) returns (QueryAllowanceResponse) {}
-    rpc QueryAllowances(QueryAllowancesRequest) returns (QueryAllowancesResponse) {}
-    rpc QueryFreeze(QueryFreezeRequest) returns (QueryFreezeResponse) {}
-    rpc QueryFreezes(QueryFreezesRequest) returns (QueryFreezesResponse) {}
-    rpc QueryIssue(QueryIssueRequest) returns (QueryIssueResponse) {}
-    rpc QueryAllIssues(QueryAllIssuesRequest) returns (QueryAllIssuesResponse) {}
-    rpc QueryIssues(QueryIssuesRequest) returns (QueryIssuesResponse) {}
-    rpc QueryParams(QueryParamsRequest) returns (QueryParamsResponse) {}
+  rpc QueryAllowance(QueryAllowanceRequest) returns (QueryAllowanceResponse) {}
+  rpc QueryAllowances(QueryAllowancesRequest) returns (QueryAllowancesResponse) {}
+  rpc QueryFreeze(QueryFreezeRequest) returns (QueryFreezeResponse) {}
+  rpc QueryFreezes(QueryFreezesRequest) returns (QueryFreezesResponse) {}
+  rpc QueryIssue(QueryIssueRequest) returns (QueryIssueResponse) {}
+  rpc QueryAllIssues(QueryAllIssuesRequest) returns (QueryAllIssuesResponse) {}
+  rpc QueryIssues(QueryIssuesRequest) returns (QueryIssuesResponse) {}
+  rpc QueryParams(QueryParamsRequest) returns (QueryParamsResponse) {}
 }
 
 message QueryAllowanceRequest {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string denom = 3;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 3;
 }
 
 message QueryAllowanceResponse {
-    Coins allowance = 1;
+  Coins allowance = 1;
 }
 
 message QueryAllowancesRequest {
-    string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-    string denom = 2;
+  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 2;
 }
 
 message QueryAllowancesResponse {
-    repeated Allowance allowances = 1;
+  repeated Allowance allowances = 1;
 }
 
 message QueryFreezeRequest {
-    string denom = 1;
-    string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string denom = 1;
+  string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
 }
 
 message QueryFreezeResponse {
-    Freeze freeze = 1;
+  Freeze freeze = 1;
 }
 
 message QueryFreezesRequest {
-    string denom = 1;
+  string denom = 1;
 }
 
 message QueryFreezesResponse {
-    repeated AddressFreeze freezes = 1;
+  repeated AddressFreeze freezes = 1;
 }
 
 message QueryIssueRequest {
-    string denom = 1;
+  string denom = 1;
 }
 
 message QueryIssueResponse {
-    CoinIssue issue = 1;
+  CoinIssue issue = 1;
 }
 
 message QueryAllIssuesRequest {}
 
 message QueryAllIssuesResponse {
-    repeated CoinIssue issues = 1;
+  repeated CoinIssue issues = 1;
 }
 
 message QueryIssuesRequest {
-    IssuesParams params = 1;
+  IssuesParams params = 1;
 }
 
 message QueryIssuesResponse {
-    repeated CoinIssue issues = 1;
+  repeated CoinIssue issues = 1;
 }
 
 message QueryParamsRequest {}
 
 message QueryParamsResponse {
-    Params params = 1;
+  Params params = 1;
 }

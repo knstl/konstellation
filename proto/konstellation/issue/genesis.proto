@@ -7,11 +7,11 @@ import "gogoproto/gogo.proto";
 import "issue.proto";
 
 message GenesisState {
-	uint64 starting_issue_id = 1;
-    Issues issues = 2;
-    string params = 3 [(gogoproto.customtype) = "Params", (gogoproto.nullable) = false];
+  uint64 starting_issue_id = 1;
+  Issues issues = 2;
+  string params = 3 [(gogoproto.customtype) = "Params", (gogoproto.nullable) = false];
 }
 
 message Issues {
-    repeated CoinIssue issues = 1;
+  repeated CoinIssue issues = 1;
 }
