@@ -3,7 +3,8 @@ version: '2'
 services:
   konstellation_node_1_full_node:
     container_name: testnode-1
-    image: kirdb/knstld:0.2.0
+    build: .
+#    image: kirdb/knstld:0.2.0
     environment:
       - CHAIN_ID=darchub
 #    ports:
@@ -17,7 +18,8 @@ services:
 
   konstellation_node_2_full_node:
     container_name: testnode-2
-    image: kirdb/knstld:0.2.0
+    build: .
+#    image: kirdb/knstld:0.2.0
     environment:
      - CHAIN_ID=darchub
 #    ports:
@@ -31,7 +33,8 @@ services:
 
   konstellation_node_3_full_node:
     container_name: testnode-3
-    image: kirdb/knstld:0.2.0
+    build: .
+#    image: kirdb/knstld:0.2.0
     environment:
       - CHAIN_ID=darchub
 #    ports:
@@ -45,7 +48,8 @@ services:
 
   konstellation_node_host:
     container_name: host
-    image: kirdb/knstld:0.2.0
+    build: .
+#    image: kirdb/knstld:0.2.0
     environment:
       - CHAIN_ID=darchub
     ports:

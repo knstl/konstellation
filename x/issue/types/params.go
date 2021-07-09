@@ -3,11 +3,11 @@ package types
 import (
 	"bytes"
 	"fmt"
+	"github.com/konstellation/konstellation/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	"github.com/konstellation/kn-sdk/types"
 )
 
 // DefaultParamspace defines the default issue module parameter subspace
