@@ -80,11 +80,7 @@ func freeze(ctx sdk.Context, k Keeper, denom string, holder string) ([]byte, err
 
 func freezes(ctx sdk.Context, k Keeper, denom string) ([]byte, error) {
 	freezes := k.GetFreezes(ctx, denom)
-	freezeSlice := []*types.AddressFreeze{}
-	for _, freeze := range freezes {
-		freezeSlice = append(freezeSlice, freeze)
-	}
-	freezeList := types.AddressFreezeList{AddressFreezes: freezeSlice}
+	freezeList := types.AddressFreezeList{AddressFreezes: freezes}
 
 	bz, err := k.GetCodec().MarshalBinaryBare(&freezeList)
 	if err != nil {

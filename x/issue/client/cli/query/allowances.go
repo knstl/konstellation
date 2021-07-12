@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
@@ -24,16 +23,10 @@ func getQueryCmdAllowances() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			owner, err := sdk.AccAddressFromBech32(args[0])
-			if err != nil {
-				return err
-			}
-			denom := args[1]
-
 			ctx := cmd.Context()
 			allowancesRequest := types.QueryAllowancesRequest{
-				Owner: types.AccAddress(owner),
-				Denom: denom,
+				Owner: args[0],
+				Denom: args[1],
 			}
 			res, err := queryClient.QueryAllowances(ctx, &allowancesRequest)
 			if err != nil {

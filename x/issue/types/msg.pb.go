@@ -30,8 +30,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type MsgIssueCreate struct {
-	Owner        AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Issuer       AccAddress `protobuf:"bytes,2,opt,name=issuer,proto3,customtype=AccAddress" json:"issuer"`
+	Owner        string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Issuer       string `protobuf:"bytes,2,opt,name=issuer,proto3" json:"issuer,omitempty" yaml:"issuer"`
 	*IssueParams `protobuf:"bytes,3,opt,name=issue_params,json=issueParams,proto3,embedded=issue_params" json:"issue_params,omitempty"`
 }
 
@@ -67,6 +67,20 @@ func (m *MsgIssueCreate) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgIssueCreate proto.InternalMessageInfo
+
+func (m *MsgIssueCreate) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *MsgIssueCreate) GetIssuer() string {
+	if m != nil {
+		return m.Issuer
+	}
+	return ""
+}
 
 type MsgIssueCreateResponse struct {
 	Amount *CoinIssue `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
@@ -113,9 +127,9 @@ func (m *MsgIssueCreateResponse) GetAmount() *CoinIssue {
 }
 
 type MsgDescription struct {
-	Owner       AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Denom       string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Description string     `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Owner       string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Denom       string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 }
 
 func (m *MsgDescription) Reset()         { *m = MsgDescription{} }
@@ -150,6 +164,13 @@ func (m *MsgDescription) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgDescription proto.InternalMessageInfo
+
+func (m *MsgDescription) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
 
 func (m *MsgDescription) GetDenom() string {
 	if m != nil {
@@ -202,9 +223,9 @@ func (m *MsgDescriptionResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDescriptionResponse proto.InternalMessageInfo
 
 type MsgDisableFeature struct {
-	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Denom   string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Feature string     `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
+	Owner   string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Denom   string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Feature string `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
 }
 
 func (m *MsgDisableFeature) Reset()         { *m = MsgDisableFeature{} }
@@ -239,6 +260,13 @@ func (m *MsgDisableFeature) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgDisableFeature proto.InternalMessageInfo
+
+func (m *MsgDisableFeature) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
 
 func (m *MsgDisableFeature) GetDenom() string {
 	if m != nil {
@@ -291,9 +319,9 @@ func (m *MsgDisableFeatureResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDisableFeatureResponse proto.InternalMessageInfo
 
 type MsgEnableFeature struct {
-	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Denom   string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Feature string     `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
+	Owner   string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"from_address"`
+	Denom   string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Feature string `protobuf:"bytes,3,opt,name=feature,proto3" json:"feature,omitempty"`
 }
 
 func (m *MsgEnableFeature) Reset()         { *m = MsgEnableFeature{} }
@@ -328,6 +356,13 @@ func (m *MsgEnableFeature) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgEnableFeature proto.InternalMessageInfo
+
+func (m *MsgEnableFeature) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
 
 func (m *MsgEnableFeature) GetDenom() string {
 	if m != nil {
@@ -380,8 +415,8 @@ func (m *MsgEnableFeatureResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgEnableFeatureResponse proto.InternalMessageInfo
 
 type MsgFeatures struct {
-	Owner          AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Denom          string     `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Owner          string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Denom          string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
 	*IssueFeatures `protobuf:"bytes,3,opt,name=issue_features,json=issueFeatures,proto3,embedded=issue_features" json:"issue_features,omitempty"`
 }
 
@@ -417,6 +452,13 @@ func (m *MsgFeatures) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgFeatures proto.InternalMessageInfo
+
+func (m *MsgFeatures) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
 
 func (m *MsgFeatures) GetDenom() string {
 	if m != nil {
@@ -462,9 +504,9 @@ func (m *MsgFeaturesResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgFeaturesResponse proto.InternalMessageInfo
 
 type MsgTransfer struct {
-	FromAddress AccAddress `protobuf:"bytes,1,opt,name=from_address,json=fromAddress,proto3,customtype=AccAddress" json:"from_address"`
-	ToAddress   AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
-	Amount      *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	FromAddress string `protobuf:"bytes,1,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty" yaml:"from_address"`
+	ToAddress   string `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3" json:"to_address,omitempty" yaml:"to_address"`
+	Amount      *Coins `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgTransfer) Reset()         { *m = MsgTransfer{} }
@@ -499,6 +541,20 @@ func (m *MsgTransfer) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgTransfer proto.InternalMessageInfo
+
+func (m *MsgTransfer) GetFromAddress() string {
+	if m != nil {
+		return m.FromAddress
+	}
+	return ""
+}
+
+func (m *MsgTransfer) GetToAddress() string {
+	if m != nil {
+		return m.ToAddress
+	}
+	return ""
+}
 
 func (m *MsgTransfer) GetAmount() *Coins {
 	if m != nil {
@@ -544,10 +600,10 @@ func (m *MsgTransferResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgTransferResponse proto.InternalMessageInfo
 
 type MsgTransferFrom struct {
-	Sender      AccAddress `protobuf:"bytes,1,opt,name=sender,proto3,customtype=AccAddress" json:"sender"`
-	FromAddress AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=AccAddress" json:"from_address"`
-	ToAddress   AccAddress `protobuf:"bytes,3,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
-	Amount      *Coins     `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Sender      string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty" yaml:"sender"`
+	FromAddress string `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty" yaml:"from_address"`
+	ToAddress   string `protobuf:"bytes,3,opt,name=to_address,json=toAddress,proto3" json:"to_address,omitempty" yaml:"to_address"`
+	Amount      *Coins `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgTransferFrom) Reset()         { *m = MsgTransferFrom{} }
@@ -582,6 +638,27 @@ func (m *MsgTransferFrom) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgTransferFrom proto.InternalMessageInfo
+
+func (m *MsgTransferFrom) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+func (m *MsgTransferFrom) GetFromAddress() string {
+	if m != nil {
+		return m.FromAddress
+	}
+	return ""
+}
+
+func (m *MsgTransferFrom) GetToAddress() string {
+	if m != nil {
+		return m.ToAddress
+	}
+	return ""
+}
 
 func (m *MsgTransferFrom) GetAmount() *Coins {
 	if m != nil {
@@ -627,9 +704,9 @@ func (m *MsgTransferFromResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgTransferFromResponse proto.InternalMessageInfo
 
 type MsgTransferOwnership struct {
-	Owner     AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	ToAddress AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
-	Denom     string     `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Owner     string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	ToAddress string `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3" json:"to_address,omitempty" yaml:"to_address"`
+	Denom     string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
 }
 
 func (m *MsgTransferOwnership) Reset()         { *m = MsgTransferOwnership{} }
@@ -664,6 +741,20 @@ func (m *MsgTransferOwnership) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgTransferOwnership proto.InternalMessageInfo
+
+func (m *MsgTransferOwnership) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *MsgTransferOwnership) GetToAddress() string {
+	if m != nil {
+		return m.ToAddress
+	}
+	return ""
+}
 
 func (m *MsgTransferOwnership) GetDenom() string {
 	if m != nil {
@@ -709,9 +800,9 @@ func (m *MsgTransferOwnershipResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgTransferOwnershipResponse proto.InternalMessageInfo
 
 type MsgApprove struct {
-	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Spender AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=AccAddress" json:"spender"`
-	Amount  *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Owner   string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Spender string `protobuf:"bytes,2,opt,name=spender,proto3" json:"spender,omitempty" yaml:"spender"`
+	Amount  *Coins `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgApprove) Reset()         { *m = MsgApprove{} }
@@ -746,6 +837,20 @@ func (m *MsgApprove) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgApprove proto.InternalMessageInfo
+
+func (m *MsgApprove) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *MsgApprove) GetSpender() string {
+	if m != nil {
+		return m.Spender
+	}
+	return ""
+}
 
 func (m *MsgApprove) GetAmount() *Coins {
 	if m != nil {
@@ -791,9 +896,9 @@ func (m *MsgApproveResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgApproveResponse proto.InternalMessageInfo
 
 type MsgIncreaseAllowance struct {
-	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Spender AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=AccAddress" json:"spender"`
-	Amount  *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Owner   string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Spender string `protobuf:"bytes,2,opt,name=spender,proto3" json:"spender,omitempty" yaml:"spender"`
+	Amount  *Coins `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgIncreaseAllowance) Reset()         { *m = MsgIncreaseAllowance{} }
@@ -828,6 +933,20 @@ func (m *MsgIncreaseAllowance) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgIncreaseAllowance proto.InternalMessageInfo
+
+func (m *MsgIncreaseAllowance) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *MsgIncreaseAllowance) GetSpender() string {
+	if m != nil {
+		return m.Spender
+	}
+	return ""
+}
 
 func (m *MsgIncreaseAllowance) GetAmount() *Coins {
 	if m != nil {
@@ -873,9 +992,9 @@ func (m *MsgIncreaseAllowanceResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgIncreaseAllowanceResponse proto.InternalMessageInfo
 
 type MsgDecreaseAllowance struct {
-	Owner   AccAddress `protobuf:"bytes,1,opt,name=owner,proto3,customtype=AccAddress" json:"owner"`
-	Spender AccAddress `protobuf:"bytes,2,opt,name=spender,proto3,customtype=AccAddress" json:"spender"`
-	Amount  *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Owner   string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
+	Spender string `protobuf:"bytes,2,opt,name=spender,proto3" json:"spender,omitempty" yaml:"spender"`
+	Amount  *Coins `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgDecreaseAllowance) Reset()         { *m = MsgDecreaseAllowance{} }
@@ -910,6 +1029,20 @@ func (m *MsgDecreaseAllowance) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgDecreaseAllowance proto.InternalMessageInfo
+
+func (m *MsgDecreaseAllowance) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *MsgDecreaseAllowance) GetSpender() string {
+	if m != nil {
+		return m.Spender
+	}
+	return ""
+}
 
 func (m *MsgDecreaseAllowance) GetAmount() *Coins {
 	if m != nil {
@@ -955,9 +1088,9 @@ func (m *MsgDecreaseAllowanceResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDecreaseAllowanceResponse proto.InternalMessageInfo
 
 type MsgMint struct {
-	Minter    AccAddress `protobuf:"bytes,1,opt,name=minter,proto3,customtype=AccAddress" json:"minter"`
-	ToAddress AccAddress `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3,customtype=AccAddress" json:"to_address"`
-	Amount    *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Minter    string `protobuf:"bytes,1,opt,name=minter,proto3" json:"minter,omitempty" yaml:"minter"`
+	ToAddress string `protobuf:"bytes,2,opt,name=to_address,json=toAddress,proto3" json:"to_address,omitempty" yaml:"to_address"`
+	Amount    *Coins `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgMint) Reset()         { *m = MsgMint{} }
@@ -992,6 +1125,20 @@ func (m *MsgMint) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgMint proto.InternalMessageInfo
+
+func (m *MsgMint) GetMinter() string {
+	if m != nil {
+		return m.Minter
+	}
+	return ""
+}
+
+func (m *MsgMint) GetToAddress() string {
+	if m != nil {
+		return m.ToAddress
+	}
+	return ""
+}
 
 func (m *MsgMint) GetAmount() *Coins {
 	if m != nil {
@@ -1037,8 +1184,8 @@ func (m *MsgMintResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgMintResponse proto.InternalMessageInfo
 
 type MsgBurn struct {
-	Burner AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=AccAddress" json:"burner"`
-	Amount *Coins     `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Burner string `protobuf:"bytes,1,opt,name=burner,proto3" json:"burner,omitempty" yaml:"burner"`
+	Amount *Coins `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgBurn) Reset()         { *m = MsgBurn{} }
@@ -1073,6 +1220,13 @@ func (m *MsgBurn) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgBurn proto.InternalMessageInfo
+
+func (m *MsgBurn) GetBurner() string {
+	if m != nil {
+		return m.Burner
+	}
+	return ""
+}
 
 func (m *MsgBurn) GetAmount() *Coins {
 	if m != nil {
@@ -1118,9 +1272,9 @@ func (m *MsgBurnResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgBurnResponse proto.InternalMessageInfo
 
 type MsgBurnFrom struct {
-	Burner      AccAddress `protobuf:"bytes,1,opt,name=burner,proto3,customtype=AccAddress" json:"burner"`
-	FromAddress AccAddress `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3,customtype=AccAddress" json:"from_address"`
-	Amount      *Coins     `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Burner      string `protobuf:"bytes,1,opt,name=burner,proto3" json:"burner,omitempty" yaml:"burner"`
+	FromAddress string `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty" yaml:"from_address"`
+	Amount      *Coins `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
 func (m *MsgBurnFrom) Reset()         { *m = MsgBurnFrom{} }
@@ -1155,6 +1309,20 @@ func (m *MsgBurnFrom) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgBurnFrom proto.InternalMessageInfo
+
+func (m *MsgBurnFrom) GetBurner() string {
+	if m != nil {
+		return m.Burner
+	}
+	return ""
+}
+
+func (m *MsgBurnFrom) GetFromAddress() string {
+	if m != nil {
+		return m.FromAddress
+	}
+	return ""
+}
 
 func (m *MsgBurnFrom) GetAmount() *Coins {
 	if m != nil {
@@ -1200,10 +1368,10 @@ func (m *MsgBurnFromResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgBurnFromResponse proto.InternalMessageInfo
 
 type MsgFreeze struct {
-	Freezer AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=AccAddress" json:"freezer"`
-	Holder  AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=AccAddress" json:"holder"`
-	Denom   string     `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
-	Op      string     `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
+	Freezer string `protobuf:"bytes,1,opt,name=freezer,proto3" json:"freezer,omitempty" yaml:"freezer"`
+	Holder  string `protobuf:"bytes,2,opt,name=holder,proto3" json:"holder,omitempty" yaml:"holder"`
+	Denom   string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Op      string `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
 }
 
 func (m *MsgFreeze) Reset()         { *m = MsgFreeze{} }
@@ -1238,6 +1406,20 @@ func (m *MsgFreeze) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgFreeze proto.InternalMessageInfo
+
+func (m *MsgFreeze) GetFreezer() string {
+	if m != nil {
+		return m.Freezer
+	}
+	return ""
+}
+
+func (m *MsgFreeze) GetHolder() string {
+	if m != nil {
+		return m.Holder
+	}
+	return ""
+}
 
 func (m *MsgFreeze) GetDenom() string {
 	if m != nil {
@@ -1290,10 +1472,10 @@ func (m *MsgFreezeResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgFreezeResponse proto.InternalMessageInfo
 
 type MsgUnfreeze struct {
-	Freezer AccAddress `protobuf:"bytes,1,opt,name=freezer,proto3,customtype=AccAddress" json:"freezer"`
-	Holder  AccAddress `protobuf:"bytes,2,opt,name=holder,proto3,customtype=AccAddress" json:"holder"`
-	Denom   string     `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
-	Op      string     `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
+	Freezer string `protobuf:"bytes,1,opt,name=freezer,proto3" json:"freezer,omitempty" yaml:"freezer"`
+	Holder  string `protobuf:"bytes,2,opt,name=holder,proto3" json:"holder,omitempty" yaml:"holder"`
+	Denom   string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
+	Op      string `protobuf:"bytes,4,opt,name=op,proto3" json:"op,omitempty"`
 }
 
 func (m *MsgUnfreeze) Reset()         { *m = MsgUnfreeze{} }
@@ -1328,6 +1510,20 @@ func (m *MsgUnfreeze) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_MsgUnfreeze proto.InternalMessageInfo
+
+func (m *MsgUnfreeze) GetFreezer() string {
+	if m != nil {
+		return m.Freezer
+	}
+	return ""
+}
+
+func (m *MsgUnfreeze) GetHolder() string {
+	if m != nil {
+		return m.Holder
+	}
+	return ""
+}
 
 func (m *MsgUnfreeze) GetDenom() string {
 	if m != nil {
@@ -1417,80 +1613,85 @@ func init() {
 func init() { proto.RegisterFile("msg.proto", fileDescriptor_c06e4cca6c2cc899) }
 
 var fileDescriptor_c06e4cca6c2cc899 = []byte{
-	// 1168 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x98, 0x41, 0x6f, 0xdc, 0x44,
-	0x14, 0xc7, 0xe3, 0x4d, 0x9b, 0x68, 0xdf, 0x36, 0x49, 0xe3, 0xa4, 0xb0, 0x99, 0xa4, 0xce, 0xe2,
-	0x86, 0x66, 0x53, 0xaa, 0xac, 0x1a, 0x04, 0xf7, 0xa4, 0xa5, 0x22, 0x87, 0x55, 0xab, 0x15, 0x5c,
-	0xb8, 0x44, 0xce, 0xee, 0xc4, 0xb5, 0xd8, 0x9d, 0x31, 0x33, 0xde, 0x16, 0x38, 0x70, 0xe8, 0x01,
-	0x84, 0x00, 0x09, 0xc1, 0x01, 0x0e, 0x88, 0x03, 0xe2, 0xd6, 0x13, 0xdf, 0xa2, 0xc7, 0x48, 0x5c,
-	0x10, 0x48, 0x11, 0x4a, 0x90, 0xf8, 0x1a, 0xd5, 0xcc, 0xd8, 0x13, 0xef, 0xda, 0xe3, 0xdd, 0xa4,
-	0x52, 0x95, 0x4b, 0x64, 0x7b, 0xfe, 0xe3, 0xf7, 0x7b, 0xcf, 0xef, 0xbd, 0x79, 0x1b, 0x28, 0xf7,
-	0xb8, 0xbf, 0x19, 0x32, 0x1a, 0x51, 0x7b, 0xe1, 0x63, 0x4a, 0x78, 0x84, 0xbb, 0x5d, 0x2f, 0x0a,
-	0x28, 0xd9, 0x0c, 0x38, 0xef, 0x63, 0xb4, 0xe8, 0x53, 0x9f, 0xca, 0xf5, 0x86, 0xb8, 0x52, 0x52,
-	0xb4, 0xe2, 0x53, 0xea, 0x77, 0x71, 0xc3, 0x0b, 0x83, 0x86, 0x47, 0x08, 0x8d, 0xe4, 0x16, 0x1e,
-	0xaf, 0x56, 0xe4, 0xd6, 0xf8, 0x66, 0xe6, 0x93, 0x3e, 0x66, 0x01, 0x66, 0xf1, 0x2d, 0xb4, 0x69,
-	0x40, 0xd4, 0xb5, 0xfb, 0x87, 0x05, 0xb3, 0x4d, 0xee, 0xef, 0x0a, 0xf5, 0x5d, 0x86, 0xbd, 0x08,
-	0xdb, 0x75, 0xb8, 0x4c, 0x9f, 0x10, 0xcc, 0xaa, 0x56, 0xcd, 0xaa, 0x97, 0x77, 0xec, 0xe7, 0x47,
-	0xab, 0x13, 0x7f, 0x1f, 0xad, 0xc2, 0x76, 0xbb, 0xbd, 0xdd, 0xe9, 0x30, 0xcc, 0x79, 0x4b, 0x09,
-	0xec, 0x5b, 0x30, 0x25, 0xcd, 0xb0, 0x6a, 0xc9, 0x28, 0x8d, 0x15, 0xf6, 0x2e, 0x5c, 0x91, 0x57,
-	0x7b, 0xa1, 0xc7, 0xbc, 0x1e, 0xaf, 0x4e, 0xd6, 0xac, 0x7a, 0x65, 0xab, 0xb6, 0x99, 0xe3, 0xf0,
-	0xa6, 0xa4, 0x79, 0x28, 0x75, 0x3b, 0x97, 0x0e, 0x8f, 0x56, 0xad, 0x96, 0x72, 0x47, 0x3d, 0x72,
-	0x1f, 0xc2, 0x6b, 0x83, 0xc8, 0x2d, 0xcc, 0x43, 0x4a, 0x38, 0xb6, 0xdf, 0x85, 0x29, 0xaf, 0x47,
-	0xfb, 0x24, 0x92, 0xec, 0x95, 0x2d, 0x27, 0xf7, 0xf5, 0x77, 0x69, 0x40, 0xe4, 0xee, 0x56, 0xac,
-	0x76, 0x99, 0x0c, 0xc2, 0x3d, 0xcc, 0xdb, 0x2c, 0x08, 0x85, 0xf2, 0x0c, 0x41, 0x58, 0x84, 0xcb,
-	0x1d, 0x4c, 0x68, 0x4f, 0xc5, 0xa0, 0xa5, 0x6e, 0xec, 0x1a, 0x54, 0x3a, 0xa7, 0xaf, 0x93, 0xde,
-	0x96, 0x5b, 0xe9, 0x47, 0x6e, 0x55, 0x7a, 0x91, 0xb2, 0x99, 0x78, 0xe1, 0xf6, 0x60, 0x5e, 0xac,
-	0x04, 0xdc, 0xdb, 0xef, 0xe2, 0xfb, 0xd8, 0x8b, 0xfa, 0x0c, 0xbf, 0x34, 0x50, 0x15, 0xa6, 0x0f,
-	0xd4, 0xab, 0x62, 0x98, 0xe4, 0xd6, 0x5d, 0x86, 0xa5, 0x8c, 0x39, 0xcd, 0xd2, 0x85, 0xab, 0x4d,
-	0xee, 0xbf, 0x47, 0x5e, 0x0d, 0x0a, 0x82, 0xea, 0xb0, 0x35, 0x4d, 0xf2, 0xab, 0x05, 0x95, 0x26,
-	0xf7, 0xe3, 0xc7, 0xfc, 0xa5, 0x29, 0x1e, 0xc0, 0xac, 0x4a, 0xc8, 0xd8, 0x78, 0x92, 0x92, 0xae,
-	0x39, 0x25, 0x13, 0xdb, 0x71, 0x52, 0xce, 0x04, 0xe9, 0x87, 0xee, 0x35, 0x58, 0x48, 0xf1, 0x69,
-	0xee, 0x67, 0x8a, 0xfb, 0x03, 0xe6, 0x11, 0x7e, 0x80, 0x99, 0xfd, 0x0e, 0x5c, 0x39, 0x60, 0xb4,
-	0xb7, 0xe7, 0x29, 0xc8, 0x02, 0xfc, 0x8a, 0xd0, 0xc5, 0x37, 0xf6, 0x1d, 0x80, 0x88, 0xea, 0x4d,
-	0xe6, 0x7a, 0x2b, 0x47, 0x34, 0xd9, 0xb2, 0xa5, 0xab, 0x41, 0x79, 0x86, 0x8c, 0xd5, 0xc0, 0x75,
-	0x25, 0x28, 0x27, 0x12, 0x58, 0xed, 0xc4, 0x3f, 0x16, 0xcc, 0xa5, 0x9e, 0xdf, 0x67, 0xb4, 0x27,
-	0xaa, 0x9f, 0x63, 0xd2, 0x29, 0xfc, 0x02, 0xb1, 0x22, 0xe3, 0x74, 0xe9, 0x3c, 0x4e, 0x4f, 0x9e,
-	0xcd, 0xe9, 0x4b, 0x63, 0x3b, 0xbd, 0x04, 0xaf, 0x0f, 0x39, 0xa7, 0x1d, 0xff, 0xda, 0x82, 0xc5,
-	0xd4, 0xda, 0x03, 0x91, 0x50, 0xfc, 0x51, 0x10, 0x9e, 0x21, 0xfd, 0xce, 0xf1, 0xe5, 0x74, 0xc6,
-	0x4e, 0xa6, 0x32, 0xd6, 0x75, 0x60, 0x25, 0x0f, 0x45, 0xb3, 0xfe, 0x6c, 0x01, 0x34, 0xb9, 0xbf,
-	0x1d, 0x86, 0x8c, 0x3e, 0x3e, 0x4b, 0x99, 0xde, 0x86, 0x69, 0x1e, 0xaa, 0x4f, 0x69, 0xc6, 0x4b,
-	0x24, 0xe7, 0x4a, 0xab, 0x45, 0xb0, 0x4f, 0xc9, 0x34, 0xf0, 0x6f, 0x2a, 0xb8, 0xbb, 0xa4, 0xcd,
-	0xb0, 0xc7, 0xf1, 0x76, 0xb7, 0x4b, 0x9f, 0x78, 0xa4, 0x7d, 0xb1, 0xd0, 0x55, 0xd4, 0x33, 0x8c,
-	0xc3, 0x4e, 0xdc, 0xc3, 0x17, 0xdf, 0x89, 0x0c, 0xa3, 0x76, 0xe2, 0x17, 0x0b, 0xa6, 0x9b, 0xdc,
-	0x6f, 0x06, 0x24, 0x12, 0x75, 0xdd, 0x0b, 0x48, 0x54, 0x5c, 0xd7, 0x4a, 0xf1, 0xaa, 0xba, 0xd2,
-	0xbc, 0xec, 0x3e, 0x82, 0x4e, 0x13, 0x07, 0x12, 0x78, 0xa7, 0xcf, 0x88, 0x00, 0xde, 0xef, 0xb3,
-	0xe2, 0x48, 0xc7, 0x8a, 0x94, 0xf5, 0xd2, 0x19, 0xad, 0x0b, 0x53, 0xda, 0xfa, 0xef, 0xaa, 0xa9,
-	0x8b, 0x67, 0x49, 0x2f, 0x1c, 0x1b, 0xe1, 0x9c, 0xbd, 0xf0, 0xfc, 0xdd, 0x3c, 0xa1, 0xd4, 0xf4,
-	0xdf, 0x58, 0x50, 0x16, 0x47, 0x15, 0xc3, 0xf8, 0x73, 0x2c, 0xb2, 0xef, 0x40, 0x5e, 0x15, 0xc1,
-	0x27, 0x12, 0xe1, 0xe9, 0x23, 0xda, 0x2d, 0x4e, 0xd5, 0x58, 0x91, 0xdf, 0xc6, 0xec, 0x59, 0x28,
-	0xd1, 0x50, 0x76, 0xe7, 0x72, 0xab, 0x44, 0x43, 0x77, 0x41, 0x8e, 0x3b, 0x0a, 0x46, 0x23, 0x7e,
-	0xa7, 0x02, 0xfc, 0x21, 0x39, 0xb8, 0x18, 0x90, 0x2a, 0x92, 0x09, 0x4e, 0x82, 0xb9, 0xf5, 0xff,
-	0x1c, 0x4c, 0x36, 0xb9, 0x6f, 0x7f, 0x6b, 0xc1, 0xe2, 0xfb, 0x1e, 0xe9, 0x74, 0xf1, 0xd0, 0x30,
-	0x7d, 0x23, 0xf7, 0x2b, 0x0d, 0x8a, 0xd0, 0x5b, 0x63, 0x88, 0x74, 0x64, 0xdc, 0xa7, 0x7f, 0xfe,
-	0xf7, 0x63, 0x69, 0x05, 0xa1, 0xc6, 0xc0, 0xa6, 0x86, 0xdc, 0xa4, 0xfe, 0xda, 0x5f, 0x5a, 0x30,
-	0xaf, 0x71, 0xf4, 0xc4, 0x54, 0x33, 0x99, 0x49, 0x14, 0xa8, 0x3e, 0x4a, 0xa1, 0x29, 0xde, 0x94,
-	0x14, 0xab, 0xe8, 0x7a, 0x2e, 0x45, 0x32, 0x52, 0xd9, 0x3f, 0xa4, 0xe3, 0x92, 0x9e, 0xaf, 0x8d,
-	0x71, 0x49, 0x89, 0xcc, 0x71, 0xc9, 0x9b, 0x9a, 0xeb, 0x92, 0xc8, 0x45, 0xb5, 0x5c, 0xa2, 0xd4,
-	0xe4, 0x3d, 0x18, 0x1d, 0x3d, 0x97, 0x19, 0xa3, 0x93, 0x28, 0xcc, 0xd1, 0xc9, 0x8c, 0x4b, 0xc5,
-	0xd1, 0x89, 0x12, 0x93, 0x3f, 0x59, 0x70, 0x2d, 0x03, 0x22, 0xfb, 0xc9, 0xda, 0x28, 0x53, 0x42,
-	0x85, 0x6e, 0x8f, 0xa3, 0xd2, 0x50, 0xb7, 0x24, 0xd4, 0x1a, 0x72, 0x0b, 0xa1, 0xf6, 0x44, 0xcf,
-	0xb1, 0x9f, 0x5a, 0x70, 0x55, 0x93, 0x25, 0x03, 0xc5, 0xaa, 0xc9, 0x5c, 0x2c, 0x40, 0xeb, 0x23,
-	0x04, 0x1a, 0x65, 0x4d, 0xa2, 0x38, 0x68, 0x25, 0x17, 0xc5, 0x8b, 0xed, 0x3d, 0xb3, 0x00, 0x9d,
-	0x16, 0x55, 0x66, 0x48, 0xd8, 0x30, 0x56, 0xcd, 0xb0, 0x14, 0xdd, 0x19, 0x5b, 0xaa, 0x11, 0x1b,
-	0x12, 0x71, 0x03, 0xad, 0xe7, 0x97, 0x59, 0xbc, 0x6f, 0xcf, 0xd3, 0x38, 0x03, 0xb4, 0xd9, 0x69,
-	0x60, 0xc3, 0x9c, 0xcb, 0x63, 0xd3, 0x9a, 0xcf, 0xef, 0x62, 0xda, 0x0e, 0xce, 0xd0, 0x3e, 0x86,
-	0x19, 0x0d, 0x2b, 0x4f, 0xfd, 0x15, 0x93, 0x51, 0xb1, 0x8a, 0xd6, 0x8a, 0x56, 0x35, 0xc5, 0x1b,
-	0x92, 0x62, 0x19, 0x2d, 0xe5, 0x52, 0x88, 0x91, 0x61, 0xc0, 0xae, 0x3c, 0xbc, 0x8d, 0x76, 0xc5,
-	0xaa, 0xd9, 0xee, 0xc0, 0x69, 0x5c, 0x6c, 0x57, 0x1c, 0xbb, 0xf6, 0x57, 0xe9, 0x9a, 0xd7, 0xc7,
-	0x76, 0xad, 0xe8, 0xf5, 0xb2, 0xc4, 0xea, 0xa3, 0x14, 0x1a, 0xe2, 0xa6, 0x84, 0xa8, 0x21, 0xc7,
-	0x08, 0xa1, 0x4a, 0x6b, 0x20, 0x4f, 0xb2, 0xbf, 0x2b, 0x36, 0x46, 0xd5, 0xb4, 0x96, 0x9a, 0xf3,
-	0xc4, 0xfc, 0x13, 0xa1, 0x38, 0x4f, 0x74, 0x0f, 0xa0, 0x1a, 0xe7, 0x0b, 0x98, 0x3b, 0x3d, 0x48,
-	0xd4, 0x51, 0xec, 0x18, 0x0f, 0x09, 0xb9, 0x8e, 0x6e, 0x16, 0xaf, 0x6b, 0x96, 0x1b, 0x92, 0xe5,
-	0x3a, 0x5a, 0xce, 0x3f, 0x42, 0x94, 0xb1, 0x81, 0x5e, 0xad, 0xa7, 0x01, 0xe3, 0x77, 0x4b, 0x14,
-	0xe6, 0xef, 0x36, 0x7c, 0x84, 0x8f, 0xe8, 0xd5, 0xfd, 0x58, 0xbe, 0xb3, 0xfe, 0xfc, 0xd8, 0xb1,
-	0x0e, 0x8f, 0x1d, 0xeb, 0xdf, 0x63, 0xc7, 0xfa, 0xfe, 0xc4, 0x99, 0x38, 0x3c, 0x71, 0x26, 0xfe,
-	0x3a, 0x71, 0x26, 0x3e, 0x9a, 0xf9, 0x34, 0x09, 0xdf, 0x67, 0x21, 0xe6, 0xfb, 0x53, 0xf2, 0x1f,
-	0x6b, 0x6f, 0xbf, 0x08, 0x00, 0x00, 0xff, 0xff, 0x3b, 0xfc, 0x79, 0x79, 0xd6, 0x13, 0x00, 0x00,
+	// 1236 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x98, 0x4f, 0x6f, 0x1b, 0xc5,
+	0x1b, 0xc7, 0xb3, 0x4e, 0x9b, 0xc8, 0xe3, 0xfc, 0xdd, 0x24, 0xbf, 0x3a, 0x93, 0x74, 0xed, 0xdf,
+	0x34, 0xe4, 0x0f, 0x94, 0x58, 0x04, 0xc4, 0xa1, 0xb7, 0xa4, 0xa5, 0x22, 0x07, 0xab, 0xd5, 0x0a,
+	0x2e, 0x5c, 0xa2, 0x4d, 0x3c, 0xd9, 0xac, 0x6a, 0xcf, 0x6c, 0x77, 0xd6, 0x2d, 0xe5, 0xc0, 0xa1,
+	0x07, 0x90, 0x50, 0x0f, 0x08, 0x24, 0xb8, 0x20, 0xc4, 0x11, 0x09, 0x89, 0x0b, 0x6f, 0x82, 0x63,
+	0x24, 0x2e, 0x9c, 0x2c, 0x94, 0x20, 0x71, 0xcf, 0x2b, 0x40, 0x33, 0xb3, 0x33, 0x59, 0x7b, 0x77,
+	0x6c, 0xd7, 0x91, 0x50, 0x2e, 0xd1, 0xee, 0xcc, 0x77, 0xf6, 0xf9, 0x3c, 0xcf, 0x3c, 0xf3, 0xcc,
+	0xe3, 0x80, 0x62, 0x8b, 0xf9, 0xdb, 0x61, 0x44, 0x63, 0x6a, 0x2f, 0x3c, 0xa1, 0x84, 0xc5, 0xb8,
+	0xd9, 0xf4, 0xe2, 0x80, 0x92, 0xed, 0x80, 0xb1, 0x36, 0x86, 0x8b, 0x3e, 0xf5, 0xa9, 0x98, 0xaf,
+	0xf1, 0x27, 0x29, 0x85, 0xab, 0x3e, 0xa5, 0x7e, 0x13, 0xd7, 0xbc, 0x30, 0xa8, 0x79, 0x84, 0xd0,
+	0x58, 0x2c, 0x61, 0xc9, 0x6c, 0x49, 0x2c, 0x4d, 0x5e, 0xa6, 0x9f, 0xb6, 0x71, 0x14, 0xe0, 0x28,
+	0x79, 0x05, 0x47, 0x34, 0x20, 0xf2, 0x19, 0xfd, 0x6a, 0x81, 0x99, 0x3a, 0xf3, 0xf7, 0xb9, 0xfa,
+	0x7e, 0x84, 0xbd, 0x18, 0xdb, 0xeb, 0xe0, 0x26, 0x7d, 0x4e, 0x70, 0x54, 0xb6, 0xaa, 0xd6, 0x66,
+	0x71, 0x6f, 0xee, 0xa2, 0x53, 0x99, 0x7a, 0xe1, 0xb5, 0x9a, 0xf7, 0x90, 0x18, 0x46, 0xae, 0x9c,
+	0xb6, 0xb7, 0xc0, 0x84, 0x30, 0x12, 0x95, 0x0b, 0x42, 0x38, 0x7f, 0xd1, 0xa9, 0x4c, 0x4b, 0xa1,
+	0x1c, 0x47, 0x6e, 0x22, 0xb0, 0xf7, 0xc1, 0x94, 0x78, 0x3a, 0x08, 0xbd, 0xc8, 0x6b, 0xb1, 0xf2,
+	0x78, 0xd5, 0xda, 0x2c, 0xed, 0x54, 0xb7, 0x73, 0xbc, 0xdd, 0x16, 0x28, 0x8f, 0x85, 0x6e, 0xef,
+	0xc6, 0x69, 0xa7, 0x62, 0xb9, 0xd2, 0x17, 0x39, 0x84, 0x1e, 0x83, 0xff, 0x75, 0xf3, 0xba, 0x98,
+	0x85, 0x94, 0x30, 0x6c, 0xbf, 0x0f, 0x26, 0xbc, 0x16, 0x6d, 0x93, 0x58, 0x80, 0x97, 0x76, 0x9c,
+	0xdc, 0xcf, 0xdf, 0xa7, 0x01, 0x11, 0xab, 0xdd, 0x44, 0x8d, 0x42, 0x11, 0x81, 0x07, 0x98, 0x1d,
+	0x45, 0x41, 0xc8, 0x95, 0x43, 0x47, 0x60, 0x11, 0xdc, 0x6c, 0x60, 0x42, 0x5b, 0x32, 0x00, 0xae,
+	0x7c, 0xb1, 0xab, 0xa0, 0xd4, 0xb8, 0xfc, 0x98, 0xf0, 0xb5, 0xe8, 0xa6, 0x87, 0x50, 0x59, 0xf8,
+	0x90, 0xb2, 0xa8, 0x7c, 0x40, 0x4f, 0xc0, 0x3c, 0x9f, 0x09, 0x98, 0x77, 0xd8, 0xc4, 0x0f, 0xb1,
+	0x17, 0xb7, 0x23, 0x7c, 0x45, 0x9c, 0x32, 0x98, 0x3c, 0x96, 0x1f, 0x4a, 0x50, 0xd4, 0x2b, 0x5a,
+	0x01, 0xcb, 0x19, 0x63, 0x9a, 0xe4, 0x29, 0x98, 0xab, 0x33, 0xff, 0x03, 0x92, 0x06, 0x79, 0xbb,
+	0x1b, 0xe4, 0xd6, 0x45, 0xa7, 0xb2, 0x20, 0x41, 0x8e, 0x23, 0xda, 0x3a, 0xf0, 0x1a, 0x8d, 0x08,
+	0x33, 0x36, 0x32, 0x0f, 0x04, 0xe5, 0x5e, 0x93, 0x1a, 0xe7, 0x07, 0x0b, 0x94, 0xea, 0xcc, 0x4f,
+	0x86, 0xd9, 0x15, 0x63, 0xf2, 0x08, 0xcc, 0xc8, 0x7c, 0x4c, 0x4c, 0xab, 0x8c, 0x44, 0xe6, 0x8c,
+	0x54, 0x96, 0x93, 0x9c, 0x9c, 0x0e, 0xd2, 0x83, 0x68, 0x09, 0x2c, 0xa4, 0xe8, 0x34, 0xf5, 0x6f,
+	0x92, 0xfa, 0xa3, 0xc8, 0x23, 0xec, 0x18, 0x47, 0xf6, 0x3d, 0x30, 0x95, 0x8e, 0xd4, 0xa0, 0x38,
+	0x96, 0xf8, 0xeb, 0xae, 0x7c, 0xb3, 0xdf, 0x03, 0x20, 0xa6, 0x7a, 0xa5, 0x3c, 0x72, 0x4b, 0x17,
+	0x9d, 0xca, 0xbc, 0x5c, 0x79, 0x39, 0x87, 0xdc, 0x62, 0x4c, 0xd5, 0xaa, 0x1d, 0x7d, 0x28, 0xa4,
+	0x87, 0xd0, 0x78, 0x28, 0x98, 0x3e, 0x10, 0xd2, 0x19, 0x05, 0xad, 0x9d, 0x39, 0xb3, 0xc0, 0x6c,
+	0x6a, 0xfc, 0x61, 0x44, 0x5b, 0xbc, 0x06, 0x30, 0x4c, 0x1a, 0x7a, 0x1f, 0x52, 0x35, 0x40, 0x8e,
+	0x23, 0x37, 0x11, 0x64, 0x7c, 0x2f, 0x8c, 0xec, 0xfb, 0xf8, 0x6b, 0xfb, 0x7e, 0x63, 0x68, 0xdf,
+	0x97, 0xc1, 0xad, 0x1e, 0x1f, 0xb5, 0xff, 0x5f, 0x59, 0x60, 0x31, 0x35, 0xf7, 0x88, 0xe7, 0x17,
+	0x3b, 0x09, 0xc2, 0xa1, 0x73, 0x71, 0xb4, 0x1d, 0xd4, 0x19, 0x3c, 0x9e, 0xca, 0x60, 0xe4, 0x80,
+	0xd5, 0x3c, 0x16, 0x0d, 0xfb, 0x9d, 0x05, 0x40, 0x9d, 0xf9, 0xbb, 0x61, 0x18, 0xd1, 0x67, 0xc3,
+	0x97, 0x90, 0xbb, 0x60, 0x92, 0x85, 0x72, 0x43, 0x25, 0x9f, 0x7d, 0xd1, 0xa9, 0xcc, 0x24, 0x1b,
+	0x1a, 0x26, 0x3b, 0xaa, 0x24, 0x23, 0x25, 0xd7, 0x22, 0xb0, 0x2f, 0xb9, 0x34, 0xee, 0x4f, 0x32,
+	0xb6, 0xfb, 0xe4, 0x28, 0xc2, 0x1e, 0xc3, 0xbb, 0xcd, 0x26, 0x7d, 0xee, 0x91, 0xa3, 0xeb, 0x04,
+	0x2e, 0x23, 0x9e, 0x21, 0xec, 0x75, 0xe1, 0x01, 0xbe, 0xee, 0x2e, 0x64, 0x08, 0xb5, 0x0b, 0x3f,
+	0x5a, 0x60, 0xb2, 0xce, 0xfc, 0x7a, 0x40, 0x62, 0x7e, 0xb2, 0x5b, 0x01, 0x89, 0xf3, 0x4e, 0xb6,
+	0x1c, 0x47, 0x6e, 0x22, 0xf8, 0x0f, 0x2b, 0xd3, 0xbc, 0xa8, 0x40, 0x9c, 0x4f, 0x33, 0x9f, 0x08,
+	0xe4, 0xbd, 0x76, 0x44, 0x38, 0xf2, 0x61, 0x3b, 0x22, 0x79, 0xc8, 0x72, 0x1c, 0xb9, 0x89, 0x20,
+	0x65, 0xbc, 0xf0, 0x9a, 0xc6, 0xb9, 0x25, 0x6d, 0xfc, 0x67, 0x59, 0xdf, 0xf9, 0x98, 0x2a, 0x87,
+	0xc3, 0x12, 0x5c, 0xa5, 0x1c, 0x8e, 0x5e, 0xd4, 0x15, 0x69, 0xba, 0xa8, 0x15, 0xf9, 0xcd, 0x15,
+	0x61, 0xfc, 0x19, 0xe6, 0x29, 0x78, 0x2c, 0x9e, 0x94, 0x03, 0xa9, 0x14, 0x4c, 0x26, 0x90, 0xab,
+	0x24, 0xdc, 0xdb, 0x13, 0xda, 0x6c, 0xe4, 0x35, 0x80, 0x72, 0x1c, 0xb9, 0x89, 0x20, 0xbf, 0x88,
+	0xd9, 0x33, 0xa0, 0x40, 0x43, 0x51, 0x9c, 0x8b, 0x6e, 0x81, 0x86, 0x68, 0x41, 0x74, 0x3f, 0x92,
+	0x45, 0x13, 0xbe, 0x92, 0x31, 0xfe, 0x98, 0x1c, 0x5f, 0x0b, 0x46, 0x19, 0x47, 0x45, 0xa3, 0x28,
+	0x77, 0xfe, 0x99, 0x05, 0xe3, 0x75, 0xe6, 0xdb, 0xaf, 0x2c, 0xb0, 0xf8, 0xa1, 0x47, 0x1a, 0x4d,
+	0xdc, 0xd3, 0x55, 0xdf, 0xc9, 0xdd, 0xa3, 0x6e, 0x11, 0x7c, 0x6b, 0x08, 0x91, 0x0e, 0x0c, 0x7a,
+	0xf9, 0xc7, 0xdf, 0xdf, 0x16, 0x56, 0x21, 0xac, 0x75, 0x2d, 0xaa, 0x89, 0x45, 0xf2, 0xaf, 0xfd,
+	0x85, 0x05, 0xe6, 0x35, 0x8e, 0x6e, 0x9e, 0xaa, 0x26, 0x33, 0x4a, 0x01, 0x37, 0x07, 0x29, 0x34,
+	0xc5, 0x1b, 0x82, 0xa2, 0x02, 0x6f, 0xe7, 0x52, 0xa8, 0xfe, 0xca, 0xfe, 0x26, 0x1d, 0x97, 0x74,
+	0xaf, 0x6d, 0x8c, 0x4b, 0x4a, 0x64, 0x8e, 0x4b, 0x5e, 0x0f, 0xbd, 0x29, 0x88, 0x10, 0xac, 0xe6,
+	0x12, 0xa5, 0xfa, 0xf0, 0xee, 0xe8, 0xe8, 0x26, 0xcd, 0x18, 0x1d, 0xa5, 0x30, 0x47, 0x27, 0xd3,
+	0x33, 0xf5, 0x8f, 0x4e, 0xac, 0x4c, 0x7e, 0x6f, 0x81, 0xa5, 0x0c, 0x88, 0xa8, 0x28, 0x6b, 0x83,
+	0x4c, 0x71, 0x15, 0xbc, 0x3b, 0x8c, 0x4a, 0x43, 0xbd, 0x29, 0xa0, 0xd6, 0x20, 0xea, 0x0b, 0x75,
+	0xc0, 0x2b, 0x8e, 0xfd, 0xd2, 0x02, 0x73, 0x9a, 0x4c, 0x75, 0x13, 0x15, 0x93, 0xb9, 0x44, 0x00,
+	0x37, 0x06, 0x08, 0x34, 0xca, 0x9a, 0x40, 0x71, 0xe0, 0x6a, 0x2e, 0x8a, 0x97, 0xd8, 0xfb, 0xc5,
+	0x02, 0xf0, 0xf2, 0x50, 0x65, 0x7a, 0x84, 0x2d, 0xe3, 0xa9, 0xe9, 0x95, 0xc2, 0x77, 0x86, 0x96,
+	0x6a, 0xc4, 0x9a, 0x40, 0xdc, 0x82, 0x1b, 0xf9, 0xc7, 0x2c, 0x59, 0x77, 0xe0, 0x69, 0x9c, 0x2e,
+	0xda, 0x6c, 0x3b, 0xb0, 0x65, 0xce, 0xe5, 0xa1, 0x69, 0xcd, 0x57, 0x78, 0x7f, 0xda, 0x06, 0xce,
+	0xd0, 0x3e, 0x03, 0xd3, 0x1a, 0x56, 0x5c, 0xfc, 0xab, 0x26, 0xa3, 0x7c, 0x16, 0xae, 0xf5, 0x9b,
+	0xd5, 0x14, 0xff, 0x17, 0x14, 0x2b, 0x70, 0x39, 0x97, 0x82, 0xb7, 0x0d, 0x5d, 0x76, 0xc5, 0xed,
+	0x6d, 0xb4, 0xcb, 0x67, 0xcd, 0x76, 0xbb, 0xee, 0xe3, 0xfe, 0x76, 0xf9, 0xcd, 0x6b, 0x7f, 0x99,
+	0x3e, 0xf3, 0xfa, 0xe2, 0xae, 0xf6, 0xfb, 0xbc, 0x38, 0x62, 0x9b, 0x83, 0x14, 0x1a, 0x62, 0x5d,
+	0x40, 0x54, 0xa1, 0x63, 0x84, 0x90, 0x47, 0xab, 0x2b, 0x4f, 0xb2, 0xbf, 0x2a, 0xb6, 0x06, 0x9d,
+	0x69, 0x2d, 0x35, 0xe7, 0x89, 0xf9, 0xf7, 0x41, 0xff, 0x3c, 0xd1, 0x35, 0x80, 0x6a, 0x9c, 0xcf,
+	0xc1, 0xec, 0xe5, 0x45, 0x22, 0x6f, 0x62, 0xc7, 0x78, 0x49, 0x88, 0x79, 0xb8, 0xde, 0x7f, 0x5e,
+	0xb3, 0xdc, 0x11, 0x2c, 0xb7, 0xe1, 0x4a, 0xfe, 0x15, 0x22, 0x8d, 0x75, 0xd5, 0x6a, 0xdd, 0x0c,
+	0x18, 0xf7, 0x4d, 0x29, 0xcc, 0xfb, 0xd6, 0x7b, 0x85, 0x0f, 0xa8, 0xd5, 0xed, 0x44, 0xbe, 0xb7,
+	0xf1, 0xfb, 0x99, 0x63, 0x9d, 0x9e, 0x39, 0xd6, 0x5f, 0x67, 0x8e, 0xf5, 0xf5, 0xb9, 0x33, 0x76,
+	0x7a, 0xee, 0x8c, 0xfd, 0x79, 0xee, 0x8c, 0x7d, 0x32, 0xfd, 0xa9, 0x0a, 0xdf, 0x8b, 0x10, 0xb3,
+	0xc3, 0x09, 0xf1, 0x1f, 0xb6, 0x77, 0xff, 0x0d, 0x00, 0x00, 0xff, 0xff, 0x67, 0xae, 0x83, 0xe1,
+	0xdf, 0x13, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -2073,26 +2274,20 @@ func (m *MsgIssueCreate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.Issuer.Size()
-		i -= size
-		if _, err := m.Issuer.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Issuer) > 0 {
+		i -= len(m.Issuer)
+		copy(dAtA[i:], m.Issuer)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Issuer)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2165,16 +2360,13 @@ func (m *MsgDescription) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2235,16 +2427,13 @@ func (m *MsgDisableFeature) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2305,16 +2494,13 @@ func (m *MsgEnableFeature) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2380,16 +2566,13 @@ func (m *MsgFeatures) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2448,26 +2631,20 @@ func (m *MsgTransfer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.ToAddress.Size()
-		i -= size
-		if _, err := m.ToAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.ToAddress) > 0 {
+		i -= len(m.ToAddress)
+		copy(dAtA[i:], m.ToAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.ToAddress)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.FromAddress.Size()
-		i -= size
-		if _, err := m.FromAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.FromAddress) > 0 {
+		i -= len(m.FromAddress)
+		copy(dAtA[i:], m.FromAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.FromAddress)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2526,36 +2703,27 @@ func (m *MsgTransferFrom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x22
 	}
-	{
-		size := m.ToAddress.Size()
-		i -= size
-		if _, err := m.ToAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.ToAddress) > 0 {
+		i -= len(m.ToAddress)
+		copy(dAtA[i:], m.ToAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.ToAddress)))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x1a
-	{
-		size := m.FromAddress.Size()
-		i -= size
-		if _, err := m.FromAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.FromAddress) > 0 {
+		i -= len(m.FromAddress)
+		copy(dAtA[i:], m.FromAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.FromAddress)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Sender.Size()
-		i -= size
-		if _, err := m.Sender.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2609,26 +2777,20 @@ func (m *MsgTransferOwnership) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.ToAddress.Size()
-		i -= size
-		if _, err := m.ToAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.ToAddress) > 0 {
+		i -= len(m.ToAddress)
+		copy(dAtA[i:], m.ToAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.ToAddress)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2687,26 +2849,20 @@ func (m *MsgApprove) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.Spender.Size()
-		i -= size
-		if _, err := m.Spender.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Spender) > 0 {
+		i -= len(m.Spender)
+		copy(dAtA[i:], m.Spender)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Spender)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2765,26 +2921,20 @@ func (m *MsgIncreaseAllowance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.Spender.Size()
-		i -= size
-		if _, err := m.Spender.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Spender) > 0 {
+		i -= len(m.Spender)
+		copy(dAtA[i:], m.Spender)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Spender)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2843,26 +2993,20 @@ func (m *MsgDecreaseAllowance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.Spender.Size()
-		i -= size
-		if _, err := m.Spender.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Spender) > 0 {
+		i -= len(m.Spender)
+		copy(dAtA[i:], m.Spender)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Spender)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Owner.Size()
-		i -= size
-		if _, err := m.Owner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2921,26 +3065,20 @@ func (m *MsgMint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.ToAddress.Size()
-		i -= size
-		if _, err := m.ToAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.ToAddress) > 0 {
+		i -= len(m.ToAddress)
+		copy(dAtA[i:], m.ToAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.ToAddress)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Minter.Size()
-		i -= size
-		if _, err := m.Minter.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Minter) > 0 {
+		i -= len(m.Minter)
+		copy(dAtA[i:], m.Minter)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Minter)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -2999,16 +3137,13 @@ func (m *MsgBurn) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	{
-		size := m.Burner.Size()
-		i -= size
-		if _, err := m.Burner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Burner) > 0 {
+		i -= len(m.Burner)
+		copy(dAtA[i:], m.Burner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Burner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -3067,26 +3202,20 @@ func (m *MsgBurnFrom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.FromAddress.Size()
-		i -= size
-		if _, err := m.FromAddress.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.FromAddress) > 0 {
+		i -= len(m.FromAddress)
+		copy(dAtA[i:], m.FromAddress)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.FromAddress)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Burner.Size()
-		i -= size
-		if _, err := m.Burner.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Burner) > 0 {
+		i -= len(m.Burner)
+		copy(dAtA[i:], m.Burner)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Burner)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -3147,26 +3276,20 @@ func (m *MsgFreeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.Holder.Size()
-		i -= size
-		if _, err := m.Holder.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Holder) > 0 {
+		i -= len(m.Holder)
+		copy(dAtA[i:], m.Holder)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Holder)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Freezer.Size()
-		i -= size
-		if _, err := m.Freezer.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Freezer) > 0 {
+		i -= len(m.Freezer)
+		copy(dAtA[i:], m.Freezer)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Freezer)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -3227,26 +3350,20 @@ func (m *MsgUnfreeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	{
-		size := m.Holder.Size()
-		i -= size
-		if _, err := m.Holder.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Holder) > 0 {
+		i -= len(m.Holder)
+		copy(dAtA[i:], m.Holder)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Holder)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x12
-	{
-		size := m.Freezer.Size()
-		i -= size
-		if _, err := m.Freezer.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintMsg(dAtA, i, uint64(size))
+	if len(m.Freezer) > 0 {
+		i -= len(m.Freezer)
+		copy(dAtA[i:], m.Freezer)
+		i = encodeVarintMsg(dAtA, i, uint64(len(m.Freezer)))
+		i--
+		dAtA[i] = 0xa
 	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -3290,10 +3407,14 @@ func (m *MsgIssueCreate) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.Issuer.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.Issuer)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.IssueParams != nil {
 		l = m.IssueParams.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3320,8 +3441,10 @@ func (m *MsgDescription) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3348,8 +3471,10 @@ func (m *MsgDisableFeature) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3376,8 +3501,10 @@ func (m *MsgEnableFeature) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3404,8 +3531,10 @@ func (m *MsgFeatures) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3432,10 +3561,14 @@ func (m *MsgTransfer) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.FromAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.ToAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.FromAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.ToAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3458,12 +3591,18 @@ func (m *MsgTransferFrom) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Sender.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.FromAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.ToAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.FromAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.ToAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3486,10 +3625,14 @@ func (m *MsgTransferOwnership) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.ToAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.ToAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3512,10 +3655,14 @@ func (m *MsgApprove) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.Spender.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.Spender)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3538,10 +3685,14 @@ func (m *MsgIncreaseAllowance) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.Spender.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.Spender)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3564,10 +3715,14 @@ func (m *MsgDecreaseAllowance) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Owner.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.Spender.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.Spender)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3590,10 +3745,14 @@ func (m *MsgMint) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Minter.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.ToAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Minter)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.ToAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3616,8 +3775,10 @@ func (m *MsgBurn) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Burner.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Burner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3640,10 +3801,14 @@ func (m *MsgBurnFrom) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Burner.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.FromAddress.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Burner)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.FromAddress)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovMsg(uint64(l))
@@ -3666,10 +3831,14 @@ func (m *MsgFreeze) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Freezer.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.Holder.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Freezer)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.Holder)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3696,10 +3865,14 @@ func (m *MsgUnfreeze) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Freezer.Size()
-	n += 1 + l + sovMsg(uint64(l))
-	l = m.Holder.Size()
-	n += 1 + l + sovMsg(uint64(l))
+	l = len(m.Freezer)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
+	l = len(m.Holder)
+	if l > 0 {
+		n += 1 + l + sovMsg(uint64(l))
+	}
 	l = len(m.Denom)
 	if l > 0 {
 		n += 1 + l + sovMsg(uint64(l))
@@ -3785,9 +3958,7 @@ func (m *MsgIssueCreate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3819,9 +3990,7 @@ func (m *MsgIssueCreate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Issuer.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Issuer = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4025,9 +4194,7 @@ func (m *MsgDescription) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4223,9 +4390,7 @@ func (m *MsgDisableFeature) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4421,9 +4586,7 @@ func (m *MsgEnableFeature) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4619,9 +4782,7 @@ func (m *MsgFeatures) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4821,9 +4982,7 @@ func (m *MsgTransfer) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.FromAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.FromAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4855,9 +5014,7 @@ func (m *MsgTransfer) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.ToAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.ToAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -5025,9 +5182,7 @@ func (m *MsgTransferFrom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Sender.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5059,9 +5214,7 @@ func (m *MsgTransferFrom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.FromAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.FromAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -5093,9 +5246,7 @@ func (m *MsgTransferFrom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.ToAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.ToAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -5263,9 +5414,7 @@ func (m *MsgTransferOwnership) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5297,9 +5446,7 @@ func (m *MsgTransferOwnership) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.ToAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.ToAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -5463,9 +5610,7 @@ func (m *MsgApprove) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5497,9 +5642,7 @@ func (m *MsgApprove) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Spender.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Spender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -5667,9 +5810,7 @@ func (m *MsgIncreaseAllowance) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5701,9 +5842,7 @@ func (m *MsgIncreaseAllowance) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Spender.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Spender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -5871,9 +6010,7 @@ func (m *MsgDecreaseAllowance) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Owner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5905,9 +6042,7 @@ func (m *MsgDecreaseAllowance) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Spender.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Spender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -6075,9 +6210,7 @@ func (m *MsgMint) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Minter.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Minter = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6109,9 +6242,7 @@ func (m *MsgMint) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.ToAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.ToAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -6279,9 +6410,7 @@ func (m *MsgBurn) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Burner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Burner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6449,9 +6578,7 @@ func (m *MsgBurnFrom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Burner.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Burner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6483,9 +6610,7 @@ func (m *MsgBurnFrom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.FromAddress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.FromAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -6653,9 +6778,7 @@ func (m *MsgFreeze) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Freezer.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Freezer = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6687,9 +6810,7 @@ func (m *MsgFreeze) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Holder.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Holder = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -6885,9 +7006,7 @@ func (m *MsgUnfreeze) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Freezer.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Freezer = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6919,9 +7038,7 @@ func (m *MsgUnfreeze) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Holder.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Holder = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {

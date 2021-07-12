@@ -43,8 +43,8 @@ var _ sdk.Msg = &MsgUnfreeze{}
 
 func NewMsgIssueCreate(owner, issuer sdk.AccAddress, params *IssueParams) MsgIssueCreate {
 	return MsgIssueCreate{
-		AccAddress(owner),
-		AccAddress(issuer),
+		owner.String(),
+		issuer.String(),
 		params,
 	}
 }
@@ -92,7 +92,7 @@ func (msg MsgIssueCreate) ValidateBasic() error {
 }
 
 func NewMsgDescription(owner sdk.AccAddress, denom, description string) MsgDescription {
-	return MsgDescription{Owner: AccAddress(owner), Denom: denom, Description: description}
+	return MsgDescription{Owner: owner.String(), Denom: denom, Description: description}
 }
 
 // Route Implements Msg.
@@ -127,7 +127,7 @@ func (msg MsgDescription) GetSigners() []sdk.AccAddress {
 }
 
 func NewMsgDisableFeature(owner sdk.AccAddress, denom, feature string) MsgDisableFeature {
-	return MsgDisableFeature{Owner: AccAddress(owner), Denom: denom, Feature: feature}
+	return MsgDisableFeature{Owner: owner.String(), Denom: denom, Feature: feature}
 }
 
 // Route Implements Msg.
@@ -162,7 +162,7 @@ func (msg MsgDisableFeature) GetSigners() []sdk.AccAddress {
 }
 
 func NewMsgEnableFeature(owner sdk.AccAddress, denom, feature string) MsgEnableFeature {
-	return MsgEnableFeature{Owner: AccAddress(owner), Denom: denom, Feature: feature}
+	return MsgEnableFeature{Owner: owner.String(), Denom: denom, Feature: feature}
 }
 
 // Route Implements Msg.
@@ -197,7 +197,7 @@ func (msg MsgEnableFeature) GetSigners() []sdk.AccAddress {
 
 func NewMsgFeatures(owner sdk.AccAddress, denom string, features *IssueFeatures) MsgFeatures {
 	return MsgFeatures{
-		AccAddress(owner),
+		owner.String(),
 		denom,
 		features,
 	}
@@ -234,7 +234,7 @@ func NewMsgTransfer(fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) MsgTransf
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgTransfer{FromAddress: AccAddress(fromAddr), ToAddress: AccAddress(toAddr), Amount: &coins}
+	return MsgTransfer{FromAddress: fromAddr.String(), ToAddress: toAddr.String(), Amount: &coins}
 }
 
 // Route Implements Msg.
@@ -275,7 +275,7 @@ func NewMsgTransferFrom(sender, fromAddr, toAddr sdk.AccAddress, amount sdk.Coin
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgTransferFrom{Sender: AccAddress(sender), FromAddress: AccAddress(fromAddr), ToAddress: AccAddress(toAddr), Amount: &coins}
+	return MsgTransferFrom{Sender: sender.String(), FromAddress: fromAddr.String(), ToAddress: toAddr.String(), Amount: &coins}
 }
 
 // Route Implements Msg.
@@ -315,7 +315,7 @@ func (msg MsgTransferFrom) GetSigners() []sdk.AccAddress {
 }
 
 func NewMsgTransferOwnership(owner, toAddr sdk.AccAddress, denom string) MsgTransferOwnership {
-	return MsgTransferOwnership{Owner: AccAddress(owner), ToAddress: AccAddress(toAddr), Denom: denom}
+	return MsgTransferOwnership{Owner: owner.String(), ToAddress: toAddr.String(), Denom: denom}
 }
 
 // Route Implements Msg.
@@ -354,7 +354,7 @@ func NewMsgApprove(owner, spender sdk.AccAddress, amount sdk.Coins) MsgApprove {
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgApprove{AccAddress(owner), AccAddress(spender), &coins}
+	return MsgApprove{owner.String(), spender.String(), &coins}
 }
 
 // Route Implements Msg.
@@ -395,7 +395,7 @@ func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) Ms
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgIncreaseAllowance{AccAddress(owner), AccAddress(spender), &coins}
+	return MsgIncreaseAllowance{owner.String(), spender.String(), &coins}
 }
 
 // Route Implements Msg.
@@ -437,7 +437,7 @@ func NewMsgDecreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) Ms
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgDecreaseAllowance{AccAddress(owner), AccAddress(spender), &coins}
+	return MsgDecreaseAllowance{owner.String(), spender.String(), &coins}
 }
 
 // Route Implements Msg.
@@ -478,7 +478,7 @@ func NewMsgMint(minter, toAddr sdk.AccAddress, amount sdk.Coins) MsgMint {
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgMint{Minter: AccAddress(minter), ToAddress: AccAddress(toAddr), Amount: &coins}
+	return MsgMint{Minter: minter.String(), ToAddress: toAddr.String(), Amount: &coins}
 }
 
 // Route Implements Msg.
@@ -519,7 +519,7 @@ func NewMsgBurn(burner sdk.AccAddress, amount sdk.Coins) MsgBurn {
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgBurn{Burner: AccAddress(burner), Amount: &coins}
+	return MsgBurn{Burner: burner.String(), Amount: &coins}
 }
 
 // Route Implements Msg.
@@ -557,7 +557,7 @@ func NewMsgBurnFrom(burner, fromAddr sdk.AccAddress, amount sdk.Coins) MsgBurnFr
 	for _, coin := range amount {
 		coins.Coins = append(coins.Coins, coin)
 	}
-	return MsgBurnFrom{Burner: AccAddress(burner), FromAddress: AccAddress(fromAddr), Amount: &coins}
+	return MsgBurnFrom{Burner: burner.String(), FromAddress: fromAddr.String(), Amount: &coins}
 }
 
 // Route Implements Msg.
@@ -594,7 +594,7 @@ func (msg MsgBurnFrom) GetSigners() []sdk.AccAddress {
 }
 
 func NewMsgFreeze(freezer, holder sdk.AccAddress, denom, op string) MsgFreeze {
-	return MsgFreeze{Freezer: AccAddress(freezer), Holder: AccAddress(holder), Denom: denom, Op: op}
+	return MsgFreeze{Freezer: freezer.String(), Holder: holder.String(), Denom: denom, Op: op}
 }
 
 // Route Implements Msg.
@@ -631,7 +631,7 @@ func (msg MsgFreeze) GetSigners() []sdk.AccAddress {
 }
 
 func NewMsgUnfreeze(freezer, holder sdk.AccAddress, denom, op string) MsgUnfreeze {
-	return MsgUnfreeze{Freezer: AccAddress(freezer), Holder: AccAddress(holder), Denom: denom, Op: op}
+	return MsgUnfreeze{Freezer: freezer.String(), Holder: holder.String(), Denom: denom, Op: op}
 }
 
 // Route Implements Msg.

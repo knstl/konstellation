@@ -185,9 +185,9 @@ func (k *Keeper) setAddressDenoms(ctx sdk.Context, accAddress string, denoms []s
 }
 
 func (k *Keeper) addAddressDenom(ctx sdk.Context, issue *types.CoinIssue) {
-	denoms := k.getAddressDenoms(ctx, issue.GetOwner().String())
+	denoms := k.getAddressDenoms(ctx, issue.GetOwner())
 	denoms = append(denoms, issue.GetDenom())
-	k.setAddressDenoms(ctx, issue.GetOwner().String(), denoms)
+	k.setAddressDenoms(ctx, issue.GetOwner(), denoms)
 }
 
 func (k *Keeper) deleteAllAddressDenoms(ctx sdk.Context, accAddress string) {
@@ -492,13 +492,12 @@ func (k *Keeper) allowance(ctx sdk.Context, owner, spender sdk.AccAddress, denom
 
 func (k *Keeper) allowances(ctx sdk.Context, owner sdk.AccAddress, denom string) types.Allowances {
 	store := ctx.KVStore(k.key)
-	allowances := make(types.Allowances, 0)
 	allowanceList := types.AllowanceList{Allowances: []*types.Allowance{}}
 	bz := store.Get(KeyAllowances(denom, owner))
 	if bz != nil {
 		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &allowanceList)
 	}
-	allowances = types.Allowances(allowanceList.Allowances)
+	allowances := types.Allowances(allowanceList.Allowances)
 
 	return allowances
 }
@@ -736,7 +735,7 @@ func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) *sdkerrors.Error
 		sdk.NewEvent(
 			types.EventTypeIssue,
 			sdk.NewAttribute(sdk.AttributeKeyAmount, issue.ToCoin().String()),
-			sdk.NewAttribute(types.AttributeKeyIssuer, issue.GetIssuer().String()),
+			sdk.NewAttribute(types.AttributeKeyIssuer, issue.GetIssuer()),
 		),
 	)
 
@@ -750,8 +749,8 @@ func (k *Keeper) Issue(ctx sdk.Context, issue *types.CoinIssue) *sdkerrors.Error
 	if err := k.sk.MintCoins(ctx, types.ModuleName, issue.ToCoins()); err != nil {
 		return err
 	}
-
-	return k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, issue.GetOwner(), issue.ToCoins())
+	owner, _ := sdk.AccAddressFromBech32(issue.GetOwner())
+	return k.sk.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, issue.ToCoins())
 }
 
 func (k *Keeper) Transfer(ctx sdk.Context, from, to sdk.AccAddress, coins sdk.Coins) *sdkerrors.Error {
@@ -803,7 +802,7 @@ func (k *Keeper) TransferOwnership(ctx sdk.Context, owner, to sdk.AccAddress, de
 		return err
 	}
 
-	i.Owner = types.AccAddress(to)
+	i.Owner = to.String()
 	k.deleteAddressDenom(ctx, owner.String(), denom)
 	k.addAddressDenom(ctx, i)
 	k.setIssue(ctx, i)

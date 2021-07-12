@@ -56,7 +56,7 @@ func (coinIssues CoinIssues) String() string {
 	out := fmt.Sprintf("%-17s|%-44s|%-10s|%-6s|%-18s|%-8s|%s\n",
 		"IssueID", "Owner", "Name", "Symbol", "TotalSupply", "Decimals", "IssueTime")
 	for _, issue := range coinIssues {
-		out += fmt.Sprintf("%-44s|%-10s|%-6s|%-18s|%-8d|%d\n", issue.GetOwner().String(), issue.Denom, issue.Symbol, issue.TotalSupply.String(), issue.Decimals, issue.IssueTime)
+		out += fmt.Sprintf("%-44s|%-10s|%-6s|%-18s|%-8d|%d\n", issue.GetOwner(), issue.Denom, issue.Symbol, issue.TotalSupply.String(), issue.Decimals, issue.IssueTime)
 	}
 	return strings.TrimSpace(out)
 }
@@ -65,8 +65,8 @@ func NewCoinIssue(owner, issuer sdk.AccAddress, params *IssueParams) *CoinIssue 
 	var ci CoinIssue
 	_ = mapstructure.Decode(params, &ci)
 	ci.SetFeatures(params.IssueFeatures)
-	ci.Owner = AccAddress(owner)
-	ci.Issuer = AccAddress(issuer)
+	ci.Owner = owner.String()
+	ci.Issuer = issuer.String()
 	ci.Symbol = strings.ToUpper(ci.Symbol)
 	ci.TotalSupply = params.TotalSupply
 
@@ -81,20 +81,12 @@ func (ci *CoinIssue) SetDenom(denom string) {
 	ci.Denom = denom
 }
 
-func (ci *CoinIssue) GetIssuer() sdk.AccAddress {
-	return sdk.AccAddress(ci.Issuer)
-}
-
 func (ci *CoinIssue) SetIssuer(issuer sdk.AccAddress) {
-	ci.Issuer = AccAddress(issuer)
-}
-
-func (ci *CoinIssue) GetOwner() sdk.AccAddress {
-	return sdk.AccAddress(ci.Owner)
+	ci.Issuer = issuer.String()
 }
 
 func (ci *CoinIssue) SetOwner(owner sdk.AccAddress) {
-	ci.Owner = AccAddress(owner)
+	ci.Owner = owner.String()
 }
 
 func (ci *CoinIssue) SetSymbol(symbol string) {

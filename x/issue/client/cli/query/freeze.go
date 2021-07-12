@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/konstellation/konstellation/x/issue/types"
 )
@@ -24,17 +23,10 @@ func getQueryCmdFreeze() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			holder, err := sdk.AccAddressFromBech32(args[1])
-			if err != nil {
-				return err
-			}
-
-			denom := args[0]
-
 			ctx := cmd.Context()
 			freezeRequest := types.QueryFreezeRequest{
-				Holder: types.AccAddress(holder),
-				Denom:  denom,
+				Denom:  args[0],
+				Holder: args[1],
 			}
 			res, err := queryClient.QueryFreeze(ctx, &freezeRequest)
 			if err != nil {

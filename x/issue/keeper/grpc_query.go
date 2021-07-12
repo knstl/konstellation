@@ -39,12 +39,7 @@ func (k Keeper) QueryFreezes(c context.Context, r *types.QueryFreezesRequest) (*
 	ctx := sdk.UnwrapSDKContext(c)
 	freezes := k.GetFreezes(ctx, r.Denom)
 
-	freezeList := []*types.AddressFreeze{}
-	for _, freeze := range freezes {
-		freezeList = append(freezeList, freeze)
-	}
-
-	return &types.QueryFreezesResponse{Freezes: freezeList}, nil
+	return &types.QueryFreezesResponse{Freezes: freezes}, nil
 }
 
 func (k Keeper) QueryIssue(c context.Context, r *types.QueryIssueRequest) (*types.QueryIssueResponse, error) {

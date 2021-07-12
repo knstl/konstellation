@@ -23,8 +23,8 @@ service Query {
 }
 
 message QueryAllowanceRequest {
-  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
-  string spender = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string owner = 1 [(gogoproto.moretags) = "yaml:\"owner\""];
+  string spender = 2 [(gogoproto.moretags) = "yaml:\"spender\""];
   string denom = 3;
 }
 
@@ -33,7 +33,7 @@ message QueryAllowanceResponse {
 }
 
 message QueryAllowancesRequest {
-  string owner = 1 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string owner = 1 [(gogoproto.moretags) = "yaml:\"owner\""];
   string denom = 2;
 }
 
@@ -43,7 +43,7 @@ message QueryAllowancesResponse {
 
 message QueryFreezeRequest {
   string denom = 1;
-  string holder = 2 [(gogoproto.customtype) = "AccAddress", (gogoproto.nullable) = false];
+  string holder = 2 [(gogoproto.moretags) = "yaml:\"holder\""];
 }
 
 message QueryFreezeResponse {
