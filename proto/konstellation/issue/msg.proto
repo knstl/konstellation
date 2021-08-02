@@ -5,9 +5,9 @@ option go_package = "x/issue/types";
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
-import "issue.proto";
-import "querier.proto";
-import "coin.proto";
+import "konstellation/issue/issue.proto";
+import "konstellation/issue/querier.proto";
+import "konstellation/issue/coin.proto";
 
 service Msg {
   rpc HandleMsgIssueCreate(MsgIssueCreate) returns (MsgIssueCreateResponse){

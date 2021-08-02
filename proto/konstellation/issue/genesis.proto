@@ -4,7 +4,7 @@ package konstellation.issue;
 option go_package = "x/issue/types";
 
 import "gogoproto/gogo.proto";
-import "issue.proto";
+import "konstellation/issue/issue.proto";
 
 message GenesisState {
   uint64 starting_issue_id = 1;

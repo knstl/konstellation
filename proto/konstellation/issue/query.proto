@@ -3,23 +3,41 @@ package konstellation.issue;
 
 option go_package = "x/issue/types";
 
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
 import "gogoproto/gogo.proto";
-import "allowance.proto";
-import "freeze.proto";
-import "issue.proto";
-import "querier.proto";
-import "params.proto";
-import "coin.proto";
+import "konstellation/issue/allowance.proto";
+import "konstellation/issue/freeze.proto";
+import "konstellation/issue/issue.proto";
+import "konstellation/issue/querier.proto";
+import "konstellation/issue/params.proto";
+import "konstellation/issue/coin.proto";
 
 service Query {
-  rpc QueryAllowance(QueryAllowanceRequest) returns (QueryAllowanceResponse) {}
-  rpc QueryAllowances(QueryAllowancesRequest) returns (QueryAllowancesResponse) {}
-  rpc QueryFreeze(QueryFreezeRequest) returns (QueryFreezeResponse) {}
-  rpc QueryFreezes(QueryFreezesRequest) returns (QueryFreezesResponse) {}
-  rpc QueryIssue(QueryIssueRequest) returns (QueryIssueResponse) {}
-  rpc QueryAllIssues(QueryAllIssuesRequest) returns (QueryAllIssuesResponse) {}
-  rpc QueryIssues(QueryIssuesRequest) returns (QueryIssuesResponse) {}
-  rpc QueryParams(QueryParamsRequest) returns (QueryParamsResponse) {}
+  rpc QueryAllowance(QueryAllowanceRequest) returns (QueryAllowanceResponse) {
+    option (google.api.http).get = "/konstellation/issue/allowance/{owner}/{spender}/{denom}";
+  }
+  rpc QueryAllowances(QueryAllowancesRequest) returns (QueryAllowancesResponse) {
+    option (google.api.http).get = "/konstellation/issue/allowances/{owner}/{denom}";
+  }
+  rpc QueryFreeze(QueryFreezeRequest) returns (QueryFreezeResponse) {
+    option (google.api.http).get = "/konstellation/issue/freeze/{holder}/{denom}";
+  }
+  rpc QueryFreezes(QueryFreezesRequest) returns (QueryFreezesResponse) {
+    option (google.api.http).get = "/konstellation/issue/freezes/{denom}";
+  }
+  rpc QueryIssue(QueryIssueRequest) returns (QueryIssueResponse) {
+    option (google.api.http).get = "/konstellation/issue/issue/{denom}";
+  }
+  rpc QueryAllIssues(QueryAllIssuesRequest) returns (QueryAllIssuesResponse) {
+    option (google.api.http).get = "/konstellation/issue/issues/all";
+  }
+  rpc QueryIssues(QueryIssuesRequest) returns (QueryIssuesResponse) {
+    option (google.api.http).get = "/konstellation/issue/issues";
+  }
+  rpc QueryParams(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/konstellation/issue/params";
+  }
 }
 
 message QueryAllowanceRequest {
