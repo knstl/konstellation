@@ -1,9 +1,11 @@
 PACKAGES_SIMTEST=$(shell go list ./... | grep '/simulation')
-VERSION := $(shell echo $(shell git describe --tags) | sed 's/^v//')
+#VERSION := $(shell echo $(shell git describe --tags) | sed 's/^v//')
+VERSION := $(shell echo $(shell git describe --always --match "v*") | sed 's/^v//')
 COMMIT := $(shell git log -1 --format='%H')
 LEDGER_ENABLED ?= true
 SDK_PACK := $(shell go list -m github.com/cosmos/cosmos-sdk | sed  's/ /\@/g')
 BINDIR ?= $(GOPATH)/bin
+BUILDDIR ?= $(CURDIR)/build
 SIMAPP = ./app
 
 # for dockerized protobuf tools
@@ -12,7 +14,7 @@ PROTO_CONTAINER := cosmwasm/prototools-docker:v0.1.0
 BUF_IMAGE=bufbuild/buf@sha256:9dc5d6645f8f8a2d5aaafc8957fbbb5ea64eada98a84cb09654e8f49d6f73b3e
 DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace $(BUF_IMAGE)
 #DOCKER_BUF := docker run --rm -v $(shell pwd)/buf.yaml:/workspace/buf.yaml -v $(shell go list -f "{{ .Dir }}" -m github.com/cosmos/cosmos-sdk):/workspace/cosmos_sdk_dir -v $(shell pwd):/workspace/wasmd  --workdir /workspace $(PROTO_CONTAINER)
-HTTPS_GIT := https://github.com/konstellation/konstellation.git
+HTTPS_GIT := https://github.com/konstellation/knstl.git
 
 export GO111MODULE = on
 
@@ -60,35 +62,26 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=konstellation \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
-cosmodromeldflags = -X github.com/cosmos/cosmos-sdk/version.Name=cosmodrome \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=cosmodrome \
-		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
-		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
-		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
 ifeq ($(WITH_CLEVELDB),yes)
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
-  cosmodromeldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
 endif
 ldflags += $(LDFLAGS)
-cosmodromeldflags += $(LDFLAGS)
 ldflags := $(strip $(ldflags))
-cosmodromeldflags := $(strip $(cosmodromeldflags))
 
 BUILD_FLAGS := -tags "$(build_tags_comma_sep)" -ldflags '$(ldflags)' -trimpath
-COSMODROME_BUILD_FLAGS := -tags "$(build_tags_comma_sep)" -ldflags '$(cosmodromeldflags)' -trimpath
 
-all: install lint test
-build: go.sum
-ifeq ($(OS),Windows_NT)
-	exit 1
-else
-	go build -mod=readonly $(BUILD_FLAGS) -o build/knstld ./client/knstld
-	go build -mod=readonly $(BUILD_FLAGS) -o build/cosmodrome ./client/cosmodrome
-endif
+BUILD_TARGETS := build install
 
+build: BUILD_ARGS=-o $(BUILDDIR)/
 build-linux: go.sum
 	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 $(MAKE) build
+
+$(BUILD_TARGETS): go.sum $(BUILDDIR)/
+	go $@ -mod=readonly $(BUILD_FLAGS) $(BUILD_ARGS) ./...
+
+$(BUILDDIR)/:
+	mkdir -p $(BUILDDIR)/
 
 build-contract-tests-hooks:
 ifeq ($(OS),Windows_NT)
@@ -98,8 +91,7 @@ else
 endif
 
 install: go.sum
-	go install -mod=readonly $(BUILD_FLAGS) ./client/knstld
-	go install -mod=readonly $(BUILD_FLAGS) ./client/cosmodrome
+	go install -mod=readonly $(BUILD_FLAGS) ./cmd/knstld
 
 ########################################
 ### Tools & dependencies

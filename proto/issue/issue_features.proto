@@ -1,0 +1,13 @@
+syntax = "proto3";
+package konstellation.issue;
+
+option go_package = "x/issue/types";
+
+message IssueFeatures {
+  bool burn_owner_disabled = 1; 
+  bool burn_holder_disabled = 2; 
+  bool burn_from_disabled = 3; 
+  bool mint_disabled = 4; 
+  bool freeze_disabled = 5; 
+  uint64 id = 6;
+}

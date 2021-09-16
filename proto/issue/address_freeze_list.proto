@@ -1,0 +1,11 @@
+syntax = "proto3";
+package konstellation.issue;
+
+option go_package = "x/issue/types";
+
+import "issue/address_freeze.proto";
+
+message AddressFreezeList {
+  repeated AddressFreeze addressFreezes = 1;
+  uint64 id = 2;
+}

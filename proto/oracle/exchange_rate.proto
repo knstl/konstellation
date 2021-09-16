@@ -1,0 +1,16 @@
+syntax = "proto3";
+package konstellation.oracle;
+
+option go_package = "x/oracle/types";
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+message ExchangeRate {
+  string pair = 1;
+  string rate = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+  repeated string Denoms = 3;
+  int32 height = 4;
+  google.protobuf.Timestamp timestamp = 5
+  [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}

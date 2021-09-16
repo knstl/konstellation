@@ -1,54 +1,39 @@
 package cli
 
 import (
+	"fmt"
+	// "strings"
+
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/flags"
+	// "github.com/cosmos/cosmos-sdk/client/flags"
+	// sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/konstellation/konstellation/x/oracle/types"
 )
 
-func GetQueryExchangeRateCmd() *cobra.Command {
-	txCmd := &cobra.Command{
+// GetQueryCmd returns the cli query commands for this module
+func GetQueryCmd(queryRoute string) *cobra.Command {
+	// Group oracle queries under a subcommand
+	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
-		Short:                      "Querying exchange rate subcommands",
+		Short:                      fmt.Sprintf("Querying commands for the %s module", types.ModuleName),
 		DisableFlagParsing:         true,
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
 	}
 
-	txCmd.AddCommand(
-		GetCmdQueryExchangeRate(),
-	)
+	// this line is used by starport scaffolding # 1
 
-	return txCmd
-}
+	//	cmd.AddCommand(CmdListParams())
+	//	cmd.AddCommand(CmdShowParams())
 
-func GetCmdQueryExchangeRate() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "exchange-rate",
-		Short: "Query exchange rate",
-		Args:  cobra.NoArgs,
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientQueryContext(cmd)
-			if err != nil {
-				return err
-			}
-			// protobuf function and structs
-			queryClient := types.NewQueryClient(clientCtx)
+	cmd.AddCommand(CmdListAdminAddr())
+	//	cmd.AddCommand(CmdShowAdminAddr())
 
-			exchangeRate := &types.QueryExchangeRateRequest{}
-			res, err := queryClient.ExchangeRate(cmd.Context(), exchangeRate)
-
-			if err != nil {
-				return err
-			}
-
-			return clientCtx.PrintProto(&res.ExchangeRate)
-		},
-	}
-	flags.AddQueryFlagsToCmd(cmd)
+	cmd.AddCommand(CmdListExchangeRate())
+	cmd.AddCommand(CmdShowExchangeRate())
 
 	return cmd
 }

@@ -1,8 +1,0 @@
-syntax = "proto3";
-package konstellation.oracle;
-
-option go_package = "x/oracle/types";
-
-message GenesisState {
-  repeated string allowed_addresses = 1;
-}

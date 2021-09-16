@@ -2,6 +2,7 @@
 set -o xtrace
 
 COMMAND=$1
+ARGS=$2
 
 IMAGE=${IMAGE:-"knstld:latest"}
 VOLUME=${VOLUME:-knstld_data}
@@ -18,6 +19,9 @@ function usage() {
   echo "  init    Init docker container "
   echo "  setup   Setup docker container "
   echo "  run     Run docker container "
+  echo "  add     Add key"
+  echo "  send    Send tx"
+  echo "  it      Interact"
   echo ""
 }
 
@@ -34,7 +38,7 @@ volumes=()
 
 if [[ -n $TEST ]]
 then
-  volumes+=( -v ~/pj/konstellation/docker/:/opt/ )
+  volumes+=( -v ~/dev/konstellation/docker/:/opt/ )
 fi
 
 if [[ $VOLTYPE = "b" ]]
@@ -79,6 +83,20 @@ function config() {
     "${volumes[@]}" "$IMAGE" /opt/config.sh
 }
 
+function add() {
+  docker run --rm -it \
+  -e KEY_PASSWORD="$KEY_PASSWORD" \
+  -e KEY_NAME="$KEY_NAME" \
+  -e KEY_MNEMONIC="$KEY_MNEMONIC" \
+    "${volumes[@]}" "$IMAGE" /opt/add.sh
+}
+
+function it() {
+  docker run --rm -it \
+    -e CMD="$CMD" \
+    "${volumes[@]}" "$IMAGE" /opt/it.sh "$ARGS"
+}
+
 case "${COMMAND}" in
 "init")
   init
@@ -91,6 +109,12 @@ case "${COMMAND}" in
   ;;
 "run")
   run
+  ;;
+"add")
+  add
+  ;;
+"it")
+  it
   ;;
 *)
   usage

@@ -1,0 +1,11 @@
+syntax = "proto3";
+package konstellation.issue;
+
+option go_package = "x/issue/types";
+
+import "gogoproto/gogo.proto";
+
+message Coins {
+  repeated string coins = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+  uint64 id = 2;
+}

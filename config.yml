@@ -1,0 +1,38 @@
+accounts:
+  - name: alice
+    coins: [ "200000000000000udarc" ]
+  - name: bob
+    coins: [ "120000000000000udarc" ]
+validator:
+  name: alice
+  staked: "100000000000000udarc"
+client:
+  openapi:
+    path: "docs/static/openapi.yml"
+faucet:
+  name: bob
+  coins: [ "100000udarc" ]
+build:
+  binary: "knstld"
+genesis:
+  chain_id: "darchub"
+  app_state:
+    staking:
+      params:
+        bond_denom: "udarc"
+    mint:
+      params:
+        mint_denom: "udarc"
+    gov:
+      deposit_params:
+        min_deposit:
+          - amount: "10000000000"
+            denom: "udarc"
+        max_deposit_period: "172800s"
+    crisis:
+      constant_fee:
+        amount: "100000000000"
+        denom: "udarc"
+    oracle:
+      allowed_addresses:
+        - address: "darc1n8lpdv72n4vr90e8drj8903vmrafafmgcelfpx"
