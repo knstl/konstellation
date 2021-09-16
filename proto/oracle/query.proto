@@ -1,0 +1,95 @@
+syntax = "proto3";
+package konstellation.oracle;
+
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+// this line is used by starport scaffolding # 1
+import "oracle/exchange_rate.proto";
+import "oracle/admin_addr.proto";
+
+option go_package = "x/oracle/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    // this line is used by starport scaffolding # 2
+
+//	// Queries a params by id.
+//	rpc Params(QueryGetParamsRequest) returns (QueryGetParamsResponse) {
+//		option (google.api.http).get = "/konstellation/konstellation/x/oracle/params/{id}";
+//	}
+//
+//	// Queries a list of params items.
+//	rpc ParamsAll(QueryAllParamsRequest) returns (QueryAllParamsResponse) {
+//		option (google.api.http).get = "/konstellation/konstellation/x/oracle/params";
+//	}
+//
+//
+//	// Queries a adminAddr by id.
+//	rpc AdminAddr(QueryGetAdminAddrRequest) returns (QueryGetAdminAddrResponse) {
+//		option (google.api.http).get = "/konstellation/konstellation/x/oracle/adminAddr/{id}";
+//	}
+//
+	// Queries a list of adminAddr items.
+	rpc AdminAddrAll(QueryAllAdminAddrRequest) returns (QueryAllAdminAddrResponse) {
+		option (google.api.http).get = "/konstellation/konstellation/x/oracle/adminAddr";
+	}
+
+	rpc ExchangeRate(QueryExchangeRateRequest) returns (QueryExchangeRateResponse) {
+		option (google.api.http).get = "/konstellation/oracle/exchange_rate/{pair}";
+	}
+
+	rpc AllExchangeRates(QueryAllExchangeRatesRequest) returns (QueryAllExchangeRatesResponse) {
+		option (google.api.http).get = "/konstellation/oracle/exchange_rate";
+	}
+}
+
+message QueryExchangeRateRequest {
+	string pair = 1;
+}
+
+message QueryExchangeRateResponse {
+	ExchangeRate ExchangeRate = 1;
+}
+
+message QueryAllExchangeRatesRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllExchangeRatesResponse {
+	repeated ExchangeRate ExchangeRate = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// this line is used by starport scaffolding # 3
+//message QueryGetParamsRequest {
+//	uint64 id = 1;
+//}
+//
+//message QueryGetParamsResponse {
+//	Params Params = 1;
+//}
+//
+//message QueryAllParamsRequest {
+//	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+//}
+//
+//message QueryAllParamsResponse {
+//	repeated Params Params = 1;
+//	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+//}
+//message QueryGetAdminAddrRequest {
+////	uint64 id = 1;
+//}
+//
+//message QueryGetAdminAddrResponse {
+//	AdminAddr AdminAddr = 1;
+//}
+//
+message QueryAllAdminAddrRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllAdminAddrResponse {
+	repeated AdminAddr AdminAddr = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

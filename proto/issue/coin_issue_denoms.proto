@@ -1,0 +1,11 @@
+syntax = "proto3";
+package konstellation.issue;
+
+option go_package = "x/issue/types";
+
+import "issue/coin_issue_denom.proto";
+
+message CoinIssueDenoms {
+  repeated CoinIssueDenom denoms = 1;
+  uint64 id = 2;
+}
