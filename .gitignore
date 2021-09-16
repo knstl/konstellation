@@ -10,7 +10,6 @@ vendor
 .vendor-new
 build
 dist
-docs
 testnet
 localnet
 config/keys.json

@@ -1,0 +1,10 @@
+syntax = "proto3";
+package konstellation.issue;
+
+option go_package = "x/issue/types";
+
+message IssuesParams {
+  string owner = 1; 
+  int32 limit = 2; 
+  uint64 id = 3;
+}

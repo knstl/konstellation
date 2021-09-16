@@ -1,0 +1,10 @@
+syntax = "proto3";
+package konstellation.oracle;
+
+option go_package = "x/oracle/types";
+
+import "gogoproto/gogo.proto";
+
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+}

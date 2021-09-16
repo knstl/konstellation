@@ -1,0 +1,71 @@
+syntax = "proto3";
+package konstellation.oracle;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+import "oracle/exchange_rate.proto";
+import "oracle/admin_addr.proto";
+import "google/api/annotations.proto";
+
+option go_package = "x/oracle/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc SetExchangeRate(MsgSetExchangeRate) returns (MsgSetExchangeRateResponse){
+    option (google.api.http).put = "/konstellation/oracle/exchange_rate";
+  }
+  rpc SetExchangeRates(MsgSetExchangeRates) returns (MsgSetExchangeRatesResponse){
+    option (google.api.http).put = "/konstellation/oracle/exchange_rates";
+  }
+  rpc DeleteExchangeRate(MsgDeleteExchangeRate) returns (MsgDeleteExchangeRateResponse){
+    option (google.api.http).delete = "/konstellation/oracle/exchange_rate";
+  }
+  rpc DeleteExchangeRates(MsgDeleteExchangeRates) returns (MsgDeleteExchangeRatesResponse){
+    option (google.api.http).delete = "/konstellation/oracle/exchange_rates";
+  }
+  rpc SetAdminAddr(MsgSetAdminAddr) returns (MsgSetAdminAddrResponse){
+    option (google.api.http).put = "/konstellation/oracle/admin_addr";
+  }
+}
+
+// this line is used by starport scaffolding # proto/tx/message
+message MsgSetAdminAddr {
+  string sender = 1;
+  repeated AdminAddr add = 2;
+  repeated AdminAddr delete = 3;
+}
+
+message MsgSetAdminAddrResponse {
+}
+
+message MsgDeleteExchangeRates {
+  string sender = 1;
+  repeated string pairs = 2;
+}
+
+message MsgDeleteExchangeRatesResponse {
+}
+
+message MsgDeleteExchangeRate {
+  string sender = 1;
+  string pair = 2;
+}
+
+message MsgDeleteExchangeRateResponse {
+}
+
+message MsgSetExchangeRates {
+  repeated ExchangeRate exchange_rates = 1;
+  string sender = 2;
+}
+
+message MsgSetExchangeRatesResponse {
+}
+
+message MsgSetExchangeRate {
+  ExchangeRate exchange_rate = 1;
+  string sender = 2;
+}
+
+message MsgSetExchangeRateResponse {
+}
