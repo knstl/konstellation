@@ -99,6 +99,9 @@ import (
 const (
 	AccountAddressPrefix = "darc"
 	Name                 = "knstl"
+	NodeDir              = ".knstld"
+	Bech32Prefix         = "darc"
+	EnvPrefixNode        = "knstl"
 )
 
 var (
