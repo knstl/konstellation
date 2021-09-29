@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec/types"
@@ -86,12 +87,12 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
-	issuemodule "github.com/konstellation/konstellation/x/issue"
-	issuemodulekeeper "github.com/konstellation/konstellation/x/issue/keeper"
-	issuemoduletypes "github.com/konstellation/konstellation/x/issue/types"
-	oraclemodule "github.com/konstellation/konstellation/x/oracle"
-	oraclemodulekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
-	oraclemoduletypes "github.com/konstellation/konstellation/x/oracle/types"
+	"github.com/konstellation/konstellation/x/issue"
+	issuekeeper "github.com/konstellation/konstellation/x/issue/keeper"
+	issuetypes "github.com/konstellation/konstellation/x/issue/types"
+	"github.com/konstellation/konstellation/x/oracle"
+	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
+	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
 
 	"github.com/tendermint/spm/cosmoscmd"
 )
@@ -175,8 +176,8 @@ var (
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
-		issuemodule.AppModuleBasic{},
-		oraclemodule.AppModuleBasic{},
+		issue.AppModuleBasic{},
+		oracle.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 	)
 
@@ -246,10 +247,10 @@ type App struct {
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
-	IssueKeeper issuemodulekeeper.Keeper
+	IssueKeeper issuekeeper.Keeper
 
-	OracleKeeper     oraclemodulekeeper.Keeper
-	wasmKeeper       wasm.Keeper
+	OracleKeeper oraclekeeper.Keeper
+	wasmKeeper   wasm.Keeper
 	scopedWasmKeeper capabilitykeeper.ScopedKeeper
 
 	// the module manager
@@ -294,8 +295,8 @@ func New(
 		ibctransfertypes.StoreKey,
 		capabilitytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
-		issuemoduletypes.StoreKey,
-		oraclemoduletypes.StoreKey,
+		issuetypes.StoreKey,
+		oracletypes.StoreKey,
 		wasm.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -393,25 +394,25 @@ func New(
 		&stakingKeeper, govRouter,
 	)
 
-	app.OracleKeeper = *oraclemodulekeeper.NewKeeper(
+	app.OracleKeeper = *oraclekeeper.NewKeeper(
 		appCodec,
-		keys[oraclemoduletypes.StoreKey],
-		keys[oraclemoduletypes.MemStoreKey],
-		app.GetSubspace(oraclemoduletypes.ModuleName),
+		keys[oracletypes.StoreKey],
+		keys[oracletypes.MemStoreKey],
+		app.GetSubspace(oracletypes.ModuleName),
 	)
-	oracleModule := oraclemodule.NewAppModule(appCodec, app.OracleKeeper)
+	oracleModule := oracle.NewAppModule(appCodec, app.OracleKeeper)
 
-	app.IssueKeeper = *issuemodulekeeper.NewKeeper(
+	app.IssueKeeper = *issuekeeper.NewKeeper(
 		appCodec,
-		keys[issuemoduletypes.StoreKey],
-		keys[issuemoduletypes.MemStoreKey],
+		keys[issuetypes.StoreKey],
+		keys[issuetypes.MemStoreKey],
 		app.AccountKeeper,
 		app.BankKeeper,
 		"",
 		app.ParamsKeeper,
-		app.GetSubspace(oraclemoduletypes.ModuleName),
+		app.GetSubspace(oracletypes.ModuleName),
 	)
-	issueModule := issuemodule.NewAppModule(appCodec, app.IssueKeeper)
+	issueModule := issue.NewAppModule(appCodec, app.IssueKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	wasmDir := filepath.Join(homePath, "wasm")
@@ -529,8 +530,8 @@ func New(
 		evidencetypes.ModuleName,
 		ibctransfertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
-		issuemoduletypes.ModuleName,
-		oraclemoduletypes.ModuleName,
+		issuetypes.ModuleName,
+		oracletypes.ModuleName,
 		wasm.ModuleName,
 	)
 
@@ -720,8 +721,8 @@ func initParamsKeeper(appCodec codec.BinaryMarshaler, legacyAmino *codec.LegacyA
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
-	paramsKeeper.Subspace(issuemoduletypes.ModuleName)
-	paramsKeeper.Subspace(oraclemoduletypes.ModuleName)
+	paramsKeeper.Subspace(issuetypes.ModuleName)
+	paramsKeeper.Subspace(oracletypes.ModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
 
 	return paramsKeeper
