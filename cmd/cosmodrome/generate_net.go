@@ -11,7 +11,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	"github.com/imdario/mergo"
 	"github.com/konstellation/konstellation/app"
+	conf "github.com/konstellation/konstellation/cmd/cosmodrome/pkg/chainconf"
+	"github.com/konstellation/konstellation/cmd/cosmodrome/types"
+	"github.com/konstellation/konstellation/const"
 	"github.com/konstellation/konstellation/crypto/keybase"
 	tmtypes "github.com/tendermint/tendermint/types"
 	tmtime "github.com/tendermint/tendermint/types/time"
@@ -30,7 +34,6 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/konstellation/konstellation/common/utils"
-	"github.com/konstellation/konstellation/types"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -59,7 +62,6 @@ var (
 
 func GenNetCmd(
 	mbm module.BasicManager,
-	//gus kntypes.GenesisUpdaters,
 	genBalIterator banktypes.GenesisBalancesIterator,
 ) *cobra.Command {
 	cmd := &cobra.Command{
@@ -108,7 +110,7 @@ Example:
 	cmd.Flags().StringP(flagNodeDaemonHome, "d", ".knstld", "Home directory of the node's daemon configuration")
 	cmd.Flags().StringP(flagNetConfigFile, "n", "./config/net.json", "Net configuration file")
 	cmd.Flags().StringP(flagKeyStorageFile, "k", "./config/keys.json", "Keys file")
-	cmd.Flags().String(server.FlagMinGasPrices, fmt.Sprintf("0.000006%s", types.StakeDenom), "Minimum gas prices to accept for transactions; All fees in a tx must meet this minimum (e.g. 0.01apple,0.001darc)")
+	cmd.Flags().String(server.FlagMinGasPrices, fmt.Sprintf("0.000006%s", _const.StakeDenom), "Minimum gas prices to accept for transactions; All fees in a tx must meet this minimum (e.g. 0.01apple,0.001darc)")
 	cmd.Flags().String(flags.FlagKeyringBackend, flags.DefaultKeyringBackend, "Select keyring's backend (os|file|test)")
 	cmd.Flags().String(flags.FlagKeyAlgorithm, string(hd.Secp256k1Type), "Key signing algorithm to generate keys for")
 	cmd.PersistentFlags().String(flags.FlagChainID, "", "The network chain ID")
@@ -125,7 +127,7 @@ func parseKeyStorage(keyStorageFile string) (*types.KeyStorage, error) {
 	return &keyStorage, nil
 }
 
-func saveKey(nodeDir, keyringBackend, algoStr string, valKey *types.ValidatorKey, key *types.Key, inBuf io.Reader) error {
+func saveKey(nodeDir, keyringBackend, algoStr string, valKey *conf.ValidatorKey, key *types.Key, inBuf io.Reader) error {
 	addr, secret, err := keybase.SaveCoinKey(nodeDir, keyringBackend, algoStr, key, true, true, inBuf)
 	if err != nil {
 		_ = os.RemoveAll(outDir)
@@ -153,36 +155,47 @@ func saveKey(nodeDir, keyringBackend, algoStr string, valKey *types.ValidatorKey
 	return nil
 }
 
-func parseNetConfig(netConfigFile string) (*types.NetConfig, error) {
-	var netConfig types.NetConfig
-
-	if err := utils.ReadJson(netConfigFile, &netConfig); err != nil {
+func parseNetConfig(netConfigFile string) (*conf.Config, error) {
+	c, err := conf.ParseFile(netConfigFile)
+	if err != nil {
 		return nil, err
 	}
 
-	return &netConfig, nil
+	return &c, nil
 }
 
-func genAccounts(genaccs []*types.GenAccount) ([]banktypes.Balance, []authtypes.GenesisAccount, error) {
+func genAccounts(accs []conf.Account) ([]banktypes.Balance, []authtypes.GenesisAccount, error) {
 	var (
-		genAccounts []authtypes.GenesisAccount
+		genAccounts authtypes.GenesisAccounts
 		genBalances []banktypes.Balance
 	)
 
-	for _, ga := range genaccs {
+	for _, ga := range accs {
 		addr, err := sdk.AccAddressFromBech32(ga.Address)
 		if err != nil {
 			return nil, nil, err
 		}
+		var genAccount authtypes.GenesisAccount
+		genAccount = authtypes.NewBaseAccount(addr, nil, 0, 0)
+		if err := genAccount.Validate(); err != nil {
+			return nil, nil, fmt.Errorf("failed to validate new genesis account: %w", err)
+		}
+		if genAccounts.Contains(addr) {
+			return nil, nil, fmt.Errorf("cannot add account at existing address %s", addr)
+		}
+		genAccounts = append(genAccounts, genAccount)
 
-		genAccounts = append(genAccounts, authtypes.NewBaseAccount(addr, nil, 0, 0))
-		genBalances = append(genBalances, banktypes.Balance{
-			Address: addr.String(),
-			Coins: sdk.NewCoins(
-				sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(ga.CoinGenesis)),
-			).Sort(),
-		})
+		coins, err := sdk.ParseCoinsNormalized(strings.Join(ga.Coins, ","))
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to parse coins: %w", err)
+		}
+
+		balances := banktypes.Balance{Address: addr.String(), Coins: coins.Sort()}
+		genBalances = append(genBalances, balances)
 	}
+
+	genAccounts = authtypes.SanitizeGenesisAccounts(genAccounts)
+	genBalances = banktypes.SanitizeGenesisBalances(genBalances)
 
 	return genBalances, genAccounts, nil
 }
@@ -191,7 +204,7 @@ func clientConfig(
 	clientCtx client.Context,
 	nodeConfig *tmconfig.Config,
 	appConfig *srvconfig.Config,
-	validators []*types.Validator) (err error) {
+	validators []*conf.Validator) (err error) {
 	var addressesIPs []string
 
 	for _, validator := range validators {
@@ -216,20 +229,20 @@ func clientConfig(
 
 func configValidator(nodeConfig *tmconfig.Config,
 	appConfig *srvconfig.Config,
-	valInfo *types.ValidatorInfo,
+	valInfo conf.ValidatorInfo,
 	key *types.Key,
 	genAccount *authtypes.GenesisAccount,
 	keyringBackend,
 	algoStr string,
 	inBuf io.Reader,
-) (*types.Validator, error) {
+) (*conf.Validator, error) {
 	nodeDir := filepath.Join(outDir, valInfo.Name, app.NodeDir, nodeDaemonHomeName)
 	if err := os.MkdirAll(filepath.Join(nodeDir, "config"), nodeDirPerm); err != nil {
 		_ = os.RemoveAll(outDir)
 		return nil, err
 	}
 
-	valNodeConfig := types.ValNodeConfig{
+	valNodeConfig := conf.ValNodeConfig{
 		DirName:   valInfo.Name,
 		DaemonDir: nodeDir,
 	}
@@ -253,11 +266,11 @@ func configValidator(nodeConfig *tmconfig.Config,
 
 	memo := fmt.Sprintf("%s@%s:26656", nodeID, valInfo.IP)
 
-	if err := saveKey(nodeDir, algoStr, keyringBackend, &valInfo.Key, key, inBuf); err != nil {
+	if err := saveKey(nodeDir, algoStr, keyringBackend, valInfo.Key, key, inBuf); err != nil {
 		return nil, err
 	}
 
-	return &types.Validator{
+	return &conf.Validator{
 		Index:         valInfo.Index,
 		Moniker:       valInfo.Description.Moniker,
 		ValNodeConfig: valNodeConfig,
@@ -278,18 +291,18 @@ func configValidators(
 	appConfig *srvconfig.Config,
 	keyStorage *types.KeyStorage,
 	genAccounts []authtypes.GenesisAccount,
-	netConfig *types.NetConfig,
+	c *conf.Config,
 	keyringBackend,
 	algoStr string,
 	inBuf io.Reader,
-) (validators []*types.Validator, err error) {
-	if netConfig.GlobalConfig != nil {
-		if err := mapstructure.Decode(netConfig.GlobalConfig, nodeConfig); err != nil {
+) (validators []*conf.Validator, err error) {
+	if c.GlobalConfig != nil {
+		if err := mapstructure.Decode(c.GlobalConfig, nodeConfig); err != nil {
 			return nil, err
 		}
 	}
 
-	for _, valInfo := range netConfig.Validators {
+	for _, valInfo := range c.Validators {
 		key, err := keyStorage.GetKey(valInfo.Key.Address)
 		if err != nil {
 			return nil, err
@@ -300,7 +313,6 @@ func configValidators(
 			return nil, err
 		}
 
-		// genAccount := authtypes.NewBaseAccount(addr, nil, 0, 0)
 		var genAccount authtypes.GenesisAccount
 		for _, gacc := range genAccounts {
 			if gacc.GetAddress().Equals(addr) {
@@ -319,17 +331,37 @@ func configValidators(
 	return
 }
 
+// Override genesis app state according to chain.yml
+func updateGenesisState(clientCtx client.Context, genState *map[string]json.RawMessage, appState map[string]interface{}) error {
+	for mod, updates := range appState {
+		var currState map[string]interface{}
+		err := json.Unmarshal((*genState)[mod], &currState)
+		if err != nil {
+			return err
+		}
+		if err := mergo.Merge(&currState, updates, mergo.WithOverride); err != nil {
+			return err
+		}
+		state, err := json.Marshal(currState)
+		if err != nil {
+			return err
+		}
+		(*genState)[mod] = state
+	}
+
+	return nil
+}
+
 func initGenFiles(
 	clientCtx client.Context,
 	mbm module.BasicManager,
-	//gus types.GenesisUpdaters,
-	validators []*types.Validator,
+	genesis conf.Genesis,
+	validators []*conf.Validator,
 	genAccounts []authtypes.GenesisAccount,
 	genBalances []banktypes.Balance,
 	chainID string,
 ) error {
 	appGenState := mbm.DefaultGenesis(clientCtx.JSONMarshaler)
-
 	// set the accounts in the genesis state
 	var authGenState authtypes.GenesisState
 	clientCtx.JSONMarshaler.MustUnmarshalJSON(appGenState[authtypes.ModuleName], &authGenState)
@@ -348,12 +380,10 @@ func initGenFiles(
 	bankGenState.Balances = genBalances
 	appGenState[banktypes.ModuleName] = clientCtx.JSONMarshaler.MustMarshalJSON(&bankGenState)
 
-	// Update default genesis
-	//for _, gu := range gus {
-	//	gu.UpdateGenesis(clientCtx.JSONMarshaler, appGenState)
-	//}
+	if err := updateGenesisState(clientCtx, &appGenState, genesis.AppState); err != nil {
+		return err
+	}
 
-	// todo - nil??
 	if err := mbm.ValidateGenesis(clientCtx.JSONMarshaler, clientCtx.TxConfig, appGenState); err != nil {
 		return fmt.Errorf("error validating genesis: %s", err.Error())
 	}
@@ -381,7 +411,7 @@ func initGenFiles(
 
 func genTxs(
 	clientCtx client.Context,
-	validators []*types.Validator,
+	validators []*conf.Validator,
 	keyStorage *types.KeyStorage,
 	keyringBackend string,
 	chainID string,
@@ -421,7 +451,7 @@ func genTxs(
 		createValMsg, err := stakingtypes.NewMsgCreateValidator(
 			sdk.ValAddress(validator.Key.AccAddr),
 			validator.ValPubKey,
-			sdk.NewCoin(types.StakeDenom, sdk.TokensFromConsensusPower(validator.Key.CoinDelegate)),
+			sdk.NewCoin(_const.StakeDenom, sdk.TokensFromConsensusPower(validator.Key.CoinDelegate)),
 			stakingtypes.NewDescription(validator.ValNodeConfig.DaemonDir, "", "", "", ""),
 			stakingtypes.NewCommissionRates(sdk.OneDec(), sdk.OneDec(), sdk.OneDec()),
 			sdk.OneInt(),
@@ -474,7 +504,7 @@ func collectGenFiles(
 	clientCtx client.Context,
 	config *tmconfig.Config,
 	genBalIterator banktypes.GenesisBalancesIterator,
-	validators []*types.Validator,
+	validators []*conf.Validator,
 	chainID string,
 	outputDir string,
 ) error {
@@ -523,7 +553,6 @@ func generateNetwork(
 	cmd *cobra.Command,
 	nodeConfig *tmconfig.Config,
 	mbm module.BasicManager,
-	//gus types.GenesisUpdaters,
 	genBalIterator banktypes.GenesisBalancesIterator,
 	outputDir,
 	chainID,
@@ -567,12 +596,12 @@ func generateNetwork(
 		return err
 	}
 
-	netConfig, err := parseNetConfig(netConfigFile)
+	c, err := parseNetConfig(netConfigFile)
 	if err != nil {
 		return err
 	}
 
-	genBalances, genAccounts, err := genAccounts(netConfig.GenAccounts)
+	genBalances, genAccounts, err := genAccounts(c.Accounts)
 	if err != nil {
 		return err
 	}
@@ -582,7 +611,7 @@ func generateNetwork(
 		appConfig,
 		keyStorage,
 		genAccounts,
-		netConfig,
+		c,
 		keyringBackend,
 		algoStr,
 		inBuf,
@@ -591,7 +620,7 @@ func generateNetwork(
 		return err
 	}
 
-	if err := initGenFiles(clientCtx, mbm, validators, genAccounts, genBalances, chainID); err != nil {
+	if err := initGenFiles(clientCtx, mbm, c.Genesis, validators, genAccounts, genBalances, chainID); err != nil {
 		return err
 	}
 

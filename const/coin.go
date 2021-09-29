@@ -1,4 +1,4 @@
-package types
+package _const
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"

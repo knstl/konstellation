@@ -1,9 +1,8 @@
-package types
+package conf
 
 import (
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/types"
-
 	authTypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
@@ -29,19 +28,20 @@ type ValidatorKey struct {
 }
 
 type ValidatorInfo struct {
-	Name        string       `json:"name"`
-	IP          string       `json:"ip"`
-	Index       int          `json:"index"`
-	Cors        string       `json:"cors"`
-	Faucet      bool         `json:"faucet"`
-	Key         ValidatorKey `json:"key"`
-	Description Description  `json:"description"`
-	Config      *Config      `json:"config"`
+	Name        string        `json:"name"`
+	IP          string        `json:"ip"`
+	Index       int           `json:"index"`
+	Cors        string        `json:"cors"`
+	Faucet      bool          `json:"faucet"`
+	Key         *ValidatorKey `json:"key"`
+	Description *Description  `json:"description"`
+	Config      *NodeConfig   `json:"config"`
 }
 
 type Validator struct {
 	ValNodeConfig ValNodeConfig
 	Index         int
+	Name          string
 	ChainID       string
 	Moniker       string
 	ID            string
@@ -51,6 +51,6 @@ type Validator struct {
 	Cors          string
 	ValPubKey     cryptotypes.PubKey
 	IP            string
-	Key           ValidatorKey
-	Description   Description
+	Key           *ValidatorKey
+	Description   *Description
 }

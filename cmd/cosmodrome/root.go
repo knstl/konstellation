@@ -10,7 +10,7 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/konstellation/konstellation/app"
-	"github.com/konstellation/konstellation/types"
+	"github.com/konstellation/konstellation/const"
 	"github.com/spf13/cobra"
 	"github.com/tendermint/spm/cosmoscmd"
 	"os"
@@ -27,7 +27,7 @@ func NewRootCmd(
 ) (*cobra.Command, cosmoscmd.EncodingConfig) {
 	// Set config for prefixes
 	cosmoscmd.SetPrefixes(accountAddressPrefix)
-	types.RegisterNativeCoinUnits()
+	_const.RegisterNativeCoinUnits()
 
 	encodingConfig := cosmoscmd.MakeEncodingConfig(moduleBasics)
 

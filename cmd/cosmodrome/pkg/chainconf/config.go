@@ -1,4 +1,4 @@
-package types
+package conf
 
 import (
 	"time"
@@ -19,13 +19,13 @@ type BaseConfig struct {
 // RPCConfig defines the configuration options for the Tendermint RPC server
 type RPCConfig struct {
 	// TCP or UNIX socket address for the RPC server to listen on
-	ListenAddress string `json:"laddr" mapstructure:"laddr"`
+	ListenAddress string `yaml:"laddr" mapstructure:"laddr" json:"listen_address"`
 
 	// A list of origins a cross-domain request can be executed from.
 	// If the special '*' value is present in the list, all origins will be allowed.
 	// An origin may contain a wildcard (*) to replace 0 or more characters (i.e.: http://*.domain.com).
 	// Only one wildcard can be used per origin.
-	CORSAllowedOrigins []string `json:"cors_allowed_origins" mapstructure:"cors_allowed_origins"`
+	CORSAllowedOrigins []string `yaml:"cors_allowed_origins" mapstructure:"cors_allowed_origins" json:"cors_allowed_origins"`
 }
 
 //-----------------------------------------------------------------------------
@@ -34,10 +34,10 @@ type RPCConfig struct {
 // ConsensusConfig defines the configuration for the Tendermint consensus service,
 // including timeouts and details about the WAL and the block structure.
 type ConsensusConfig struct {
-	TimeoutCommit time.Duration `json:"timeout_commit" mapstructure:"timeout_commit"`
+	TimeoutCommit time.Duration `json:"timeout_commit" mapstructure:"timeout_commit" json:"timeout_commit"`
 	// EmptyBlocks mode and possible interval between empty blocks
-	CreateEmptyBlocks         bool          `json:"create_empty_blocks" mapstructure:"create_empty_blocks"`
-	CreateEmptyBlocksInterval time.Duration `json:"create_empty_blocks_interval" mapstructure:"create_empty_blocks_interval"`
+	CreateEmptyBlocks         bool          `yaml:"create_empty_blocks" json:"create_empty_blocks" mapstructure:"create_empty_blocks"`
+	CreateEmptyBlocksInterval time.Duration `yaml:"create_empty_blocks_interval" json:"create_empty_blocks_interval" mapstructure:"create_empty_blocks_interval"`
 }
 
 //-----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ type TxIndexConfig struct {
 	// It's recommended to index only a subset of tags due to possible memory
 	// bloat. This is, of course, depends on the indexer's DB and the volume of
 	// transactions.
-	IndexTags string `json:"index_tags" mapstructure:"index_tags"`
+	IndexTags string `yaml:"index_tags" json:"index_tags" mapstructure:"index_tags"`
 
 	// When set to true, tells indexer to index all tags (predefined tags:
 	// "tx.hash", "tx.height" and all tags from DeliverTx responses).
@@ -61,15 +61,15 @@ type TxIndexConfig struct {
 	// Note this may be not desirable (see the comment above). IndexTags has a
 	// precedence over IndexAllTags (i.e. when given both, IndexTags will be
 	// indexed).
-	IndexAllTags bool `json:"index_all_tags" mapstructure:"index_all_tags"`
+	IndexAllTags bool `yaml:"index_all_tags" json:"index_all_tags" mapstructure:"index_all_tags"`
 }
 
-type Config struct {
+type NodeConfig struct {
 	// Top level options use an anonymous struct
 	BaseConfig `mapstructure:",squash"`
 
 	// Options for services
-	RPC       *RPCConfig       `mapstructure:"rpc" json:"rpc"`
-	Consensus *ConsensusConfig `mapstructure:"consensus" json:"consensus"`
-	TxIndex   *TxIndexConfig   `mapstructure:"tx_index" json:"tx_index"`
+	RPC       *RPCConfig       `mapstructure:"rpc" json:"rpc" yaml:"rpc"`
+	Consensus *ConsensusConfig `mapstructure:"consensus" json:"consensus" yaml:"consensus"`
+	TxIndex   *TxIndexConfig   `mapstructure:"tx_index" json:"tx_index" yaml:"tx_index"`
 }
