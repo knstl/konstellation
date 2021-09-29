@@ -1,7 +1,7 @@
 package oracle_test
 
 import (
-	"github.com/konstellation/konstellation/types"
+	"github.com/konstellation/konstellation/const"
 	types2 "github.com/konstellation/konstellation/x/oracle/types"
 	"os"
 	"testing"
@@ -15,7 +15,7 @@ import (
 
 func TestMain(m *testing.M) {
 	// Write code here to run before tests
-	types.RegisterBech32Prefix()
+	_const.RegisterBech32Prefix()
 
 	// Run tests
 	exitVal := m.Run()

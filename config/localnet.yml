@@ -1,0 +1,97 @@
+type: "localnet"
+config:
+  consensus:
+    timeout_commit: 5000000000
+    create_empty_blocks: true
+    create_empty_blocks_interval: 0
+  tx_index:
+    index_tags: ""
+    index_all_tags: true
+accounts:
+  - address: darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx
+    coins: [ "300000000000000udarc" ]
+  - address: darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc
+    coins: [ "200000000000000udarc" ]
+  - address: darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf
+    coins: [ "200000000000000udarc" ]
+validators:
+  - name: "testnode-1"
+    ip: "172.18.0.2"
+    index: 1
+    description:
+      moniker: "testnode-1"
+      identity: ""
+      website: "http://172.18.0.2:26657"
+      details: "testnode-1"
+    key:
+      address: darc1rzdt9wrzwv3x7vv6f7xpyaqqgf3lt6phptqtsx
+      coin_delegate: 100000000
+    config:
+      rpc:
+        cors_allowed_origins:
+          - "*"
+        laddr: "tcp://0.0.0.0:26657"
+      faucet: true
+  - name: "testnode-2"
+    ip: "172.18.0.3"
+    index: 2
+    description:
+      moniker: "testnode-2"
+      identity: ""
+      website: "http://172.18.0.3:26657"
+      details: "testnode-2"
+    key:
+      address: darc1ejgxhtvj6c9n7d7g29jmsxhnn6wh2j8rll0vfc
+      coin_delegate: 100000000
+    config:
+      rpc:
+        cors_allowed_origins:
+          - "*"
+        laddr: "tcp://0.0.0.0:26657"
+  - name: "testnode-3"
+    ip: "172.18.0.4"
+    index: 3
+    description:
+      moniker: "testnode-3"
+      identity: ""
+      website: "http://172.18.0.4:26657"
+      details: "testnode-3"
+    key:
+      address: darc15h6uhzufhe0d0avuk54zcqw0t66qefeyc3vttf
+      coin_delegate: 100000000
+    config:
+      rpc:
+        cors_allowed_origins:
+          - "*"
+        laddr: "tcp://0.0.0.0:26657"
+genesis:
+  chain_id: "darchub"
+  app_state:
+    staking:
+      params:
+        bond_denom: "udarc"
+    mint:
+      params:
+        mint_denom: "udarc"
+    gov:
+      deposit_params:
+        min_deposit:
+          - amount: "10000000000"
+            denom: "udarc"
+        max_deposit_period: "172800s"
+    crisis:
+      constant_fee:
+        amount: "100000000000"
+        denom: "udarc"
+    oracle:
+      allowed_addresses:
+        - address: "darc1n8lpdv72n4vr90e8drj8903vmrafafmgcelfpx"
+#    issue:
+#      tokens:
+#        - owner: "darc1n8lpdv72n4vr90e8drj8903vmrafafmgcelfpx"
+#          issuer: "darc1n8lpdv72n4vr90e8drj8903vmrafafmgcelfpx"
+#          denom: "udarc"
+#          symbol: "UDARC"
+#          total_supply: 0
+#          decimals: 6
+#          freeze_disabled: true

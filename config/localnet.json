@@ -11,6 +11,16 @@
       "index_all_tags": true
     }
   },
+  "genesis": {
+    "chain_id": "darchub",
+    "app_state": {
+      "staking": {
+        "params": {
+          "bond_denom": "udarc"
+        }
+      }
+    }
+  },
   "validators": [
     {
       "name": "testnode-1",
