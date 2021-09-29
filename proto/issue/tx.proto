@@ -8,29 +8,61 @@ import "issue/coin_issue.proto";
 import "issue/coins.proto";
 import "issue/issue_params.proto";
 
+import "google/api/annotations.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "x/issue/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc Freeze(MsgFreeze) returns (MsgFreezeResponse);
-    // this line is used by starport scaffolding # proto/tx/rpc
-  rpc Unfreeze(MsgUnfreeze) returns (MsgUnfreezeResponse);
-  rpc BurnFrom(MsgBurnFrom) returns (MsgBurnFromResponse);
-  rpc Burn(MsgBurn) returns (MsgBurnResponse);
-  rpc Mint(MsgMint) returns (MsgMintResponse);
-  rpc DecreaseAllowance(MsgDecreaseAllowance) returns (MsgDecreaseAllowanceResponse);
-  rpc IncreaseAllowance(MsgIncreaseAllowance) returns (MsgIncreaseAllowanceResponse);
-  rpc Approve(MsgApprove) returns (MsgApproveResponse);
-  rpc TransferOwnership(MsgTransferOwnership) returns (MsgTransferOwnershipResponse);
-  rpc TransferFrom(MsgTransferFrom) returns (MsgTransferFromResponse);
-  rpc Transfer(MsgTransfer) returns (MsgTransferResponse);
-  rpc Features(MsgFeatures) returns (MsgFeaturesResponse);
-  rpc EnableFeature(MsgEnableFeature) returns (MsgEnableFeatureResponse);
-  rpc DisableFeature(MsgDisableFeature) returns (MsgDisableFeatureResponse);
-  rpc Description(MsgDescription) returns (MsgDescriptionResponse);
-  rpc IssueCreate(MsgIssueCreate) returns (MsgIssueCreateResponse);
+  rpc Issue(MsgIssue) returns (MsgIssueResponse) {
+    option (google.api.http).put = "/konstellation/issue/issue";
+  }
+  rpc TransferOwnership(MsgTransferOwnership) returns (MsgTransferOwnershipResponse) {
+    option (google.api.http).post = "/konstellation/issue/transfer_ownership";
+  }
+  rpc Transfer(MsgTransfer) returns (MsgTransferResponse) {
+    option (google.api.http).put = "/konstellation/issue/transfer";
+  }
+  rpc Approve(MsgApprove) returns (MsgApproveResponse) {
+    option (google.api.http).put = "/konstellation/issue/approve";
+  }
+  rpc IncreaseAllowance(MsgIncreaseAllowance) returns (MsgIncreaseAllowanceResponse) {
+    option (google.api.http).put = "/konstellation/issue/increase_allowance";
+  }
+  rpc DecreaseAllowance(MsgDecreaseAllowance) returns (MsgDecreaseAllowanceResponse) {
+    option (google.api.http).put = "/konstellation/issue/decrease_allowance";
+  }
+  rpc TransferFrom(MsgTransferFrom) returns (MsgTransferFromResponse) {
+    option (google.api.http).put = "/konstellation/issue/transfer_from";
+  }
+  rpc Mint(MsgMint) returns (MsgMintResponse) {
+    option (google.api.http).put = "/konstellation/issue/mint";
+  }
+  rpc Burn(MsgBurn) returns (MsgBurnResponse) {
+    option (google.api.http).put = "/konstellation/issue/burn";
+  }
+  rpc BurnFrom(MsgBurnFrom) returns (MsgBurnFromResponse) {
+    option (google.api.http).put = "/konstellation/issue/burn_from";
+  }
+  rpc Freeze(MsgFreeze) returns (MsgFreezeResponse) {
+    option (google.api.http).put = "/konstellation/issue/freeze";
+  }
+  rpc Unfreeze(MsgUnfreeze) returns (MsgUnfreezeResponse) {
+    option (google.api.http).put = "/konstellation/issue/unfreeze";
+  }
+  rpc Features(MsgFeatures) returns (MsgFeaturesResponse) {
+    option (google.api.http).put = "/konstellation/issue/features";
+  }
+  rpc EnableFeature(MsgEnableFeature) returns (MsgEnableFeatureResponse) {
+    option (google.api.http).put = "/konstellation/issue/enable_feature";
+  }
+  rpc DisableFeature(MsgDisableFeature) returns (MsgDisableFeatureResponse) {
+    option (google.api.http).put = "/konstellation/issue/disable_feature";
+  }
+  rpc Description(MsgDescription) returns (MsgDescriptionResponse) {
+    option (google.api.http).post = "/konstellation/issue/description";
+  }
 }
 
 message MsgFreeze {
@@ -172,12 +204,12 @@ message MsgDescription {
 message MsgDescriptionResponse {
 }
 
-message MsgIssueCreate {
+message MsgIssue {
   string owner = 1;
   string issuer = 2;
-  IssueParams issue_params = 3 [(gogoproto.embed) = true];
+  IssueParams params = 3 [(gogoproto.embed) = true];
 }
 
-message MsgIssueCreateResponse {
-	CoinIssue amount = 1;
+message MsgIssueResponse {
+  CoinIssue amount = 1;
 }

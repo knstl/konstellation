@@ -1,7 +1,7 @@
 package types
 
 const (
-	TypeMsgIssueCreate       = "issue_create"
+	TypeMsgIssue             = "issue"
 	TypeMsgDescription       = "description"
 	TypeMsgDisableFeature    = "disable_feature"
 	TypeMsgEnableFeature     = "enable_feature"

@@ -26,40 +26,40 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 // GenesisState defines the issue module's genesis state.
 type GenesisState struct {
 	//
-	// // this line is used by starport scaffolding # genesis/proto/state
-	// repeated CoinIssueDenoms coinIssueDenomsList = 31; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 coinIssueDenomsCount = 32; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated CoinIssueList coinIssueListList = 29; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 coinIssueListCount = 30; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated IssuesParams issuesParamsList = 27; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 issuesParamsCount = 28; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated IssueParams issueParamsList = 25; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 issueParamsCount = 26; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated IssueFeatures issueFeaturesList = 23; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 issueFeaturesCount = 24; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated Params paramsList = 21; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 paramsCount = 22; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated Issues issuesList = 19; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 issuesCount = 20; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated CoinIssueDenom coinIssueDenomList = 17; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 coinIssueDenomCount = 18; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated CoinIssue coinIssueList = 15; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 coinIssueCount = 16; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated AddressFreezeList addressFreezeListList = 13; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 addressFreezeListCount = 14; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated AddressFreeze addressFreezeList = 11; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 addressFreezeCount = 12; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated Freeze freezeList = 9; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 freezeCount = 10; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated Coins coinsList = 7; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 coinsCount = 8; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated AllowanceList allowanceListList = 5; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 allowanceListCount = 6; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated Allowance allowanceList = 3; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 allowanceCount = 4; // this line is used by starport scaffolding # genesis/proto/stateField
-	// repeated Address addressList = 1; // this line is used by starport scaffolding # genesis/proto/stateField
-	// uint64 addressCount = 2; // this line is used by starport scaffolding # genesis/proto/stateField
-	// // this line is used by starport scaffolding # ibc/genesis/proto
+	//// this line is used by starport scaffolding # genesis/proto/state
+	//repeated CoinIssueDenoms coinIssueDenomsList = 31; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 coinIssueDenomsCount = 32; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated CoinIssueList coinIssueListList = 29; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 coinIssueListCount = 30; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated IssuesParams issuesParamsList = 27; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 issuesParamsCount = 28; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated IssueParams issueParamsList = 25; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 issueParamsCount = 26; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated IssueFeatures issueFeaturesList = 23; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 issueFeaturesCount = 24; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated Params paramsList = 21; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 paramsCount = 22; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated Issues issuesList = 19; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 issuesCount = 20; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated CoinIssueDenom coinIssueDenomList = 17; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 coinIssueDenomCount = 18; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated CoinIssue coinIssueList = 15; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 coinIssueCount = 16; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated AddressFreezeList addressFreezeListList = 13; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 addressFreezeListCount = 14; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated AddressFreeze addressFreezeList = 11; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 addressFreezeCount = 12; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated Freeze freezeList = 9; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 freezeCount = 10; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated Coins coinsList = 7; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 coinsCount = 8; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated AllowanceList allowanceListList = 5; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 allowanceListCount = 6; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated Allowance allowanceList = 3; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 allowanceCount = 4; // this line is used by starport scaffolding # genesis/proto/stateField
+	//repeated Address addressList = 1; // this line is used by starport scaffolding # genesis/proto/stateField
+	//uint64 addressCount = 2; // this line is used by starport scaffolding # genesis/proto/stateField
+	//// this line is used by starport scaffolding # ibc/genesis/proto
 	StartingIssueId uint64  `protobuf:"varint,1,opt,name=starting_issue_id,json=startingIssueId,proto3" json:"starting_issue_id,omitempty"`
 	Issues          *Issues `protobuf:"bytes,2,opt,name=issues,proto3" json:"issues,omitempty"`
 	Params          Params  `protobuf:"bytes,3,opt,name=params,proto3,customtype=Params" json:"params"`

@@ -9,6 +9,7 @@ import (
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -1478,24 +1479,24 @@ func (m *MsgDescriptionResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDescriptionResponse proto.InternalMessageInfo
 
-type MsgIssueCreate struct {
+type MsgIssue struct {
 	Owner        string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	Issuer       string `protobuf:"bytes,2,opt,name=issuer,proto3" json:"issuer,omitempty"`
-	*IssueParams `protobuf:"bytes,3,opt,name=issue_params,json=issueParams,proto3,embedded=issue_params" json:"issue_params,omitempty"`
+	*IssueParams `protobuf:"bytes,3,opt,name=params,proto3,embedded=params" json:"params,omitempty"`
 }
 
-func (m *MsgIssueCreate) Reset()         { *m = MsgIssueCreate{} }
-func (m *MsgIssueCreate) String() string { return proto.CompactTextString(m) }
-func (*MsgIssueCreate) ProtoMessage()    {}
-func (*MsgIssueCreate) Descriptor() ([]byte, []int) {
+func (m *MsgIssue) Reset()         { *m = MsgIssue{} }
+func (m *MsgIssue) String() string { return proto.CompactTextString(m) }
+func (*MsgIssue) ProtoMessage()    {}
+func (*MsgIssue) Descriptor() ([]byte, []int) {
 	return fileDescriptor_782540d001d342a4, []int{30}
 }
-func (m *MsgIssueCreate) XXX_Unmarshal(b []byte) error {
+func (m *MsgIssue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgIssueCreate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgIssue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgIssueCreate.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgIssue.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -1505,48 +1506,48 @@ func (m *MsgIssueCreate) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-func (m *MsgIssueCreate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgIssueCreate.Merge(m, src)
+func (m *MsgIssue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIssue.Merge(m, src)
 }
-func (m *MsgIssueCreate) XXX_Size() int {
+func (m *MsgIssue) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgIssueCreate) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgIssueCreate.DiscardUnknown(m)
+func (m *MsgIssue) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIssue.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgIssueCreate proto.InternalMessageInfo
+var xxx_messageInfo_MsgIssue proto.InternalMessageInfo
 
-func (m *MsgIssueCreate) GetOwner() string {
+func (m *MsgIssue) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
 	return ""
 }
 
-func (m *MsgIssueCreate) GetIssuer() string {
+func (m *MsgIssue) GetIssuer() string {
 	if m != nil {
 		return m.Issuer
 	}
 	return ""
 }
 
-type MsgIssueCreateResponse struct {
+type MsgIssueResponse struct {
 	Amount *CoinIssue `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
-func (m *MsgIssueCreateResponse) Reset()         { *m = MsgIssueCreateResponse{} }
-func (m *MsgIssueCreateResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgIssueCreateResponse) ProtoMessage()    {}
-func (*MsgIssueCreateResponse) Descriptor() ([]byte, []int) {
+func (m *MsgIssueResponse) Reset()         { *m = MsgIssueResponse{} }
+func (m *MsgIssueResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIssueResponse) ProtoMessage()    {}
+func (*MsgIssueResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_782540d001d342a4, []int{31}
 }
-func (m *MsgIssueCreateResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgIssueResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgIssueCreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgIssueResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgIssueCreateResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgIssueResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -1556,19 +1557,19 @@ func (m *MsgIssueCreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *MsgIssueCreateResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgIssueCreateResponse.Merge(m, src)
+func (m *MsgIssueResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIssueResponse.Merge(m, src)
 }
-func (m *MsgIssueCreateResponse) XXX_Size() int {
+func (m *MsgIssueResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgIssueCreateResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgIssueCreateResponse.DiscardUnknown(m)
+func (m *MsgIssueResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIssueResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgIssueCreateResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgIssueResponse proto.InternalMessageInfo
 
-func (m *MsgIssueCreateResponse) GetAmount() *CoinIssue {
+func (m *MsgIssueResponse) GetAmount() *CoinIssue {
 	if m != nil {
 		return m.Amount
 	}
@@ -1606,81 +1607,93 @@ func init() {
 	proto.RegisterType((*MsgDisableFeatureResponse)(nil), "konstellation.issue.MsgDisableFeatureResponse")
 	proto.RegisterType((*MsgDescription)(nil), "konstellation.issue.MsgDescription")
 	proto.RegisterType((*MsgDescriptionResponse)(nil), "konstellation.issue.MsgDescriptionResponse")
-	proto.RegisterType((*MsgIssueCreate)(nil), "konstellation.issue.MsgIssueCreate")
-	proto.RegisterType((*MsgIssueCreateResponse)(nil), "konstellation.issue.MsgIssueCreateResponse")
+	proto.RegisterType((*MsgIssue)(nil), "konstellation.issue.MsgIssue")
+	proto.RegisterType((*MsgIssueResponse)(nil), "konstellation.issue.MsgIssueResponse")
 }
 
 func init() { proto.RegisterFile("issue/tx.proto", fileDescriptor_782540d001d342a4) }
 
 var fileDescriptor_782540d001d342a4 = []byte{
-	// 1068 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x98, 0xcf, 0x6f, 0x1b, 0x45,
-	0x14, 0xc7, 0xb3, 0x4e, 0xea, 0x90, 0xe7, 0xc4, 0xd4, 0x93, 0x34, 0x75, 0x97, 0xca, 0xb6, 0x96,
-	0xd2, 0x1f, 0xa2, 0x38, 0x22, 0x20, 0x0e, 0xbd, 0x25, 0x2d, 0x91, 0x82, 0x64, 0x35, 0x5a, 0x7e,
-	0x1c, 0xb8, 0x44, 0x9b, 0x78, 0xec, 0x2c, 0xb5, 0x77, 0x96, 0x9d, 0x35, 0x6d, 0xf9, 0x0f, 0x88,
-	0x38, 0x70, 0xe2, 0x84, 0x10, 0x47, 0xee, 0xfc, 0x13, 0x1c, 0x73, 0xe4, 0x64, 0xa1, 0xe4, 0x3f,
-	0xb0, 0xf8, 0x03, 0xd0, 0xce, 0xaf, 0x1d, 0x7b, 0x3d, 0xf1, 0x12, 0x8b, 0x2a, 0x17, 0x6b, 0x77,
-	0xde, 0x77, 0xde, 0xfb, 0xbc, 0xd9, 0x37, 0x33, 0x4f, 0x86, 0xb2, 0x4f, 0xe9, 0x00, 0x6f, 0xc5,
-	0xaf, 0x9a, 0x61, 0x44, 0x62, 0x82, 0xd6, 0x5f, 0x90, 0x80, 0xc6, 0xb8, 0xd7, 0xf3, 0x62, 0x9f,
-	0x04, 0x4d, 0x66, 0xb5, 0x37, 0xba, 0xa4, 0x4b, 0x98, 0x7d, 0x2b, 0x79, 0xe2, 0x52, 0xdb, 0xe6,
-	0x53, 0xd9, 0xef, 0x61, 0x07, 0x7b, 0xf1, 0x20, 0xc2, 0x54, 0xd8, 0x36, 0xb9, 0xed, 0x98, 0xf8,
-	0xc1, 0x21, 0x7b, 0x14, 0xe3, 0x95, 0x74, 0x5c, 0x4a, 0xab, 0xba, 0x9b, 0xd0, 0x8b, 0xbc, 0xbe,
-	0xb0, 0x38, 0xa7, 0x16, 0xac, 0xb4, 0x68, 0x77, 0x2f, 0xc2, 0xf8, 0x7b, 0x8c, 0x1e, 0xc3, 0x72,
-	0x87, 0x3d, 0x45, 0x55, 0xab, 0x61, 0x3d, 0x5c, 0xd9, 0x45, 0xa3, 0x61, 0xbd, 0xfc, 0xda, 0xeb,
-	0xf7, 0x9e, 0x38, 0xc2, 0xe0, 0xb8, 0x52, 0x82, 0x1e, 0x41, 0xf1, 0x84, 0xf4, 0xda, 0x38, 0xaa,
-	0x16, 0x98, 0xb8, 0x32, 0x1a, 0xd6, 0xd7, 0xb8, 0x98, 0x8f, 0x3b, 0xae, 0x10, 0xa0, 0x0d, 0xb8,
-	0xd1, 0xc6, 0x01, 0xe9, 0x57, 0x17, 0x13, 0xa5, 0xcb, 0x5f, 0x50, 0x19, 0x0a, 0x24, 0xac, 0x2e,
-	0xb1, 0xa1, 0x02, 0x09, 0x9d, 0x75, 0xa8, 0x28, 0x16, 0x17, 0xd3, 0x90, 0x04, 0x14, 0x3b, 0x3f,
-	0x5a, 0x50, 0x6a, 0xd1, 0xee, 0x97, 0x41, 0xe7, 0x5a, 0x30, 0xde, 0x82, 0x75, 0x8d, 0x46, 0x51,
-	0xfe, 0xce, 0x29, 0x77, 0x07, 0x51, 0xb0, 0x17, 0x91, 0x7e, 0x12, 0xf7, 0x68, 0x10, 0x05, 0x0a,
-	0x52, 0x8b, 0xcb, 0xc7, 0x1d, 0x57, 0x08, 0xd0, 0x13, 0x58, 0xed, 0x44, 0xa4, 0x7f, 0xe8, 0xb5,
-	0xdb, 0x11, 0xa6, 0x54, 0x80, 0xde, 0x1e, 0x0d, 0xeb, 0xeb, 0x32, 0xab, 0xd4, 0xea, 0xb8, 0xa5,
-	0xe4, 0x75, 0x87, 0xbf, 0xa1, 0x6d, 0x28, 0x7a, 0x7d, 0x32, 0x08, 0x62, 0x06, 0x5d, 0xda, 0xb6,
-	0x9b, 0x53, 0x6a, 0xab, 0xf9, 0x34, 0x29, 0x05, 0x57, 0x28, 0x45, 0x06, 0x92, 0x54, 0x65, 0x70,
-	0x02, 0xcb, 0x62, 0xf8, 0xbf, 0xc0, 0xa7, 0x00, 0x85, 0xdc, 0x00, 0x15, 0x78, 0x5b, 0x44, 0x52,
-	0xc1, 0x7f, 0xb5, 0x58, 0xf4, 0x96, 0x1f, 0xc4, 0x49, 0xf4, 0xbe, 0x1f, 0xc4, 0xd3, 0xa2, 0xf3,
-	0x71, 0xc7, 0x15, 0x02, 0xf4, 0x31, 0x40, 0x4c, 0x26, 0x16, 0xee, 0xd6, 0x68, 0x58, 0xaf, 0x70,
-	0x79, 0x6a, 0x73, 0xdc, 0x95, 0x98, 0xcc, 0xb3, 0x68, 0x9c, 0x39, 0xe1, 0x53, 0xcc, 0xbf, 0x59,
-	0xb0, 0xd1, 0xa2, 0xdd, 0x67, 0xf8, 0x38, 0xc2, 0x1e, 0xc5, 0x3b, 0xbd, 0x1e, 0x79, 0xe9, 0x05,
-	0xc7, 0x18, 0xdd, 0x87, 0x1b, 0xe4, 0x65, 0xba, 0x7a, 0x37, 0x47, 0xc3, 0xfa, 0x2a, 0x07, 0x62,
-	0xc3, 0x8e, 0xcb, 0xcd, 0x49, 0x25, 0xd3, 0x10, 0x07, 0x69, 0x71, 0x6a, 0x95, 0x2c, 0x0c, 0x8e,
-	0x2b, 0x25, 0x57, 0xa2, 0xae, 0xc1, 0xdd, 0x69, 0x84, 0x93, 0x29, 0xec, 0x07, 0xd7, 0x3d, 0x85,
-	0x0c, 0xa1, 0x4a, 0xe1, 0x67, 0x0b, 0xa0, 0x45, 0xbb, 0x3b, 0x61, 0x18, 0x91, 0xef, 0xae, 0x13,
-	0xf8, 0x06, 0xa0, 0x94, 0x4b, 0xe1, 0x9e, 0xf2, 0x15, 0xff, 0x22, 0xf2, 0x02, 0xda, 0xc1, 0xd1,
-	0xf3, 0x04, 0x86, 0x9e, 0xf8, 0x61, 0x6e, 0x70, 0x75, 0x4a, 0x15, 0xf4, 0x53, 0x6a, 0x7c, 0x23,
-	0x2c, 0xe6, 0xdb, 0x08, 0x62, 0x6d, 0x33, 0x2c, 0x0a, 0xf6, 0xdc, 0x62, 0x55, 0x2f, 0x05, 0xf2,
-	0x60, 0xa3, 0x7c, 0xdd, 0x32, 0xbb, 0x93, 0x8a, 0x65, 0x13, 0x82, 0xb9, 0x0e, 0xb6, 0x2b, 0x25,
-	0xa4, 0x7d, 0xa7, 0xa5, 0xdc, 0xdf, 0xe9, 0x0e, 0xdc, 0x9e, 0xc8, 0x51, 0xe5, 0xff, 0x07, 0x3f,
-	0xd4, 0xa5, 0x2d, 0x93, 0x90, 0x75, 0xe5, 0x84, 0xfe, 0xcf, 0xa3, 0x8a, 0x9f, 0xef, 0x12, 0x5a,
-	0x25, 0xf3, 0x0b, 0x4f, 0x66, 0x4f, 0x34, 0x11, 0x73, 0x16, 0xdc, 0x73, 0xd1, 0xd5, 0xa8, 0xa6,
-	0x44, 0x00, 0x3a, 0x53, 0x01, 0xf7, 0x93, 0x5f, 0x19, 0x79, 0x77, 0xe9, 0x6c, 0x58, 0xb7, 0xdc,
-	0x35, 0x5f, 0x1f, 0x14, 0xd4, 0xf2, 0x55, 0x51, 0x7f, 0x03, 0x37, 0x5b, 0xb4, 0xfb, 0x69, 0xe0,
-	0x1d, 0xf5, 0xa4, 0x76, 0x4e, 0xf2, 0x2a, 0x2c, 0x0b, 0x66, 0x71, 0xd1, 0xcb, 0x57, 0xc7, 0x86,
-	0xea, 0x64, 0x2c, 0xc5, 0xf1, 0x82, 0xb5, 0x26, 0xcf, 0x7c, 0xfa, 0x26, 0x40, 0xde, 0x81, 0x3b,
-	0x99, 0x60, 0x8a, 0x24, 0x84, 0x32, 0x3b, 0xd3, 0xe9, 0x71, 0xe4, 0x87, 0xc9, 0x1a, 0xcf, 0x89,
-	0xd1, 0x80, 0x52, 0x3b, 0x75, 0x26, 0x50, 0xf4, 0x21, 0xa7, 0x0a, 0x9b, 0xe3, 0x11, 0x15, 0xcb,
-	0x0f, 0x16, 0x83, 0x61, 0x9f, 0xf7, 0x69, 0x84, 0xbd, 0x18, 0x27, 0x41, 0x34, 0x18, 0x19, 0x7a,
-	0x13, 0x8a, 0xec, 0x73, 0x8b, 0xd3, 0xd6, 0x15, 0x6f, 0x68, 0x1f, 0x56, 0xf5, 0xa6, 0x54, 0x14,
-	0x51, 0xc3, 0x5c, 0x44, 0x07, 0x4c, 0x27, 0x4a, 0xa8, 0xe4, 0xa7, 0x43, 0xce, 0x01, 0xa3, 0xd4,
-	0x50, 0x24, 0x25, 0xfa, 0x44, 0x6d, 0x22, 0x8b, 0xb9, 0xaf, 0x19, 0x37, 0x11, 0x9b, 0x2d, 0x37,
-	0xd2, 0xf6, 0x3f, 0x25, 0x58, 0x6c, 0xd1, 0x2e, 0x3a, 0x80, 0xa2, 0xe8, 0x8f, 0xa7, 0xcf, 0x54,
-	0x3d, 0xab, 0x7d, 0xff, 0x72, 0xbb, 0x22, 0xfa, 0x0a, 0xde, 0x52, 0xfd, 0x6c, 0xc3, 0x34, 0x47,
-	0x2a, 0xec, 0x87, 0xb3, 0x14, 0xba, 0x5f, 0xd5, 0x81, 0x1a, 0xfd, 0x4a, 0x85, 0xd9, 0xef, 0x64,
-	0x6f, 0x88, 0x3e, 0x83, 0x25, 0xd6, 0x18, 0xde, 0xbd, 0x6c, 0x86, 0x7d, 0xef, 0x32, 0xab, 0xee,
-	0x8b, 0xb5, 0x79, 0x46, 0x5f, 0x89, 0xd5, 0xec, 0x4b, 0x6f, 0xc1, 0xd0, 0xb7, 0x50, 0xc9, 0xb6,
-	0x5f, 0x8f, 0x4c, 0x53, 0x33, 0x52, 0xfb, 0xc3, 0xdc, 0x52, 0x3d, 0x64, 0xb6, 0x5d, 0x32, 0x86,
-	0xcc, 0x48, 0xcd, 0x21, 0x8d, 0x2d, 0x0e, 0xfa, 0x1c, 0x96, 0x65, 0x7b, 0x53, 0x37, 0xcd, 0x16,
-	0x02, 0xfb, 0xc1, 0x0c, 0x81, 0x9e, 0x47, 0xb6, 0x09, 0x31, 0xe6, 0x91, 0x91, 0x9a, 0xf3, 0x30,
-	0xb6, 0x13, 0xe8, 0x08, 0x56, 0xc7, 0x5a, 0x89, 0x7b, 0xb3, 0x5c, 0xb0, 0x2a, 0x7d, 0x9c, 0x47,
-	0xa5, 0xef, 0x00, 0x75, 0x5d, 0x37, 0x66, 0xcd, 0x34, 0xef, 0x80, 0xc9, 0xdb, 0x33, 0xf1, 0xab,
-	0x6e, 0x4e, 0xa3, 0x5f, 0xa9, 0x30, 0xfb, 0x9d, 0xbc, 0xdf, 0x10, 0x86, 0xb5, 0xf1, 0xcb, 0xed,
-	0x3d, 0xd3, 0xd4, 0x31, 0x99, 0xfd, 0x41, 0x2e, 0x99, 0x0a, 0x73, 0x02, 0xe5, 0xc9, 0xbb, 0xcb,
-	0x58, 0xfa, 0x63, 0x3a, 0xbb, 0x99, 0x4f, 0xa7, 0x22, 0x1d, 0x42, 0x49, 0xbf, 0x9b, 0xde, 0x35,
-	0xef, 0x30, 0x25, 0xb2, 0xdf, 0xcf, 0x21, 0xd2, 0x03, 0xe8, 0xf7, 0x8d, 0x31, 0x80, 0x26, 0x32,
-	0x07, 0x98, 0x72, 0x5d, 0xec, 0x3e, 0xf8, 0xf3, 0xbc, 0x66, 0x9d, 0x9d, 0xd7, 0xac, 0xbf, 0xcf,
-	0x6b, 0xd6, 0x4f, 0x17, 0xb5, 0x85, 0xb3, 0x8b, 0xda, 0xc2, 0x5f, 0x17, 0xb5, 0x85, 0xaf, 0xd7,
-	0x5e, 0x6d, 0x89, 0xbf, 0x72, 0x5e, 0x87, 0x98, 0x1e, 0x15, 0xd9, 0x5f, 0x28, 0x1f, 0xfd, 0x1b,
-	0x00, 0x00, 0xff, 0xff, 0xda, 0x38, 0xdf, 0xfb, 0xe0, 0x11, 0x00, 0x00,
+	// 1255 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x98, 0x4d, 0x4f, 0x24, 0x45,
+	0x18, 0xc7, 0xb7, 0x67, 0x61, 0x80, 0x87, 0x17, 0x99, 0x86, 0x65, 0x87, 0x02, 0x66, 0xc6, 0xe6,
+	0xdd, 0x45, 0x26, 0xa2, 0xf1, 0xb0, 0x07, 0x13, 0x70, 0x25, 0x59, 0x93, 0xc9, 0x9a, 0x8e, 0x5e,
+	0xbc, 0x90, 0x86, 0x29, 0x86, 0x71, 0x67, 0xba, 0xda, 0xae, 0x1e, 0x17, 0x4c, 0xd6, 0x83, 0x37,
+	0x37, 0xc6, 0x18, 0x4d, 0xf6, 0x64, 0x8c, 0xf1, 0xe4, 0xdd, 0x2f, 0xe1, 0x91, 0xc4, 0x8b, 0xa7,
+	0x89, 0x01, 0x3f, 0x01, 0x5f, 0x40, 0x53, 0xaf, 0xd3, 0x43, 0x77, 0x0d, 0x23, 0x44, 0xc3, 0x85,
+	0xd0, 0xf5, 0xfc, 0xab, 0xff, 0xbf, 0xa7, 0xaa, 0xfa, 0xe9, 0xa7, 0x07, 0x26, 0xea, 0x94, 0xb6,
+	0x70, 0x39, 0x3a, 0xde, 0x0c, 0x42, 0x12, 0x11, 0x7b, 0xea, 0x29, 0xf1, 0x69, 0x84, 0x1b, 0x0d,
+	0x2f, 0xaa, 0x13, 0x7f, 0x93, 0x47, 0xd1, 0x74, 0x8d, 0xd4, 0x08, 0x8f, 0x97, 0xd9, 0x7f, 0x42,
+	0x8a, 0x90, 0x98, 0xca, 0xff, 0xee, 0x1d, 0x62, 0x2f, 0x6a, 0x85, 0x98, 0xca, 0xd8, 0x8c, 0x88,
+	0x1d, 0x90, 0xba, 0xbf, 0xc7, 0xff, 0x95, 0xe3, 0xb9, 0xce, 0xb8, 0x92, 0xe6, 0xe3, 0xb7, 0x09,
+	0xbc, 0xd0, 0x6b, 0xaa, 0xc8, 0x7c, 0x8d, 0x90, 0x5a, 0x03, 0x97, 0xbd, 0xa0, 0x5e, 0xf6, 0x7c,
+	0x9f, 0x44, 0x9c, 0x49, 0x46, 0x9d, 0x17, 0x16, 0x8c, 0x54, 0x68, 0x6d, 0x37, 0xc4, 0xf8, 0x73,
+	0x6c, 0x6f, 0xc0, 0xd0, 0x21, 0xff, 0x2f, 0xcc, 0x5b, 0x25, 0x6b, 0x6d, 0x64, 0xc7, 0xbe, 0x68,
+	0x17, 0x27, 0x4e, 0xbc, 0x66, 0xe3, 0xa1, 0x23, 0x03, 0x8e, 0xab, 0x24, 0xf6, 0x3a, 0x64, 0x8f,
+	0x48, 0xa3, 0x8a, 0xc3, 0x7c, 0x86, 0x8b, 0x73, 0x17, 0xed, 0xe2, 0xb8, 0x10, 0x8b, 0x71, 0xc7,
+	0x95, 0x02, 0x7b, 0x1a, 0x06, 0xab, 0xd8, 0x27, 0xcd, 0xfc, 0x5d, 0xa6, 0x74, 0xc5, 0x85, 0x3d,
+	0x01, 0x19, 0x12, 0xe4, 0x07, 0xf8, 0x50, 0x86, 0x04, 0xce, 0x14, 0xe4, 0x34, 0x8b, 0x8b, 0x69,
+	0x40, 0x7c, 0x8a, 0x9d, 0xaf, 0x2d, 0x18, 0xad, 0xd0, 0xda, 0x47, 0xfe, 0xe1, 0xad, 0x60, 0xbc,
+	0x07, 0x53, 0x31, 0x1a, 0x4d, 0xf9, 0x8b, 0xa0, 0xdc, 0x69, 0x85, 0xfe, 0x6e, 0x48, 0x9a, 0xcc,
+	0x77, 0xbf, 0x15, 0xfa, 0x1a, 0x32, 0xe6, 0x2b, 0xc6, 0x1d, 0x57, 0x0a, 0xec, 0x87, 0x30, 0x76,
+	0x18, 0x92, 0xe6, 0x9e, 0x57, 0xad, 0x86, 0x98, 0x52, 0x09, 0x7a, 0xff, 0xa2, 0x5d, 0x9c, 0x52,
+	0x59, 0x75, 0xa2, 0x8e, 0x3b, 0xca, 0x2e, 0xb7, 0xc5, 0x95, 0xbd, 0x05, 0x59, 0xaf, 0x49, 0x5a,
+	0x7e, 0xc4, 0xa1, 0x47, 0xb7, 0xd0, 0x66, 0xca, 0xc9, 0xdb, 0x7c, 0x97, 0x1d, 0x14, 0x57, 0x2a,
+	0x65, 0x06, 0x8a, 0x54, 0x67, 0x70, 0x04, 0x43, 0x72, 0xf8, 0xdf, 0xc0, 0x77, 0x00, 0x32, 0x7d,
+	0x03, 0xe4, 0xe0, 0x15, 0xe9, 0xa4, 0xcd, 0x7f, 0xb4, 0xb8, 0x7b, 0xa5, 0xee, 0x47, 0xcc, 0xbd,
+	0x59, 0xf7, 0xa3, 0x34, 0x77, 0x31, 0xee, 0xb8, 0x52, 0x60, 0xbf, 0x05, 0x10, 0x91, 0x4b, 0x0b,
+	0x77, 0xef, 0xa2, 0x5d, 0xcc, 0x09, 0x79, 0x27, 0xe6, 0xb8, 0x23, 0x11, 0xb9, 0xc9, 0xa2, 0x09,
+	0x66, 0xc6, 0xa7, 0x99, 0x7f, 0xb2, 0x60, 0xba, 0x42, 0x6b, 0x8f, 0xf0, 0x41, 0x88, 0x3d, 0x8a,
+	0xb7, 0x1b, 0x0d, 0xf2, 0xcc, 0xf3, 0x0f, 0xb0, 0xbd, 0x02, 0x83, 0xe4, 0x59, 0x67, 0xf5, 0x26,
+	0x2f, 0xda, 0xc5, 0x31, 0x01, 0xc4, 0x87, 0x1d, 0x57, 0x84, 0xd9, 0x49, 0xa6, 0x01, 0xf6, 0x3b,
+	0x87, 0x33, 0x76, 0x92, 0x65, 0xc0, 0x71, 0x95, 0xe4, 0x5a, 0xd4, 0x05, 0x98, 0x4f, 0x23, 0xbc,
+	0x9c, 0xc2, 0x63, 0xff, 0xb6, 0xa7, 0x90, 0x20, 0xd4, 0x29, 0xbc, 0xb4, 0x00, 0x2a, 0xb4, 0xb6,
+	0x1d, 0x04, 0x21, 0xf9, 0xec, 0x36, 0x81, 0x4f, 0x83, 0xdd, 0xe1, 0xd2, 0xb8, 0x2f, 0xc4, 0x8a,
+	0x7f, 0x18, 0x7a, 0x3e, 0x3d, 0xc4, 0xe1, 0x13, 0x06, 0x43, 0x8f, 0xea, 0x41, 0xdf, 0xe0, 0xba,
+	0x4a, 0x65, 0xe2, 0x55, 0xaa, 0xfb, 0x41, 0xb8, 0xdb, 0xdf, 0x83, 0x20, 0xd7, 0x36, 0xc1, 0xa2,
+	0x61, 0xcf, 0x2c, 0x7e, 0xea, 0x95, 0x40, 0x15, 0x36, 0x2a, 0xd6, 0x2d, 0xf1, 0x74, 0x52, 0xb9,
+	0x6c, 0x52, 0x70, 0xa3, 0xc2, 0x76, 0xad, 0x84, 0x62, 0xfb, 0x34, 0xd0, 0xf7, 0x3e, 0xcd, 0xc2,
+	0xfd, 0x4b, 0x39, 0xea, 0xfc, 0x7f, 0x15, 0x45, 0x5d, 0xc5, 0x12, 0x09, 0x59, 0xd7, 0x4e, 0xe8,
+	0xbf, 0x2c, 0x55, 0xa2, 0xbe, 0x2b, 0x68, 0x9d, 0xcc, 0x0f, 0x22, 0x99, 0x5d, 0xd9, 0x62, 0xdc,
+	0xf0, 0xc0, 0x3d, 0x91, 0x3d, 0x8f, 0x6e, 0x59, 0x24, 0xa0, 0x93, 0x0a, 0xf8, 0x98, 0xfd, 0x55,
+	0xce, 0x3b, 0x03, 0xa7, 0xed, 0xa2, 0xe5, 0x8e, 0xd7, 0xe3, 0x83, 0x92, 0x5a, 0x5d, 0x6a, 0xea,
+	0x4f, 0x60, 0xb2, 0x42, 0x6b, 0xef, 0xf9, 0xde, 0x7e, 0x43, 0x69, 0x6f, 0x48, 0x9e, 0x87, 0x21,
+	0xc9, 0x2c, 0x5f, 0xf4, 0xea, 0xd2, 0x41, 0x90, 0xbf, 0xec, 0xa5, 0x39, 0x9e, 0xf2, 0xd6, 0xe4,
+	0x51, 0x9d, 0xfe, 0x1f, 0x20, 0x73, 0x30, 0x9b, 0x30, 0xd3, 0x24, 0x01, 0x4c, 0xf0, 0x9a, 0x4e,
+	0x0f, 0xc2, 0x7a, 0xc0, 0xd6, 0xf8, 0x86, 0x18, 0x25, 0x18, 0xad, 0x76, 0x6e, 0x26, 0x51, 0xe2,
+	0x43, 0x4e, 0x1e, 0x66, 0xba, 0x1d, 0x35, 0xcb, 0x31, 0x0c, 0xb3, 0xe2, 0xcc, 0x36, 0x92, 0xdd,
+	0x3d, 0x46, 0xa1, 0x3c, 0x67, 0x20, 0xcb, 0xf7, 0x59, 0x96, 0x59, 0x57, 0x5e, 0xd9, 0xef, 0x40,
+	0x56, 0x74, 0xa9, 0xf2, 0xdc, 0x94, 0xcc, 0xe7, 0xe6, 0x03, 0xae, 0x93, 0xa7, 0x46, 0xce, 0x72,
+	0xde, 0xe7, 0xe7, 0x82, 0xc7, 0x15, 0x8d, 0xfd, 0xb6, 0x7e, 0x58, 0x2c, 0x7e, 0xcf, 0x82, 0xf1,
+	0x61, 0x11, 0xf3, 0xa4, 0x7a, 0xeb, 0xef, 0x49, 0xb8, 0x5b, 0xa1, 0x35, 0xfb, 0x53, 0x18, 0x14,
+	0xa9, 0x2c, 0xa4, 0x4e, 0x54, 0x7e, 0x68, 0xb9, 0x67, 0x58, 0x2f, 0x8e, 0xf3, 0xe5, 0xef, 0x7f,
+	0x7d, 0x9f, 0x99, 0x47, 0xa8, 0xdc, 0x25, 0x2f, 0xc7, 0x3a, 0x75, 0xfb, 0x67, 0x0b, 0x72, 0xc9,
+	0x77, 0xc1, 0xba, 0xc9, 0x20, 0x21, 0x45, 0x6f, 0xf4, 0x2d, 0xd5, 0x5c, 0x65, 0xce, 0xb5, 0xee,
+	0xac, 0xa6, 0x72, 0x45, 0x72, 0xde, 0x1e, 0xd1, 0x38, 0xcf, 0x61, 0x58, 0x97, 0xc0, 0xd2, 0x55,
+	0x7e, 0x68, 0xed, 0x2a, 0x85, 0x06, 0x59, 0xe6, 0x20, 0x45, 0xb4, 0xd0, 0x13, 0xc4, 0x3e, 0x81,
+	0x21, 0xf5, 0x76, 0x2f, 0x9a, 0xee, 0x2d, 0x05, 0x68, 0xf5, 0x0a, 0x81, 0xf6, 0x5e, 0xe2, 0xde,
+	0x05, 0x34, 0x9f, 0xea, 0xed, 0x49, 0x3f, 0xb6, 0x3d, 0xc9, 0xe6, 0xc8, 0xb8, 0x3d, 0x09, 0xa9,
+	0x79, 0x7b, 0xcc, 0x0d, 0x8d, 0xdc, 0x1e, 0x94, 0xbe, 0x3d, 0x75, 0x39, 0x6f, 0xcf, 0xd3, 0x38,
+	0x0c, 0x32, 0xd9, 0x84, 0x1a, 0x21, 0x13, 0x52, 0x33, 0xa4, 0xb9, 0x71, 0xec, 0x0d, 0x59, 0xc5,
+	0x09, 0xc8, 0x6f, 0x2c, 0x18, 0xeb, 0xea, 0x23, 0x96, 0xae, 0x3a, 0x26, 0x4c, 0x85, 0x36, 0xfa,
+	0x51, 0x69, 0xaa, 0xd7, 0x38, 0xd5, 0x12, 0x72, 0x7a, 0x9f, 0x6c, 0xf6, 0x5a, 0xb6, 0x9b, 0x30,
+	0xc0, 0xbf, 0x36, 0xe6, 0x4d, 0x0e, 0x2c, 0x8a, 0x96, 0x7a, 0x45, 0xb5, 0xef, 0xab, 0xdc, 0x77,
+	0x0e, 0xcd, 0xa6, 0xfa, 0xb2, 0x6f, 0x15, 0x66, 0xc7, 0x3f, 0xad, 0x8c, 0x76, 0x2c, 0x6a, 0xb6,
+	0xeb, 0xfa, 0x58, 0xea, 0x6d, 0xc7, 0x3e, 0xcc, 0xec, 0x2f, 0x60, 0x58, 0x7f, 0x8a, 0x96, 0x7a,
+	0xdd, 0x94, 0xaf, 0xf2, 0xda, 0x55, 0x0a, 0x6d, 0xbd, 0xc2, 0xad, 0x4b, 0xa8, 0x60, 0xb4, 0x16,
+	0xab, 0xdb, 0x82, 0xac, 0xfc, 0x49, 0xa1, 0x60, 0xba, 0xb7, 0x88, 0xa3, 0x95, 0xde, 0x71, 0xed,
+	0xbc, 0xc8, 0x9d, 0x17, 0xd0, 0x5c, 0xaa, 0xb3, 0xfc, 0x6d, 0xe0, 0x39, 0x0c, 0xeb, 0xdf, 0x09,
+	0x8c, 0x69, 0x2b, 0x85, 0x39, 0xed, 0xc4, 0xd7, 0x7d, 0xef, 0x4a, 0xd5, 0xf2, 0x3b, 0xf6, 0xba,
+	0xbd, 0x32, 0xda, 0x2b, 0x85, 0xd9, 0x3e, 0xd1, 0x04, 0xf5, 0xb6, 0x57, 0x1d, 0x98, 0xfd, 0x9d,
+	0x05, 0xe3, 0xdd, 0x9d, 0x92, 0xf1, 0x4d, 0xd5, 0x25, 0x43, 0xaf, 0xf7, 0x25, 0xd3, 0x38, 0x0f,
+	0x38, 0xce, 0x32, 0x5a, 0x4c, 0xc5, 0xc1, 0x7c, 0x8e, 0xea, 0x0b, 0xed, 0x97, 0x16, 0x4c, 0x5c,
+	0x6e, 0x9b, 0x8c, 0xf5, 0xa6, 0x4b, 0x87, 0x36, 0xfb, 0xd3, 0x69, 0xae, 0x0d, 0xce, 0xb5, 0x82,
+	0x96, 0xd2, 0x8b, 0x92, 0x98, 0xa4, 0xc1, 0xbe, 0xb2, 0x60, 0x34, 0xde, 0x45, 0x2d, 0x9a, 0xab,
+	0xa0, 0x16, 0xa1, 0x07, 0x7d, 0x88, 0x34, 0xcf, 0x1a, 0xe7, 0x71, 0x9c, 0x92, 0xa1, 0x48, 0xea,
+	0x19, 0x3b, 0xab, 0xbf, 0x9d, 0x15, 0xac, 0xd3, 0xb3, 0x82, 0xf5, 0xe7, 0x59, 0xc1, 0xfa, 0xf6,
+	0xbc, 0x70, 0xe7, 0xf4, 0xbc, 0x70, 0xe7, 0x8f, 0xf3, 0xc2, 0x9d, 0x8f, 0xc7, 0x8f, 0x55, 0xf5,
+	0x3a, 0x09, 0x30, 0xdd, 0xcf, 0xf2, 0x5f, 0xed, 0xde, 0xfc, 0x27, 0x00, 0x00, 0xff, 0xff, 0x2d,
+	0xdd, 0x9a, 0xe0, 0x71, 0x14, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1695,23 +1708,22 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
-	Freeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*MsgFreezeResponse, error)
-	// this line is used by starport scaffolding # proto/tx/rpc
-	Unfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*MsgUnfreezeResponse, error)
-	BurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*MsgBurnFromResponse, error)
-	Burn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error)
-	Mint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error)
-	DecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*MsgDecreaseAllowanceResponse, error)
-	IncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*MsgIncreaseAllowanceResponse, error)
-	Approve(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*MsgApproveResponse, error)
+	Issue(ctx context.Context, in *MsgIssue, opts ...grpc.CallOption) (*MsgIssueResponse, error)
 	TransferOwnership(ctx context.Context, in *MsgTransferOwnership, opts ...grpc.CallOption) (*MsgTransferOwnershipResponse, error)
-	TransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*MsgTransferFromResponse, error)
 	Transfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*MsgTransferResponse, error)
+	Approve(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*MsgApproveResponse, error)
+	IncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*MsgIncreaseAllowanceResponse, error)
+	DecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*MsgDecreaseAllowanceResponse, error)
+	TransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*MsgTransferFromResponse, error)
+	Mint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error)
+	Burn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error)
+	BurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*MsgBurnFromResponse, error)
+	Freeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*MsgFreezeResponse, error)
+	Unfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*MsgUnfreezeResponse, error)
 	Features(ctx context.Context, in *MsgFeatures, opts ...grpc.CallOption) (*MsgFeaturesResponse, error)
 	EnableFeature(ctx context.Context, in *MsgEnableFeature, opts ...grpc.CallOption) (*MsgEnableFeatureResponse, error)
 	DisableFeature(ctx context.Context, in *MsgDisableFeature, opts ...grpc.CallOption) (*MsgDisableFeatureResponse, error)
 	Description(ctx context.Context, in *MsgDescription, opts ...grpc.CallOption) (*MsgDescriptionResponse, error)
-	IssueCreate(ctx context.Context, in *MsgIssueCreate, opts ...grpc.CallOption) (*MsgIssueCreateResponse, error)
 }
 
 type msgClient struct {
@@ -1722,72 +1734,9 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 	return &msgClient{cc}
 }
 
-func (c *msgClient) Freeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*MsgFreezeResponse, error) {
-	out := new(MsgFreezeResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Freeze", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) Unfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*MsgUnfreezeResponse, error) {
-	out := new(MsgUnfreezeResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Unfreeze", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) BurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*MsgBurnFromResponse, error) {
-	out := new(MsgBurnFromResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/BurnFrom", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) Burn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error) {
-	out := new(MsgBurnResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Burn", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) Mint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error) {
-	out := new(MsgMintResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Mint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) DecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*MsgDecreaseAllowanceResponse, error) {
-	out := new(MsgDecreaseAllowanceResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/DecreaseAllowance", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) IncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*MsgIncreaseAllowanceResponse, error) {
-	out := new(MsgIncreaseAllowanceResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/IncreaseAllowance", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) Approve(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*MsgApproveResponse, error) {
-	out := new(MsgApproveResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Approve", in, out, opts...)
+func (c *msgClient) Issue(ctx context.Context, in *MsgIssue, opts ...grpc.CallOption) (*MsgIssueResponse, error) {
+	out := new(MsgIssueResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Issue", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1803,6 +1752,42 @@ func (c *msgClient) TransferOwnership(ctx context.Context, in *MsgTransferOwners
 	return out, nil
 }
 
+func (c *msgClient) Transfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*MsgTransferResponse, error) {
+	out := new(MsgTransferResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Transfer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) Approve(ctx context.Context, in *MsgApprove, opts ...grpc.CallOption) (*MsgApproveResponse, error) {
+	out := new(MsgApproveResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Approve", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) IncreaseAllowance(ctx context.Context, in *MsgIncreaseAllowance, opts ...grpc.CallOption) (*MsgIncreaseAllowanceResponse, error) {
+	out := new(MsgIncreaseAllowanceResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/IncreaseAllowance", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DecreaseAllowance(ctx context.Context, in *MsgDecreaseAllowance, opts ...grpc.CallOption) (*MsgDecreaseAllowanceResponse, error) {
+	out := new(MsgDecreaseAllowanceResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/DecreaseAllowance", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *msgClient) TransferFrom(ctx context.Context, in *MsgTransferFrom, opts ...grpc.CallOption) (*MsgTransferFromResponse, error) {
 	out := new(MsgTransferFromResponse)
 	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/TransferFrom", in, out, opts...)
@@ -1812,9 +1797,45 @@ func (c *msgClient) TransferFrom(ctx context.Context, in *MsgTransferFrom, opts 
 	return out, nil
 }
 
-func (c *msgClient) Transfer(ctx context.Context, in *MsgTransfer, opts ...grpc.CallOption) (*MsgTransferResponse, error) {
-	out := new(MsgTransferResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Transfer", in, out, opts...)
+func (c *msgClient) Mint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error) {
+	out := new(MsgMintResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Mint", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) Burn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error) {
+	out := new(MsgBurnResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Burn", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) BurnFrom(ctx context.Context, in *MsgBurnFrom, opts ...grpc.CallOption) (*MsgBurnFromResponse, error) {
+	out := new(MsgBurnFromResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/BurnFrom", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) Freeze(ctx context.Context, in *MsgFreeze, opts ...grpc.CallOption) (*MsgFreezeResponse, error) {
+	out := new(MsgFreezeResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Freeze", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) Unfreeze(ctx context.Context, in *MsgUnfreeze, opts ...grpc.CallOption) (*MsgUnfreezeResponse, error) {
+	out := new(MsgUnfreezeResponse)
+	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/Unfreeze", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1857,72 +1878,65 @@ func (c *msgClient) Description(ctx context.Context, in *MsgDescription, opts ..
 	return out, nil
 }
 
-func (c *msgClient) IssueCreate(ctx context.Context, in *MsgIssueCreate, opts ...grpc.CallOption) (*MsgIssueCreateResponse, error) {
-	out := new(MsgIssueCreateResponse)
-	err := c.cc.Invoke(ctx, "/konstellation.issue.Msg/IssueCreate", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
-	Freeze(context.Context, *MsgFreeze) (*MsgFreezeResponse, error)
-	// this line is used by starport scaffolding # proto/tx/rpc
-	Unfreeze(context.Context, *MsgUnfreeze) (*MsgUnfreezeResponse, error)
-	BurnFrom(context.Context, *MsgBurnFrom) (*MsgBurnFromResponse, error)
-	Burn(context.Context, *MsgBurn) (*MsgBurnResponse, error)
-	Mint(context.Context, *MsgMint) (*MsgMintResponse, error)
-	DecreaseAllowance(context.Context, *MsgDecreaseAllowance) (*MsgDecreaseAllowanceResponse, error)
-	IncreaseAllowance(context.Context, *MsgIncreaseAllowance) (*MsgIncreaseAllowanceResponse, error)
-	Approve(context.Context, *MsgApprove) (*MsgApproveResponse, error)
+	Issue(context.Context, *MsgIssue) (*MsgIssueResponse, error)
 	TransferOwnership(context.Context, *MsgTransferOwnership) (*MsgTransferOwnershipResponse, error)
-	TransferFrom(context.Context, *MsgTransferFrom) (*MsgTransferFromResponse, error)
 	Transfer(context.Context, *MsgTransfer) (*MsgTransferResponse, error)
+	Approve(context.Context, *MsgApprove) (*MsgApproveResponse, error)
+	IncreaseAllowance(context.Context, *MsgIncreaseAllowance) (*MsgIncreaseAllowanceResponse, error)
+	DecreaseAllowance(context.Context, *MsgDecreaseAllowance) (*MsgDecreaseAllowanceResponse, error)
+	TransferFrom(context.Context, *MsgTransferFrom) (*MsgTransferFromResponse, error)
+	Mint(context.Context, *MsgMint) (*MsgMintResponse, error)
+	Burn(context.Context, *MsgBurn) (*MsgBurnResponse, error)
+	BurnFrom(context.Context, *MsgBurnFrom) (*MsgBurnFromResponse, error)
+	Freeze(context.Context, *MsgFreeze) (*MsgFreezeResponse, error)
+	Unfreeze(context.Context, *MsgUnfreeze) (*MsgUnfreezeResponse, error)
 	Features(context.Context, *MsgFeatures) (*MsgFeaturesResponse, error)
 	EnableFeature(context.Context, *MsgEnableFeature) (*MsgEnableFeatureResponse, error)
 	DisableFeature(context.Context, *MsgDisableFeature) (*MsgDisableFeatureResponse, error)
 	Description(context.Context, *MsgDescription) (*MsgDescriptionResponse, error)
-	IssueCreate(context.Context, *MsgIssueCreate) (*MsgIssueCreateResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
 type UnimplementedMsgServer struct {
 }
 
+func (*UnimplementedMsgServer) Issue(ctx context.Context, req *MsgIssue) (*MsgIssueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Issue not implemented")
+}
+func (*UnimplementedMsgServer) TransferOwnership(ctx context.Context, req *MsgTransferOwnership) (*MsgTransferOwnershipResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransferOwnership not implemented")
+}
+func (*UnimplementedMsgServer) Transfer(ctx context.Context, req *MsgTransfer) (*MsgTransferResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Transfer not implemented")
+}
+func (*UnimplementedMsgServer) Approve(ctx context.Context, req *MsgApprove) (*MsgApproveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Approve not implemented")
+}
+func (*UnimplementedMsgServer) IncreaseAllowance(ctx context.Context, req *MsgIncreaseAllowance) (*MsgIncreaseAllowanceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IncreaseAllowance not implemented")
+}
+func (*UnimplementedMsgServer) DecreaseAllowance(ctx context.Context, req *MsgDecreaseAllowance) (*MsgDecreaseAllowanceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DecreaseAllowance not implemented")
+}
+func (*UnimplementedMsgServer) TransferFrom(ctx context.Context, req *MsgTransferFrom) (*MsgTransferFromResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransferFrom not implemented")
+}
+func (*UnimplementedMsgServer) Mint(ctx context.Context, req *MsgMint) (*MsgMintResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Mint not implemented")
+}
+func (*UnimplementedMsgServer) Burn(ctx context.Context, req *MsgBurn) (*MsgBurnResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Burn not implemented")
+}
+func (*UnimplementedMsgServer) BurnFrom(ctx context.Context, req *MsgBurnFrom) (*MsgBurnFromResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BurnFrom not implemented")
+}
 func (*UnimplementedMsgServer) Freeze(ctx context.Context, req *MsgFreeze) (*MsgFreezeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Freeze not implemented")
 }
 func (*UnimplementedMsgServer) Unfreeze(ctx context.Context, req *MsgUnfreeze) (*MsgUnfreezeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Unfreeze not implemented")
-}
-func (*UnimplementedMsgServer) BurnFrom(ctx context.Context, req *MsgBurnFrom) (*MsgBurnFromResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BurnFrom not implemented")
-}
-func (*UnimplementedMsgServer) Burn(ctx context.Context, req *MsgBurn) (*MsgBurnResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Burn not implemented")
-}
-func (*UnimplementedMsgServer) Mint(ctx context.Context, req *MsgMint) (*MsgMintResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Mint not implemented")
-}
-func (*UnimplementedMsgServer) DecreaseAllowance(ctx context.Context, req *MsgDecreaseAllowance) (*MsgDecreaseAllowanceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DecreaseAllowance not implemented")
-}
-func (*UnimplementedMsgServer) IncreaseAllowance(ctx context.Context, req *MsgIncreaseAllowance) (*MsgIncreaseAllowanceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IncreaseAllowance not implemented")
-}
-func (*UnimplementedMsgServer) Approve(ctx context.Context, req *MsgApprove) (*MsgApproveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Approve not implemented")
-}
-func (*UnimplementedMsgServer) TransferOwnership(ctx context.Context, req *MsgTransferOwnership) (*MsgTransferOwnershipResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TransferOwnership not implemented")
-}
-func (*UnimplementedMsgServer) TransferFrom(ctx context.Context, req *MsgTransferFrom) (*MsgTransferFromResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TransferFrom not implemented")
-}
-func (*UnimplementedMsgServer) Transfer(ctx context.Context, req *MsgTransfer) (*MsgTransferResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Transfer not implemented")
 }
 func (*UnimplementedMsgServer) Features(ctx context.Context, req *MsgFeatures) (*MsgFeaturesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Features not implemented")
@@ -1936,12 +1950,189 @@ func (*UnimplementedMsgServer) DisableFeature(ctx context.Context, req *MsgDisab
 func (*UnimplementedMsgServer) Description(ctx context.Context, req *MsgDescription) (*MsgDescriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Description not implemented")
 }
-func (*UnimplementedMsgServer) IssueCreate(ctx context.Context, req *MsgIssueCreate) (*MsgIssueCreateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IssueCreate not implemented")
-}
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
 	s.RegisterService(&_Msg_serviceDesc, srv)
+}
+
+func _Msg_Issue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIssue)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Issue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/Issue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Issue(ctx, req.(*MsgIssue))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_TransferOwnership_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgTransferOwnership)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).TransferOwnership(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/TransferOwnership",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).TransferOwnership(ctx, req.(*MsgTransferOwnership))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_Transfer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgTransfer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Transfer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/Transfer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Transfer(ctx, req.(*MsgTransfer))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_Approve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgApprove)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Approve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/Approve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Approve(ctx, req.(*MsgApprove))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_IncreaseAllowance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIncreaseAllowance)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).IncreaseAllowance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/IncreaseAllowance",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).IncreaseAllowance(ctx, req.(*MsgIncreaseAllowance))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DecreaseAllowance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDecreaseAllowance)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DecreaseAllowance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/DecreaseAllowance",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DecreaseAllowance(ctx, req.(*MsgDecreaseAllowance))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_TransferFrom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgTransferFrom)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).TransferFrom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/TransferFrom",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).TransferFrom(ctx, req.(*MsgTransferFrom))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_Mint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgMint)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Mint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/Mint",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Mint(ctx, req.(*MsgMint))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_Burn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgBurn)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Burn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/Burn",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Burn(ctx, req.(*MsgBurn))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_BurnFrom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgBurnFrom)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).BurnFrom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/konstellation.issue.Msg/BurnFrom",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).BurnFrom(ctx, req.(*MsgBurnFrom))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Msg_Freeze_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1976,168 +2167,6 @@ func _Msg_Unfreeze_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).Unfreeze(ctx, req.(*MsgUnfreeze))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_BurnFrom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgBurnFrom)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).BurnFrom(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/BurnFrom",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).BurnFrom(ctx, req.(*MsgBurnFrom))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_Burn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgBurn)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).Burn(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/Burn",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).Burn(ctx, req.(*MsgBurn))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_Mint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgMint)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).Mint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/Mint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).Mint(ctx, req.(*MsgMint))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_DecreaseAllowance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgDecreaseAllowance)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).DecreaseAllowance(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/DecreaseAllowance",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).DecreaseAllowance(ctx, req.(*MsgDecreaseAllowance))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_IncreaseAllowance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgIncreaseAllowance)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).IncreaseAllowance(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/IncreaseAllowance",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).IncreaseAllowance(ctx, req.(*MsgIncreaseAllowance))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_Approve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgApprove)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).Approve(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/Approve",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).Approve(ctx, req.(*MsgApprove))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_TransferOwnership_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgTransferOwnership)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).TransferOwnership(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/TransferOwnership",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).TransferOwnership(ctx, req.(*MsgTransferOwnership))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_TransferFrom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgTransferFrom)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).TransferFrom(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/TransferFrom",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).TransferFrom(ctx, req.(*MsgTransferFrom))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_Transfer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgTransfer)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).Transfer(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/Transfer",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).Transfer(ctx, req.(*MsgTransfer))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2214,28 +2243,50 @@ func _Msg_Description_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_IssueCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgIssueCreate)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).IssueCreate(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/konstellation.issue.Msg/IssueCreate",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).IssueCreate(ctx, req.(*MsgIssueCreate))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "konstellation.issue.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Issue",
+			Handler:    _Msg_Issue_Handler,
+		},
+		{
+			MethodName: "TransferOwnership",
+			Handler:    _Msg_TransferOwnership_Handler,
+		},
+		{
+			MethodName: "Transfer",
+			Handler:    _Msg_Transfer_Handler,
+		},
+		{
+			MethodName: "Approve",
+			Handler:    _Msg_Approve_Handler,
+		},
+		{
+			MethodName: "IncreaseAllowance",
+			Handler:    _Msg_IncreaseAllowance_Handler,
+		},
+		{
+			MethodName: "DecreaseAllowance",
+			Handler:    _Msg_DecreaseAllowance_Handler,
+		},
+		{
+			MethodName: "TransferFrom",
+			Handler:    _Msg_TransferFrom_Handler,
+		},
+		{
+			MethodName: "Mint",
+			Handler:    _Msg_Mint_Handler,
+		},
+		{
+			MethodName: "Burn",
+			Handler:    _Msg_Burn_Handler,
+		},
+		{
+			MethodName: "BurnFrom",
+			Handler:    _Msg_BurnFrom_Handler,
+		},
 		{
 			MethodName: "Freeze",
 			Handler:    _Msg_Freeze_Handler,
@@ -2243,42 +2294,6 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Unfreeze",
 			Handler:    _Msg_Unfreeze_Handler,
-		},
-		{
-			MethodName: "BurnFrom",
-			Handler:    _Msg_BurnFrom_Handler,
-		},
-		{
-			MethodName: "Burn",
-			Handler:    _Msg_Burn_Handler,
-		},
-		{
-			MethodName: "Mint",
-			Handler:    _Msg_Mint_Handler,
-		},
-		{
-			MethodName: "DecreaseAllowance",
-			Handler:    _Msg_DecreaseAllowance_Handler,
-		},
-		{
-			MethodName: "IncreaseAllowance",
-			Handler:    _Msg_IncreaseAllowance_Handler,
-		},
-		{
-			MethodName: "Approve",
-			Handler:    _Msg_Approve_Handler,
-		},
-		{
-			MethodName: "TransferOwnership",
-			Handler:    _Msg_TransferOwnership_Handler,
-		},
-		{
-			MethodName: "TransferFrom",
-			Handler:    _Msg_TransferFrom_Handler,
-		},
-		{
-			MethodName: "Transfer",
-			Handler:    _Msg_Transfer_Handler,
 		},
 		{
 			MethodName: "Features",
@@ -2295,10 +2310,6 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Description",
 			Handler:    _Msg_Description_Handler,
-		},
-		{
-			MethodName: "IssueCreate",
-			Handler:    _Msg_IssueCreate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -3369,7 +3380,7 @@ func (m *MsgDescriptionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgIssueCreate) Marshal() (dAtA []byte, err error) {
+func (m *MsgIssue) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -3379,12 +3390,12 @@ func (m *MsgIssueCreate) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgIssueCreate) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgIssue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgIssueCreate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgIssue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -3418,7 +3429,7 @@ func (m *MsgIssueCreate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgIssueCreateResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgIssueResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -3428,12 +3439,12 @@ func (m *MsgIssueCreateResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgIssueCreateResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgIssueResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgIssueCreateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgIssueResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -3922,7 +3933,7 @@ func (m *MsgDescriptionResponse) Size() (n int) {
 	return n
 }
 
-func (m *MsgIssueCreate) Size() (n int) {
+func (m *MsgIssue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3943,7 +3954,7 @@ func (m *MsgIssueCreate) Size() (n int) {
 	return n
 }
 
-func (m *MsgIssueCreateResponse) Size() (n int) {
+func (m *MsgIssueResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -7002,7 +7013,7 @@ func (m *MsgDescriptionResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgIssueCreate) Unmarshal(dAtA []byte) error {
+func (m *MsgIssue) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -7025,10 +7036,10 @@ func (m *MsgIssueCreate) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgIssueCreate: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgIssue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgIssueCreate: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgIssue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -7152,7 +7163,7 @@ func (m *MsgIssueCreate) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgIssueCreateResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgIssueResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -7175,10 +7186,10 @@ func (m *MsgIssueCreateResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgIssueCreateResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgIssueResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgIssueCreateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgIssueResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

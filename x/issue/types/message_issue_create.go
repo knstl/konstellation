@@ -5,56 +5,55 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-var _ sdk.Msg = &MsgIssueCreate{}
+var _ sdk.Msg = &MsgIssue{}
 
-func NewMsgIssueCreate(owner, issuer sdk.AccAddress, params *IssueParams) *MsgIssueCreate {
-	return &MsgIssueCreate{
+func NewMsgIssue(owner, issuer sdk.AccAddress, params *IssueParams) *MsgIssue {
+	return &MsgIssue{
 		owner.String(),
 		issuer.String(),
 		params,
 	}
 }
 
-func (msg *MsgIssueCreate) Route() string {
+func (m *MsgIssue) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgIssueCreate) Type() string {
-	//return "IssueCreate"
-	return TypeMsgIssueCreate
+func (m *MsgIssue) Type() string {
+	return TypeMsgIssue
 }
 
-func (msg *MsgIssueCreate) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgIssue) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgIssueCreate) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgIssue) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgIssueCreate) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgIssue) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		//return ErrNilOwner(DefaultCodespace)
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "Owner address cannot be empty")
 	}
 	// Cannot issue zero or negative coins
-	if msg.TotalSupply.IsZero() || !msg.TotalSupply.IsPositive() {
+	if m.TotalSupply.IsZero() || !m.TotalSupply.IsPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "Cannot issue 0 or negative coin amounts")
 	}
-	//if utils.QuoDecimals(msg.TotalSupply, msg.Decimals).GT(CoinMaxTotalSupply) {
+	//if utils.QuoDecimals(m.TotalSupply, m.Decimals).GT(CoinMaxTotalSupply) {
 	//	return ErrCoinTotalSupplyMaxValueNotValid
 	//}
-	if len(msg.Symbol) < CoinSymbolMinLength || len(msg.Symbol) > CoinSymbolMaxLength {
+	if len(m.Symbol) < CoinSymbolMinLength || len(m.Symbol) > CoinSymbolMaxLength {
 		return ErrCoinSymbolNotValid
 	}
-	if uint(msg.Decimals) > CoinDecimalsMaxValue {
+	if uint(m.Decimals) > CoinDecimalsMaxValue {
 		return ErrCoinDecimalsMaxValueNotValid
 	}
-	if uint(msg.Decimals)%CoinDecimalsMultiple != 0 {
+	if uint(m.Decimals)%CoinDecimalsMultiple != 0 {
 		return ErrCoinDecimalsMultipleNotValid
 	}
-	if len(msg.Description) > CoinDescriptionMaxLength {
+	if len(m.Description) > CoinDescriptionMaxLength {
 		return ErrCoinDescriptionMaxLengthNotValid
 	}
 	return nil

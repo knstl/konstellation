@@ -5,7 +5,6 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/konstellation/konstellation/x/issue/types"
 	"google.golang.org/grpc/codes"
@@ -48,9 +47,9 @@ func (k Keeper) IssueFeatures(c context.Context, req *types.QueryGetIssueFeature
 	var issueFeatures types.IssueFeatures
 	ctx := sdk.UnwrapSDKContext(c)
 
-	if !k.HasIssueFeatures(ctx, req.Id) {
-		return nil, sdkerrors.ErrKeyNotFound
-	}
+	//if !k.HasIssueFeatures(ctx, req.Id) {
+	//	return nil, sdkerrors.ErrKeyNotFound
+	//}
 
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
 	k.cdc.MustUnmarshalBinaryBare(store.Get(GetIssueFeaturesIDBytes(req.Id)), &issueFeatures)

@@ -28,8 +28,11 @@ func NewIssueFeatures(data interface{}) (*IssueFeatures, error) {
 
 func NewIssueParams(data interface{}) (*IssueParams, error) {
 	var issue IssueParams
-	err := mapstructure.Decode(data, &issue)
-	return &issue, err
+	if err := mapstructure.Decode(data, &issue); err != nil {
+		return nil, err
+	}
+
+	return &issue, nil
 }
 
 func (ip *IssueParams) AddTotalSupply(totalSupply *sdk.Int) {

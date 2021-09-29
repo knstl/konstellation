@@ -9,5 +9,4 @@ message IssueFeatures {
   bool burn_from_disabled = 3; 
   bool mint_disabled = 4; 
   bool freeze_disabled = 5; 
-  uint64 id = 6;
 }

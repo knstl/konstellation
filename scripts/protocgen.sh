@@ -30,7 +30,7 @@ buf protoc \
     --grpc-gateway_out=Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
   --gocosmos_out=plugins=interfacetype+grpc,\
 Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
-  proto/oracle
+  proto/oracle/*.proto
 
   #  --grpc-gateway_out=Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
   
@@ -40,7 +40,7 @@ buf protoc \
   --grpc-gateway_out=Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
   --gocosmos_out=plugins=interfacetype+grpc,\
 Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types:. \
-  proto/issue
+  proto/issue/*.proto
 
 #buf protoc \
 #  -I "proto" \

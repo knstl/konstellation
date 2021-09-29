@@ -61,25 +61,25 @@ func (k Keeper) AppendIssueFeatures(
 */
 
 // SetIssueFeatures set a specific issueFeatures in the store
-func (k Keeper) SetIssueFeatures(ctx sdk.Context, issueFeatures types.IssueFeatures) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
-	b := k.cdc.MustMarshalBinaryBare(&issueFeatures)
-	store.Set(GetIssueFeaturesIDBytes(issueFeatures.Id), b)
-}
-
-// GetIssueFeatures returns a issueFeatures from its id
-func (k Keeper) GetIssueFeatures(ctx sdk.Context, id uint64) types.IssueFeatures {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
-	var issueFeatures types.IssueFeatures
-	k.cdc.MustUnmarshalBinaryBare(store.Get(GetIssueFeaturesIDBytes(id)), &issueFeatures)
-	return issueFeatures
-}
-
-// HasIssueFeatures checks if the issueFeatures exists in the store
-func (k Keeper) HasIssueFeatures(ctx sdk.Context, id uint64) bool {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
-	return store.Has(GetIssueFeaturesIDBytes(id))
-}
+//func (k Keeper) SetIssueFeatures(ctx sdk.Context, issueFeatures types.IssueFeatures) {
+//	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
+//	b := k.cdc.MustMarshalBinaryBare(&issueFeatures)
+//	store.Set(GetIssueFeaturesIDBytes(issueFeatures.Id), b)
+//}
+//
+//// GetIssueFeatures returns a issueFeatures from its id
+//func (k Keeper) GetIssueFeatures(ctx sdk.Context, id uint64) types.IssueFeatures {
+//	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
+//	var issueFeatures types.IssueFeatures
+//	k.cdc.MustUnmarshalBinaryBare(store.Get(GetIssueFeaturesIDBytes(id)), &issueFeatures)
+//	return issueFeatures
+//}
+//
+//// HasIssueFeatures checks if the issueFeatures exists in the store
+//func (k Keeper) HasIssueFeatures(ctx sdk.Context, id uint64) bool {
+//	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueFeaturesKey))
+//	return store.Has(GetIssueFeaturesIDBytes(id))
+//}
 
 /*
 // GetIssueFeaturesOwner returns the creator of the

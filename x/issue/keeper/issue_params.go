@@ -61,25 +61,25 @@ func (k Keeper) AppendIssueParams(
 */
 
 // SetIssueParams set a specific issueParams in the store
-func (k Keeper) SetIssueParams(ctx sdk.Context, issueParams types.IssueParams) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueParamsKey))
-	b := k.cdc.MustMarshalBinaryBare(&issueParams)
-	store.Set(GetIssueParamsIDBytes(issueParams.Id), b)
-}
-
-// GetIssueParams returns a issueParams from its id
-func (k Keeper) GetIssueParams(ctx sdk.Context, id uint64) types.IssueParams {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueParamsKey))
-	var issueParams types.IssueParams
-	k.cdc.MustUnmarshalBinaryBare(store.Get(GetIssueParamsIDBytes(id)), &issueParams)
-	return issueParams
-}
-
-// HasIssueParams checks if the issueParams exists in the store
-func (k Keeper) HasIssueParams(ctx sdk.Context, id uint64) bool {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueParamsKey))
-	return store.Has(GetIssueParamsIDBytes(id))
-}
+//func (k Keeper) SetIssueParams(ctx sdk.Context, issueParams types.IssueParams) {
+//	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueParamsKey))
+//	b := k.cdc.MustMarshalBinaryBare(&issueParams)
+//	store.Set(GetIssueParamsIDBytes(issueParams.Id), b)
+//}
+//
+//// GetIssueParams returns a issueParams from its id
+//func (k Keeper) GetIssueParams(ctx sdk.Context, id uint64) types.IssueParams {
+//	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueParamsKey))
+//	var issueParams types.IssueParams
+//	k.cdc.MustUnmarshalBinaryBare(store.Get(GetIssueParamsIDBytes(id)), &issueParams)
+//	return issueParams
+//}
+//
+//// HasIssueParams checks if the issueParams exists in the store
+//func (k Keeper) HasIssueParams(ctx sdk.Context, id uint64) bool {
+//	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.IssueParamsKey))
+//	return store.Has(GetIssueParamsIDBytes(id))
+//}
 
 /*
 // GetIssueParamsOwner returns the creator of the

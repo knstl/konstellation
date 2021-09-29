@@ -7,11 +7,34 @@ import (
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-func (k msgServer) IssueCreate(goCtx context.Context, msg *types.MsgIssueCreate) (*types.MsgIssueCreateResponse, error) {
+func (k msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	issuerAddr, err := sdk.AccAddressFromBech32(msg.Issuer)
+	if err != nil {
+		return nil, err
+	}
 
-	return &types.MsgIssueCreateResponse{}, nil
+	ownerAddr, err := sdk.AccAddressFromBech32(msg.Owner)
+	if err != nil {
+		return nil, err
+	}
+
+	// Sub fee from issuer
+	fee := k.keeper.GetParams(ctx).IssueFee
+	if err := k.keeper.ChargeFee(ctx, issuerAddr, fee); err != nil {
+		return nil, err
+	}
+
+	params, err := types.NewIssueParams(msg.IssueParams)
+	if err != nil {
+		return nil, types.ErrInvalidIssueParams
+	}
+
+	ci := k.keeper.CreateIssue(ctx, ownerAddr, issuerAddr, params)
+	if err := k.keeper.Issue(ctx, ci); err != nil {
+		return nil, err
+	}
+
+	return &types.MsgIssueResponse{}, nil
 }

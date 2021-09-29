@@ -37,7 +37,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 
 	cdc.RegisterConcrete(&MsgDescription{}, "issue/Description", nil)
 
-	cdc.RegisterConcrete(&MsgIssueCreate{}, "issue/IssueCreate", nil)
+	cdc.RegisterConcrete(&MsgIssue{}, "issue/IssueCreate", nil)
 
 }
 
@@ -86,7 +86,7 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgDescription{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgIssueCreate{},
+		&MsgIssue{},
 	)
 
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)

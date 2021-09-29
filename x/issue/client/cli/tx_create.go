@@ -17,10 +17,10 @@ var _ = strconv.Itoa(0)
 
 func CmdIssueCreate() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "issue-create [denom] [symbol] [total-supply] --decimals [decimals] --burnOwnerDisabled [burn-owner-disabled] --burnHolderDisabled [burn-holder-disabled] --burnFromDisabled [burn-from-disabled] --mintDisabled [mint-disabled] --freezeDisabled [freeze-disabled] --description [description]",
+		Use:     "create [denom] [symbol] [total-supply] --decimals [decimals] --burnOwnerDisabled [burn-owner-disabled] --burnHolderDisabled [burn-holder-disabled] --burnFromDisabled [burn-from-disabled] --mintDisabled [mint-disabled] --freezeDisabled [freeze-disabled] --description [description]",
 		Short:   "Broadcast message IssueCreate",
 		Long:    "Issue a new token",
-		Example: "$ konstellationcli issue create foocoin FOO 100000000 --from foo",
+		Example: "$ knstld issue create foocoin FOO 100000000 --from foo",
 		Args:    cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -64,7 +64,7 @@ func CmdIssueCreate() *cobra.Command {
 				IssueFeatures: &issueFeatures,
 			}
 
-			msg := types.NewMsgIssueCreate(account, account, &issueParams)
+			msg := types.NewMsgIssue(account, account, &issueParams)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
