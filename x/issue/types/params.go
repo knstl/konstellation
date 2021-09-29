@@ -3,7 +3,7 @@ package types
 import (
 	"bytes"
 	"fmt"
-	"github.com/konstellation/konstellation/types"
+	"github.com/konstellation/konstellation/const"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -72,13 +72,13 @@ func (p Params) Equal(p2 Params) bool {
 // DefaultParams returns a default set of parameters.
 func DefaultParams() Params {
 	return Params{
-		IssueFee:         sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(200000000)),
-		MintFee:          sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(100000000)),
-		FreezeFee:        sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(200000000)),
-		UnfreezeFee:      sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(200000000)),
-		BurnFee:          sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(100000000)),
-		BurnFromFee:      sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(100000000)),
-		TransferOwnerFee: sdk.NewCoin(types.DefaultBondDenom, sdk.NewInt(200000000)),
+		IssueFee:         sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(200000000)),
+		MintFee:          sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(100000000)),
+		FreezeFee:        sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(200000000)),
+		UnfreezeFee:      sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(200000000)),
+		BurnFee:          sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(100000000)),
+		BurnFromFee:      sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(100000000)),
+		TransferOwnerFee: sdk.NewCoin(_const.DefaultBondDenom, sdk.NewInt(200000000)),
 	}
 }
 
