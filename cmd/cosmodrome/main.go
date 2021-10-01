@@ -13,10 +13,7 @@ func main() {
 	cobra.EnableCommandSorting = false
 
 	rootCmd, _ := NewRootCmd(
-		"cosmodrome",
 		app.AccountAddressPrefix,
-		app.DefaultNodeHome,
-		app.Name,
 		app.ModuleBasics,
 		// this line is used by starport scaffolding # root/arguments
 	)

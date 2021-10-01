@@ -19,10 +19,7 @@ import (
 // NewRootCmd creates a new root command for cosmodrome. It is called once in the
 // main function.
 func NewRootCmd(
-	appName,
-	accountAddressPrefix,
-	defaultNodeHome,
-	defaultChainID string,
+	accountAddressPrefix string,
 	moduleBasics module.BasicManager,
 ) (*cobra.Command, cosmoscmd.EncodingConfig) {
 	// Set config for prefixes

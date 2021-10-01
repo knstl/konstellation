@@ -101,7 +101,6 @@ const (
 	Name                 = "knstl"
 	NodeDir              = ".knstld"
 	Bech32Prefix         = "darc"
-	EnvPrefixNode        = "knstl"
 )
 
 var (
@@ -184,7 +183,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, "."+Name)
+	DefaultNodeHome = filepath.Join(userHomeDir, NodeDir)
 }
 
 // App extends an ABCI application, but with most of its parameters exported.
