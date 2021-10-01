@@ -14,7 +14,7 @@ PROTO_CONTAINER := cosmwasm/prototools-docker:v0.1.0
 BUF_IMAGE=bufbuild/buf@sha256:9dc5d6645f8f8a2d5aaafc8957fbbb5ea64eada98a84cb09654e8f49d6f73b3e
 DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace $(BUF_IMAGE)
 #DOCKER_BUF := docker run --rm -v $(shell pwd)/buf.yaml:/workspace/buf.yaml -v $(shell go list -f "{{ .Dir }}" -m github.com/cosmos/cosmos-sdk):/workspace/cosmos_sdk_dir -v $(shell pwd):/workspace/wasmd  --workdir /workspace $(PROTO_CONTAINER)
-HTTPS_GIT := https://github.com/konstellation/knstl.git
+HTTPS_GIT := https://github.com/konstellation/konstellation.git
 
 export GO111MODULE = on
 
@@ -63,30 +63,19 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=konstellation \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
-cosmodromeldflags = -X github.com/cosmos/cosmos-sdk/version.Name=cosmodrome \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=cosmodrome \
-		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
-		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
-		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
-
 ifeq ($(WITH_CLEVELDB),yes)
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
-  cosmodromeldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
 endif
 ldflags += $(LDFLAGS)
-cosmodromeldflags += $(LDFLAGS)
 ldflags := $(strip $(ldflags))
-cosmodromeldflags := $(strip $(cosmodromeldflags))
 
 BUILD_FLAGS := -tags "$(build_tags_comma_sep)" -ldflags '$(ldflags)' -trimpath
-COSMODROME_BUILD_FLAGS := -tags "$(build_tags_comma_sep)" -ldflags '$(cosmodromeldflags)' -trimpath
 
 build: go.sum
 ifeq ($(OS),Windows_NT)
 	exit 1
 else
 	go build -mod=readonly $(BUILD_FLAGS) -o build/knstld ./cmd/knstld
-	go build -mod=readonly $(COSMODROME_BUILD_FLAGS) -o build/cosmodrome ./cmd/cosmodrome
 endif
 
 build-linux: go.sum
@@ -104,7 +93,6 @@ endif
 
 install: go.sum
 	go install -mod=readonly $(BUILD_FLAGS) ./cmd/knstld
-	go install -mod=readonly $(COSMODROME_BUILD_FLAGS) ./cmd/cosmodrome
 
 ########################################
 ### Tools & dependencies

@@ -333,3 +333,6 @@ go get -u go.opencensus.io
 go get gopkg.in/fsnotify/fsnotify.v1
 github.com/fsnotify/fsnotify v1.4.8
 ```
+
+## Network generation
+To generate network see [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
