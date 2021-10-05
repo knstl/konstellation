@@ -8,6 +8,7 @@ import "issue/params.proto";
 import "issue/coin_issue.proto";
 import "issue/freeze.proto";
 import "issue/allowance.proto";
+import "gogoproto/gogo.proto";
 
 option go_package = "x/issue/types";
 
@@ -105,7 +106,8 @@ message QueryAllowancesRequest {
 }
 
 message QueryAllowancesResponse {
-  repeated Allowance allowances = 1;
+  repeated Allowance allowances = 1
+    [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "Allowances"];
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

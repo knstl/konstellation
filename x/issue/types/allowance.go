@@ -16,7 +16,7 @@ func (a Allowance) String() string {
 }
 */
 
-type Allowances []*Allowance
+type Allowances []Allowance
 
 func (as *Allowances) String() (str string) {
 	for _, allowance := range *as {

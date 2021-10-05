@@ -504,12 +504,11 @@ func (k *Keeper) allowance(ctx sdk.Context, owner, spender sdk.AccAddress, denom
 func (k *Keeper) allowances(ctx sdk.Context, owner sdk.AccAddress, denom string) types.Allowances {
 	// todo if denom is empty get all allowances for address
 	store := ctx.KVStore(k.storeKey)
-	allowanceList := types.AllowanceList{Allowances: []*types.Allowance{}}
+	allowances := make(types.Allowances, 0)
 	bz := store.Get(KeyAllowances(denom, owner))
 	if bz != nil {
-		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &allowanceList)
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &allowances)
 	}
-	allowances := types.Allowances(allowanceList.Allowances)
 
 	return allowances
 }
