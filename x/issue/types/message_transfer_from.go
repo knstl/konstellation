@@ -8,11 +8,7 @@ import (
 var _ sdk.Msg = &MsgTransferFrom{}
 
 func NewMsgTransferFrom(sender, fromAddr, toAddr sdk.AccAddress, amount sdk.Coins) *MsgTransferFrom {
-	coins := Coins{Coins: []sdk.Coin{}}
-	for _, coin := range amount {
-		coins.Coins = append(coins.Coins, coin)
-	}
-	return &MsgTransferFrom{Sender: sender.String(), FromAddress: fromAddr.String(), ToAddress: toAddr.String(), Amount: &coins}
+	return &MsgTransferFrom{Sender: sender.String(), FromAddress: fromAddr.String(), ToAddress: toAddr.String(), Amount: amount}
 }
 
 func (msg *MsgTransferFrom) Route() string {
@@ -20,7 +16,6 @@ func (msg *MsgTransferFrom) Route() string {
 }
 
 func (msg *MsgTransferFrom) Type() string {
-	//return "TransferFrom"
 	return TypeMsgTransferFrom
 }
 
@@ -43,10 +38,10 @@ func (msg *MsgTransferFrom) ValidateBasic() error {
 	if sdk.AccAddress(msg.ToAddress).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+sdk.Coins(msg.Amount.Coins).String())
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsAllPositive() {
+	if !msg.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

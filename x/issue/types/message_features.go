@@ -15,29 +15,29 @@ func NewMsgFeatures(owner sdk.AccAddress, denom string, features *IssueFeatures)
 	}
 }
 
-func (msg *MsgFeatures) Route() string {
+func (m *MsgFeatures) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgFeatures) Type() string {
+func (m *MsgFeatures) Type() string {
 	return "Features"
 }
 
-func (msg *MsgFeatures) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgFeatures) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgFeatures) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgFeatures) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgFeatures) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgFeatures) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "Owner address cannot be empty")
 	}
-	if msg.Denom == "" {
-		return ErrInvalidDenom(msg.Denom)
+	if m.Denom == "" {
+		return ErrInvalidDenom(m.Denom)
 	}
 	return nil
 }

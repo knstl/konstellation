@@ -8,42 +8,37 @@ import (
 var _ sdk.Msg = &MsgDecreaseAllowance{}
 
 func NewMsgDecreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) *MsgDecreaseAllowance {
-	coins := Coins{Coins: []sdk.Coin{}}
-	for _, coin := range amount {
-		coins.Coins = append(coins.Coins, coin)
-	}
-	return &MsgDecreaseAllowance{owner.String(), spender.String(), &coins}
+	return &MsgDecreaseAllowance{owner.String(), spender.String(), amount}
 }
 
-func (msg *MsgDecreaseAllowance) Route() string {
+func (m *MsgDecreaseAllowance) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgDecreaseAllowance) Type() string {
-	//return "DecreaseAllowance"
+func (m *MsgDecreaseAllowance) Type() string {
 	return TypeMsgDecreaseAllowance
 }
 
-func (msg *MsgDecreaseAllowance) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgDecreaseAllowance) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgDecreaseAllowance) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgDecreaseAllowance) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgDecreaseAllowance) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgDecreaseAllowance) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
-	if sdk.AccAddress(msg.Spender).Empty() {
+	if sdk.AccAddress(m.Spender).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+sdk.Coins(msg.Amount.Coins).String())
+	if !m.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+m.Amount.String())
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsAllPositive() {
+	if !m.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

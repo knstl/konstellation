@@ -10,8 +10,24 @@ import (
 func (k msgServer) Mint(goCtx context.Context, msg *types.MsgMint) (*types.MsgMintResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	minter, err := sdk.AccAddressFromBech32(msg.Minter)
+	if err != nil {
+		return nil, err
+	}
+
+	toAddr, err := sdk.AccAddressFromBech32(msg.ToAddress)
+	if err != nil {
+		return nil, err
+	}
+
+	fee := k.keeper.GetParams(ctx).MintFee
+	if err := k.keeper.ChargeFee(ctx, minter, fee); err != nil {
+		return nil, err
+	}
+
+	if err := k.keeper.Mint(ctx, minter, toAddr, msg.Amount); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgMintResponse{}, nil
 }

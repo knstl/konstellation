@@ -15,33 +15,32 @@ func NewMsgDescription(owner sdk.AccAddress, denom string, description string) *
 	}
 }
 
-func (msg *MsgDescription) Route() string {
+func (m *MsgDescription) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgDescription) Type() string {
-	//return "Description"
+func (m *MsgDescription) Type() string {
 	return TypeMsgDescription
 }
 
-func (msg *MsgDescription) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgDescription) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgDescription) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgDescription) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgDescription) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgDescription) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
-	if msg.Denom == "" {
-		return ErrInvalidDenom(msg.Denom)
+	if m.Denom == "" {
+		return ErrInvalidDenom(m.Denom)
 	}
 
-	if len(msg.Description) > CoinDescriptionMaxLength {
+	if len(m.Description) > CoinDescriptionMaxLength {
 		return ErrCoinDescriptionMaxLengthNotValid
 	}
 	return nil

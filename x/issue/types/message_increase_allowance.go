@@ -8,11 +8,7 @@ import (
 var _ sdk.Msg = &MsgIncreaseAllowance{}
 
 func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) *MsgIncreaseAllowance {
-	coins := Coins{Coins: []sdk.Coin{}}
-	for _, coin := range amount {
-		coins.Coins = append(coins.Coins, coin)
-	}
-	return &MsgIncreaseAllowance{owner.String(), spender.String(), &coins}
+	return &MsgIncreaseAllowance{owner.String(), spender.String(), amount}
 }
 
 func (msg *MsgIncreaseAllowance) Route() string {
@@ -20,7 +16,6 @@ func (msg *MsgIncreaseAllowance) Route() string {
 }
 
 func (msg *MsgIncreaseAllowance) Type() string {
-	//return "IncreaseAllowance"
 	return TypeMsgIncreaseAllowance
 }
 
@@ -40,10 +35,10 @@ func (msg *MsgIncreaseAllowance) ValidateBasic() error {
 	if sdk.AccAddress(msg.Spender).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+sdk.Coins(msg.Amount.Coins).String())
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsAllPositive() {
+	if !msg.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

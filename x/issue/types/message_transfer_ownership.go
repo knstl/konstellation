@@ -20,7 +20,6 @@ func (msg *MsgTransferOwnership) Route() string {
 }
 
 func (msg *MsgTransferOwnership) Type() string {
-	//return "TransferOwnership"
 	return TypeMsgTransferOwnership
 }
 

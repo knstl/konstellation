@@ -8,11 +8,7 @@ import (
 var _ sdk.Msg = &MsgBurn{}
 
 func NewMsgBurn(burner sdk.AccAddress, amount sdk.Coins) *MsgBurn {
-	coins := Coins{Coins: []sdk.Coin{}}
-	for _, coin := range amount {
-		coins.Coins = append(coins.Coins, coin)
-	}
-	return &MsgBurn{Burner: burner.String(), Amount: &coins}
+	return &MsgBurn{Burner: burner.String(), Amount: amount}
 }
 
 func (msg *MsgBurn) Route() string {
@@ -20,7 +16,6 @@ func (msg *MsgBurn) Route() string {
 }
 
 func (msg *MsgBurn) Type() string {
-	//return "Burn"
 	return TypeMsgBurn
 }
 
@@ -37,10 +32,10 @@ func (msg *MsgBurn) ValidateBasic() error {
 	if sdk.AccAddress(msg.Burner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing burner address")
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+sdk.Coins(msg.Amount.Coins).String())
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsAllPositive() {
+	if !msg.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

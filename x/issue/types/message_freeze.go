@@ -12,34 +12,34 @@ func NewMsgFreeze(freezer, holder sdk.AccAddress, denom, op string) MsgFreeze {
 }
 
 // Route Implements Msg.
-func (msg MsgFreeze) Route() string { return RouterKey }
+func (m MsgFreeze) Route() string { return RouterKey }
 
 // Type Implements Msg.
-func (msg MsgFreeze) Type() string { return TypeMsgFreeze }
+func (m MsgFreeze) Type() string { return TypeMsgFreeze }
 
 // ValidateBasic Implements Msg.
-func (msg MsgFreeze) ValidateBasic() error {
-	if sdk.AccAddress(msg.Freezer).Empty() {
+func (m MsgFreeze) ValidateBasic() error {
+	if sdk.AccAddress(m.Freezer).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing freezer address")
 	}
-	if sdk.AccAddress(msg.Holder).Empty() {
+	if sdk.AccAddress(m.Holder).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing holder address")
 	}
-	if msg.Denom == "" {
-		return ErrInvalidDenom(msg.Denom)
+	if m.Denom == "" {
+		return ErrInvalidDenom(m.Denom)
 	}
-	if msg.Op == "" {
-		return ErrInvalidFreezeOp(msg.Op)
+	if m.Op == "" {
+		return ErrInvalidFreezeOp(m.Op)
 	}
 	return nil
 }
 
 // GetSignBytes Implements Msg.
-func (msg MsgFreeze) GetSignBytes() []byte {
-	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+func (m MsgFreeze) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&m))
 }
 
 // GetSigners Implements Msg.
-func (msg MsgFreeze) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Freezer)}
+func (m MsgFreeze) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Freezer)}
 }

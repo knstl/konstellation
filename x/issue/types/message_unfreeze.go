@@ -21,7 +21,6 @@ func (msg *MsgUnfreeze) Route() string {
 }
 
 func (msg *MsgUnfreeze) Type() string {
-	//return "Unfreeze"
 	return TypeMsgUnfreeze
 }
 

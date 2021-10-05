@@ -15,34 +15,33 @@ func NewMsgDisableFeature(owner sdk.AccAddress, denom string, feature string) *M
 	}
 }
 
-func (msg *MsgDisableFeature) Route() string {
+func (m *MsgDisableFeature) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgDisableFeature) Type() string {
-	//return "DisableFeature"
+func (m *MsgDisableFeature) Type() string {
 	return TypeMsgDisableFeature
 }
 
-func (msg *MsgDisableFeature) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgDisableFeature) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgDisableFeature) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgDisableFeature) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgDisableFeature) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgDisableFeature) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
 
-	if msg.Denom == "" {
-		return ErrInvalidDenom(msg.Denom)
+	if m.Denom == "" {
+		return ErrInvalidDenom(m.Denom)
 	}
-	if msg.Feature == "" {
-		return ErrInvalidFeature(msg.Feature)
+	if m.Feature == "" {
+		return ErrInvalidFeature(m.Feature)
 	}
 	return nil
 }
