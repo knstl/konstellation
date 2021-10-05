@@ -10,8 +10,19 @@ import (
 func (k msgServer) DecreaseAllowance(goCtx context.Context, msg *types.MsgDecreaseAllowance) (*types.MsgDecreaseAllowanceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	spender, err := sdk.AccAddressFromBech32(msg.Spender)
+	if err != nil {
+		return nil, err
+	}
+
+	owner, err := sdk.AccAddressFromBech32(msg.Owner)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := k.keeper.DecreaseAllowance(ctx, owner, spender, msg.Amount); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgDecreaseAllowanceResponse{}, nil
 }

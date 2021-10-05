@@ -16,7 +16,7 @@ var _ = strconv.Itoa(0)
 func CmdDecreaseAllowance() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "decrease-allowance [spender] [amount]",
-		Short: "Broadcast message DecreaseAllowance",
+		Short: "Decreases the allowance granted to `spender` by the caller.",
 		Long:  "Decreases the allowance granted to `spender` by the caller.",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
