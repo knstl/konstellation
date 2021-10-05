@@ -7,17 +7,22 @@ import "gogoproto/gogo.proto";
 
 message CoinIssue {
   uint64 id = 1;
-  string issuer = 2 [(gogoproto.moretags) = "yaml:\"issuer\""]; 
-  string owner = 3 [(gogoproto.moretags) = "yaml:\"owner\""]; 
-  string denom = 4; 
-  string symbol = 5; 
-  string total_supply = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false]; 
-  int32 decimals = 7; 
-  string description = 8; 
-  int32 issueTime = 9; 
-  bool burn_owner_disabled = 10; 
-  bool burn_holder_disabled = 11; 
-  bool burn_from_disabled = 12; 
-  bool freeze_disabled = 13; 
-  bool mint_disabled = 14; 
+  string issuer = 2 [(gogoproto.moretags) = "yaml:\"issuer\""];
+  string owner = 3 [(gogoproto.moretags) = "yaml:\"owner\""];
+  string denom = 4;
+  string symbol = 5;
+  string total_supply = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  int32 decimals = 7;
+  string description = 8;
+  int32 issueTime = 9;
+  bool burn_owner_disabled = 10;
+  bool burn_holder_disabled = 11;
+  bool burn_from_disabled = 12;
+  bool freeze_disabled = 13;
+  bool mint_disabled = 14;
+}
+
+message IssueOwnership {
+  string owner = 1 [(gogoproto.moretags) = "yaml:\"owner\""];
+  string denom = 2;
 }

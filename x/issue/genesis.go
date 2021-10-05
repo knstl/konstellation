@@ -317,7 +317,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, gs types.GenesisState) {
 	k.SetLastId(ctx, gs.StartingIssueId)
 	k.SetParams(ctx, gs.Params)
-	for _, issue := range gs.Issues.Issues {
+	for _, issue := range gs.Issues {
 		k.AddIssue(ctx, issue)
 	}
 }

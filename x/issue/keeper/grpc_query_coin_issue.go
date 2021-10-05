@@ -13,6 +13,9 @@ func (q queryServer) Issue(c context.Context, req *types.QueryIssueRequest) (*ty
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
+	if req.Denom == "" {
+		return nil, status.Error(codes.InvalidArgument, "denom cannot be empty")
+	}
 
 	ctx := sdk.UnwrapSDKContext(c)
 
