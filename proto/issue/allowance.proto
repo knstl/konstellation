@@ -8,5 +8,4 @@ import "gogoproto/gogo.proto";
 message Allowance {
   string amount = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false]; 
   string spender = 2; 
-  uint64 id = 3;
 }

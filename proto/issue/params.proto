@@ -13,5 +13,4 @@ message Params {
   string burn_fee = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
   string burn_from_fee = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
   string transfer_owner_fee = 7 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
-  uint64 id = 8;
 }

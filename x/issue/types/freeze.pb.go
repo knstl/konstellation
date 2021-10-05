@@ -23,9 +23,10 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Freeze struct {
-	In  bool   `protobuf:"varint,1,opt,name=in,proto3" json:"in,omitempty"`
-	Out bool   `protobuf:"varint,2,opt,name=out,proto3" json:"out,omitempty"`
-	Id  uint64 `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`
+	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Denom   string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	In      bool   `protobuf:"varint,3,opt,name=in,proto3" json:"in,omitempty"`
+	Out     bool   `protobuf:"varint,4,opt,name=out,proto3" json:"out,omitempty"`
 }
 
 func (m *Freeze) Reset()         { *m = Freeze{} }
@@ -61,6 +62,20 @@ func (m *Freeze) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Freeze proto.InternalMessageInfo
 
+func (m *Freeze) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+func (m *Freeze) GetDenom() string {
+	if m != nil {
+		return m.Denom
+	}
+	return ""
+}
+
 func (m *Freeze) GetIn() bool {
 	if m != nil {
 		return m.In
@@ -75,13 +90,6 @@ func (m *Freeze) GetOut() bool {
 	return false
 }
 
-func (m *Freeze) GetId() uint64 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
-
 func init() {
 	proto.RegisterType((*Freeze)(nil), "konstellation.issue.Freeze")
 }
@@ -89,17 +97,18 @@ func init() {
 func init() { proto.RegisterFile("issue/freeze.proto", fileDescriptor_1dc2fe13cc08aeb7) }
 
 var fileDescriptor_1dc2fe13cc08aeb7 = []byte{
-	// 155 bytes of a gzipped FileDescriptorProto
+	// 176 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xca, 0x2c, 0x2e, 0x2e,
 	0x4d, 0xd5, 0x4f, 0x2b, 0x4a, 0x4d, 0xad, 0x4a, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12,
 	0xce, 0xce, 0xcf, 0x2b, 0x2e, 0x49, 0xcd, 0xc9, 0x49, 0x2c, 0xc9, 0xcc, 0xcf, 0xd3, 0x03, 0xab,
-	0x50, 0xb2, 0xe2, 0x62, 0x73, 0x03, 0x2b, 0x12, 0xe2, 0xe3, 0x62, 0xca, 0xcc, 0x93, 0x60, 0x54,
-	0x60, 0xd4, 0xe0, 0x08, 0x62, 0xca, 0xcc, 0x13, 0x12, 0xe0, 0x62, 0xce, 0x2f, 0x2d, 0x91, 0x60,
-	0x02, 0x0b, 0x80, 0x98, 0x60, 0x15, 0x29, 0x12, 0xcc, 0x0a, 0x8c, 0x1a, 0x2c, 0x41, 0x4c, 0x99,
-	0x29, 0x4e, 0xea, 0x27, 0x1e, 0xc9, 0x31, 0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0xe3,
-	0x84, 0xc7, 0x72, 0x0c, 0x17, 0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0x10, 0xc5, 0x5b, 0xa1,
-	0x0f, 0x71, 0x40, 0x49, 0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0xd8, 0x01, 0xc6, 0x80, 0x00, 0x00,
-	0x00, 0xff, 0xff, 0x89, 0x17, 0xf5, 0x55, 0x96, 0x00, 0x00, 0x00,
+	0x50, 0x8a, 0xe2, 0x62, 0x73, 0x03, 0x2b, 0x12, 0x92, 0xe0, 0x62, 0x4f, 0x4c, 0x49, 0x29, 0x4a,
+	0x2d, 0x2e, 0x96, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x82, 0x71, 0x85, 0x44, 0xb8, 0x58, 0x53,
+	0x52, 0xf3, 0xf2, 0x73, 0x25, 0x98, 0xc0, 0xe2, 0x10, 0x8e, 0x10, 0x1f, 0x17, 0x53, 0x66, 0x9e,
+	0x04, 0xb3, 0x02, 0xa3, 0x06, 0x47, 0x10, 0x53, 0x66, 0x9e, 0x90, 0x00, 0x17, 0x73, 0x7e, 0x69,
+	0x89, 0x04, 0x0b, 0x58, 0x00, 0xc4, 0x74, 0x52, 0x3f, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39,
+	0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63,
+	0x39, 0x86, 0x28, 0xde, 0x0a, 0x7d, 0x88, 0x03, 0x4b, 0x2a, 0x0b, 0x52, 0x8b, 0x93, 0xd8, 0xc0,
+	0x0e, 0x34, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x1d, 0xba, 0x4e, 0xc1, 0xb6, 0x00, 0x00, 0x00,
 }
 
 func (m *Freeze) Marshal() (dAtA []byte, err error) {
@@ -122,11 +131,6 @@ func (m *Freeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Id != 0 {
-		i = encodeVarintFreeze(dAtA, i, uint64(m.Id))
-		i--
-		dAtA[i] = 0x18
-	}
 	if m.Out {
 		i--
 		if m.Out {
@@ -135,7 +139,7 @@ func (m *Freeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x20
 	}
 	if m.In {
 		i--
@@ -145,7 +149,21 @@ func (m *Freeze) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0x18
+	}
+	if len(m.Denom) > 0 {
+		i -= len(m.Denom)
+		copy(dAtA[i:], m.Denom)
+		i = encodeVarintFreeze(dAtA, i, uint64(len(m.Denom)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintFreeze(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -167,14 +185,19 @@ func (m *Freeze) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.Address)
+	if l > 0 {
+		n += 1 + l + sovFreeze(uint64(l))
+	}
+	l = len(m.Denom)
+	if l > 0 {
+		n += 1 + l + sovFreeze(uint64(l))
+	}
 	if m.In {
 		n += 2
 	}
 	if m.Out {
 		n += 2
-	}
-	if m.Id != 0 {
-		n += 1 + sovFreeze(uint64(m.Id))
 	}
 	return n
 }
@@ -215,6 +238,70 @@ func (m *Freeze) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFreeze
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFreeze
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFreeze
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Address = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFreeze
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFreeze
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFreeze
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Denom = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field In", wireType)
 			}
@@ -234,7 +321,7 @@ func (m *Freeze) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.In = bool(v != 0)
-		case 2:
+		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Out", wireType)
 			}
@@ -254,25 +341,6 @@ func (m *Freeze) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Out = bool(v != 0)
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			m.Id = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFreeze
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Id |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipFreeze(dAtA[iNdEx:])

@@ -53,12 +53,6 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	cmd.AddCommand(CmdListCoinIssue())
 	cmd.AddCommand(CmdShowCoinIssue())
 
-	//cmd.AddCommand(CmdListAddressFreezeList())
-	//cmd.AddCommand(CmdShowAddressFreezeList())
-
-	//cmd.AddCommand(CmdListAddressFreeze())
-	//cmd.AddCommand(CmdShowAddressFreeze())
-
 	cmd.AddCommand(CmdListFreeze())
 	cmd.AddCommand(CmdShowFreeze())
 

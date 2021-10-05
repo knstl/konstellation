@@ -4,7 +4,8 @@ package konstellation.issue;
 option go_package = "x/issue/types";
 
 message Freeze {
-  bool in = 1; 
-  bool out = 2; 
-  uint64 id = 3;
+  string address = 1;
+  string denom = 2;
+  bool in = 3;
+  bool out = 4;
 }

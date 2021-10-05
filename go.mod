@@ -15,7 +15,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/imdario/mergo v0.3.11
 	github.com/mitchellh/mapstructure v1.3.3
-	github.com/regen-network/cosmos-proto v0.3.1 // indirect
+	github.com/pelletier/go-toml v1.8.1
 	github.com/rs/zerolog v1.21.0
 	github.com/spf13/cast v1.3.1
 	github.com/spf13/cobra v1.1.3

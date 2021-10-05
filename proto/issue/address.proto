@@ -1,9 +1,0 @@
-syntax = "proto3";
-package konstellation.issue;
-
-option go_package = "x/issue/types";
-
-message Address {
-  string address = 1;
-  uint64 id = 2;
-}

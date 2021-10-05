@@ -6,7 +6,7 @@ version: 2
 defaults: &build_defaults
   working_directory: /go/src/github.com/konstellation/konstellation
   docker:
-    - image: circleci/golang:1.15
+    - image: circleci/golang:1.16
 
 deps: &dependencies
   run:
@@ -22,7 +22,7 @@ jobs:
       - run:
           name: run build
           command: |
-            go build -v ./client/knstld
+            go build
       - run:
           name: run tests
           command: |
