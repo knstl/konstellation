@@ -11,34 +11,34 @@ func NewMsgIncreaseAllowance(owner, spender sdk.AccAddress, amount sdk.Coins) *M
 	return &MsgIncreaseAllowance{owner.String(), spender.String(), amount}
 }
 
-func (msg *MsgIncreaseAllowance) Route() string {
+func (m *MsgIncreaseAllowance) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgIncreaseAllowance) Type() string {
+func (m *MsgIncreaseAllowance) Type() string {
 	return TypeMsgIncreaseAllowance
 }
 
-func (msg *MsgIncreaseAllowance) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgIncreaseAllowance) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgIncreaseAllowance) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgIncreaseAllowance) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgIncreaseAllowance) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgIncreaseAllowance) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
-	if sdk.AccAddress(msg.Spender).Empty() {
+	if sdk.AccAddress(m.Spender).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
-	if !msg.Amount.IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
+	if !m.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+m.Amount.String())
 	}
-	if !msg.Amount.IsAllPositive() {
+	if !m.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

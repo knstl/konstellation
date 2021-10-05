@@ -11,8 +11,13 @@ const (
 	FreezeInOut = "in-out"
 )
 
-func NewFreeze(in, out bool) *Freeze {
-	return &Freeze{In: in, Out: out}
+func NewFreeze(address, denom string, in, out bool) *Freeze {
+	return &Freeze{
+		Address: address,
+		Denom:   denom,
+		In:      in,
+		Out:     out,
+	}
 }
 
 /*
@@ -21,19 +26,9 @@ func (f Freeze) String() string {
 }
 */
 
-func NewAddressFreeze(address string, in, out bool) *AddressFreeze {
-	return &AddressFreeze{Address: address, In: in, Out: out}
-}
+type Freezes []*Freeze
 
-/*
-func (af AddressFreeze) String() string {
-	return fmt.Sprintf(`%s: in=%t, out=%t`, af.Address, af.In, af.Out)
-}
-*/
-
-type AddressFreezes []*AddressFreeze
-
-func (afs AddressFreezes) String() string {
+func (afs Freezes) String() string {
 	out := fmt.Sprintf("%-44s|%-32s|%-32s\n", "Address", "Out-end-time", "In-end-time")
 	for _, v := range afs {
 		out += fmt.Sprintf("%-44s|%-32t|%-32t\n", v.Address, v.In, v.Out)

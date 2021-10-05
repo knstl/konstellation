@@ -107,7 +107,7 @@ message QueryAllowancesRequest {
 
 message QueryAllowancesResponse {
   repeated Allowance allowances = 1
-    [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "Allowances"];
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "Allowances"];
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
@@ -127,7 +127,7 @@ message QueryFreezesRequest {
 }
 
 message QueryFreezesResponse {
-  repeated Freeze freezes = 1;
+  repeated Freeze freezes = 1  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "[]Freeze"];
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
@@ -137,7 +137,7 @@ message QueryAllFreezesRequest {
 }
 
 message QueryAllFreezesResponse {
-  repeated Freeze freezes = 1;
+  repeated Freeze freezes = 1 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "[]Freeze"];
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

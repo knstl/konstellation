@@ -39,7 +39,7 @@ func (ip *IssueParams) AddTotalSupply(totalSupply *sdk.Int) {
 	ip.TotalSupply = sdk.NewIntWithDecimal(totalSupply.Int64(), cast.ToInt(ip.Decimals))
 }
 
-func NewIssuesParams(owner string, limit int32) IssuesParams {
+func NewIssuesParams(owner string, limit uint64) IssuesParams {
 	return IssuesParams{Owner: owner, Limit: limit}
 }
 
@@ -47,6 +47,6 @@ func (ip *IssuesParams) AddOwner(owner string) {
 	ip.Owner = owner
 }
 
-func (ip *IssuesParams) AddLimit(limit int32) {
+func (ip *IssuesParams) AddLimit(limit uint64) {
 	ip.Limit = limit
 }

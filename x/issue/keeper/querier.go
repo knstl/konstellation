@@ -77,7 +77,10 @@ func allowances(ctx sdk.Context, k Keeper, denom string, owner string) ([]byte, 
 }
 
 func freeze(ctx sdk.Context, k Keeper, denom string, holder string) ([]byte, error) {
-	holderAddress, _ := sdk.AccAddressFromBech32(holder)
+	holderAddress, err := sdk.AccAddressFromBech32(holder)
+	if err != nil {
+		return nil, err
+	}
 	freeze := k.GetFreeze(ctx, denom, holderAddress)
 
 	bz, err := k.GetCodec().MarshalBinaryBare(freeze)
@@ -88,10 +91,25 @@ func freeze(ctx sdk.Context, k Keeper, denom string, holder string) ([]byte, err
 }
 
 func freezes(ctx sdk.Context, k Keeper, denom string) ([]byte, error) {
-	freezes := k.GetFreezes(ctx, denom)
+	//holderAddress, err := sdk.AccAddressFromBech32(holder)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//freezes := k.GetFreezesOfDenom(ctx, denom)
+	//freezeList := types.AddressFreezeList{AddressFreezes: freezes}
+	//
+	//bz, err := k.GetCodec().MarshalBinaryBare(&freezeList)
+	//if err != nil {
+	//	return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, sdkerrors.ErrJSONMarshal.Error())
+	//}
+	//return bz, nil
+}
+
+func freezesAll(ctx sdk.Context, k Keeper, denom string) ([]byte, error) {
+	freezes := k.GetFreezesOfDenom(ctx, denom)
 	freezeList := types.AddressFreezeList{AddressFreezes: freezes}
 
-	bz, err := k.GetCodec().MarshalBinaryBare(&freezeList)
+	bz, err := k.GetCodec().MarshalBinaryBare(freezes)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, sdkerrors.ErrJSONMarshal.Error())
 	}

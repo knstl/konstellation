@@ -7,14 +7,8 @@ import (
 )
 
 func NewAllowance(amount sdk.Coin, spender sdk.AccAddress) *Allowance {
-	return &Allowance{Amount: amount.Amount, Spender: spender.String()}
+	return &Allowance{Amount: amount, Spender: spender.String()}
 }
-
-/*
-func (a Allowance) String() string {
-	return fmt.Sprintf(`%s:%s`, a.Spender, a.Amount)
-}
-*/
 
 type Allowances []Allowance
 

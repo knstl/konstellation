@@ -391,7 +391,7 @@ func (k *Keeper) DisableFeature(ctx sdk.Context, owner sdk.AccAddress, denom str
 		return err
 	}
 
-	i.SetFeatures(features)
+	//i.SetFeatures(features)
 	k.setIssue(ctx, i)
 
 	return nil
@@ -549,7 +549,7 @@ func (k *Keeper) allowances(ctx sdk.Context, owner sdk.AccAddress, denom string)
 	allowances := make(types.Allowances, 0)
 	bz := store.Get(KeyAllowances(denom, owner))
 	if bz != nil {
-		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &allowances)
+		k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, allowances)
 	}
 
 	return allowances
@@ -582,7 +582,7 @@ func (k *Keeper) increaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 	)
 
 	allowance := k.allowance(ctx, owner, spender, amount.Denom)
-	k.approve(ctx, owner, spender, allowance.Add(amount))
+	k.approve(ctx, owner, spender, allowance.Amount.Add(amount))
 }
 
 func (k *Keeper) decreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddress, amount sdk.Coin) {
@@ -597,8 +597,8 @@ func (k *Keeper) decreaseAllowance(ctx sdk.Context, owner, spender sdk.AccAddres
 	)
 
 	allowance := k.allowance(ctx, owner, spender, amount.Denom)
-	if allowance.IsGTE(amount) {
-		k.approve(ctx, owner, spender, allowance.Sub(amount))
+	if allowance.Amount.IsGTE(amount) {
+		k.approve(ctx, owner, spender, allowance.Amount.Sub(amount))
 	} else {
 		k.approve(ctx, owner, spender, sdk.NewCoin(amount.Denom, sdk.ZeroInt()))
 	}
@@ -616,25 +616,43 @@ func (k *Keeper) getFreeze(ctx sdk.Context, denom string, holder sdk.AccAddress)
 	store := ctx.KVStore(k.storeKey)
 	bz := store.Get(KeyFreeze(denom, holder))
 	if len(bz) == 0 {
-		return types.NewFreeze(false, false)
+		return types.NewFreeze(holder.String(), denom, false, false)
 	}
 	var freeze types.Freeze
 	k.cdc.MustUnmarshalBinaryLengthPrefixed(bz, &freeze)
 	return &freeze
 }
 
-func (k *Keeper) GetFreezes(ctx sdk.Context, denom string) []*types.AddressFreeze {
+func (k *Keeper) GetFreeze(ctx sdk.Context, denom string, holder sdk.AccAddress) *types.Freeze {
+	return k.getFreeze(ctx, denom, holder)
+}
+
+func (k *Keeper) GetFreezesOfDenom(ctx sdk.Context, denom string) []types.Freeze {
 	store := ctx.KVStore(k.storeKey)
 	iterator := sdk.KVStorePrefixIterator(store, PrefixFreeze(denom))
 	defer iterator.Close()
-	list := make(types.AddressFreezes, 0)
+	list := make([]types.Freeze, 0)
 	for ; iterator.Valid(); iterator.Next() {
 		var freeze types.Freeze
 		k.cdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &freeze)
 		keys := strings.Split(string(iterator.Key()), KeyDelimiter)
 		address := keys[len(keys)-1]
-		list = append(list, types.NewAddressFreeze(address, freeze.In, freeze.Out))
+		list = append(list, types.NewFreeze(address, denom, freeze.In, freeze.Out))
 	}
+	return list
+}
+func (k *Keeper) GetFreezesOfHolder(ctx sdk.Context, holder sdk.AccAddress) types.Freezes {
+	//store := ctx.KVStore(k.storeKey)
+	//iterator := sdk.KVStorePrefixIterator(store, PrefixFreeze(denom))
+	//defer iterator.Close()
+	list := make(types.Freezes, 0)
+	//for ; iterator.Valid(); iterator.Next() {
+	//	var freeze types.Freeze
+	//	k.cdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &freeze)
+	//	keys := strings.Split(string(iterator.Key()), KeyDelimiter)
+	//	address := keys[len(keys)-1]
+	//	list = append(list, types.NewFreeze(address, denom, freeze.In, freeze.Out))
+	//}
 	return list
 }
 
@@ -847,7 +865,7 @@ func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, 
 		if allowance.Amount.IsGTE(coin) {
 			k.decreaseAllowance(ctx, from, sender, coin)
 		} else {
-			return types.ErrAmountGreaterThanAllowance(coin, allowance)
+			return types.ErrAmountGreaterThanAllowance(coin, allowance.Amount)
 		}
 	}
 
@@ -929,10 +947,10 @@ func (k *Keeper) BurnFrom(ctx sdk.Context, burner, from sdk.AccAddress, coins sd
 
 	for _, coin := range coins {
 		allowance := k.allowance(ctx, from, burner, coin.Denom)
-		if allowance.IsGTE(coin) {
+		if allowance.Amount.IsGTE(coin) {
 			k.decreaseAllowance(ctx, from, burner, coin)
 		} else {
-			return types.ErrAmountGreaterThanAllowance(coin, allowance)
+			return types.ErrAmountGreaterThanAllowance(coin, allowance.Amount)
 		}
 	}
 
