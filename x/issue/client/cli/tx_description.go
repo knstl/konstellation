@@ -15,7 +15,7 @@ var _ = strconv.Itoa(0)
 func CmdDescription() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "description [denom] [description]",
-		Short: "Broadcast message Description",
+		Short: "Change issue's description",
 		Long:  "Change issue's description",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
