@@ -8,11 +8,7 @@ import (
 var _ sdk.Msg = &MsgApprove{}
 
 func NewMsgApprove(owner, spender sdk.AccAddress, amount sdk.Coins) *MsgApprove {
-	coins := Coins{Coins: []sdk.Coin{}}
-	for _, coin := range amount {
-		coins.Coins = append(coins.Coins, coin)
-	}
-	return &MsgApprove{owner.String(), spender.String(), &coins}
+	return &MsgApprove{owner.String(), spender.String(), amount}
 }
 
 func (msg *MsgApprove) Route() string {
