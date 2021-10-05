@@ -33,41 +33,11 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	cmd.AddCommand(CmdAllowances())
 	cmd.AddCommand(CmdAllowance())
 
-	//cmd.AddCommand(CmdListCoinIssueDenoms())
-	//cmd.AddCommand(CmdShowCoinIssueDenoms())
-
-	//cmd.AddCommand(CmdListCoinIssueList())
-	//cmd.AddCommand(CmdShowCoinIssueList())
-
-	cmd.AddCommand(CmdListIssuesParams())
-	//cmd.AddCommand(CmdShowIssuesParams())
-
-	cmd.AddCommand(CmdListIssueParams())
-	cmd.AddCommand(CmdShowIssueParams())
-
-	//cmd.AddCommand(CmdListIssueFeatures())
-	//cmd.AddCommand(CmdShowIssueFeatures())
-
-	cmd.AddCommand(CmdListParams())
-	//cmd.AddCommand(CmdShowParams())
-
-	//cmd.AddCommand(CmdListIssues())
-	//cmd.AddCommand(CmdShowIssues())
-
-	//cmd.AddCommand(CmdListCoinIssueDenom())
-	//cmd.AddCommand(CmdShowCoinIssueDenom())
-
 	cmd.AddCommand(CmdListFreeze())
+	cmd.AddCommand(CmdListAllFreeze())
 	cmd.AddCommand(CmdShowFreeze())
 
-	//cmd.AddCommand(CmdListCoins())
-	//cmd.AddCommand(CmdShowCoins())
-
-	cmd.AddCommand(CmdListAllowanceList())
-	cmd.AddCommand(CmdShowAllowanceList())
-
-	cmd.AddCommand(CmdListAddress())
-	cmd.AddCommand(CmdShowAddress())
+	cmd.AddCommand(CmdListParams())
 
 	return cmd
 }

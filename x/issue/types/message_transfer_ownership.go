@@ -15,32 +15,32 @@ func NewMsgTransferOwnership(owner, toAddr sdk.AccAddress, denom string) *MsgTra
 	}
 }
 
-func (msg *MsgTransferOwnership) Route() string {
+func (m *MsgTransferOwnership) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgTransferOwnership) Type() string {
+func (m *MsgTransferOwnership) Type() string {
 	return TypeMsgTransferOwnership
 }
 
-func (msg *MsgTransferOwnership) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
+func (m *MsgTransferOwnership) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Owner)}
 }
 
-func (msg *MsgTransferOwnership) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgTransferOwnership) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgTransferOwnership) ValidateBasic() error {
-	if sdk.AccAddress(msg.Owner).Empty() {
+func (m *MsgTransferOwnership) ValidateBasic() error {
+	if sdk.AccAddress(m.Owner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
 	}
-	if sdk.AccAddress(msg.ToAddress).Empty() {
+	if sdk.AccAddress(m.ToAddress).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
-	if msg.Denom == "" {
-		return ErrInvalidDenom(msg.Denom)
+	if m.Denom == "" {
+		return ErrInvalidDenom(m.Denom)
 	}
 	return nil
 }

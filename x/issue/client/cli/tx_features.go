@@ -15,7 +15,7 @@ var _ = strconv.Itoa(0)
 func CmdFeatures() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "features [denom] --burnOwnerDisabled [burn-owner-disabled] --burnHolderDisabled [burn-holder-disabled] --burnFromDisabled [burn-from-disabled] --mintDisabled [mint-disabled] --freezeDisabled [freeze-disabled]",
-		Short: "Broadcast message Features",
+		Short: "Enable feature",
 		Long:  "Enable feature for token",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -48,6 +48,12 @@ func CmdFeatures() *cobra.Command {
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+
+	cmd.Flags().Bool(flagBurnOwnerDisabled, false, "Disable token owner burn the token")
+	cmd.Flags().Bool(flagBurnHolderDisabled, false, "Disable token holder burn the token")
+	cmd.Flags().Bool(flagBurnFromDisabled, false, "Disable token owner burn the token from any holder")
+	cmd.Flags().Bool(flagMintDisabled, false, "Token owner can not minting the token")
+	cmd.Flags().Bool(flagFreezeDisabled, false, "Token holder can transfer the token in and out")
 
 	flags.AddTxFlagsToCmd(cmd)
 

@@ -13,5 +13,12 @@ func (k msgServer) Transfer(goCtx context.Context, msg *types.MsgTransfer) (*typ
 	// TODO: Handling the message
 	_ = ctx
 
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+		),
+	)
+
 	return &types.MsgTransferResponse{}, nil
 }

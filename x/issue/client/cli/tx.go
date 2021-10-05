@@ -2,22 +2,14 @@ package cli
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	// "github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/konstellation/konstellation/x/issue/types"
 )
 
-var (
-	DefaultRelativePacketTimeoutTimestamp = uint64((time.Duration(10) * time.Minute).Nanoseconds())
-)
-
 const (
-	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
-
 	flagDecimals           = "decimals"
 	flagBurnOwnerDisabled  = "burn-owner"
 	flagBurnHolderDisabled = "burn-holder"
@@ -38,37 +30,22 @@ func GetTxCmd() *cobra.Command {
 	}
 
 	// this line is used by starport scaffolding # 1
-	cmd.AddCommand(CmdUnfreeze())
-
-	cmd.AddCommand(CmdBurnFrom())
-
-	cmd.AddCommand(CmdBurn())
-
-	cmd.AddCommand(CmdMint())
-
-	cmd.AddCommand(CmdDecreaseAllowance())
-
-	cmd.AddCommand(CmdIncreaseAllowance())
-
-	cmd.AddCommand(CmdIncreaseAllowance())
-
-	cmd.AddCommand(CmdApprove())
-
-	cmd.AddCommand(CmdTransferOwnership())
-
-	cmd.AddCommand(CmdTransferFrom())
-
-	cmd.AddCommand(CmdTransfer())
-
-	cmd.AddCommand(CmdFeatures())
-
-	cmd.AddCommand(CmdEnableFeature())
-
-	cmd.AddCommand(CmdDisableFeature())
-
-	cmd.AddCommand(CmdDescription())
-
 	cmd.AddCommand(CmdIssueCreate())
+	cmd.AddCommand(CmdFeatures())
+	cmd.AddCommand(CmdEnableFeature())
+	cmd.AddCommand(CmdDisableFeature())
+	cmd.AddCommand(CmdDescription())
+	cmd.AddCommand(CmdFreeze())
+	cmd.AddCommand(CmdUnfreeze())
+	cmd.AddCommand(CmdMint())
+	cmd.AddCommand(CmdBurn())
+	cmd.AddCommand(CmdBurnFrom())
+	cmd.AddCommand(CmdApprove())
+	cmd.AddCommand(CmdIncreaseAllowance())
+	cmd.AddCommand(CmdDecreaseAllowance())
+	cmd.AddCommand(CmdTransferOwnership())
+	cmd.AddCommand(CmdTransferFrom())
+	cmd.AddCommand(CmdTransfer())
 
 	return cmd
 }

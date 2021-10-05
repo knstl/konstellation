@@ -11,37 +11,37 @@ func NewMsgTransferFrom(sender, fromAddr, toAddr sdk.AccAddress, amount sdk.Coin
 	return &MsgTransferFrom{Sender: sender.String(), FromAddress: fromAddr.String(), ToAddress: toAddr.String(), Amount: amount}
 }
 
-func (msg *MsgTransferFrom) Route() string {
+func (m *MsgTransferFrom) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgTransferFrom) Type() string {
+func (m *MsgTransferFrom) Type() string {
 	return TypeMsgTransferFrom
 }
 
-func (msg *MsgTransferFrom) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Sender)}
+func (m *MsgTransferFrom) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Sender)}
 }
 
-func (msg *MsgTransferFrom) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgTransferFrom) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgTransferFrom) ValidateBasic() error {
-	if sdk.AccAddress(msg.Sender).Empty() {
+func (m *MsgTransferFrom) ValidateBasic() error {
+	if sdk.AccAddress(m.Sender).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing sender address")
 	}
-	if sdk.AccAddress(msg.FromAddress).Empty() {
+	if sdk.AccAddress(m.FromAddress).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing from address")
 	}
-	if sdk.AccAddress(msg.ToAddress).Empty() {
+	if sdk.AccAddress(m.ToAddress).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
-	if !msg.Amount.IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
+	if !m.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+m.Amount.String())
 	}
-	if !msg.Amount.IsAllPositive() {
+	if !m.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

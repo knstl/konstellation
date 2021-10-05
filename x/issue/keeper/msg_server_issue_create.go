@@ -36,5 +36,12 @@ func (k msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.Msg
 		return nil, err
 	}
 
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+		),
+	)
+
 	return &types.MsgIssueResponse{}, nil
 }

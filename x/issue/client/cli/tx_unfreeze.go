@@ -1,22 +1,18 @@
 package cli
 
 import (
-	"github.com/spf13/cobra"
-	"strconv"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/konstellation/konstellation/x/issue/types"
+	"github.com/spf13/cobra"
 )
-
-var _ = strconv.Itoa(0)
 
 func CmdUnfreeze() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "unfreeze [denom] [holder_address] [op]",
-		Short: "Broadcast message Unfreeze",
+		Short: "Unfreeze tokens in holder",
 		Long:  "Unfreeze tokens in holder \n Operations: in, out, in-out",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {

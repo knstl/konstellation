@@ -7,8 +7,13 @@ import (
 
 var _ sdk.Msg = &MsgFreeze{}
 
-func NewMsgFreeze(freezer, holder sdk.AccAddress, denom, op string) MsgFreeze {
-	return MsgFreeze{Freezer: freezer.String(), Holder: holder.String(), Denom: denom, Op: op}
+func NewMsgFreeze(freezer, holder sdk.AccAddress, denom, op string) *MsgFreeze {
+	return &MsgFreeze{
+		Freezer: freezer.String(),
+		Holder:  holder.String(),
+		Denom:   denom,
+		Op:      op,
+	}
 }
 
 // Route Implements Msg.

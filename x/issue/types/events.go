@@ -15,6 +15,8 @@ const (
 	EventTypeFreeze            = "freeze"
 	EventTypeUnfreeze          = "unfreeze"
 	EventTypeChangeFeatures    = "features"
+	EventTypeEnableFeature     = "enable_feature"
+	EventTypeDisableFeature    = "disable_feature"
 	EventTypeChangeDescription = "description"
 
 	AttributeKeyIssuer      = "issuer"
@@ -30,6 +32,7 @@ const (
 	AttributeKeyOp          = "op"
 	AttributeKeyDenom       = "denom"
 	AttributeKeyFeatures    = "features"
+	AttributeKeyFeature     = "feature"
 	AttributeKeyDescription = "description"
 
 	AttributeValueCategory = ModuleName

@@ -15,7 +15,7 @@ var _ = strconv.Itoa(0)
 func CmdEnableFeature() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "enable-feature [denom] [feature]",
-		Short: "Broadcast message EnableFeature",
+		Short: "Enable feature",
 		Long:  "Enable feature for token",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {

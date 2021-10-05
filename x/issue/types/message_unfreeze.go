@@ -16,35 +16,35 @@ func NewMsgUnfreeze(freezer sdk.AccAddress, holder sdk.AccAddress, denom string,
 	}
 }
 
-func (msg *MsgUnfreeze) Route() string {
+func (m *MsgUnfreeze) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgUnfreeze) Type() string {
+func (m *MsgUnfreeze) Type() string {
 	return TypeMsgUnfreeze
 }
 
-func (msg *MsgUnfreeze) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Freezer)}
+func (m *MsgUnfreeze) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Freezer)}
 }
 
-func (msg *MsgUnfreeze) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgUnfreeze) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgUnfreeze) ValidateBasic() error {
-	if sdk.AccAddress(msg.Freezer).Empty() {
+func (m *MsgUnfreeze) ValidateBasic() error {
+	if sdk.AccAddress(m.Freezer).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing freezer address")
 	}
-	if sdk.AccAddress(msg.Holder).Empty() {
+	if sdk.AccAddress(m.Holder).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing holder address")
 	}
-	if msg.Denom == "" {
-		return ErrInvalidDenom(msg.Denom)
+	if m.Denom == "" {
+		return ErrInvalidDenom(m.Denom)
 	}
-	if msg.Op == "" {
-		return ErrInvalidFreezeOp(msg.Op)
+	if m.Op == "" {
+		return ErrInvalidFreezeOp(m.Op)
 	}
 	return nil
 }

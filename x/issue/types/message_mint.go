@@ -15,34 +15,34 @@ func NewMsgMint(minter, toAddr sdk.AccAddress, amount sdk.Coins) *MsgMint {
 	}
 }
 
-func (msg *MsgMint) Route() string {
+func (m *MsgMint) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgMint) Type() string {
+func (m *MsgMint) Type() string {
 	return TypeMsgMint
 }
 
-func (msg *MsgMint) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Minter)}
+func (m *MsgMint) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Minter)}
 }
 
-func (msg *MsgMint) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgMint) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgMint) ValidateBasic() error {
-	if sdk.AccAddress(msg.Minter).Empty() {
+func (m *MsgMint) ValidateBasic() error {
+	if sdk.AccAddress(m.Minter).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing minter address")
 	}
-	if sdk.AccAddress(msg.ToAddress).Empty() {
+	if sdk.AccAddress(m.ToAddress).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
-	if !msg.Amount.IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
+	if !m.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+m.Amount.String())
 	}
-	if !msg.Amount.IsAllPositive() {
+	if !m.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

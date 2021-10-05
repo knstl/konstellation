@@ -29,5 +29,12 @@ func (k msgServer) Mint(goCtx context.Context, msg *types.MsgMint) (*types.MsgMi
 		return nil, err
 	}
 
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+		),
+	)
+
 	return &types.MsgMintResponse{}, nil
 }

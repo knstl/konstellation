@@ -13,5 +13,12 @@ func (k msgServer) TransferOwnership(goCtx context.Context, msg *types.MsgTransf
 	// TODO: Handling the message
 	_ = ctx
 
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+		),
+	)
+
 	return &types.MsgTransferOwnershipResponse{}, nil
 }

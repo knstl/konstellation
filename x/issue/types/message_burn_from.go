@@ -11,34 +11,34 @@ func NewMsgBurnFrom(burner, fromAddr sdk.AccAddress, amount sdk.Coins) *MsgBurnF
 	return &MsgBurnFrom{Burner: burner.String(), FromAddress: fromAddr.String(), Amount: amount}
 }
 
-func (msg *MsgBurnFrom) Route() string {
+func (m *MsgBurnFrom) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgBurnFrom) Type() string {
+func (m *MsgBurnFrom) Type() string {
 	return TypeMsgBurnFrom
 }
 
-func (msg *MsgBurnFrom) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{sdk.AccAddress(msg.Burner)}
+func (m *MsgBurnFrom) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{sdk.AccAddress(m.Burner)}
 }
 
-func (msg *MsgBurnFrom) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
+func (m *MsgBurnFrom) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(m)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgBurnFrom) ValidateBasic() error {
-	if sdk.AccAddress(msg.Burner).Empty() {
+func (m *MsgBurnFrom) ValidateBasic() error {
+	if sdk.AccAddress(m.Burner).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing burner address")
 	}
-	if sdk.AccAddress(msg.FromAddress).Empty() {
+	if sdk.AccAddress(m.FromAddress).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing recipient address")
 	}
-	if !msg.Amount.IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
+	if !m.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+m.Amount.String())
 	}
-	if !msg.Amount.IsAllPositive() {
+	if !m.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

@@ -355,6 +355,48 @@ func (k *Keeper) ChangeFeatures(ctx sdk.Context, owner sdk.AccAddress, denom str
 	return nil
 }
 
+func (k *Keeper) EnableFeature(ctx sdk.Context, owner sdk.AccAddress, denom string, feature string) *sdkerrors.Error {
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeChangeFeatures,
+			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
+			sdk.NewAttribute(types.AttributeKeyDenom, denom),
+			sdk.NewAttribute(types.AttributeKeyFeature, feature),
+		),
+	)
+
+	i, err := k.getIssueIfOwner(ctx, denom, owner)
+	if err != nil {
+		return err
+	}
+
+	//i.SetFeatures(features)
+	k.setIssue(ctx, i)
+
+	return nil
+}
+
+func (k *Keeper) DisableFeature(ctx sdk.Context, owner sdk.AccAddress, denom string, feature string) *sdkerrors.Error {
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeDisableFeature,
+			sdk.NewAttribute(types.AttributeKeyOwner, owner.String()),
+			sdk.NewAttribute(types.AttributeKeyDenom, denom),
+			sdk.NewAttribute(types.AttributeKeyFeature, feature),
+		),
+	)
+
+	i, err := k.getIssueIfOwner(ctx, denom, owner)
+	if err != nil {
+		return err
+	}
+
+	i.SetFeatures(features)
+	k.setIssue(ctx, i)
+
+	return nil
+}
+
 func (k *Keeper) ChangeDescription(ctx sdk.Context, owner sdk.AccAddress, denom string, description string) *sdkerrors.Error {
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
@@ -895,6 +937,28 @@ func (k *Keeper) BurnFrom(ctx sdk.Context, burner, from sdk.AccAddress, coins sd
 	}
 
 	return k.burn(ctx, burner, from, coins)
+}
+
+func (k *Keeper) Freeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, op string) *sdkerrors.Error {
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeFreeze,
+			sdk.NewAttribute(types.AttributeKeyFreezer, freezer.String()),
+			sdk.NewAttribute(types.AttributeKeyHolder, holder.String()),
+			sdk.NewAttribute(types.AttributeKeyDenom, denom),
+			sdk.NewAttribute(types.AttributeKeyOp, op),
+		),
+	)
+
+	issue, err := k.getIssueIfOwner(ctx, denom, freezer)
+	if err != nil {
+		return err
+	}
+	if issue.FreezeDisabled {
+		return types.ErrCanNotFreeze(denom)
+	}
+
+	return k.freeze(ctx, holder, denom, op, true)
 }
 
 func (k *Keeper) Unfreeze(ctx sdk.Context, freezer, holder sdk.AccAddress, denom, op string) *sdkerrors.Error {
