@@ -16,7 +16,7 @@ var _ = strconv.Itoa(0)
 func CmdBurn() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "burn [amount]",
-		Short: "Broadcast message Burn",
+		Short: "Burn tokens from sender",
 		Long:  "Burn tokens from sender",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {

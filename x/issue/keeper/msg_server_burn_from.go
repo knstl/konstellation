@@ -10,8 +10,25 @@ import (
 func (k msgServer) BurnFrom(goCtx context.Context, msg *types.MsgBurnFrom) (*types.MsgBurnFromResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	burner, err := sdk.AccAddressFromBech32(msg.Burner)
+	if err != nil {
+		return nil, err
+	}
+
+	fromAddr, err := sdk.AccAddressFromBech32(msg.FromAddress)
+	if err != nil {
+		return nil, err
+	}
+
+	// Sub fee from sender
+	fee := k.keeper.GetParams(ctx).BurnFromFee
+	if err := k.keeper.ChargeFee(ctx, burner, fee); err != nil {
+		return nil, err
+	}
+
+	if err := k.keeper.BurnFrom(ctx, burner, fromAddr, msg.Amount); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgBurnFromResponse{}, nil
 }

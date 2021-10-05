@@ -16,7 +16,7 @@ var _ = strconv.Itoa(0)
 func CmdBurnFrom() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "burn-from [from_address] [amount]",
-		Short: "Broadcast message BurnFrom",
+		Short: "Burn tokens from recipient",
 		Long:  "Burn tokens from recipient",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
