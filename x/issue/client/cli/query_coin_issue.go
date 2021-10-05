@@ -13,7 +13,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CmdListCoinIssue() *cobra.Command {
+const (
+	flagOwner = "owner"
+)
+
+func CmdListIssues() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "Query issue list",
@@ -53,7 +57,7 @@ func CmdListCoinIssue() *cobra.Command {
 	return cmd
 }
 
-func CmdListAllCoinIssue() *cobra.Command {
+func CmdListAllIssues() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list-all",
 		Short: "Query all issues",
@@ -87,10 +91,10 @@ func CmdListAllCoinIssue() *cobra.Command {
 	return cmd
 }
 
-func CmdShowCoinIssue() *cobra.Command {
+func CmdShowIssue() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-coin-issue [denom]",
-		Short: "shows a CoinIssue",
+		Use:   "find [denom]",
+		Short: "Query issue by denom",
 		Long:  "Query issue by denom",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {

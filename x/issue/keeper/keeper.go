@@ -487,20 +487,22 @@ func (k *Keeper) setAllowances(ctx sdk.Context, owner, spender sdk.AccAddress, a
 	store.Set(KeyAllowances(amount.Denom, owner), bz)
 }
 
-func (k *Keeper) allowance(ctx sdk.Context, owner, spender sdk.AccAddress, denom string) sdk.Coin {
+func (k *Keeper) allowance(ctx sdk.Context, owner, spender sdk.AccAddress, denom string) types.Allowance {
 	store := ctx.KVStore(k.storeKey)
 	bz := store.Get(KeyAllowance(denom, owner, spender))
 	if bz == nil {
-		return sdk.NewCoin(denom, sdk.ZeroInt())
+		return *types.NewAllowance(sdk.NewCoin(denom, sdk.ZeroInt()), spender)
 	}
 
 	var amount sdk.Coin
 	k.GetCodec().MustUnmarshalBinaryLengthPrefixed(bz, &amount)
 	amount.Denom = denom
-	return amount
+	return *types.NewAllowance(amount, spender)
+
 }
 
 func (k *Keeper) allowances(ctx sdk.Context, owner sdk.AccAddress, denom string) types.Allowances {
+	// todo if denom is empty get all allowances for address
 	store := ctx.KVStore(k.storeKey)
 	allowanceList := types.AllowanceList{Allowances: []*types.Allowance{}}
 	bz := store.Get(KeyAllowances(denom, owner))
@@ -801,7 +803,7 @@ func (k *Keeper) TransferFrom(ctx sdk.Context, sender, from, to sdk.AccAddress, 
 
 	for _, coin := range coins {
 		allowance := k.allowance(ctx, from, sender, coin.Denom)
-		if allowance.IsGTE(coin) {
+		if allowance.Amount.IsGTE(coin) {
 			k.decreaseAllowance(ctx, from, sender, coin)
 		} else {
 			return types.ErrAmountGreaterThanAllowance(coin, allowance)
@@ -840,6 +842,10 @@ func (k *Keeper) Approve(ctx sdk.Context, owner, spender sdk.AccAddress, coins s
 	}
 
 	return nil
+}
+
+func (k *Keeper) Allowance(ctx sdk.Context, owner sdk.AccAddress, spender sdk.AccAddress, denom string) types.Allowance {
+	return k.allowance(ctx, owner, spender, denom)
 }
 
 func (k *Keeper) Allowances(ctx sdk.Context, owner sdk.AccAddress, denom string) types.Allowances {

@@ -5,11 +5,11 @@ package konstellation.issue;
 import "gogoproto/gogo.proto";
 import "issue/issue_features.proto";
 import "issue/coin_issue.proto";
-import "issue/coins.proto";
 import "issue/issue_params.proto";
 
 import "google/api/annotations.proto";
 // this line is used by starport scaffolding # proto/tx/import
+import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "x/issue/types";
 
@@ -90,7 +90,8 @@ message MsgUnfreezeResponse {
 message MsgBurnFrom {
   string burner = 1 [(gogoproto.moretags) = "yaml:\"burner\""];
   string from_address = 2 [(gogoproto.moretags) = "yaml:\"from_address\""];
-  Coins amount = 3;
+  repeated cosmos.base.v1beta1.Coin amount = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgBurnFromResponse {
@@ -98,7 +99,8 @@ message MsgBurnFromResponse {
 
 message MsgBurn {
   string burner = 1 [(gogoproto.moretags) = "yaml:\"burner\""];
-  Coins amount = 2;
+  repeated cosmos.base.v1beta1.Coin amount = 2
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgBurnResponse {
@@ -107,7 +109,8 @@ message MsgBurnResponse {
 message MsgMint {
   string minter = 1 [(gogoproto.moretags) = "yaml:\"minter\""];
   string to_address = 2 [(gogoproto.moretags) = "yaml:\"to_address\""];
-  Coins amount = 3;
+  repeated cosmos.base.v1beta1.Coin amount = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgMintResponse {
@@ -116,7 +119,8 @@ message MsgMintResponse {
 message MsgDecreaseAllowance {
   string owner = 1 [(gogoproto.moretags) = "yaml:\"owner\""];
   string spender = 2 [(gogoproto.moretags) = "yaml:\"spender\""];
-  Coins amount = 3;
+  repeated cosmos.base.v1beta1.Coin amount = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgDecreaseAllowanceResponse {
@@ -125,7 +129,8 @@ message MsgDecreaseAllowanceResponse {
 message MsgIncreaseAllowance {
   string owner = 1 [(gogoproto.moretags) = "yaml:\"owner\""];
   string spender = 2 [(gogoproto.moretags) = "yaml:\"spender\""];
-  Coins amount = 3;
+  repeated cosmos.base.v1beta1.Coin amount = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgIncreaseAllowanceResponse {
@@ -134,7 +139,8 @@ message MsgIncreaseAllowanceResponse {
 message MsgApprove {
   string owner = 1 [(gogoproto.moretags) = "yaml:\"owner\""];
   string spender = 2 [(gogoproto.moretags) = "yaml:\"spender\""];
-  Coins amount = 3;
+  repeated cosmos.base.v1beta1.Coin amount = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgApproveResponse {
@@ -153,7 +159,8 @@ message MsgTransferFrom {
   string sender = 1 [(gogoproto.moretags) = "yaml:\"sender\""];
   string from_address = 2 [(gogoproto.moretags) = "yaml:\"from_address\""];
   string to_address = 3 [(gogoproto.moretags) = "yaml:\"to_address\""];
-  Coins amount = 4;
+  repeated cosmos.base.v1beta1.Coin amount = 4
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgTransferFromResponse {
@@ -162,7 +169,8 @@ message MsgTransferFromResponse {
 message MsgTransfer {
   string from_address = 1 [(gogoproto.moretags) = "yaml:\"from_address\""];
   string to_address = 2 [(gogoproto.moretags) = "yaml:\"to_address\""];
-  Coins amount = 3;
+  repeated cosmos.base.v1beta1.Coin amount = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message MsgTransferResponse {
@@ -211,5 +219,5 @@ message MsgIssue {
 }
 
 message MsgIssueResponse {
-  CoinIssue amount = 1;
+  CoinIssue issue = 1;
 }

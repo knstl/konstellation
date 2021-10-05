@@ -10,8 +10,19 @@ import (
 func (k msgServer) Approve(goCtx context.Context, msg *types.MsgApprove) (*types.MsgApproveResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	spender, err := sdk.AccAddressFromBech32(msg.Spender)
+	if err != nil {
+		return nil, err
+	}
+
+	owner, err := sdk.AccAddressFromBech32(msg.Owner)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := k.keeper.Approve(ctx, owner, spender, msg.Amount); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgApproveResponse{}, nil
 }

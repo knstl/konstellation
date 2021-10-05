@@ -39,10 +39,10 @@ func (msg *MsgApprove) ValidateBasic() error {
 	if sdk.AccAddress(msg.Spender).Empty() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing spender address")
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+sdk.Coins(msg.Amount.Coins).String())
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, "send amount is invalid: "+msg.Amount.String())
 	}
-	if !sdk.Coins(msg.Amount.Coins).IsAllPositive() {
+	if !msg.Amount.IsAllPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "send amount must be positive")
 	}
 	return nil

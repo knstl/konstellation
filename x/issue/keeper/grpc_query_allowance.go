@@ -3,59 +3,63 @@ package keeper
 import (
 	"context"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/konstellation/konstellation/x/issue/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) AllowanceAll(c context.Context, req *types.QueryAllAllowanceRequest) (*types.QueryAllAllowanceResponse, error) {
+func (q queryServer) Allowances(c context.Context, req *types.QueryAllowancesRequest) (*types.QueryAllowancesResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
-
-	var allowances []*types.Allowance
+	ownerAddress, err := sdk.AccAddressFromBech32(req.Owner)
+	if err != nil {
+		return nil, err
+	}
 	ctx := sdk.UnwrapSDKContext(c)
 
-	store := ctx.KVStore(k.storeKey)
-	allowanceStore := prefix.NewStore(store, types.KeyPrefix(types.AllowanceKey))
+	allowances := q.keeper.Allowances(ctx, ownerAddress, req.Denom)
 
-	pageRes, err := query.Paginate(allowanceStore, req.Pagination, func(key []byte, value []byte) error {
-		var allowance types.Allowance
-		if err := k.cdc.UnmarshalBinaryBare(value, &allowance); err != nil {
-			return err
-		}
+	//store := ctx.KVStore(k.storeKey)
+	//allowanceStore := prefix.NewStore(store, types.KeyPrefix(types.AllowanceKey))
+	//
+	//pageRes, err := query.Paginate(allowanceStore, req.Pagination, func(key []byte, value []byte) error {
+	//	var allowance types.Allowance
+	//	if err := k.cdc.UnmarshalBinaryBare(value, &allowance); err != nil {
+	//		return err
+	//	}
+	//
+	//	allowances = append(allowances, &allowance)
+	//	return nil
+	//})
+	//
+	//if err != nil {
+	//	return nil, status.Error(codes.Internal, err.Error())
+	//}
 
-		allowances = append(allowances, &allowance)
-		return nil
-	})
-
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	return &types.QueryAllAllowanceResponse{Allowance: allowances, Pagination: pageRes}, nil
+	// todo add pagination
+	return &types.QueryAllowancesResponse{Allowances: allowances}, nil
 }
 
-func (k Keeper) Allowance(c context.Context, req *types.QueryGetAllowanceRequest) (*types.QueryGetAllowanceResponse, error) {
+func (q queryServer) Allowance(c context.Context, req *types.QueryAllowanceRequest) (*types.QueryAllowanceResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	var allowance types.Allowance
-	ctx := sdk.UnwrapSDKContext(c)
-
-	if !k.HasAllowance(ctx, req.Id) {
-		return nil, sdkerrors.ErrKeyNotFound
+	ownerAddress, err := sdk.AccAddressFromBech32(req.Owner)
+	if err != nil {
+		return nil, err
+	}
+	spenderAddress, err := sdk.AccAddressFromBech32(req.Spender)
+	if err != nil {
+		return nil, err
 	}
 
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.AllowanceKey))
-	k.cdc.MustUnmarshalBinaryBare(store.Get(GetAllowanceIDBytes(req.Id)), &allowance)
+	ctx := sdk.UnwrapSDKContext(c)
+	allowance := q.keeper.Allowance(ctx, ownerAddress, spenderAddress, req.Denom)
 
-	return &types.QueryGetAllowanceResponse{Allowance: &allowance}, nil
+	return &types.QueryAllowanceResponse{Allowance: &allowance}, nil
 }
 
 /*

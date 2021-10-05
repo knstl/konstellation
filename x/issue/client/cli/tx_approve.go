@@ -16,7 +16,7 @@ var _ = strconv.Itoa(0)
 func CmdApprove() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "approve [spender] [amount]",
-		Short: "Broadcast message Approve",
+		Short: "Sets `amount` as the allowance of `spender` over the caller's tokens.",
 		Long:  "Sets `amount` as the allowance of `spender` over the caller's tokens.",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
