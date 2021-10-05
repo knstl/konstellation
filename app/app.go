@@ -86,9 +86,6 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
-	"github.com/konstellation/konstellation/x/issue"
-	issuekeeper "github.com/konstellation/konstellation/x/issue/keeper"
-	issuetypes "github.com/konstellation/konstellation/x/issue/types"
 	"github.com/konstellation/konstellation/x/oracle"
 	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
@@ -153,7 +150,6 @@ var (
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
-		issue.AppModuleBasic{},
 		oracle.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 	)
@@ -167,7 +163,6 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		issuetypes.ModuleName:          {authtypes.Minter, authtypes.Burner},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -225,8 +220,6 @@ type App struct {
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
-	IssueKeeper issuekeeper.Keeper
-
 	OracleKeeper     oraclekeeper.Keeper
 	wasmKeeper       wasm.Keeper
 	scopedWasmKeeper capabilitykeeper.ScopedKeeper
@@ -273,7 +266,6 @@ func New(
 		ibctransfertypes.StoreKey,
 		capabilitytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
-		issuetypes.StoreKey,
 		oracletypes.StoreKey,
 		wasm.StoreKey,
 	)
@@ -386,18 +378,6 @@ func New(
 	)
 	oracleModule := oracle.NewAppModule(appCodec, app.OracleKeeper)
 
-	app.IssueKeeper = *issuekeeper.NewKeeper(
-		appCodec,
-		keys[issuetypes.StoreKey],
-		keys[issuetypes.MemStoreKey],
-		app.AccountKeeper,
-		app.BankKeeper,
-		"",
-		app.ParamsKeeper,
-		app.GetSubspace(issuetypes.ModuleName),
-	)
-	issueModule := issue.NewAppModule(appCodec, app.IssueKeeper)
-
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	wasmDir := filepath.Join(homePath, "wasm")
 
@@ -464,7 +444,6 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
-		issueModule,
 		oracleModule,
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper),
 	)
@@ -509,7 +488,6 @@ func New(
 		evidencetypes.ModuleName,
 		ibctransfertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
-		issuetypes.ModuleName,
 		oracletypes.ModuleName,
 		wasm.ModuleName,
 	)
@@ -700,7 +678,6 @@ func initParamsKeeper(appCodec codec.BinaryMarshaler, legacyAmino *codec.LegacyA
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
-	paramsKeeper.Subspace(issuetypes.ModuleName)
 	paramsKeeper.Subspace(oracletypes.ModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
 
