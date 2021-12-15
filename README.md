@@ -81,6 +81,8 @@ screen -dmSL knstld build/knstld start
 build/knstld status
 ```
 
+Wait for the konstellation block synchroniztion complete
+
 ### Create a key
 Add new
 ``` bash
