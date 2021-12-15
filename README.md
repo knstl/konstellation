@@ -14,6 +14,8 @@ Get testnet config [here](https://github.com/Konstellation/testnet)
 This assumes that you're running Linux or MacOS and have installed [Go 1.17+](https://golang.org/dl/).  This guide helps you:
 
 Build, Install, and Name your Node
+
+Current latest release is `v0.4.3`
 ```bash
 # Clone Konstellation from the latest release found here: https://github.com/konstellation/konstellation/releases
 git clone -b <latest_release> https://github.com/konstellation/konstellation
