@@ -78,7 +78,7 @@ Your full node has been initialized!
 # Start Konstellation
 build/knstld start
 
-to run process in background run
+# to run process in background run
 screen -dmSL knstld build/knstld start
 
 # Check your node's status with konstellation cli
