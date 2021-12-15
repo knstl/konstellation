@@ -23,6 +23,8 @@ git clone -b <latest_release> https://github.com/konstellation/konstellation
 cd konstellation
 # Compile and install Konstellation
 make build
+# Check konstellation version
+build/knstld version
 ```
 
 ### To join testnet follow this steps
