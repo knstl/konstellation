@@ -134,8 +134,8 @@ Check if your key(address) has enough balance:
 build/knstld query bank balances <key address>
 ```
 
-For test nodes, `chain-id` is `darchub`.
-You need transction fee `2udarc` to make your transaction for creating validator.
+For test nodes, `chain-id` is `darchub`.\
+You need transction fee `2udarc` to make your transaction for creating validator.\
 Don't use more `udarc` than you have! 
 
 ```bash
