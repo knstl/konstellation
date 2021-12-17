@@ -4,10 +4,10 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 
 # Konstellation network
 
-## Testnet Full Node Quick Start
+## Mainnet Full Node Quick Start
 With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on darchub.
 
-Get testnet config [here](https://github.com/Konstellation/testnet)
+Get mainnet config [here](https://github.com/Konstellation/testnet/mainnet)
 
 ### Build from code
 
@@ -27,7 +27,7 @@ make build
 build/knstld version
 ```
 
-### To join testnet follow this steps
+### To join mainnet follow this steps
 
 #### Initialize data and folders
 ```bash
@@ -35,18 +35,16 @@ build/knstld unsafe-reset-all
 ```
 
 #### Genesis & Seeds
-Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/genesis.json)
+Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json)
 ```
-wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/genesis.json
+wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json
 ```
-Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/config.toml) with predefined seeds and persistent peers
+Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml) with predefined seeds and persistent peers
 ```
-wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/config.toml
+wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml
 ```
 
-* NOTE: See [testnet repo](https://github.com/Konstellation/testnet) for the latest testnet info.
-
-Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/darchub)
+Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/mainnet)
 
 1) Open ~/.knstld/config/config.toml with text editor. Alternatively you can use cli editor, like nano ``` nano ~/.knstld/config/config.toml ```
 2) Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
@@ -116,7 +114,7 @@ It is the only way to recover your account if you ever forget your password.
 ```
 
 ### To become a validator follow this steps
-Before setting up your validator node, make sure you've already gone through the [Full Node Setup](https://github.com/Konstellation/konstellation#to-join-testnet-follow-this-steps)
+Before setting up your validator node, make sure you've already gone through the [Full Node Setup](https://github.com/Konstellation/konstellation#to-join-mainnet-follow-this-steps)
 
 #### What is a Validator?
 [Validators](https://docs.cosmos.network/v0.44/modules/staking/01_state.html#validator) are responsible for committing new blocks to the blockchain through voting. A validator's stake is slashed if they become unavailable or sign blocks at the same height.
