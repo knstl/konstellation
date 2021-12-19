@@ -7,7 +7,7 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 ## Mainnet Full Node Quick Start
 With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on darchub.
 
-Get mainnet config [here](https://github.com/Konstellation/konstellation/config)
+Get mainnet config [here](https://github.com/Konstellation/konstellation/tree/master/config)
 
 ### Build from code
 
