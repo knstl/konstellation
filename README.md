@@ -37,11 +37,11 @@ build/knstld unsafe-reset-all
 #### Genesis & Seeds
 Download [genesis.json](https://raw.githubusercontent.com/Konstellation/konstellation/master/config/genesis.json)
 ```
-wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json
+wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/konstellation/master/config/genesis.json
 ```
 Download [config.toml](https://raw.githubusercontent.com/Konstellation/konstellation/master/config/config.toml) with predefined seeds and persistent peers
 ```
-wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml
+wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/konstellation/master/config/config.toml
 ```
 
 Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/konstellation/tree/master/config)
