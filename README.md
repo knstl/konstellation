@@ -7,7 +7,7 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 ## Mainnet Full Node Quick Start
 With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on darchub.
 
-Get mainnet config [here](https://github.com/Konstellation/testnet/mainnet)
+Get mainnet config [here](https://github.com/Konstellation/konstellation/config)
 
 ### Build from code
 
@@ -35,16 +35,16 @@ build/knstld unsafe-reset-all
 ```
 
 #### Genesis & Seeds
-Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json)
+Download [genesis.json](https://raw.githubusercontent.com/Konstellation/konstellation/master/config/config.toml/genesis.json)
 ```
 wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json
 ```
-Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml) with predefined seeds and persistent peers
+Download [config.toml](https://raw.githubusercontent.com/Konstellation/konstellation/master/config/config.toml/config.toml) with predefined seeds and persistent peers
 ```
 wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml
 ```
 
-Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/mainnet)
+Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/konstellation/tree/master/config)
 
 1) Open ~/.knstld/config/config.toml with text editor. Alternatively you can use cli editor, like nano ``` nano ~/.knstld/config/config.toml ```
 2) Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
