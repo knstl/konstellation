@@ -4,16 +4,18 @@ Konstellation is the blockchain built using the [Cosmos SDK](https://github.com/
 
 # Konstellation network
 
-## Testnet Full Node Quick Start
+## Mainnet Full Node Quick Start
 With each version of the Konstellation Hub, the chain is restarted from a new Genesis state. We are currently on darchub.
 
-Get testnet config [here](https://github.com/Konstellation/testnet)
+Get mainnet config [here](https://github.com/Konstellation/testnet/mainnet)
 
 ### Build from code
 
 This assumes that you're running Linux or MacOS and have installed [Go 1.17+](https://golang.org/dl/).  This guide helps you:
 
 Build, Install, and Name your Node
+
+Current latest release is `v0.4.3`
 ```bash
 # Clone Konstellation from the latest release found here: https://github.com/konstellation/konstellation/releases
 git clone -b <latest_release> https://github.com/konstellation/konstellation
@@ -21,9 +23,11 @@ git clone -b <latest_release> https://github.com/konstellation/konstellation
 cd konstellation
 # Compile and install Konstellation
 make build
+# Check konstellation version
+build/knstld version
 ```
 
-### To join testnet follow this steps
+### To join mainnet follow this steps
 
 #### Initialize data and folders
 ```bash
@@ -31,18 +35,16 @@ build/knstld unsafe-reset-all
 ```
 
 #### Genesis & Seeds
-Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/genesis.json)
+Download [genesis.json](https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json)
 ```
-wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/genesis.json
+wget -O $HOME/.knstld/config/genesis.json https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/genesis.json
 ```
-Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/config.toml) with predefined seeds and persistent peers
+Download [config.toml](https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml) with predefined seeds and persistent peers
 ```
-wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/darchub/config.toml
+wget -O $HOME/.knstld/config/config.toml https://raw.githubusercontent.com/Konstellation/testnet/master/mainnet/config.toml
 ```
 
-* NOTE: See [testnet repo](https://github.com/Konstellation/testnet) for the latest testnet info.
-
-Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/darchub)
+Alternatively enter persistent peers to config.toml provided [here](https://github.com/Konstellation/testnet/tree/master/mainnet)
 
 1) Open ~/.knstld/config/config.toml with text editor. Alternatively you can use cli editor, like nano ``` nano ~/.knstld/config/config.toml ```
 2) Scroll down to persistant peers in `config.toml`, and add the persistant peers as a comma-separated list
@@ -74,7 +76,7 @@ Your full node has been initialized!
 # Start Konstellation
 build/knstld start
 
-to run process in background run
+# to run process in background run
 screen -dmSL knstld build/knstld start
 
 # Check your node's status with konstellation cli
@@ -112,7 +114,7 @@ It is the only way to recover your account if you ever forget your password.
 ```
 
 ### To become a validator follow this steps
-Before setting up your validator node, make sure you've already gone through the [Full Node Setup](https://github.com/Konstellation/konstellation#to-join-testnet-follow-this-steps)
+Before setting up your validator node, make sure you've already gone through the [Full Node Setup](https://github.com/Konstellation/konstellation#to-join-mainnet-follow-this-steps)
 
 #### What is a Validator?
 [Validators](https://docs.cosmos.network/v0.44/modules/staking/01_state.html#validator) are responsible for committing new blocks to the blockchain through voting. A validator's stake is slashed if they become unavailable or sign blocks at the same height.
@@ -156,7 +158,7 @@ build/knstld tx staking create-validator \
 
 When specifying commission parameters, the `commission-max-change-rate` is used to measure % _point_ change over the `commission-rate`. E.g. 1% to 2% is a 100% rate increase, but only 1 percentage point.
 
-`Min-self-delegation` is a strictly positive integer that represents the minimum amount of self-delegated voting power your validator must always have. A `min-self-delegation` of 1 means your validator will never have a self-delegation lower than `1000000darc`
+`Min-self-delegation` is a strictly positive integer that represents the minimum amount of self-delegated voting power your validator must always have. A `min-self-delegation` of 1 means your validator will never have a self-delegation lower than `1000000udarc`
 
 You can check that you are in the validator set by using a third party explorer or using cli tool
 ```bash
@@ -164,161 +166,3 @@ build/knstld query staking validators --chain-id=<chain_id>
 ```
 
 * Note: You can edit the params after, by running command `build/knstld tx staking edit-validator ... —from <key_name> --chain-id=<chain_id> --fees=2udarc` with the necessary options
-
-## How to init chain
-
-Add key to your keyring
-```knstld keys add key1```
-
-Initialize genesis and config files 
-```knstld init node-knstld-13 --chain-id darcmatter```
-
-Add genesis account
-```knstld add-genesis-account key1 200000000000udarc``` - 200000darc
-
-Create genesis transaction
-```knstld gentx --name key1 100000000000udarc``` - create CreateValidator transaction
-
-Collect all of gentxs
-```knstld collect-gentxs```
-
-Run network
-```knstld start```
-
-
-
-## Dockerized
-
-We provide a docker image to help with test setups. There are two modes to use it
-
-Build: ```docker build -t knstld:latest .```  or pull from dockerhub ```kirdb/knstld:latest```
-
-### Dev server
-Bring up a local node with a test account containing tokens
-
-This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
-Prepend `VOLTYPE=vol|b` if you want to bind mount or volume into container as storage
-
-#### Set IMAGE env variable
-```shell script
-export IMAGE=kirdb/knstld:0.2.0
-```
-#### Set other env variable
-```shell script
-export CHAIN_ID=darchub
-export MONIKER=<YOUR_MONIKER>
-```
-
-**You can git clone and run script or call docker commands directly****
-**In a case of using volume (not bind mount) as containe volume, change `-v ~/.knstld:/root/.knstld` to `--mount type=volume,source="$VOLUME",target=/root`**
-
-#### Init
-Initialize blockchain folder
-```shell script
-# Using script
-./docker/start.sh init
-
-# Using docker cmd
-docker run --rm -it \
-  -e MONIKER="$MONIKER" \
-  -e CHAIN_ID="$CHAIN_ID" \
-  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/init.sh
-```
-
-#### Moniker
-Change moniker
-```shell script
-export MONIKER=moniker 
-
-# Using script
-./docker/start.sh config
-
-# Using docker cmd
-docker run --rm -it \
-  -e MONIKER="$MONIKER" \
-  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/config.sh
-```
-
-#### Setup
-**Omit `KEY_NAME`, `KEY_PASSWORD`, `KEY_MNEMONIC` if you want to create a new identity.**
-Setup genaccs, gentxs, collectGentxs
-
-```shell script
-export KEY_PASSWORD="..."
-export KEY_NAME="..."
-export KEY_MNEMONIC="..."
-
-# Using script
-./docker/start.sh setup
-
-# Using docker cmd
-docker run --rm -it \
-  -e KEY_PASSWORD="$KEY_PASSWORD" \
-  -e KEY_NAME="$KEY_NAME" \
-  -e KEY_MNEMONIC="$KEY_MNEMONIC" \
-  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/setup.sh
-```
-
-#### Run 
-Run blockchain node in container
-```shell script
-# Using script
-./docker/start.sh run
-
-# Using docker cmd
-docker run --rm -it \
-  -p 26657:26657 \
-  -p 26656:26656 \
-  -p 1317:1317 \
-  -p 9090:9090 \
-  -v ~/.knstld:/root/.knstld  "$IMAGE" /opt/run.sh
-```
-
-### Localnet
-```shell script
-export IMAGE=kirdb/knstld:0.2.0
-```
-#### Create network files for specified node configs
-```shell script
-export CHAIN_ID=darchub
-./scripts/localnet.sh create
-```
-#### Run network
-```shell script
- ./scripts/localnet.sh run
-```
-
-#### With docker-compose
-```shell script
-docker-compose up
-```
-
-#### Connect to network
-**You can run docker commands directly without cloning repository. Take a look at the chapter above**
-
-```shell script
-./docker/start.sh init
-```
-```shell script
-export MONIKER=<YOUR_MONIKER>
-./docker/start.sh config
-```
-
-```shell script
-./scripts/localnet.sh copy
-```
-
-```shell script
-./docker/start.sh run
-```
-### Resolving errors
-
-#### Missing ziphash
-```shell script
-go get -u go.opencensus.io
-go get gopkg.in/fsnotify/fsnotify.v1
-github.com/fsnotify/fsnotify v1.4.8
-```
-
-## Network generation
-To generate network see [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
