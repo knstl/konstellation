@@ -166,3 +166,26 @@ build/knstld query staking validators --chain-id=<chain_id>
 ```
 
 * Note: You can edit the params after, by running command `build/knstld tx staking edit-validator ... —from <key_name> --chain-id=<chain_id> --fees=2udarc` with the necessary options
+
+## How to init chain
+
+Add key to your keyring
+```build/knstld keys add <key name>```
+
+Initialize genesis and config files.
+```build/knstld init <moniker> --chain-id <chain id>```
+
+Replace all denoms `stake` to `udarc` in `genesis.json`
+
+Add genesis account
+```build/knstld add-genesis-account <key name> 200000000000udarc``` - 200000darc
+
+Create genesis transaction
+```build/knstld gentx <key name> 100000000000udarc --chain-id <chain id>``` - create CreateValidator transaction
+
+Collect all of gentxs
+```build/knstld collect-gentxs```
+
+Run network
+```build/knstld start```
+
