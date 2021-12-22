@@ -21,6 +21,8 @@ Current latest release is `v0.4.3`
 git clone -b <latest_release> https://github.com/konstellation/konstellation
 # Enter the folder Konstellation was cloned into
 cd konstellation
+# Change git release branch `v0.4.3`
+git checkout v0.4.3
 # Compile and install Konstellation
 make build
 # Check konstellation version
