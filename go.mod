@@ -12,13 +12,8 @@ require (
 	github.com/google/uuid v1.1.5
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
-	github.com/mitchellh/mapstructure v1.3.3
-	github.com/rs/zerolog v1.21.0
-	github.com/imdario/mergo v0.3.11
 	github.com/spf13/cast v1.3.1
 	github.com/spf13/cobra v1.1.3
-	github.com/goccy/go-yaml v1.9.2
-	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/crypto v0.0.0-20191022145703-50d29ede1e15
 	github.com/tendermint/spm v0.0.0-20210625155357-5a2c8d79013b
