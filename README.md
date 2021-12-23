@@ -195,7 +195,15 @@ Run network
 
 We provide a docker image to help with test setups. There are two modes to use it
 
-Build: ```docker build -t knstld:latest .```
+Change git branch to `master`
+```shell script
+git checkout master
+```
+
+Build docker image
+```shell script
+docker build -t knstld:latest .
+```
 
 ### Dev server
 Bring up a local node with a test account containing tokens
