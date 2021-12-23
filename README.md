@@ -191,3 +191,95 @@ Collect all of gentxs
 Run network
 ```build/knstld start```
 
+## Dockerized
+
+We provide a docker image to help with test setups. There are two modes to use it
+
+Build: ```docker build -t knstld:latest .```
+
+### Dev server
+Bring up a local node with a test account containing tokens
+
+This is just designed for local testing/CI - do not use these scripts in production. Very likely you will assign tokens to accounts whose mnemonics are public on github.
+Prepend `VOLTYPE=vol|b` if you want to bind mount or volume into container as storage
+
+#### Set IMAGE env variable
+```shell script
+export IMAGE=knstld:latest
+```
+#### Set other env variable
+```shell script
+export CHAIN_ID=darchub
+export MONIKER=<YOUR_MONIKER>
+```
+
+**You can git clone and run script or call docker commands directly****
+**In a case of using volume (not bind mount) as containe volume, change `-v ~/.knstld:/root/.knstld` to `--mount type=volume,source="$VOLUME",target=/root`**
+
+#### Init
+Initialize blockchain folder
+```shell script
+# Using script
+./docker/start.sh init
+
+# Using docker cmd
+docker run --rm -it \
+  -e MONIKER="$MONIKER" \
+  -e CHAIN_ID="$CHAIN_ID" \
+  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/init.sh
+```
+
+#### Moniker
+Change moniker
+```shell script
+export MONIKER=moniker 
+
+# Using script
+./docker/start.sh config
+
+# Using docker cmd
+docker run --rm -it \
+  -e MONIKER="$MONIKER" \
+  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/config.sh
+```
+
+#### Setup
+**Omit `KEY_NAME`, `KEY_PASSWORD`, `KEY_MNEMONIC` if you want to create a new identity.**
+Setup genaccs, gentxs, collectGentxs
+
+```shell script
+export KEY_PASSWORD="..."
+export KEY_NAME="..."
+export KEY_MNEMONIC="..."
+
+# Using script
+./docker/start.sh setup
+
+# Using docker cmd
+docker run --rm -it \
+  -e KEY_PASSWORD="$KEY_PASSWORD" \
+  -e KEY_NAME="$KEY_NAME" \
+  -e KEY_MNEMONIC="$KEY_MNEMONIC" \
+  -v ~/.knstld:/root/.knstld "$IMAGE" /opt/setup.sh
+```
+
+#### Run 
+Run blockchain node in container
+```shell script
+# Using script
+./docker/start.sh run
+
+# Using docker cmd
+docker run --rm -it \
+  -p 26657:26657 \
+  -p 26656:26656 \
+  -p 1317:1317 \
+  -p 9090:9090 \
+  -v ~/.knstld:/root/.knstld  "$IMAGE" /opt/run.sh
+```
+
+### Localnet
+see `Localnet` in [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
+
+## Network generation
+To generate network see `Testnet` in [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
