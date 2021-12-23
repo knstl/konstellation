@@ -279,7 +279,7 @@ docker run --rm -it \
 ```
 
 ### Localnet
-see `Localnet` in [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
+See `Localnet` in [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
 
 ## Network generation
 To generate network see `Testnet` in [Cosmodrome](https://github.com/konstellation/cosmodrome) project repo
