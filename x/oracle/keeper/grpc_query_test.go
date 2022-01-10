@@ -12,7 +12,7 @@ import (
 type OracleTestSuite struct {
 	suite.Suite
 
-	app         *app.KonstellationApp
+	app         *app.App
 	ctx         sdk.Context
 	queryClient types.QueryClient
 }

@@ -27,7 +27,7 @@ func (k Keeper) setExchangeRate(ctx sdk.Context, rate *types.ExchangeRate) error
 	rate.Height = int32(ctx.BlockHeight())
 	rate.Timestamp = ctx.BlockHeader().Time
 
-	b := k.cdc.MustMarshalBinaryBare(rate)
+	b := k.cdc.MustMarshal(rate)
 	store.Set(types.GetExchangeRateKey(rate.Pair), b)
 	return nil
 }
@@ -89,15 +89,15 @@ func (k Keeper) GetExchangeRate(ctx sdk.Context, pair string) (exchangeRate type
 		return exchangeRate, false
 	}
 
-	k.cdc.MustUnmarshalBinaryBare(b, &exchangeRate)
+	k.cdc.MustUnmarshal(b, &exchangeRate)
 	return exchangeRate, true
 }
 
-func MustMarshalExchangeRate(cdc codec.BinaryMarshaler, r *types.ExchangeRate) []byte {
-	return cdc.MustMarshalBinaryBare(r)
+func MustMarshalExchangeRate(cdc codec.BinaryCodec, r *types.ExchangeRate) []byte {
+	return cdc.MustMarshal(r)
 }
 
-func MustUnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) types.ExchangeRate {
+func MustUnmarshalExchangeRate(cdc codec.BinaryCodec, value []byte) types.ExchangeRate {
 	r, err := UnmarshalExchangeRate(cdc, value)
 	if err != nil {
 		panic(err)
@@ -106,7 +106,7 @@ func MustUnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) types.Ex
 	return r
 }
 
-func UnmarshalExchangeRate(cdc codec.BinaryMarshaler, value []byte) (r types.ExchangeRate, err error) {
-	err = cdc.UnmarshalBinaryBare(value, &r)
+func UnmarshalExchangeRate(cdc codec.BinaryCodec, value []byte) (r types.ExchangeRate, err error) {
+	err = cdc.Unmarshal(value, &r)
 	return r, err
 }

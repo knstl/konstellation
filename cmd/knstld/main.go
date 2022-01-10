@@ -18,7 +18,7 @@ func main() {
 		app.Name,
 		app.ModuleBasics,
 		app.New,
-		cosmoscmd.WithWasm(),
+		//cosmoscmd.WithWasm(),
 		// this line is used by starport scaffolding # root/arguments
 	)
 
