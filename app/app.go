@@ -690,7 +690,7 @@ func (app *App) registerUpgradeHandlers() {
 			"staking":      1,
 			"upgrade":      1,
 			"vesting":      1,
-			"ibc":          2,
+			"ibc":          1,
 			"genutil":      1,
 			"transfer":     1,
 		}
