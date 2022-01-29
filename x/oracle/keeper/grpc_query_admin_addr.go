@@ -23,7 +23,7 @@ func (k Keeper) AdminAddrAll(c context.Context, req *types.QueryAllAdminAddrRequ
 
 	pageRes, err := query.Paginate(adminAddrStore, req.Pagination, func(key []byte, value []byte) error {
 		var adminAddr types.AdminAddr
-		if err := k.cdc.UnmarshalBinaryBare(value, &adminAddr); err != nil {
+		if err := k.cdc.Unmarshal(value, &adminAddr); err != nil {
 			return err
 		}
 

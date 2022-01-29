@@ -1,5 +1,5 @@
 /*
-// +build norace
+// + build norace
 */
 
 package cli_test
