@@ -1,10 +1,11 @@
 package keybase
 
 import (
+	"io"
+
 	hd "github.com/cosmos/cosmos-sdk/crypto/hd"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"io"
 )
 
 type expectedKey interface {
@@ -42,13 +43,13 @@ func SaveCoinKey(dir, keyringBackend, algoStr string, key expectedKey, overwrite
 	}
 
 	var info keyring.Info
+	path := hd.CreateHDPath(118, 0, 0).String()
 	if key.GetMnemonic() == "" {
 		// generate a private key, with recovery phrase
-		info, keyMnemonic, err = kr.NewMnemonic(key.GetName(), keyring.English, key.GetPassword(), algo)
+		info, keyMnemonic, err = kr.NewMnemonic(key.GetName(), keyring.English, path, key.GetPassword(), algo)
 	} else {
 		// account 0 "Account number for HD derivation"
 		// index 0 "Address index number for HD derivation"
-		path := hd.CreateHDPath(118, 0, 0).String()
 		info, err = kr.NewAccount(key.GetName(), key.GetMnemonic(), "", path, algo)
 		keyMnemonic = key.GetMnemonic()
 	}

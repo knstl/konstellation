@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
@@ -23,7 +24,7 @@ func (k Keeper) AdminAddrAll(c context.Context, req *types.QueryAllAdminAddrRequ
 
 	pageRes, err := query.Paginate(adminAddrStore, req.Pagination, func(key []byte, value []byte) error {
 		var adminAddr types.AdminAddr
-		if err := k.cdc.UnmarshalBinaryBare(value, &adminAddr); err != nil {
+		if err := k.cdc.Unmarshal(value, &adminAddr); err != nil {
 			return err
 		}
 
@@ -52,7 +53,7 @@ func (k Keeper) AdminAddrAll(c context.Context, req *types.QueryAllAdminAddrRequ
 //	}
 //
 //	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.AdminAddrKey))
-//	k.cdc.MustUnmarshalBinaryBare(store.Get(GetAdminAddrIDBytes(req.Id)), &adminAddr)
+//	k.cdc. MustUnmarshal(store.Get(GetAdminAddrIDBytes(req.Id)), &adminAddr)
 //
 //	return &types.QueryGetAdminAddrResponse{AdminAddr: &adminAddr}, nil
 //}

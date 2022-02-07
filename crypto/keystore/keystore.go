@@ -2,8 +2,10 @@ package keystore
 
 import (
 	"encoding/json"
+
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/bech32/legacybech32"
 	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/google/uuid"
 )
@@ -24,7 +26,7 @@ type keyStore struct {
 }
 
 func NewKeyStoreV3(pk cryptotypes.PrivKey, name string, encryptPassword []byte) ([]byte, error) {
-	pubkey, err := sdk.Bech32ifyPubKey(sdk.Bech32PubKeyTypeAccPub, pk.PubKey())
+	pubkey, err := legacybech32.MarshalPubKey(legacybech32.AccPK, pk.PubKey())
 	if err != nil {
 		return nil, err
 	}

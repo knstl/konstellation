@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/konstellation/konstellation/cmd/knstld/cmd/keys"
 	"os"
+
+	"github.com/konstellation/konstellation/cmd/knstld/cmd/keys"
 
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/konstellation/konstellation/app"
@@ -18,7 +19,7 @@ func main() {
 		app.Name,
 		app.ModuleBasics,
 		app.New,
-		cosmoscmd.WithWasm(),
+		//cosmoscmd.WithWasm(),
 		// this line is used by starport scaffolding # root/arguments
 	)
 

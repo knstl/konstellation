@@ -22,7 +22,7 @@ func (k Keeper) getAllowedAddress(ctx sdk.Context, addr sdk.AccAddress) (adm typ
 func (k Keeper) setAllowedAddress(ctx sdk.Context, addr types.AdminAddr) error {
 	store := ctx.KVStore(k.storeKey)
 
-	b := k.cdc.MustMarshalBinaryBare(&addr)
+	b := k.cdc.MustMarshal(&addr)
 	store.Set(types.GetAllowedAddressKey(addr.GetAdminAddress()), b)
 	return nil
 }
@@ -111,11 +111,11 @@ func (k Keeper) SetAdminAddr(ctx sdk.Context, sender sdk.AccAddress, add []types
 	return nil
 }
 
-func MustMarshalAllowedAddress(cdc codec.BinaryMarshaler, addr *types.AdminAddr) []byte {
-	return cdc.MustMarshalBinaryBare(addr)
+func MustMarshalAllowedAddress(cdc codec.BinaryCodec, addr *types.AdminAddr) []byte {
+	return cdc.MustMarshal(addr)
 }
 
-func MustUnmarshalAllowedAddress(cdc codec.BinaryMarshaler, value []byte) types.AdminAddr {
+func MustUnmarshalAllowedAddress(cdc codec.BinaryCodec, value []byte) types.AdminAddr {
 	addr, err := UnmarshalAllowedAddress(cdc, value)
 	if err != nil {
 		panic(err)
@@ -124,7 +124,7 @@ func MustUnmarshalAllowedAddress(cdc codec.BinaryMarshaler, value []byte) types.
 	return addr
 }
 
-func UnmarshalAllowedAddress(cdc codec.BinaryMarshaler, value []byte) (addr types.AdminAddr, err error) {
-	err = cdc.UnmarshalBinaryBare(value, &addr)
+func UnmarshalAllowedAddress(cdc codec.BinaryCodec, value []byte) (addr types.AdminAddr, err error) {
+	err = cdc.Unmarshal(value, &addr)
 	return addr, err
 }

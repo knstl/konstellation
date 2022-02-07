@@ -19,7 +19,7 @@ func TestDecodeStore(t *testing.T) {
 	//
 	//kvPairs := kv.Pairs{
 	//	Pairs: []kv.Pair{
-	//		{Key: types.ExchangeRateKey, Value: cdc.MustMarshalBinaryBare(&exchangeRate)},
+	//		{Key: types.ExchangeRateKey, Value: cdc.MustMarshal(&exchangeRate)},
 	//		{Key: []byte{0x99}, Value: []byte{0x99}},
 	//	},
 	//}

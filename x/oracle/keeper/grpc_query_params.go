@@ -14,7 +14,7 @@ func (k Keeper) ParamsAll(c context.Context, req *types.QueryAllParamsRequest) (
 
 	pageRes, err := query.Paginate(paramsStore, req.Pagination, func(key []byte, value []byte) error {
 		var params types.Params
-		if err := k.cdc.UnmarshalBinaryBare(value, &params); err != nil {
+		if err := k.cdc. Unmarshal(value, &params); err != nil {
 			return err
 		}
 
@@ -42,7 +42,7 @@ func (k Keeper) Params(c context.Context, req *types.QueryGetParamsRequest) (*ty
 	}
 
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ParamsKey))
-	k.cdc.MustUnmarshalBinaryBare(store.Get(GetParamsIDBytes(req.Id)), &params)
+	k.cdc. MustUnmarshal(store.Get(GetParamsIDBytes(req.Id)), &params)
 
 	return &types.QueryGetParamsResponse{Params: &params}, nil
 }

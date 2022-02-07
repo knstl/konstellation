@@ -42,7 +42,7 @@ func (k Keeper) AppendParams(
 	params.Id = count
 
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ParamsKey))
-	appendedValue := k.cdc.MustMarshalBinaryBare(&params)
+	appendedValue := k.cdc.MustMarshal(&params)
 	store.Set(GetParamsIDBytes(params.Id), appendedValue)
 
 	// Update params count
@@ -55,7 +55,7 @@ func (k Keeper) AppendParams(
 //// SetParams set a specific params in the store
 //func (k Keeper) SetParams(ctx sdk.Context, params types.Params) {
 //	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ParamsKey))
-//	b := k.cdc.MustMarshalBinaryBare(&params)
+//	b := k.cdc.MustMarshal(&params)
 //	store.Set(GetParamsIDBytes(params.Id), b)
 //}
 //
@@ -63,7 +63,7 @@ func (k Keeper) AppendParams(
 //func (k Keeper) GetParams(ctx sdk.Context, id uint64) types.Params {
 //	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ParamsKey))
 //	var params types.Params
-//	k.cdc.MustUnmarshalBinaryBare(store.Get(GetParamsIDBytes(id)), &params)
+//	k.cdc. MustUnmarshal(store.Get(GetParamsIDBytes(id)), &params)
 //	return params
 //}
 //
@@ -93,7 +93,7 @@ func (k Keeper) AppendParams(
 //
 //	for ; iterator.Valid(); iterator.Next() {
 //		var val types.Params
-//		k.cdc.MustUnmarshalBinaryBare(iterator.Value(), &val)
+//		k.cdc. MustUnmarshal(iterator.Value(), &val)
 //		list = append(list, val)
 //	}
 //

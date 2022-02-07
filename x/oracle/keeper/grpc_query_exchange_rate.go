@@ -24,7 +24,7 @@ func (k Keeper) AllExchangeRates(c context.Context, req *types.QueryAllExchangeR
 
 	pageRes, err := query.Paginate(exchangeRateStore, req.Pagination, func(key []byte, value []byte) error {
 		var exchangeRate types.ExchangeRate
-		if err := k.cdc.UnmarshalBinaryBare(value, &exchangeRate); err != nil {
+		if err := k.cdc.Unmarshal(value, &exchangeRate); err != nil {
 			return err
 		}
 
