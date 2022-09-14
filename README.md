@@ -12,7 +12,7 @@ Get mainnet config [here](https://github.com/Konstellation/konstellation/tree/ma
 ```
 - Hardware requirements 
 CPU: 4 core
-RAM: 16 GB 
+RAM: 32 GB 
 DISK Storage: SSD 500 GB
 ```
 
