@@ -26,7 +26,7 @@ func main() {
 	rootCmd.AddCommand(keys.Commands(app.DefaultNodeHome))
 	rootCmd.AddCommand(ibc.MigrateGenesisForIBC())
 
-	if err := svrcmd.Execute(rootCmd, app.DefaultNodeHome); err != nil {
+	if err := svrcmd.Execute(rootCmd, "", app.DefaultNodeHome); err != nil {
 		os.Exit(1)
 	}
 }

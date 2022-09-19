@@ -15,8 +15,8 @@ import (
 type (
 	Keeper struct {
 		cdc      codec.Codec
-		storeKey sdk.StoreKey
-		memKey   sdk.StoreKey
+		storeKey sdk.Store
+		memKey   sdk.Store
 		// this line is used by starport scaffolding # ibc/keeper/attribute
 		paramSpace paramtypes.Subspace
 	}
@@ -25,7 +25,7 @@ type (
 func NewKeeper(
 	cdc codec.Codec,
 	storeKey,
-	memKey sdk.StoreKey,
+	memKey sdk.Store,
 	// this line is used by starport scaffolding # ibc/keeper/parameter
 	paramSpace paramtypes.Subspace,
 
