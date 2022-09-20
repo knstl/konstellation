@@ -6,6 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/input"
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/crypto"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -24,13 +25,15 @@ func exportKeyStoreCommand() *cobra.Command {
 }
 
 func runExportKeyStoreCmd(cmd *cobra.Command, args []string) error {
+
+	var blankcodec codec.Codec
 	inBuf := bufio.NewReader(cmd.InOrStdin())
 	keyringBackend, _ := cmd.Flags().GetString(flags.FlagKeyringBackend)
 	clientCtx, err := client.GetClientQueryContext(cmd)
 	if err != nil {
 		return err
 	}
-	kb, err := keyring.New(sdk.KeyringServiceName(), keyringBackend, clientCtx.HomeDir, inBuf)
+	kb, err := keyring.New(sdk.KeyringServiceName(), keyringBackend, clientCtx.HomeDir, inBuf, blankcodec)
 	if err != nil {
 		return err
 	}
