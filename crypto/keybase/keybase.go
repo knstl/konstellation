@@ -1,10 +1,13 @@
 package keybase
 
 import (
+	"io"
+
+	"github.com/cosmos/cosmos-sdk/codec"
 	hd "github.com/cosmos/cosmos-sdk/crypto/hd"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	"github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"io"
 )
 
 type expectedKey interface {
@@ -17,8 +20,9 @@ type expectedKey interface {
 // phrase to recover the private key.
 func SaveCoinKey(dir, keyringBackend, algoStr string, key expectedKey, overwrite bool, testKeyring bool, inBuf io.Reader) (addr sdk.AccAddress, keyMnemonic string, err error) {
 	// TODO appName?
+	var blankcodec codec.Codec //codec was not used in the previous versions, that is .44 changed in .45
 
-	kr, err := keyring.New(sdk.KeyringServiceName(), keyringBackend, dir, inBuf)
+	kr, err := keyring.New(sdk.KeyringServiceName(), keyringBackend, dir, inBuf, blankcodec)
 	if err != nil {
 		return []byte{}, "", err
 	}
@@ -41,7 +45,8 @@ func SaveCoinKey(dir, keyringBackend, algoStr string, key expectedKey, overwrite
 		return nil, "", err
 	}
 
-	var info keyring.Info
+	var info *keyring.Record
+	var pubkey types.PubKey
 	path := hd.CreateHDPath(118, 0, 0).String()
 	if key.GetMnemonic() == "" {
 		// generate a private key, with recovery phrase
@@ -57,5 +62,10 @@ func SaveCoinKey(dir, keyringBackend, algoStr string, key expectedKey, overwrite
 		return []byte{}, "", err
 	}
 
-	return sdk.AccAddress(info.GetPubKey().Address()), keyMnemonic, nil
+	pubkey, err = info.GetPubKey()
+	if err != nil {
+		return []byte{}, "", err
+	}
+
+	return sdk.AccAddress(pubkey.Address()), keyMnemonic, nil
 }
