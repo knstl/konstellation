@@ -1,11 +1,11 @@
 module github.com/konstellation/konstellation
 
-go 1.17
+go 1.18
 
 require (
 	github.com/CosmWasm/wasmd v0.27.0
 	github.com/cosmos/cosmos-sdk v0.46.1
-	github.com/cosmos/ibc-go/v2 v2.0.2
+	github.com/cosmos/ibc-go/v4 v4.1.0
 	github.com/ethereum/go-ethereum v1.10.25
 	github.com/gogo/protobuf v1.3.3
 	github.com/golang/protobuf v1.5.2
