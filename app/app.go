@@ -87,9 +87,12 @@ import (
 	"github.com/konstellation/konstellation/docs"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
+	keep "github.com/CosmWasm/wasmd/x/wasm/keeper"
+	smltn "github.com/CosmWasm/wasmd/x/wasm/simulation"
 	"github.com/konstellation/konstellation/x/oracle"
 	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
@@ -221,6 +224,8 @@ type App struct {
 	IBCKeeper        *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
 	EvidenceKeeper   evidencekeeper.Keeper
 	TransferKeeper   ibctransferkeeper.Keeper
+	SimulKepper      smltn.BankKeeper
+	AccoKeeper       keep.AccountKeeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
@@ -395,7 +400,7 @@ func New(
 
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
-	supportedFeatures := "staking,stargate"
+	supportedFeatures := "iterator,staking,stargate"
 	app.wasmKeeper = wasm.NewKeeper(
 		appCodec,
 		keys[wasm.StoreKey],
@@ -452,7 +457,7 @@ func New(
 		transferModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 		oracleModule,
-		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper),
+		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper, app.AccoKeeper, app.SimulKepper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -670,29 +675,29 @@ func (app *App) RegisterTendermintService(clientCtx client.Context) {
 }
 
 func (app *App) registerUpgradeHandlers() {
-	app.UpgradeKeeper.SetUpgradeHandler("v0.44", func(ctx sdk.Context, plan upgradetypes.Plan, _ module.VersionMap) (module.VersionMap, error) {
+	app.UpgradeKeeper.SetUpgradeHandler("v0.45", func(ctx sdk.Context, plan upgradetypes.Plan, _ module.VersionMap) (module.VersionMap, error) {
 		// set max expected block time parameter. Replace the default with your expected value
 		// https://github.com/cosmos/ibc-go/blob/release/v1.0.x/docs/ibc/proto-docs.md#params-2
 		app.IBCKeeper.ConnectionKeeper.SetParams(ctx, ibcconnectiontypes.DefaultParams())
 		// 1st-time running in-store migrations, using 1 as fromVersion to
 		// avoid running InitGenesis.
 		fromVM := map[string]uint64{
-			"auth":         1,
-			"bank":         1,
-			"capability":   1,
-			"crisis":       1,
-			"distribution": 1,
-			"evidence":     1,
-			"gov":          1,
-			"mint":         1,
-			"params":       1,
-			"slashing":     1,
-			"staking":      1,
-			"upgrade":      1,
-			"vesting":      1,
-			"ibc":          1,
-			"genutil":      1,
-			"transfer":     1,
+			"auth":         2,
+			"bank":         2,
+			"capability":   2,
+			"crisis":       2,
+			"distribution": 2,
+			"evidence":     2,
+			"gov":          2,
+			"mint":         2,
+			"params":       2,
+			"slashing":     2,
+			"staking":      2,
+			"upgrade":      2,
+			"vesting":      2,
+			"ibc":          2,
+			"genutil":      2,
+			"transfer":     2,
 		}
 
 		return app.mm.RunMigrations(ctx, app.configurator, fromVM)
@@ -703,7 +708,7 @@ func (app *App) registerUpgradeHandlers() {
 		panic(err)
 	}
 
-	if upgradeInfo.Name == "v0.44" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+	if upgradeInfo.Name == "v0.45" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
 		storeUpgrades := storetypes.StoreUpgrades{
 			Added: []string{"authz", "feegrant"},
 		}
