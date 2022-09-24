@@ -8,6 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec/types"
+	codectype "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/spf13/cast"
 	"github.com/tendermint/spm/openapiconsole"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -91,8 +92,10 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
-	keep "github.com/CosmWasm/wasmd/x/wasm/keeper"
+
+	//keep "github.com/CosmWasm/wasmd/x/wasm/keeper"
 	smltn "github.com/CosmWasm/wasmd/x/wasm/simulation"
+	wasmtype "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/konstellation/konstellation/x/oracle"
 	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
 	oracletypes "github.com/konstellation/konstellation/x/oracle/types"
@@ -199,7 +202,7 @@ type App struct {
 
 	cdc               *codec.LegacyAmino
 	appCodec          codec.Codec
-	interfaceRegistry types.InterfaceRegistry
+	interfaceRegistry codectype.InterfaceRegistry
 	configurator      module.Configurator
 
 	invCheckPeriod uint
@@ -225,7 +228,7 @@ type App struct {
 	EvidenceKeeper   evidencekeeper.Keeper
 	TransferKeeper   ibctransferkeeper.Keeper
 	SimulKepper      smltn.BankKeeper
-	AccoKeeper       keep.AccountKeeper
+	AccoKeeper       wasmtype.AccountKeeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
