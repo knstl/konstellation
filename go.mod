@@ -27,8 +27,8 @@ require (
 )
 
 require (
-	github.com/cosmos/ibc-go/v2 v2.4.1
-	github.com/cosmos/ibc-go/v3 v3.0.0 // indirect
+	//github.com/cosmos/ibc-go/v2 v2.4.1
+	github.com/cosmos/ibc-go/v3 v3.0.0
 )
 
 require (
