@@ -2,7 +2,7 @@
 # Building environment
 # ----------------------------------------------------------------------
 
-FROM golang:1.17.5-alpine AS go-builder
+FROM golang:1.18.1-alpine AS go-builder
 
 # Set up dependencies
 RUN set -eux; apk add --no-cache ca-certificates build-base;
