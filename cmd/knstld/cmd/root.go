@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	serverconfig "github.com/cosmos/cosmos-sdk/server/config"
+	"github.com/konstellation/konstellation/app"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
@@ -45,7 +46,7 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 		WithLegacyAmino(encodingConfig.Amino).
 		WithInput(os.Stdin).
 		WithAccountRetriever(types.AccountRetriever{}).
-		WithHomeDir(simapp.DefaultNodeHome).
+		WithHomeDir(app.DefaultNodeHome).
 		WithViper("")
 
 	rootCmd := &cobra.Command{
