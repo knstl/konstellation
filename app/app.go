@@ -10,6 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	codectype "github.com/cosmos/cosmos-sdk/codec/types"
+	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/spf13/cast"
 	"github.com/tendermint/spm/openapiconsole"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -120,6 +121,9 @@ var (
 	// of "EnableAllProposals" (takes precedence over ProposalsEnabled)
 	// https://github.com/CosmWasm/wasmd/blob/02a54d33ff2c064f3539ae12d75d027d9c665f05/x/wasm/internal/types/proposal.go#L28-L34
 	EnableSpecificProposals = ""
+
+	//alias for wasm options
+	EmptyWasmOpts []wasm.Option
 )
 
 func GetWasmEnabledProposals() []wasm.ProposalType {
@@ -229,6 +233,7 @@ type App struct {
 	memKeys map[string]*sdk.MemoryStoreKey
 
 	// keepers
+	// TODO : keep keeps in another file
 	AccountKeeper    authkeeper.AccountKeeper
 	BankKeeper       bankkeeper.Keeper
 	CapabilityKeeper *capabilitykeeper.Keeper
@@ -245,9 +250,9 @@ type App struct {
 	TransferKeeper   ibctransferkeeper.Keeper
 	SimulKepper      smltn.BankKeeper
 	AccoKeeper       wasmtype.AccountKeeper
-	scopedKeeper     capabilitykeeper.ScopedKeeper
-	portKeeper       ibctypes.PortKeeper
-	ics4Wrapper      ibctypes.ICS4Wrapper
+	//scopedKeeper     capabilitykeeper.ScopedKeeper
+	portKeeper  ibctypes.PortKeeper
+	ics4Wrapper ibctypes.ICS4Wrapper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
@@ -272,10 +277,12 @@ func New(
 	skipUpgradeHeights map[int64]bool,
 	homePath string,
 	invCheckPeriod uint,
-	encodingConfig cosmoscmd.EncodingConfig,
 	appOpts servertypes.AppOptions,
+	wasmEnabledProposals []wasm.ProposalType,
+	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) cosmoscmd.App {
+	encodingConfig := simapp.MakeTestEncodingConfig() //TODO: Create a new File Encoding.
 	appCodec := encodingConfig.Marshaler
 	cdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
