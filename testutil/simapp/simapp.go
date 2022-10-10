@@ -19,16 +19,15 @@ func New(dir string) cosmoscmd.App {
 	db := tmdb.NewMemDB()
 	logger := log.NewNopLogger()
 
-	encoding := cosmoscmd.MakeEncodingConfig(app.ModuleBasics)
+	//encoding := cosmoscmd.MakeEncodingConfig(app.ModuleBasics) // removed in APP doesn't enconding, moved that inside the function
 
-	a := app.New(logger, db, nil, true, map[int64]bool{}, dir, 0, encoding,
-		simapp.EmptyAppOptions{})
+	app := app.New(logger, db, nil, false, map[int64]bool{}, dir, uint(1), simapp.EmptyAppOptions{}, app.GetWasmEnabledProposals(), app.EmptyWasmOpts)
 	// InitChain updates deliverState which is required when app.NewContext is called
-	a.InitChain(abci.RequestInitChain{
+	app.InitChain(abci.RequestInitChain{
 		ConsensusParams: defaultConsensusParams,
 		AppStateBytes:   []byte("{}"),
 	})
-	return a
+	return app
 }
 
 var defaultConsensusParams = &abci.ConsensusParams{
