@@ -5,19 +5,19 @@ package params
 
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
-	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/x/auth/migrations/legacytx"
+	"github.com/cosmos/cosmos-sdk/codec/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
 func MakeTestEncodingConfig() EncodingConfig {
 	cdc := codec.NewLegacyAmino()
-	interfaceRegistry := cdctypes.NewInterfaceRegistry()
+	interfaceRegistry := types.NewInterfaceRegistry()
 	marshaler := codec.NewAminoCodec(cdc)
 
 	return EncodingConfig{
 		InterfaceRegistry: interfaceRegistry,
 		Marshaler:         marshaler,
-		TxConfig:          legacytx.StdTxConfig{Cdc: cdc},
+		TxConfig:          authtypes.StdTxConfig{Cdc: cdc},
 		Amino:             cdc,
 	}
 }

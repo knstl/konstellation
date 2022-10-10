@@ -1,3 +1,6 @@
+//go:build !test_amino
+// +build !test_amino
+
 package params
 
 import (
@@ -10,13 +13,12 @@ import (
 func MakeTestEncodingConfig() EncodingConfig {
 	amino := codec.NewLegacyAmino()
 	interfaceRegistry := types.NewInterfaceRegistry()
-	codec := codec.NewProtoCodec(interfaceRegistry)
-
-	txCfg := tx.NewTxConfig(codec, tx.DefaultSignModes)
+	marshaler := codec.NewProtoCodec(interfaceRegistry)
+	txCfg := tx.NewTxConfig(marshaler, tx.DefaultSignModes)
 
 	return EncodingConfig{
 		InterfaceRegistry: interfaceRegistry,
-		Codec:             codec,
+		Marshaler:         marshaler,
 		TxConfig:          txCfg,
 		Amino:             amino,
 	}
