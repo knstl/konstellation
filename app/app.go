@@ -284,6 +284,7 @@ func New(
 	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) cosmoscmd.App {
+
 	encodingConfig := simapp.MakeTestEncodingConfig() //TODO: Create a new File Encoding.
 	appCodec := encodingConfig.Marshaler
 	cdc := encodingConfig.Amino
@@ -401,11 +402,12 @@ func New(
 		app.BankKeeper,
 		scopedTransferKeeper,
 	)
-	//transferModule := transfer.NewAppModule(app.TransferKeeper)
+	transferModule := transfer.NewAppModule(app.TransferKeeper)
+	transferIBCModule := transfer.NewIBCModule(app.TransferKeeper)
 
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := porttypes.NewRouter()
-	//ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferModule)
+	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferIBCModule)
 	// this line is used by starport scaffolding # ibc/app/router
 	app.IBCKeeper.SetRouter(ibcRouter)
 
@@ -495,7 +497,7 @@ func New(
 		evidence.NewAppModule(app.EvidenceKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		params.NewAppModule(app.ParamsKeeper),
-		//transferModule,
+		transferModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 		//oracleModule,
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper, app.AccoKeeper, app.SimulKepper),
