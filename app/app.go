@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/codec/types"
 	codectype "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/spf13/cast"
@@ -82,7 +81,6 @@ import (
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer"
 	ibctransferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	ibctypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibc "github.com/cosmos/ibc-go/v3/modules/core"
 	ibcclient "github.com/cosmos/ibc-go/v3/modules/core/02-client"
 	ibcclientclient "github.com/cosmos/ibc-go/v3/modules/core/02-client/client"
@@ -256,8 +254,7 @@ type App struct {
 	SimulKepper      smltn.BankKeeper
 	AccoKeeper       wasmtype.AccountKeeper
 	//scopedKeeper     capabilitykeeper.ScopedKeeper
-	portKeeper  ibctypes.PortKeeper
-	ics4Wrapper ibctypes.ICS4Wrapper
+	ics4Wrapper ibctransfertypes.ICS4Wrapper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
@@ -610,8 +607,9 @@ func New(
 		SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
 	})
 	if err != nil {
-		// TODO LOG ERROR!
+		panic(err)
 	}
+
 	app.SetAnteHandler(anteHandler)
 	app.SetEndBlocker(app.EndBlocker)
 
@@ -694,7 +692,7 @@ func (app *App) AppCodec() codec.Codec {
 }
 
 // InterfaceRegistry returns Gaia's InterfaceRegistry
-func (app *App) InterfaceRegistry() types.InterfaceRegistry {
+func (app *App) InterfaceRegistry() codectype.InterfaceRegistry {
 	return app.interfaceRegistry
 }
 
