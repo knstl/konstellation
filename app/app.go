@@ -9,7 +9,6 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	codectype "github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/spf13/cast"
 	"github.com/tendermint/spm/openapiconsole"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -299,7 +298,7 @@ func New(
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) cosmoscmd.App {
 
-	encodingConfig := simapp.MakeTestEncodingConfig() //TODO: Create a new File Encoding.
+	encodingConfig := MakeTestEncodingConfig()
 	appCodec := encodingConfig.Marshaler
 	cdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
