@@ -64,6 +64,7 @@ type App struct {
 	TransferKeeper   ibctransferkeeper.Keeper
 	SimulKepper      smltn.BankKeeper
 	AccoKeeper       wasmtype.AccountKeeper
+
 	//scopedKeeper   capabilitykeeper.ScopedKeeper
 	ics4Wrapper ibctransfertypes.ICS4Wrapper
 
