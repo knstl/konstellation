@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -557,10 +556,7 @@ func (app *App) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.Res
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
 	}
-	fmt.Println("app code normal:", app.appCodec)
-	fmt.Println("app code address:", &app.appCodec)
-	fmt.Println(app.mm.InitGenesis(ctx, app.appCodec, genesisState))
-	//app.UpgradeKeeper.SetModuleVersionMap(ctx, app.mm.GetVersionMap())
+	//app.UpgradeKeeper.SetModuleVersionMap(ctx, app.mm.GetVersionMap()) nned to
 	return app.mm.InitGenesis(ctx, app.appCodec, genesisState)
 }
 
