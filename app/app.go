@@ -550,6 +550,7 @@ func (app *App) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.Res
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
 	}
+	app.UpgradeKeeper.SetModuleVersionMap(ctx, app.mm.GetVersionMap())
 	return app.mm.InitGenesis(ctx, app.appCodec, genesisState)
 }
 
@@ -568,7 +569,7 @@ func (app *App) ModuleAccountAddrs() map[string]bool {
 	return modAccAddrs
 }
 
-// LegacyAmino returns SimApp's amino codec.
+// LegacyAmino returns knstld amino codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
@@ -576,7 +577,7 @@ func (app *App) LegacyAmino() *codec.LegacyAmino {
 	return app.cdc
 }
 
-// AppCodec returns Gaia's app codec.
+// AppCodec returns knstld's app codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
@@ -584,7 +585,7 @@ func (app *App) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-// InterfaceRegistry returns Gaia's InterfaceRegistry
+// InterfaceRegistry returns knstld's InterfaceRegistry
 func (app *App) InterfaceRegistry() codectype.InterfaceRegistry {
 	return app.interfaceRegistry
 }

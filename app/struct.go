@@ -6,7 +6,7 @@ import (
 	wasmtype "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
-	codectype "github.com/cosmos/cosmos-sdk/codec/types"
+	"github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
@@ -35,7 +35,7 @@ type App struct {
 
 	cdc               *codec.LegacyAmino
 	appCodec          codec.Codec
-	interfaceRegistry codectype.InterfaceRegistry
+	interfaceRegistry types.InterfaceRegistry
 	configurator      module.Configurator
 	basicManager      module.BasicManager
 	legacyAmino       *codec.LegacyAmino
