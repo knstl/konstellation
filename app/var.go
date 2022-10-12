@@ -26,7 +26,6 @@ import (
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibc "github.com/cosmos/ibc-go/v3/modules/core"
-	"github.com/konstellation/konstellation/x/oracle"
 	"github.com/tendermint/spm/cosmoscmd"
 )
 
@@ -75,7 +74,7 @@ var (
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
-		oracle.AppModuleBasic{},
+		//oracle.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 	)
 

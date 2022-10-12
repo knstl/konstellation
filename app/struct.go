@@ -24,7 +24,6 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
-	oraclekeeper "github.com/konstellation/konstellation/x/oracle/keeper"
 )
 
 // App extends an ABCI application, but with most of its parameters exported.
@@ -74,7 +73,7 @@ type App struct {
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
-	OracleKeeper     oraclekeeper.Keeper
+	//OracleKeeper     oraclekeeper.Keeper
 	wasmKeeper       wasm.Keeper
 	scopedWasmKeeper capabilitykeeper.ScopedKeeper
 
