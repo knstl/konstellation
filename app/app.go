@@ -86,6 +86,8 @@ import (
 	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 	"github.com/konstellation/konstellation/docs"
+
+	//"github.com/konstellation/konstellation/x/oracle/keeper"
 	"github.com/spf13/cast"
 	"github.com/tendermint/spm/openapiconsole"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -103,8 +105,18 @@ import (
 
 	//oracletypes "github.com/konstellation/konstellation/x/oracle/types"
 
+	gravitymodule "github.com/Gravity-Bridge/Gravity-Bridge/module/x/gravity"
+	gravitykeeper "github.com/Gravity-Bridge/Gravity-Bridge/module/x/gravity/keeper"
+	gravitytypes "github.com/Gravity-Bridge/Gravity-Bridge/module/x/gravity/types"
 	"github.com/tendermint/spm-extras/wasmcmd"
 	"github.com/tendermint/spm/cosmoscmd"
+
+	// Osmosis-Labs Bech32-IBC
+
+	"github.com/osmosis-labs/bech32-ibc/x/bech32ibc"
+	bech32ibcmodule "github.com/osmosis-labs/bech32-ibc/x/bech32ibc"
+	bech32ibckeeper "github.com/osmosis-labs/bech32-ibc/x/bech32ibc/keeper"
+	bech32ibctypes "github.com/osmosis-labs/bech32-ibc/x/bech32ibc/types"
 )
 
 func init() {
@@ -206,6 +218,8 @@ func New(
 		//oracletypes.StoreKey,
 		authzkeeper.StoreKey,
 		feegrant.StoreKey,
+		gravitytypes.StoreKey,
+		bech32ibctypes.StoreKey,
 		wasm.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -265,8 +279,23 @@ func New(
 	app.registerUpgradeHandlers()
 	// register the staking hooks
 	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
+
+	gravityKeeper := gravitykeeper.NewKeeper(
+		keys[gravitytypes.StoreKey],
+		app.GetSubspace(gravitytypes.ModuleName),
+		appCodec,
+		&app.BankbaseKeeper,
+		&app.StakingKeeper,
+		&app.SlashingKeeper,
+		&app.DistrKeeper,
+		&app.AccountKeeper,
+		&app.TransferKeeper,
+		&app.Bech32IbcKeeper,
+	)
+	app.GravityKeeper = gravityKeeper
+
 	app.StakingKeeper = *stakingKeeper.SetHooks(
-		stakingtypes.NewMultiStakingHooks(app.DistrKeeper.Hooks(), app.SlashingKeeper.Hooks()),
+		stakingtypes.NewMultiStakingHooks(app.DistrKeeper.Hooks(), app.SlashingKeeper.Hooks(), app.GravityKeeper.Hooks()),
 	)
 
 	// ... other modules keepers
@@ -283,6 +312,8 @@ func New(
 		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(app.ParamsKeeper)).
 		AddRoute(distrtypes.RouterKey, distr.NewCommunityPoolSpendProposalHandler(app.DistrKeeper)).
 		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(app.UpgradeKeeper)).
+		AddRoute(gravitytypes.RouterKey, gravitykeeper.NewGravityProposalHandler(app.GravityKeeper)).
+		AddRoute(bech32ibctypes.RouterKey, bech32ibcmodule.NewBech32IBCProposalHandler(app.Bech32IbcKeeper)).
 		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(app.IBCKeeper.ClientKeeper))
 
 	// Create Transfer Keepers
@@ -323,7 +354,14 @@ func New(
 	if err != nil {
 		panic("error while reading wasm config: " + err.Error())
 	}
-
+	bankbaseKeeper := bankkeeper.NewBaseKeeper(
+		appCodec,
+		keys[banktypes.StoreKey],
+		app.AccountKeeper,
+		app.GetSubspace(banktypes.ModuleName),
+		app.BlockedAddrs(),
+	)
+	app.BankbaseKeeper = bankbaseKeeper
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
 	supportedFeatures := "iterator,staking,stargate"
@@ -353,6 +391,12 @@ func New(
 	if len(enabledProposals) != 0 {
 		govRouter.AddRoute(wasm.RouterKey, wasm.NewWasmProposalHandler(app.wasmKeeper, enabledProposals))
 	}
+
+	bech32IbcKeeper := *bech32ibckeeper.NewKeeper(
+		app.IBCKeeper.ChannelKeeper, appCodec, keys[bech32ibctypes.StoreKey],
+		app.TransferKeeper,
+	)
+	app.Bech32IbcKeeper = bech32IbcKeeper
 
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := porttypes.NewRouter()
@@ -399,6 +443,8 @@ func New(
 		// this line is used by starport scaffolding # stargate/app/appModule
 		//oracleModule,
 		transferModule,
+		gravitymodule.NewAppModule(gravityKeeper, app.BankKeeper),
+		bech32ibc.NewAppModule(appCodec, bech32IbcKeeper),
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 	)
 
@@ -414,6 +460,7 @@ func New(
 		slashingtypes.ModuleName,
 		evidencetypes.ModuleName,
 		stakingtypes.ModuleName,
+		gravitytypes.ModuleName,
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		govtypes.ModuleName,
@@ -425,6 +472,7 @@ func New(
 		vestingtypes.ModuleName,
 		ibchost.ModuleName,
 		ibctransfertypes.ModuleName,
+		bech32ibctypes.ModuleName,
 		wasm.ModuleName,
 	)
 	app.mm.SetOrderEndBlockers(
@@ -435,6 +483,7 @@ func New(
 		slashingtypes.ModuleName,
 		evidencetypes.ModuleName,
 		stakingtypes.ModuleName,
+		gravitytypes.ModuleName,
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		govtypes.ModuleName,
@@ -446,6 +495,7 @@ func New(
 		vestingtypes.ModuleName,
 		ibchost.ModuleName,
 		ibctransfertypes.ModuleName,
+		bech32ibctypes.ModuleName,
 		wasm.ModuleName,
 	)
 
@@ -465,9 +515,11 @@ func New(
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		govtypes.ModuleName,
+		bech32ibctypes.ModuleName,
 		crisistypes.ModuleName,
 		genutiltypes.ModuleName,
 		authz.ModuleName,
+		gravitytypes.ModuleName,
 		feegrant.ModuleName,
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
@@ -719,6 +771,17 @@ func (app *App) registerUpgradeHandlers() {
 	}
 }
 
+// BlockedAddrs returns all the app's module account addresses that are not
+// allowed to receive external tokens.
+func (app *App) BlockedAddrs() map[string]bool {
+	blockedAddrs := make(map[string]bool)
+	for acc := range maccPerms {
+		blockedAddrs[authtypes.NewModuleAddress(acc).String()] = !allowedReceivingModAcc[acc]
+	}
+
+	return blockedAddrs
+}
+
 // GetMaccPerms returns a copy of the module account permissions
 func GetMaccPerms() map[string][]string {
 	dupMaccPerms := make(map[string][]string)
@@ -741,6 +804,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(govtypes.ModuleName).WithKeyTable(govtypes.ParamKeyTable())
 	paramsKeeper.Subspace(crisistypes.ModuleName)
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
+	paramsKeeper.Subspace(gravitytypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 	//paramsKeeper.Subspace(oracletypes.ModuleName)

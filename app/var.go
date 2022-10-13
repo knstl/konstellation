@@ -2,6 +2,8 @@ package app
 
 import (
 	"github.com/CosmWasm/wasmd/x/wasm"
+	gravitymodule "github.com/Gravity-Bridge/Gravity-Bridge/module/x/gravity"
+	gravitytypes "github.com/Gravity-Bridge/Gravity-Bridge/module/x/gravity/types"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
@@ -29,6 +31,8 @@ import (
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibc "github.com/cosmos/ibc-go/v3/modules/core"
 	"github.com/tendermint/spm/cosmoscmd"
+
+	bech32ibcmodule "github.com/osmosis-labs/bech32-ibc/x/bech32ibc"
 )
 
 const (
@@ -79,9 +83,15 @@ var (
 		feegrantmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 		//oracle.AppModuleBasic{},
+		gravitymodule.AppModuleBasic{},
 		wasm.AppModuleBasic{},
-	)
 
+		bech32ibcmodule.AppModuleBasic{},
+	)
+	// module accounts that are allowed to receive tokens
+	allowedReceivingModAcc = map[string]bool{
+		distrtypes.ModuleName: true,
+	}
 	// module account permissions
 	maccPerms = map[string][]string{
 		authtypes.FeeCollectorName:     nil,
@@ -92,6 +102,7 @@ var (
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		wasm.ModuleName:                {authtypes.Burner},
+		gravitytypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )

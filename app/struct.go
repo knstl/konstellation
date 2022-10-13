@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/CosmWasm/wasmd/x/wasm"
 	smltn "github.com/CosmWasm/wasmd/x/wasm/simulation"
+	gravitykeeper "github.com/Gravity-Bridge/Gravity-Bridge/module/x/gravity/keeper"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/codec/types"
@@ -25,6 +26,7 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
+	bech32ibckeeper "github.com/osmosis-labs/bech32-ibc/x/bech32ibc/keeper"
 )
 
 // App extends an ABCI application, but with most of its parameters exported.
@@ -51,6 +53,7 @@ type App struct {
 	// TODO : keep keeps in another file
 	AccountKeeper    authkeeper.AccountKeeper
 	BankKeeper       bankkeeper.Keeper
+	BankbaseKeeper   bankkeeper.BaseKeeper
 	CapabilityKeeper *capabilitykeeper.Keeper
 	StakingKeeper    stakingkeeper.Keeper
 	SlashingKeeper   slashingkeeper.Keeper
@@ -66,6 +69,8 @@ type App struct {
 	SimulKepper      smltn.BankKeeper
 	AuthzKeeper      authzkeeper.Keeper
 	FeeGrantKeeper   feegrantkeeper.Keeper
+	GravityKeeper    gravitykeeper.Keeper
+	Bech32IbcKeeper  bech32ibckeeper.Keeper
 	//scopedKeeper   capabilitykeeper.ScopedKeeper
 	ics4Wrapper ibctransfertypes.ICS4Wrapper
 
