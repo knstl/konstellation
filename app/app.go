@@ -142,6 +142,8 @@ func GetWasmOpts(appOpts servertypes.AppOptions) []wasm.Option {
 func getGovProposalHandlers() []govclient.ProposalHandler {
 	var govProposalHandlers []govclient.ProposalHandler
 	// this line is used by starport scaffolding # stargate/app/govProposalHandlers
+	govProposalHandlers = wasmclient.ProposalHandlers
+
 	govProposalHandlers = append(
 		wasmclient.ProposalHandlers,
 		paramsclient.ProposalHandler,
@@ -319,6 +321,7 @@ func New(
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
 	supportedFeatures := "iterator,staking,stargate"
+	wasmOpts = GetWasmOpts(appOpts)
 	app.wasmKeeper = wasm.NewKeeper(
 		appCodec,
 		keys[wasm.StoreKey],
@@ -339,18 +342,18 @@ func New(
 		wasmOpts...,
 	)
 
+	// The gov proposal types can be individually enabled
+	enabledProposals := wasmcmd.GetEnabledProposals(ProposalsEnabled, EnableSpecificProposals)
+	if len(enabledProposals) != 0 {
+		govRouter.AddRoute(wasm.RouterKey, wasm.NewWasmProposalHandler(app.wasmKeeper, enabledProposals))
+	}
+
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := porttypes.NewRouter()
 	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferIBCModule).
 		AddRoute(wasm.ModuleName, wasm.NewIBCHandler(app.wasmKeeper, app.IBCKeeper.ChannelKeeper))
 	// this line is used by starport scaffolding # ibc/app/router
 	app.IBCKeeper.SetRouter(ibcRouter)
-
-	// The gov proposal types can be individually enabled
-	enabledProposals := wasmcmd.GetEnabledProposals(ProposalsEnabled, EnableSpecificProposals)
-	if len(enabledProposals) != 0 {
-		govRouter.AddRoute(wasm.RouterKey, wasm.NewWasmProposalHandler(app.wasmKeeper, enabledProposals))
-	}
 
 	app.GovKeeper = govkeeper.NewKeeper(
 		appCodec, keys[govtypes.StoreKey], app.GetSubspace(govtypes.ModuleName), app.AccountKeeper, app.BankKeeper,
@@ -510,6 +513,15 @@ func New(
 	// initialize BaseApp
 	app.SetAnteHandler(anteHandler)
 	app.SetEndBlocker(app.EndBlocker)
+
+	if manager := app.SnapshotManager(); manager != nil {
+		err = manager.RegisterExtensions(
+			wasmkeeper.NewWasmSnapshotter(app.CommitMultiStore(), &app.wasmKeeper),
+		)
+		if err != nil {
+			panic("failed to register snapshot extension: " + err.Error())
+		}
+	}
 
 	if loadLatest {
 		if err := app.LoadLatestVersion(); err != nil {
