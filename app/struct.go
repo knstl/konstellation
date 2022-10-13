@@ -66,16 +66,13 @@ type App struct {
 	SimulKepper      smltn.BankKeeper
 	AuthzKeeper      authzkeeper.Keeper
 	FeeGrantKeeper   feegrantkeeper.Keeper
-	//scopedKeeper   capabilitykeeper.ScopedKeeper
-	ics4Wrapper ibctransfertypes.ICS4Wrapper
+	ics4Wrapper      ibctransfertypes.ICS4Wrapper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
 	ScopedTransferKeeper capabilitykeeper.ScopedKeeper
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
-
-	//OracleKeeper     oraclekeeper.Keeper
 	wasmKeeper       wasm.Keeper
 	scopedWasmKeeper capabilitykeeper.ScopedKeeper
 

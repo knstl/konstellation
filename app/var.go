@@ -78,7 +78,6 @@ var (
 		authz.AppModuleBasic{},
 		feegrantmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
-		//oracle.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 	)
 

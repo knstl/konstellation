@@ -203,7 +203,6 @@ func New(
 		ibctransfertypes.StoreKey,
 		capabilitytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
-		//oracletypes.StoreKey,
 		authzkeeper.StoreKey,
 		feegrant.StoreKey,
 		wasm.StoreKey,
@@ -263,6 +262,7 @@ func New(
 	)
 	app.UpgradeKeeper = upgradekeeper.NewKeeper(skipUpgradeHeights, keys[upgradetypes.StoreKey], appCodec, homePath, app)
 	app.registerUpgradeHandlers()
+
 	// register the staking hooks
 	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
 	app.StakingKeeper = *stakingKeeper.SetHooks(
@@ -307,16 +307,6 @@ func New(
 	)
 	// If evidence needs to be handled for the app, set routes in router here and seal
 	app.EvidenceKeeper = *evidenceKeeper
-
-	// TODO : Get Business logic fromm company
-
-	//app.OracleKeeper = *oraclekeeper.NewKeeper(
-	//	appCodec,
-	//	keys[oracletypes.StoreKey],
-	//	keys[oracletypes.MemStoreKey],
-	//	app.GetSubspace(oracletypes.ModuleName),
-	//)
-	//oracleModule := oracle.NewAppModule(appCodec, app.OracleKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	wasmDir := filepath.Join(homePath, "wasm")
@@ -398,7 +388,6 @@ func New(
 		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
 		feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry),
 		// this line is used by starport scaffolding # stargate/app/appModule
-		//oracleModule,
 		transferModule,
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 	)
