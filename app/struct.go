@@ -3,18 +3,19 @@ package app
 import (
 	"github.com/CosmWasm/wasmd/x/wasm"
 	smltn "github.com/CosmWasm/wasmd/x/wasm/simulation"
-	wasmtype "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
+	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	crisiskeeper "github.com/cosmos/cosmos-sdk/x/crisis/keeper"
 	distrkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
 	evidencekeeper "github.com/cosmos/cosmos-sdk/x/evidence/keeper"
+	feegrantkeeper "github.com/cosmos/cosmos-sdk/x/feegrant/keeper"
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
 	mintkeeper "github.com/cosmos/cosmos-sdk/x/mint/keeper"
 	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
@@ -63,8 +64,8 @@ type App struct {
 	EvidenceKeeper   evidencekeeper.Keeper
 	TransferKeeper   ibctransferkeeper.Keeper
 	SimulKepper      smltn.BankKeeper
-	AccoKeeper       wasmtype.AccountKeeper
-
+	AuthzKeeper      authzkeeper.Keeper
+	FeeGrantKeeper   feegrantkeeper.Keeper
 	//scopedKeeper   capabilitykeeper.ScopedKeeper
 	ics4Wrapper ibctransfertypes.ICS4Wrapper
 
