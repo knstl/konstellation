@@ -740,7 +740,7 @@ func (app *App) registerUpgradeHandlers(cfg module.Configurator) {
 
 	if upgradeInfo.Name == "v0.45" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
 		storeUpgrades := storetypes.StoreUpgrades{
-			Added: []string{"authz", "feegrant"},
+			Added: []string{icacontrollertypes.StoreKey, icahosttypes.StoreKey},
 		}
 
 		// configure store loader that checks if version == upgradeHeight and applies store upgrades
