@@ -24,7 +24,6 @@ import (
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	icahostkeeper "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/keeper"
 	ibctransferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
-	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 )
 
@@ -51,6 +50,7 @@ type App struct {
 	// keepers
 	// TODO : keep keeps in another file
 	AccountKeeper    authkeeper.AccountKeeper
+	AuthzKeeper      authzkeeper.Keeper
 	BankKeeper       bankkeeper.Keeper
 	CapabilityKeeper *capabilitykeeper.Keeper
 	StakingKeeper    stakingkeeper.Keeper
@@ -64,13 +64,10 @@ type App struct {
 	IBCKeeper        *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
 	EvidenceKeeper   evidencekeeper.Keeper
 	TransferKeeper   ibctransferkeeper.Keeper
-	SimulKepper      smltn.BankKeeper
-	AuthzKeeper      authzkeeper.Keeper
+	SimulKeeper      smltn.BankKeeper
 	FeeGrantKeeper   feegrantkeeper.Keeper
-	ics4Wrapper      ibctransfertypes.ICS4Wrapper
 
 	ICAHostKeeper icahostkeeper.Keeper
-
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
