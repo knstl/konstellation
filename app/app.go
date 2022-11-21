@@ -94,7 +94,6 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	// this line is used by starport scaffolding # stargate/app/moduleImport
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
@@ -104,7 +103,6 @@ import (
 	//oracletypes "github.com/konstellation/konstellation/x/oracle/types"
 
 	"github.com/tendermint/spm-extras/wasmcmd"
-	"github.com/tendermint/spm/cosmoscmd"
 
 	ica "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts"
 	icacontrollertypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/controller/types"
@@ -151,7 +149,6 @@ func GetWasmOpts(appOpts servertypes.AppOptions) []wasm.Option {
 
 func getGovProposalHandlers() []govclient.ProposalHandler {
 	var govProposalHandlers []govclient.ProposalHandler
-	// this line is used by starport scaffolding # stargate/app/govProposalHandlers
 	govProposalHandlers = wasmclient.ProposalHandlers
 
 	govProposalHandlers = append(
@@ -162,10 +159,92 @@ func getGovProposalHandlers() []govclient.ProposalHandler {
 		upgradeclient.CancelProposalHandler,
 		ibcclientclient.UpdateClientProposalHandler,
 		ibcclientclient.UpgradeProposalHandler,
-		// this line is used by starport scaffolding # stargate/app/govProposalHandler
 	)
 
 	return govProposalHandlers
+}
+
+// ValidateMembers checks for nil members
+func (app App) ValidateMembers() {
+
+	if app.legacyAmino == nil {
+		panic("Nil legacyAmino!")
+	}
+	// keepers
+	if &app.AccountKeeper == nil {
+		panic("Nil accountKeeper!")
+	}
+	if &app.AuthzKeeper == nil {
+		panic("Nil authzKeeper!")
+	}
+	if &app.BankKeeper == nil {
+		panic("Nil bankKeeper!")
+	}
+	if &app.CapabilityKeeper == nil {
+		panic("Nil capabilityKeeper!")
+	}
+	if &app.StakingKeeper == nil {
+		panic("Nil stakingKeeper!")
+	}
+	if &app.SlashingKeeper == nil {
+		panic("Nil slashingKeeper!")
+	}
+	if &app.MintKeeper == nil {
+		panic("Nil mintKeeper!")
+	}
+	if &app.DistrKeeper == nil {
+		panic("Nil distrKeeper!")
+	}
+	if &app.GovKeeper == nil {
+		panic("Nil govKeeper!")
+	}
+	if &app.CrisisKeeper == nil {
+		panic("Nil crisisKeeper!")
+	}
+	if &app.UpgradeKeeper == nil {
+		panic("Nil upgradeKeeper!")
+	}
+	if &app.ParamsKeeper == nil {
+		panic("Nil paramsKeeper!")
+	}
+	if app.IBCKeeper == nil {
+		panic("Nil ibcKeeper!")
+	}
+	if &app.EvidenceKeeper == nil {
+		panic("Nil evidenceKeeper!")
+	}
+	if &app.TransferKeeper == nil {
+		panic("Nil ibcTransferKeeper!")
+	}
+	if &app.SimulKeeper == nil {
+		panic("Nil simulKeeper!")
+	}
+	if &app.FeeGrantKeeper == nil {
+		panic("Nil simulKeeper!")
+	}
+	if &app.ICAHostKeeper == nil {
+		panic("Nil ScopedICAHostKeeper!")
+	}
+	// scoped keepers
+	if &app.ScopedICAHostKeeper == nil {
+		panic("Nil ScopedICAHostKeeper!")
+	}
+	if &app.ScopedIBCKeeper == nil {
+		panic("Nil ScopedIBCKeeper!")
+	}
+	if &app.ScopedTransferKeeper == nil {
+		panic("Nil ScopedTransferKeeper!")
+	}
+	if &app.wasmKeeper == nil {
+		panic("Nil wasmKeeper!")
+	}
+	if &app.scopedWasmKeeper == nil {
+		panic("Nil scopedWasmKeeper!")
+	}
+	// managers
+	if app.mm == nil {
+		panic("Nil ModuleManager!")
+	}
 }
 
 // New returns a reference to an initialized Knstld.
@@ -182,7 +261,7 @@ func New(
 	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
 
-) cosmoscmd.App {
+) *App {
 
 	encodingConfig := MakeTestEncodingConfig()
 	appCodec := encodingConfig.Marshaler
@@ -209,7 +288,6 @@ func New(
 		evidencetypes.StoreKey,
 		ibctransfertypes.StoreKey,
 		capabilitytypes.StoreKey,
-		// this line is used by starport scaffolding # stargate/app/storeKey
 		authzkeeper.StoreKey,
 		feegrant.StoreKey,
 		icahosttypes.StoreKey,
@@ -239,11 +317,11 @@ func New(
 	app.CapabilityKeeper = capabilitykeeper.NewKeeper(appCodec, keys[capabilitytypes.StoreKey], memKeys[capabilitytypes.MemStoreKey])
 
 	// grant capabilities for the ibc and ibc-transfer modules
-	scopedIBCKeeper := app.CapabilityKeeper.ScopeToModule(ibchost.ModuleName)
-	scopedICAHostKeeper := app.CapabilityKeeper.ScopeToModule(icahosttypes.SubModuleName)
-	scopedTransferKeeper := app.CapabilityKeeper.ScopeToModule(ibctransfertypes.ModuleName)
-	// this line is used by starport scaffolding # stargate/app/scopedKeeper
-	scopedWasmKeeper := app.CapabilityKeeper.ScopeToModule(wasm.ModuleName)
+
+	ScopedIBCKeeper := app.CapabilityKeeper.ScopeToModule(ibchost.ModuleName)
+	ScopedTransferKeeper := app.CapabilityKeeper.ScopeToModule(ibctransfertypes.ModuleName)
+	ScopedICAHostKeeper := app.CapabilityKeeper.ScopeToModule(icahosttypes.SubModuleName)
+	ScopedWasmKeeper := app.CapabilityKeeper.ScopeToModule(wasm.ModuleName)
 
 	// add keepers
 	app.AccountKeeper = authkeeper.NewAccountKeeper(
@@ -285,7 +363,12 @@ func New(
 
 	// Create IBC Keeper
 	app.IBCKeeper = ibckeeper.NewKeeper(
-		appCodec, keys[ibchost.StoreKey], app.GetSubspace(ibchost.ModuleName), app.StakingKeeper, app.UpgradeKeeper, scopedIBCKeeper,
+		appCodec,
+		keys[ibchost.StoreKey],
+		app.GetSubspace(ibchost.ModuleName),
+		app.StakingKeeper,
+		app.UpgradeKeeper,
+		ScopedIBCKeeper,
 	)
 
 	app.FeeGrantKeeper = feegrantkeeper.NewKeeper(appCodec, keys[feegrant.StoreKey], app.AccountKeeper)
@@ -302,12 +385,12 @@ func New(
 		appCodec,
 		keys[ibctransfertypes.StoreKey],
 		app.GetSubspace(ibctransfertypes.ModuleName),
-		app.ics4Wrapper,
+		app.IBCKeeper.ChannelKeeper,
 		app.IBCKeeper.ChannelKeeper,
 		&app.IBCKeeper.PortKeeper,
 		app.AccountKeeper,
 		app.BankKeeper,
-		scopedTransferKeeper,
+		ScopedTransferKeeper,
 	)
 	transferModule := transfer.NewAppModule(app.TransferKeeper)
 	transferIBCModule := transfer.NewIBCModule(app.TransferKeeper)
@@ -319,7 +402,7 @@ func New(
 		app.IBCKeeper.ChannelKeeper,
 		&app.IBCKeeper.PortKeeper,
 		app.AccountKeeper,
-		scopedICAHostKeeper,
+		ScopedICAHostKeeper,
 		app.MsgServiceRouter(),
 	)
 	icaModule := ica.NewAppModule(nil, &app.ICAHostKeeper)
@@ -333,7 +416,6 @@ func New(
 	// If evidence needs to be handled for the app, set routes in router here and seal
 	app.EvidenceKeeper = *evidenceKeeper
 
-	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	wasmDir := filepath.Join(homePath, "wasm")
 	wasmConfig, err := wasm.ReadWasmConfig(appOpts)
 	if err != nil {
@@ -354,7 +436,7 @@ func New(
 		app.DistrKeeper,
 		app.IBCKeeper.ChannelKeeper,
 		&app.IBCKeeper.PortKeeper,
-		scopedWasmKeeper,
+		ScopedWasmKeeper,
 		app.TransferKeeper,
 		app.MsgServiceRouter(),
 		app.GRPCQueryRouter(),
@@ -372,10 +454,10 @@ func New(
 
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := porttypes.NewRouter()
-	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferIBCModule).
-		AddRoute(wasm.ModuleName, wasm.NewIBCHandler(app.wasmKeeper, app.IBCKeeper.ChannelKeeper)).
-		AddRoute(icahosttypes.SubModuleName, icaHostIBCModule)
-	// this line is used by starport scaffolding # ibc/app/router
+	ibcRouter.
+		AddRoute(icahosttypes.SubModuleName, icaHostIBCModule).
+		AddRoute(ibctransfertypes.ModuleName, transferIBCModule).
+		AddRoute(wasm.ModuleName, wasm.NewIBCHandler(app.wasmKeeper, app.IBCKeeper.ChannelKeeper))
 	app.IBCKeeper.SetRouter(ibcRouter)
 
 	app.GovKeeper = govkeeper.NewKeeper(
@@ -413,7 +495,6 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
 		feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry),
-		// this line is used by starport scaffolding # stargate/app/appModule
 		transferModule,
 		icaModule,
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
@@ -493,7 +574,6 @@ func New(
 		ibchost.ModuleName,
 		ibctransfertypes.ModuleName,
 		icatypes.ModuleName,
-		// this line is used by starport scaffolding # stargate/app/initGenesis
 		//oracletypes.ModuleName,
 		wasm.ModuleName,
 	)
@@ -566,11 +646,12 @@ func New(
 		app.CapabilityKeeper.Seal()
 	}
 
-	app.ScopedIBCKeeper = scopedIBCKeeper
-	app.ScopedTransferKeeper = scopedTransferKeeper
-	// this line is used by starport scaffolding # stargate/app/beforeInitReturn
-	app.scopedWasmKeeper = scopedWasmKeeper
-	app.ScopedICAHostKeeper = scopedICAHostKeeper
+	app.ScopedIBCKeeper = ScopedIBCKeeper
+	app.ScopedTransferKeeper = ScopedTransferKeeper
+	app.ScopedICAHostKeeper = ScopedICAHostKeeper
+	app.scopedWasmKeeper = ScopedWasmKeeper
+
+	app.ValidateMembers()
 
 	return app
 }
@@ -678,7 +759,6 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 	// Register legacy and grpc-gateway routes for all modules.
 	ModuleBasics.RegisterRESTRoutes(clientCtx, apiSvr.Router)
 	ModuleBasics.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
-
 	// register app's OpenAPI routes.
 	apiSvr.Router.Handle("/static/openapi.yml", http.FileServer(http.FS(docs.Docs)))
 	apiSvr.Router.HandleFunc("/", openapiconsole.Handler(Name, "/static/openapi.yml"))
@@ -771,7 +851,6 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(crisistypes.ModuleName)
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
-	// this line is used by starport scaffolding # stargate/app/paramSubspace
 	//paramsKeeper.Subspace(oracletypes.ModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
