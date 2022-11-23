@@ -818,7 +818,7 @@ func (app *App) registerUpgradeHandlers(cfg module.Configurator) {
 		panic(err)
 	}
 
-	if upgradeInfo.Name == "v0.45" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+	if upgradeInfo.Name == "v0.45.1" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
 		storeUpgrades := storetypes.StoreUpgrades{
 			Added: []string{icacontrollertypes.StoreKey, icahosttypes.StoreKey},
 		}
