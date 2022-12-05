@@ -92,8 +92,10 @@ else
 endif
 
 install: go.sum
-	go install -mod=readonly $(BUILD_FLAGS) ./cmd/knstld
-
+ifeq ($(OS),Windows_NT)
+	exit 1
+else
+	go build -mod=readonly $(BUILD_FLAGS) -o build/knstld ./cmd/knstld
 ########################################
 ### Tools & dependencies
 
