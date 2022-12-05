@@ -96,6 +96,8 @@ ifeq ($(OS),Windows_NT)
 	exit 1
 else
 	go build -mod=readonly $(BUILD_FLAGS) -o build/knstld ./cmd/knstld
+endif
+
 ########################################
 ### Tools & dependencies
 
