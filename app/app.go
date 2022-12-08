@@ -16,7 +16,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/server/api"
 	"github.com/cosmos/cosmos-sdk/server/config"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
-	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/version"
@@ -97,7 +96,6 @@ import (
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
-	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/prometheus/client_golang/prometheus"
 
 	//oracletypes "github.com/konstellation/konstellation/x/oracle/types"
@@ -105,7 +103,6 @@ import (
 	"github.com/tendermint/spm-extras/wasmcmd"
 
 	ica "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts"
-	icacontrollertypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/controller/types"
 	icahost "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host"
 	icahostkeeper "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/keeper"
 	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
@@ -777,55 +774,56 @@ func (app *App) RegisterTendermintService(clientCtx client.Context) {
 func (app *App) registerUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler("v0.45.1", func(ctx sdk.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
 
-		vm[icatypes.ModuleName] = app.mm.Modules[icatypes.ModuleName].ConsensusVersion()
+		// vm[icatypes.ModuleName] = app.mm.Modules[icatypes.ModuleName].ConsensusVersion()
 
-		controllerParams := icacontrollertypes.Params{}
+		// controllerParams := icacontrollertypes.Params{}
 
-		hostParams := icahosttypes.Params{
-			HostEnabled: true,
-			AllowMessages: []string{
-				sdk.MsgTypeURL(&banktypes.MsgSend{}),
-				sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
-				sdk.MsgTypeURL(&stakingtypes.MsgBeginRedelegate{}),
-				sdk.MsgTypeURL(&stakingtypes.MsgCreateValidator{}),
-				sdk.MsgTypeURL(&stakingtypes.MsgEditValidator{}),
-				sdk.MsgTypeURL(&distrtypes.MsgWithdrawDelegatorReward{}),
-				sdk.MsgTypeURL(&distrtypes.MsgSetWithdrawAddress{}),
-				sdk.MsgTypeURL(&distrtypes.MsgWithdrawValidatorCommission{}),
-				sdk.MsgTypeURL(&distrtypes.MsgFundCommunityPool{}),
-				sdk.MsgTypeURL(&govtypes.MsgVote{}),
-				sdk.MsgTypeURL(&authz.MsgExec{}),
-				sdk.MsgTypeURL(&authz.MsgGrant{}),
-				sdk.MsgTypeURL(&authz.MsgRevoke{}),
-				// wasm msgs here
-				sdk.MsgTypeURL(&wasmtypes.MsgStoreCode{}),
-				sdk.MsgTypeURL(&wasmtypes.MsgInstantiateContract{}),
-				sdk.MsgTypeURL(&wasmtypes.MsgExecuteContract{}),
-			},
-		}
+		// hostParams := icahosttypes.Params{
+		// 	HostEnabled: true,
+		// 	AllowMessages: []string{
+		// 		sdk.MsgTypeURL(&banktypes.MsgSend{}),
+		// 		sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
+		// 		sdk.MsgTypeURL(&stakingtypes.MsgBeginRedelegate{}),
+		// 		sdk.MsgTypeURL(&stakingtypes.MsgCreateValidator{}),
+		// 		sdk.MsgTypeURL(&stakingtypes.MsgEditValidator{}),
+		// 		sdk.MsgTypeURL(&distrtypes.MsgWithdrawDelegatorReward{}),
+		// 		sdk.MsgTypeURL(&distrtypes.MsgSetWithdrawAddress{}),
+		// 		sdk.MsgTypeURL(&distrtypes.MsgWithdrawValidatorCommission{}),
+		// 		sdk.MsgTypeURL(&distrtypes.MsgFundCommunityPool{}),
+		// 		sdk.MsgTypeURL(&govtypes.MsgVote{}),
+		// 		sdk.MsgTypeURL(&authz.MsgExec{}),
+		// 		sdk.MsgTypeURL(&authz.MsgGrant{}),
+		// 		sdk.MsgTypeURL(&authz.MsgRevoke{}),
+		// 		// wasm msgs here
+		// 		sdk.MsgTypeURL(&wasmtypes.MsgStoreCode{}),
+		// 		sdk.MsgTypeURL(&wasmtypes.MsgInstantiateContract{}),
+		// 		sdk.MsgTypeURL(&wasmtypes.MsgExecuteContract{}),
+		// 	},
+		// }
 
-		icamodule, correctTypecast := app.mm.Modules[icatypes.ModuleName].(ica.AppModule)
-		if !correctTypecast {
-			panic("mm.Modules[icatypes.ModuleName] is not of type ica.AppModule")
-		}
-		icamodule.InitModule(ctx, controllerParams, hostParams)
+		// icamodule, correctTypecast := app.mm.Modules[icatypes.ModuleName].(ica.AppModule)
+		// if !correctTypecast {
+		// 	panic("mm.Modules[icatypes.ModuleName] is not of type ica.AppModule")
+		// }
+		// icamodule.InitModule(ctx, controllerParams, hostParams)
 
 		return app.mm.RunMigrations(ctx, cfg, vm)
 	})
 
-	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
-	if err != nil {
-		panic(err)
-	}
+	// upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	if upgradeInfo.Name == "v0.45.1" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
-		storeUpgrades := storetypes.StoreUpgrades{
-			Added: []string{icacontrollertypes.StoreKey, icahosttypes.StoreKey},
-		}
+	// if upgradeInfo.Name == "v0.45.1" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+	// 	storeUpgrades := storetypes.StoreUpgrades{
+	// 		Added: []string{icacontrollertypes.StoreKey, icahosttypes.StoreKey},
+	// 	}
 
-		// configure store loader that checks if version == upgradeHeight and applies store upgrades
-		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
-	}
+	// 	// configure store loader that checks if version == upgradeHeight and applies store upgrades
+	// 	app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
+	// }
+
 }
 
 // GetMaccPerms returns a copy of the module account permissions
