@@ -46,6 +46,7 @@ func New(t *testing.T, configs ...network.Config) *network.Network {
 // DefaultConfig will initialize config for the network with custom application,
 // genesis and single validator. All other parameters are inherited from cosmos-sdk/testutil/network.DefaultConfig
 func DefaultConfig() network.Config {
+	/// [IMPORTAT] AYUSH : NEED TO CHECK IT THOROUGHLY
 	encoding := cosmoscmd.MakeEncodingConfig(app.ModuleBasics)
 	return network.Config{
 		Codec:             encoding.Marshaler,
@@ -54,13 +55,10 @@ func DefaultConfig() network.Config {
 		InterfaceRegistry: encoding.InterfaceRegistry,
 		AccountRetriever:  authtypes.AccountRetriever{},
 		AppConstructor: func(val network.Validator) servertypes.Application {
-			return app.New(
-				val.Ctx.Logger, tmdb.NewMemDB(), nil, true, map[int64]bool{}, val.Ctx.Config.RootDir, 0,
-				encoding,
-				simapp.EmptyAppOptions{},
-				baseapp.SetPruning(storetypes.NewPruningOptionsFromString(val.AppConfig.Pruning)),
-				baseapp.SetMinGasPrices(val.AppConfig.MinGasPrices),
-			)
+			return app.New(val.Ctx.Logger, tmdb.NewMemDB(), nil, true, map[int64]bool{}, val.Ctx.Config.RootDir, 0,
+				simapp.EmptyAppOptions{}, app.GetWasmEnabledProposals(),
+				app.EmptyWasmOpts, baseapp.SetPruning(storetypes.NewPruningOptionsFromString(val.AppConfig.Pruning)),
+				baseapp.SetMinGasPrices(val.AppConfig.MinGasPrices))
 		},
 		GenesisState:    app.ModuleBasics.DefaultGenesis(encoding.Marshaler),
 		TimeoutCommit:   2 * time.Second,

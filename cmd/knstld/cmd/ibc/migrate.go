@@ -3,16 +3,17 @@ package ibc
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
+	"time"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/genutil/types"
-	ibcv100 "github.com/cosmos/ibc-go/v2/modules/core/legacy/v100"
+	ibcv100 "github.com/cosmos/ibc-go/v3/modules/core/legacy/v100"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	tmtypes "github.com/tendermint/tendermint/types"
-	"strconv"
-	"time"
 )
 
 const chainUpgradeGuide = "https://github.com/cosmos/ibc-go/blob/release/v2.0.x/docs/migrations/ibc-migration-043.md"
